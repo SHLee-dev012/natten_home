@@ -188,9 +188,18 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 .matrix {
     --mx-time: 58px;
     display: grid;
-    grid-template-rows: auto repeat(10, minmax(58px, auto));
+    /* header · prep band · 10 hour rows · teardown band */
+    grid-template-rows: auto auto repeat(10, minmax(58px, auto)) auto;
     gap: 6px;
     min-width: 1040px; /* keeps columns readable; scrolls on narrow screens */
+}
+/* Full-width prep / teardown bands */
+.mx-band {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    padding: 0.5rem 0.8rem; border-radius: 0.5rem;
+    font-size: 0.8rem; font-weight: 500; color: var(--muted);
+    background: rgba(255, 255, 255, 0.04); border: 1px dashed var(--line);
+    font-variant-numeric: tabular-nums;
 }
 .mx-corner { grid-column: 1; grid-row: 1; }
 .mx-head {

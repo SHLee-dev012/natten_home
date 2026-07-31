@@ -15,9 +15,10 @@ public final class Grid {
     /** One program block placed in the grid, possibly holding several concurrent items. */
     public record Cell(int start, int end, List<String> items) {
 
-        /** CSS grid row line where this cell begins (hour 11 → line 2). */
+        /** CSS grid row line where this cell begins.
+         *  Rows: 1 = zone headers, 2 = prep band, 3.. = hours (hour 11 → line 3). */
         public int rowStart() {
-            return start - START_HOUR + 2;
+            return start - START_HOUR + 3;
         }
 
         /** Number of hourly rows this cell spans. */

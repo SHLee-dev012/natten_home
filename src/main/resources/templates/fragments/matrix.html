@@ -15,9 +15,12 @@
             <span class="tag" th:attr="data-cat=${c.category()}" th:text="${c.category()}">공연</span>
             <span class="mx-zone" th:text="${c.zone()}">캠퍼스 낭만존</span>
         </div>
+        <!-- prep band (full width, above the hours) -->
+        <div class="mx-band" style="grid-column: 1 / -1; grid-row: 2;"
+             th:text="${brackets[0]}">08:00–11:00 현장 준비 및 사전 리허설</div>
         <!-- hour labels -->
         <div class="mx-time" th:each="h,hi : ${hours}"
-             th:style="'grid-column: 1; grid-row: ' + (${hi.index} + 2) + ';'"
+             th:style="'grid-column: 1; grid-row: ' + (${hi.index} + 3) + ';'"
              th:text="${h} + ':00'">11:00</div>
         <!-- program cells -->
         <th:block th:each="c,ci : ${columns}">
@@ -27,6 +30,9 @@
                 <span class="mx-cell-item" th:each="it : ${cell.items()}" th:text="${it}">프로그램</span>
             </div>
         </th:block>
+        <!-- teardown band (full width, below the hours) -->
+        <div class="mx-band" th:style="'grid-column: 1 / -1; grid-row: ' + (${#lists.size(hours)} + 3) + ';'"
+             th:text="${brackets[1]}">22:00–23:00 현장 정리 및 행사 종료</div>
     </div>
 </div>
 </body>
