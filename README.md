@@ -4,6 +4,14 @@
 프로그램·행사 일정(시간×존 매트릭스)·오시는 길을 제공하고, `/api/festival` JSON API로
 다른 notten 서비스가 축제 정보를 소비할 수 있습니다.
 
+## 미리보기
+
+![notten-home 데스크톱 화면](docs/screenshot-desktop.png)
+
+<p align="center">
+  <img src="docs/screenshot-mobile.png" width="320" alt="notten-home 모바일 화면"/>
+</p>
+
 ## 기술 스택
 
 - Spring Boot 4.1 (webmvc + thymeleaf) / Java 25
