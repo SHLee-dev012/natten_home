@@ -14,7 +14,7 @@ public record ScheduleZone(
      * A single time block within a zone. Hours are 24h (e.g. 11–17).
      * {@code day}: 0 = both days, 1 = day 1 only, 2 = day 2 only.
      */
-    public record Slot(int start, int end, String content, int day) {
+    public record Slot(int start, int end, String content, int day, String description) {
 
         /** Whether this slot runs on the given day number (1 or 2). */
         public boolean on(int d) {

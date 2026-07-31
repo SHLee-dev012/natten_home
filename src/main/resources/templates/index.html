@@ -44,19 +44,39 @@
     <section id="programs" class="programs">
         <h2>프로그램</h2>
         <ul class="grid">
-            <li class="card" th:each="p : ${programs}">
-                <div class="card-top">
-                    <span class="tag" th:attr="data-cat=${p.category()}" th:text="${p.category()}">공연</span>
-                    <span class="day-badge" th:if="${p.daySpecific()}" th:text="${p.dayLabel()}">2일차</span>
-                </div>
-                <h3 class="card-title" th:text="${p.title()}">프로그램 제목</h3>
-                <p class="card-meta">
-                    <span class="card-time" th:text="${p.time()}">11:00–17:00</span>
-                    <span class="card-place" th:text="${p.place()}">4F 캠퍼스 낭만존</span>
-                </p>
+            <li th:each="p : ${programs}">
+                <button type="button" class="card"
+                        th:attr="data-title=${p.title()},data-category=${p.category()},data-time=${p.time()},data-place=${p.place()},data-day=${p.day()},data-day-label=${p.dayLabel()},data-desc=${p.description()}">
+                    <span class="card-top">
+                        <span class="tag" th:attr="data-cat=${p.category()}" th:text="${p.category()}">공연</span>
+                        <span class="day-badge" th:if="${p.daySpecific()}" th:text="${p.dayLabel()}">2일차</span>
+                    </span>
+                    <span class="card-title" th:text="${p.title()}">프로그램 제목</span>
+                    <span class="card-meta">
+                        <span class="card-time" th:text="${p.time()}">11:00–17:00</span>
+                        <span class="card-place" th:text="${p.place()}">4F 캠퍼스 낭만존</span>
+                    </span>
+                    <span class="card-more">자세히 보기 →</span>
+                </button>
             </li>
         </ul>
     </section>
+
+    <!-- Program detail modal (populated by /js/modal.js from the clicked card) -->
+    <dialog id="program-modal" class="modal">
+        <div class="modal-top">
+            <span class="tag" id="m-tag">공연</span>
+            <span class="day-badge" id="m-day" hidden>2일차</span>
+            <button type="button" class="modal-close" aria-label="닫기">×</button>
+        </div>
+        <h3 class="modal-title" id="m-title">프로그램 제목</h3>
+        <p class="modal-meta">
+            <span id="m-time">11:00–17:00</span>
+            <span class="modal-dot">·</span>
+            <span id="m-place">4F 캠퍼스 낭만존</span>
+        </p>
+        <p class="modal-desc" id="m-desc">설명</p>
+    </dialog>
 
     <section id="schedule" class="program">
         <div class="program-head">
@@ -101,5 +121,7 @@
         <span class="muted">notten-home · Spring Boot</span>
     </div>
 </footer>
+
+<script th:src="@{/js/modal.js}" defer></script>
 </body>
 </html>

@@ -7,7 +7,8 @@ public record ProgramCard(
         String category,
         String time,
         String title,
-        int day) {
+        int day,
+        String description) {
 
     /** e.g. "4F 캠퍼스 낭만존". */
     public String place() {
