@@ -72,8 +72,13 @@
 </main>
 
 <footer class="foot">
-    <span th:text="${festival.name()} + ' · ' + ${festival.dateRange()}">notten 페스티벌</span>
-    <span class="muted">notten-home · Spring Boot</span>
+    <figure class="foot-seal">
+        <img th:src="@{/img/emblem.png}" alt="낯텐축제"/>
+    </figure>
+    <div class="foot-bar">
+        <span th:text="${festival.name()} + ' · ' + ${festival.dateRange()}">notten 페스티벌</span>
+        <span class="muted">notten-home · Spring Boot</span>
+    </div>
 </footer>
 </body>
 </html>

@@ -173,8 +173,19 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 
 /* Footer */
 .foot {
-    max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
-    border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted);
+    max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    border-top: 1px solid var(--line);
 }
-.foot .muted { color: var(--faint); }
+/* Emblem lockup on a paper seal — a closing brand stamp. */
+.foot-seal { margin: 0; }
+.foot-seal img {
+    display: block; width: 92px; height: auto; padding: 0.7rem 0.9rem;
+    background: #fff; border-radius: 0.8rem;
+    box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.8);
+}
+.foot-bar {
+    width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    font-size: 0.82rem; color: var(--muted);
+}
+.foot-bar .muted { color: var(--faint); }
