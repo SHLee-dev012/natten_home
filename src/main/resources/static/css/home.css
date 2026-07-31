@@ -1,0 +1,117 @@
+:root {
+    --space: #05060f;
+    --ink: #f4f5ff;
+    --muted: #b7bce0;
+    --faint: #8b90b8;
+    --line: rgba(160, 170, 255, 0.2);
+    --glass: rgba(26, 30, 66, 0.6);
+    --accent: linear-gradient(120deg, #818cf8, #a78bfa 45%, #22d3ee);
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
+    background-color: var(--space);
+    background-image:
+        radial-gradient(1100px 700px at 12% -8%, rgba(99, 102, 241, 0.25), transparent 60%),
+        radial-gradient(900px 650px at 92% 4%, rgba(232, 121, 249, 0.16), transparent 60%),
+        radial-gradient(1200px 800px at 50% 112%, rgba(34, 211, 238, 0.16), transparent 60%);
+    background-attachment: fixed;
+}
+
+/* Starfield */
+.starfield {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        radial-gradient(1.4px 1.4px at 24px 32px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(1.2px 1.2px at 160px 90px, rgba(210, 220, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 280px 180px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1.5px 1.5px at 360px 60px, rgba(200, 210, 255, 0.85), transparent);
+    background-size: 400px 400px;
+    opacity: 0.7;
+}
+
+/* Nav */
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.1rem 1.5rem;
+}
+.brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; font-weight: 700; font-size: 1.15rem; }
+.brand-mark {
+    display: grid; place-items: center; width: 1.7rem; height: 1.7rem; border-radius: 999px;
+    background: var(--accent); color: #0a0c1c; font-size: 0.8rem;
+    box-shadow: 0 0 16px -2px rgba(129, 140, 248, 0.8);
+}
+.brand-name {
+    background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.nav-links { display: flex; gap: 1.25rem; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+.nav-links a:hover { color: var(--ink); }
+
+main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Hero */
+.hero { text-align: center; padding: 4.5rem 0 3.5rem; }
+.eyebrow { margin: 0; font-size: 0.72rem; letter-spacing: 0.32em; color: #a78bfa; font-weight: 600; }
+.hero h1 {
+    margin: 1rem auto 1.5rem; max-width: 18ch; font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance;
+}
+.hero-meta { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+.pill {
+    padding: 0.4rem 0.95rem; border-radius: 999px; font-size: 0.85rem; color: var(--ink);
+    background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(10px);
+}
+
+/* Highlights */
+.highlights { padding: 2rem 0 4rem; }
+.highlights h2 { font-size: 1.4rem; letter-spacing: -0.01em; margin: 0 0 1.25rem; }
+.grid {
+    list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.card {
+    border-radius: 1rem; padding: 1.25rem; background: var(--glass);
+    border: 1px solid var(--line); backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.card:hover {
+    transform: translateY(-4px); border-color: rgba(170, 180, 255, 0.4);
+    box-shadow: 0 20px 50px -16px rgba(129, 140, 248, 0.6);
+}
+.card h3 { margin: 0.7rem 0 0.5rem; font-size: 1.05rem; letter-spacing: -0.01em; }
+.card .meta { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.card .dot { color: var(--faint); margin: 0 0.35rem; }
+
+/* Category tags */
+.tag {
+    display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 999px;
+    padding: 0.2rem 0.65rem; font-size: 0.72rem; font-weight: 600;
+    color: #ded6ff; background: rgba(139, 92, 246, 0.24); border: 1px solid rgba(139, 92, 246, 0.5);
+}
+.tag::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: currentColor; box-shadow: 0 0 6px currentColor; }
+.tag[data-cat="공연"] { color: #f9c2f4; background: rgba(232, 121, 249, 0.24); border-color: rgba(232, 121, 249, 0.55); }
+.tag[data-cat="부스"] { color: #bcc6ff; background: rgba(99, 102, 241, 0.28); border-color: rgba(129, 140, 248, 0.55); }
+.tag[data-cat="체험"] { color: #a6effb; background: rgba(34, 211, 238, 0.22); border-color: rgba(34, 211, 238, 0.5); }
+.tag[data-cat="먹거리"] { color: #fde08a; background: rgba(251, 191, 36, 0.22); border-color: rgba(251, 191, 36, 0.5); }
+
+/* Footer */
+.foot {
+    max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 3rem;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    border-top: 1px solid var(--line); font-size: 0.82rem; color: var(--muted);
+}
+.foot .muted { color: var(--faint); }

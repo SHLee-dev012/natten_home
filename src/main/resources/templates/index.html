@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${festival.name()} + ' — 홈'">notten 페스티벌</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+</head>
+<body>
+<div class="starfield" aria-hidden="true"></div>
+
+<header class="nav">
+    <a class="brand" href="/">
+        <span class="brand-mark">✦</span>
+        <span class="brand-name" th:text="${festival.name()}">notten 페스티벌</span>
+    </a>
+    <nav class="nav-links">
+        <a href="#highlights">하이라이트</a>
+        <a href="/api/festival">API</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero">
+        <p class="eyebrow">OFFLINE FESTIVAL</p>
+        <h1 th:text="${festival.tagline()}">밤하늘 아래, 오프라인으로 만나는 축제의 순간</h1>
+        <div class="hero-meta">
+            <span class="pill" th:text="${festival.dateRange()}">7월 25일 – 26일</span>
+            <span class="pill" th:text="${festival.location()}">한강 노들섬 일대</span>
+        </div>
+    </section>
+
+    <section id="highlights" class="highlights">
+        <h2>하이라이트</h2>
+        <ul class="grid">
+            <li class="card" th:each="p : ${highlights}">
+                <span class="tag" th:attr="data-cat=${p.category()}" th:text="${p.category()}">공연</span>
+                <h3 th:text="${p.title()}">프로그램 제목</h3>
+                <p class="meta">
+                    <span th:text="${p.time()}">7/25 12:00</span>
+                    <span class="dot">·</span>
+                    <span th:text="${p.place()}">메인 스테이지</span>
+                </p>
+            </li>
+        </ul>
+    </section>
+</main>
+
+<footer class="foot">
+    <span th:text="${festival.name()} + ' · ' + ${festival.dateRange()}">notten 페스티벌</span>
+    <span class="muted">notten-home · Spring Boot</span>
+</footer>
+</body>
+</html>
