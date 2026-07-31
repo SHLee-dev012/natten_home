@@ -15,6 +15,7 @@
     </a>
     <nav class="nav-links">
         <a href="#highlights">하이라이트</a>
+        <a href="#program">프로그램</a>
         <a href="#archive">아카이브</a>
         <a href="/api/festival">API</a>
     </nav>
@@ -46,6 +47,38 @@
                     <span th:text="${p.time()}">7/25 12:00</span>
                     <span class="dot">·</span>
                     <span th:text="${p.place()}">메인 스테이지</span>
+                </p>
+            </li>
+        </ul>
+    </section>
+
+    <section id="program" class="program">
+        <div class="program-head">
+            <h2>프로그램 · 행사 일정</h2>
+            <p class="program-note">
+                양일 공통(1~2일차) · 매일
+                <strong th:each="b : ${brackets}" th:text="${b.time()} + ' ' + ${b.content()}"
+                        class="bracket">08:00–11:00 준비</strong>
+            </p>
+        </div>
+        <ul class="zones">
+            <li class="zone" th:each="z : ${schedule}">
+                <div class="zone-head">
+                    <span class="floor" th:text="${z.floor()}">4F</span>
+                    <div class="zone-titles">
+                        <span class="tag" th:attr="data-cat=${z.category()}" th:text="${z.category()}">공연</span>
+                        <span class="zone-name" th:text="${z.zone()}">캠퍼스 낭만존</span>
+                    </div>
+                </div>
+                <ul class="slots">
+                    <li th:each="s : ${z.slots()}">
+                        <span class="slot-time" th:text="${s.time()}">11:00–17:00</span>
+                        <span class="slot-content" th:text="${s.content()}">프로그램 내용</span>
+                    </li>
+                </ul>
+                <p class="zone-staff">
+                    <span>담당</span>
+                    <span th:text="${z.staff()}">심재욱, 김누림</span>
                 </p>
             </li>
         </ul>

@@ -28,6 +28,31 @@ public class FestivalService {
     // Founding year of the festival; this year's edition is the 10th anniversary.
     private static final int FIRST_YEAR = 2016;
 
+    // Detailed schedule by floor/zone. Programs run both days (1~2일차) unless noted.
+    private final List<ScheduleZone> schedule = List.of(
+            new ScheduleZone("1F", "교무처", "리셉션", "현장 운영", List.of(
+                    new ScheduleZone.Slot("11:00–21:00", "환대 & 오리엔테이션"))),
+            new ScheduleZone("4F", "캠퍼스 낭만존", "공연", "심재욱, 김누림", List.of(
+                    new ScheduleZone.Slot("11:00–17:00", "보이는 라디오 (DJ부스) + 애장품 경매 (2일차 한정)"),
+                    new ScheduleZone.Slot("18:00–21:00", "임팩트 있는 공연 (1~2팀)"))),
+            new ScheduleZone("4F", "캠퍼스 낭만존", "마켓", "강다혜, 한정은, 문지현 · 운영총괄(부스협찬)", List.of(
+                    new ScheduleZone.Slot("11:00–14:00", "플리마켓(중고) · 비즈마켓(사업+홍보) · 간단 디저트"),
+                    new ScheduleZone.Slot("14:00–21:00", "협찬부스(술+먹거리) · 셀러 모집"))),
+            new ScheduleZone("5F", "라이브러리 배움터", "사람책 · 취업박람회", "강다혜, 심재욱, 온은주", List.of(
+                    new ScheduleZone.Slot("11:00–14:00", "강연 30 + QnA 20 (6층 이동 후 1:1)"),
+                    new ScheduleZone.Slot("14:00–21:00", "1일차 낯대 추천인 사람책 발표 · 2일차 사람책 발표(소속·직업 등)"))),
+            new ScheduleZone("6F", "네트워킹 존", "DJ", "심재욱, 김누림", List.of(
+                    new ScheduleZone.Slot("11:00–21:00", "6층 바이브 담당 · 다양한 DJ 라인업"))),
+            new ScheduleZone("6F", "네트워킹 존", "F&B", "강다혜, 한정은, 문지현 · 운영총괄(부스협찬)", List.of(
+                    new ScheduleZone.Slot("11:00–21:00", "협찬부스 (술+먹거리)"))),
+            new ScheduleZone("4F~6F · 외부", "전시존", "전시", "김민수, 최근우", List.of(
+                    new ScheduleZone.Slot("상시", "포토존 · 낯선대학 WALL · 가계도 · 사진전 · 원티드 게시판(참여형) · 공모전 출품작"))));
+
+    // Whole-venue brackets that apply to every zone, each day.
+    private final List<ScheduleZone.Slot> brackets = List.of(
+            new ScheduleZone.Slot("08:00–11:00", "현장 준비 및 사전 리허설"),
+            new ScheduleZone.Slot("22:00–23:00", "현장 정리 및 행사 종료"));
+
     public Festival festival() {
         return festival;
     }
@@ -49,5 +74,15 @@ public class FestivalService {
     /** Anniversary number for this year's edition (e.g. 10 for the 10주년). */
     public int anniversary() {
         return festival.startDate().getYear() - FIRST_YEAR;
+    }
+
+    /** Detailed schedule, one entry per floor/zone. */
+    public List<ScheduleZone> schedule() {
+        return schedule;
+    }
+
+    /** Whole-venue time brackets (prep / teardown) shared by every zone. */
+    public List<ScheduleZone.Slot> brackets() {
+        return brackets;
     }
 }

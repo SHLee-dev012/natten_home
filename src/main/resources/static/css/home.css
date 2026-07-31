@@ -6,6 +6,7 @@
     --line: rgba(160, 170, 255, 0.2);
     --glass: rgba(26, 30, 66, 0.6);
     --accent: linear-gradient(120deg, #818cf8, #a78bfa 45%, #22d3ee);
+    --accent-solid: #a78bfa;
 }
 
 * { box-sizing: border-box; }
@@ -128,9 +129,55 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 }
 .tag::before { content: ""; width: 0.4rem; height: 0.4rem; border-radius: 999px; background: currentColor; box-shadow: 0 0 6px currentColor; }
 .tag[data-cat="공연"] { color: #f9c2f4; background: rgba(232, 121, 249, 0.24); border-color: rgba(232, 121, 249, 0.55); }
-.tag[data-cat="부스"] { color: #bcc6ff; background: rgba(99, 102, 241, 0.28); border-color: rgba(129, 140, 248, 0.55); }
-.tag[data-cat="체험"] { color: #a6effb; background: rgba(34, 211, 238, 0.22); border-color: rgba(34, 211, 238, 0.5); }
-.tag[data-cat="먹거리"] { color: #fde08a; background: rgba(251, 191, 36, 0.22); border-color: rgba(251, 191, 36, 0.5); }
+.tag[data-cat="부스"],
+.tag[data-cat="마켓"] { color: #bcc6ff; background: rgba(99, 102, 241, 0.28); border-color: rgba(129, 140, 248, 0.55); }
+.tag[data-cat="체험"],
+.tag[data-cat^="사람책"] { color: #a6effb; background: rgba(34, 211, 238, 0.22); border-color: rgba(34, 211, 238, 0.5); }
+.tag[data-cat="먹거리"],
+.tag[data-cat="F&B"] { color: #fde08a; background: rgba(251, 191, 36, 0.22); border-color: rgba(251, 191, 36, 0.5); }
+.tag[data-cat="DJ"] { color: #d6c2ff; background: rgba(167, 139, 250, 0.26); border-color: rgba(167, 139, 250, 0.55); }
+.tag[data-cat="전시"] { color: #b6f5c6; background: rgba(52, 211, 153, 0.2); border-color: rgba(52, 211, 153, 0.5); }
+
+/* Program / schedule */
+.program { padding: 2rem 0 3rem; }
+.program-head { margin-bottom: 1.5rem; }
+.program-head h2 { font-size: 1.4rem; letter-spacing: -0.01em; margin: 0 0 0.6rem; }
+.program-note { margin: 0; font-size: 0.85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.program-note .bracket {
+    font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums;
+    padding: 0.15rem 0.55rem; border-radius: 999px;
+    background: var(--glass); border: 1px solid var(--line);
+}
+.zones {
+    list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+.zone {
+    display: flex; flex-direction: column; border-radius: 1rem; padding: 1.25rem;
+    background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.9);
+}
+.zone-head { display: flex; align-items: center; gap: 0.75rem; }
+.floor {
+    flex-shrink: 0; font-weight: 700; font-size: 0.8rem; color: var(--ink);
+    padding: 0.25rem 0.6rem; border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+}
+.zone-titles { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+.zone-name { color: var(--muted); font-size: 0.9rem; }
+.slots { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.7rem; }
+.slots li { display: flex; gap: 0.85rem; }
+.slot-time {
+    flex-shrink: 0; width: 6.2rem; font-size: 0.82rem; font-weight: 600; color: var(--accent-solid);
+    font-variant-numeric: tabular-nums;
+}
+.slot-content { font-size: 0.88rem; color: var(--ink); line-height: 1.5; }
+.zone-staff {
+    margin: 1rem 0 0; padding-top: 0.85rem; border-top: 1px solid var(--line);
+    font-size: 0.8rem; color: var(--faint); display: flex; gap: 0.6rem;
+}
+.zone-staff span:first-child { color: var(--accent-solid); font-weight: 600; }
 
 /* Archive */
 .archive {

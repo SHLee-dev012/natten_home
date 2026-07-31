@@ -21,6 +21,8 @@ public class HomeController {
         model.addAttribute("highlights", festivalService.highlights());
         model.addAttribute("archives", festivalService.archives());
         model.addAttribute("anniversary", festivalService.anniversary());
+        model.addAttribute("schedule", festivalService.schedule());
+        model.addAttribute("brackets", festivalService.brackets());
         return "index";
     }
 }
