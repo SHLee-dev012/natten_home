@@ -10,19 +10,19 @@ import java.util.List;
 public class FestivalService {
 
     private final Festival festival = new Festival(
-            "notten 페스티벌",
-            "밤하늘 아래, 오프라인으로 만나는 축제의 순간",
-            "한강 노들섬 일대",
-            LocalDate.of(2026, 7, 25),
-            LocalDate.of(2026, 7, 26));
+            "낯선대학 10주년 축제",
+            "과거를 기록하고, 현재를 연결하고, 미래를 확장하는 축제",
+            "STRANGER UNIV. 10TH ANNIVERSARY",
+            LocalDate.of(2026, 9, 12),
+            LocalDate.of(2026, 9, 13));
 
     private final List<Program> highlights = List.of(
-            new Program("오프닝 공연 — 인디 밴드 라이브", "공연", "7/25 12:00", "메인 스테이지"),
-            new Program("핸드메이드 마켓", "부스", "7/25 11:00", "A구역 부스존"),
-            new Program("도예 원데이 클래스", "체험", "7/25 14:00", "체험관 2층"),
-            new Program("푸드트럭 존", "먹거리", "7/25 11:30", "야외 광장"),
-            new Program("재즈 나이트", "공연", "7/25 19:00", "메인 스테이지"),
-            new Program("클로징 불꽃놀이", "공연", "7/26 20:30", "야외 광장"));
+            new Program("오프닝 공연 — 인디 밴드 라이브", "공연", "9/12 12:00", "메인 스테이지"),
+            new Program("핸드메이드 마켓", "부스", "9/12 11:00", "A구역 부스존"),
+            new Program("도예 원데이 클래스", "체험", "9/12 14:00", "체험관 2층"),
+            new Program("푸드트럭 존", "먹거리", "9/12 11:30", "야외 광장"),
+            new Program("재즈 나이트", "공연", "9/12 19:00", "메인 스테이지"),
+            new Program("클로징 불꽃놀이", "공연", "9/13 20:30", "야외 광장"));
 
     public Festival festival() {
         return festival;

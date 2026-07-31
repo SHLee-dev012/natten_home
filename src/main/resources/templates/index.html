@@ -11,8 +11,7 @@
 
 <header class="nav">
     <a class="brand" href="/">
-        <span class="brand-mark">✦</span>
-        <span class="brand-name" th:text="${festival.name()}">notten 페스티벌</span>
+        <img class="brand-logo" th:src="@{/img/logo.png}" alt="낯텐"/>
     </a>
     <nav class="nav-links">
         <a href="#highlights">하이라이트</a>
@@ -22,12 +21,18 @@
 
 <main>
     <section class="hero">
-        <p class="eyebrow">OFFLINE FESTIVAL</p>
-        <h1 th:text="${festival.tagline()}">밤하늘 아래, 오프라인으로 만나는 축제의 순간</h1>
-        <div class="hero-meta">
-            <span class="pill" th:text="${festival.dateRange()}">7월 25일 – 26일</span>
-            <span class="pill" th:text="${festival.location()}">한강 노들섬 일대</span>
+        <div class="hero-copy">
+            <p class="eyebrow" th:text="${festival.location()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
+            <h1 class="hero-title" th:text="${festival.name()}">낯선대학 10주년 축제</h1>
+            <p class="hero-tagline" th:text="${festival.tagline()}">과거를 기록하고, 현재를 연결하고, 미래를 확장하는 축제</p>
+            <div class="hero-meta">
+                <span class="pill pill--accent" th:text="${festival.dateRange()}">9월 12일 – 13일</span>
+                <span class="pill">SAT–SUN</span>
+            </div>
         </div>
+        <figure class="hero-poster">
+            <img th:src="@{/img/poster.png}" th:alt="${festival.name()} + ' 포스터'"/>
+        </figure>
     </section>
 
     <section id="highlights" class="highlights">
