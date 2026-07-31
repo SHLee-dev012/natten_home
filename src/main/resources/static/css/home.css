@@ -118,13 +118,8 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
     color: #0a0c1c; font-weight: 600; background: var(--accent); border-color: transparent;
     box-shadow: 0 6px 18px -6px rgba(129, 140, 248, 0.7);
 }
-a.pill--link { text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+a.pill--link { text-decoration: none; transition: border-color 0.2s ease, color 0.2s ease; }
 a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
-/* Accent pills keep dark text; the venue link just lifts on hover */
-a.pill--accent.pill--link:hover {
-    color: #0a0c1c; border-color: transparent;
-    transform: translateY(-1px); box-shadow: 0 9px 24px -6px rgba(129, 140, 248, 0.9);
-}
 
 /* Hero poster — the holographic showpiece */
 .hero-poster { margin: 0; }
