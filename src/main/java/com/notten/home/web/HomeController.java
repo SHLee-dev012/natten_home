@@ -23,6 +23,7 @@ public class HomeController {
         model.addAttribute("anniversary", festivalService.anniversary());
         model.addAttribute("schedule", festivalService.schedule());
         model.addAttribute("brackets", festivalService.brackets());
+        model.addAttribute("days", festivalService.days());
         return "index";
     }
 }

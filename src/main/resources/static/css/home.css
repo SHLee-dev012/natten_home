@@ -152,6 +152,36 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
     list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
+
+/* Day tabs (CSS-only, radio-driven) */
+.daytab-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.daytab-labels { display: inline-flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+.daytab-labels label {
+    display: flex; align-items: baseline; gap: 0.5rem; cursor: pointer;
+    padding: 0.55rem 1.1rem; border-radius: 999px; font-size: 0.9rem;
+    color: var(--muted); background: var(--glass); border: 1px solid var(--line);
+    transition: all 0.2s ease;
+}
+.daytab-labels label b { font-weight: 700; color: var(--ink); }
+.daytab-labels label span { font-size: 0.8rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.daytab-labels label:hover { border-color: var(--line-strong, rgba(170,180,255,0.36)); }
+/* Active tab */
+#day-1:checked ~ .daytab-labels label[for="day-1"],
+#day-2:checked ~ .daytab-labels label[for="day-2"] {
+    background: var(--accent); border-color: transparent;
+    box-shadow: 0 6px 18px -6px rgba(129, 140, 248, 0.7);
+}
+#day-1:checked ~ .daytab-labels label[for="day-1"] b,
+#day-1:checked ~ .daytab-labels label[for="day-1"] span,
+#day-2:checked ~ .daytab-labels label[for="day-2"] b,
+#day-2:checked ~ .daytab-labels label[for="day-2"] span { color: #0a0c1c; }
+/* Keyboard focus ring on the active-target label */
+.daytab-input:focus-visible ~ .daytab-labels label[for="day-1"],
+.daytab-input:focus-visible ~ .daytab-labels label[for="day-2"] { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
+/* Panel visibility */
+.daypanel { display: none; }
+#day-1:checked ~ .daypanel-1 { display: grid; }
+#day-2:checked ~ .daypanel-2 { display: grid; }
 .zone {
     display: flex; flex-direction: column; border-radius: 1rem; padding: 1.25rem;
     background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
