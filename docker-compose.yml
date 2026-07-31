@@ -1,15 +1,16 @@
-# notten-home — single Spring Boot service (no database).
+# notten-home — Spring Boot app behind a Caddy reverse proxy (auto HTTPS).
 #
-# Local build & run:
-#   docker compose up -d --build
-#
-# Pull the CI-published image instead of building:
-#   docker compose pull && docker compose up -d
+# Set the domain (see deploy.env.example), then:
+#   docker compose pull && docker compose up -d      # pull CI image
+#   docker compose up -d --build                     # or build locally
 
 services:
   app:
     image: "${NOTTEN_HOME_IMAGE:-ghcr.io/shlee-dev012/notten_home:latest}"
     build: .
+    # Reached by Caddy over the internal network as app:8080. Publish 8080 to
+    # the host too for direct testing; drop this line in production if you want
+    # only Caddy (443) exposed.
     ports:
       - "8080:8080"
     environment:
@@ -22,3 +23,26 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
+
+  # Reverse proxy: automatic HTTPS + domain routing.
+  # Set NOTTEN_HOME_DOMAIN (see deploy.env.example). Defaults to localhost
+  # (self-signed) so Caddy always boots.
+  caddy:
+    image: caddy:2-alpine
+    depends_on:
+      - app
+    environment:
+      NOTTEN_HOME_DOMAIN: "${NOTTEN_HOME_DOMAIN:-localhost}"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+
+volumes:
+  caddy-data:
+  caddy-config:

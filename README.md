@@ -31,24 +31,29 @@ DB가 없어 **단일 컨테이너**로 간단히 배포합니다. 이미지는 
 
 PR에서는 빌드 검증만 하고 게시하지 않습니다.
 
-### 서버에서 실행 (빌드 없이 pull)
+### 서버에서 실행 (도메인 · HTTPS 포함)
+
+앞단의 **Caddy**가 자동 HTTPS(Let's Encrypt)와 도메인 라우팅을 담당합니다.
 
 ```bash
-# GHCR 패키지가 private면 먼저 로그인
-echo <PAT-with-read:packages> | docker login ghcr.io -u <github-username> --password-stdin
+# 1) 도메인 설정
+cp deploy.env.example .env      # NOTTEN_HOME_DOMAIN(과 필요시 이미지 태그) 편집
 
+# 2) 이미지 받기 (GHCR 패키지가 private면 먼저 docker login)
 docker compose pull
-docker compose up -d      # http://<host>:8080
+
+# 3) 기동
+docker compose up -d
 ```
+
+- `NOTTEN_HOME_DOMAIN`(예: `notten.example.com`)의 A/AAAA 레코드가 이 호스트를 가리키고
+  **80/443 포트가 열려 있어야** Caddy가 인증서를 발급합니다.
+- 앱의 `:8080`도 그대로 노출되어 도메인 없이 로컬에서 바로 접속·테스트할 수 있습니다.
+  (프로덕션에서 Caddy만 공개하려면 compose의 `app.ports` 줄을 지우세요.)
+- `JAVA_OPTS`로 JVM 옵션 조정 (기본 `-XX:MaxRAMPercentage=75`), 헬스체크 포함.
 
 ### 로컬에서 직접 빌드·실행
 
 ```bash
-docker compose up -d --build
+docker compose up -d --build   # 도메인 없이 http://localhost:8080
 ```
-
-- 포트 8080 노출, 헬스체크 포함(`/` 200 확인)
-- `JAVA_OPTS` 환경변수로 JVM 옵션 조정 (기본 `-XX:MaxRAMPercentage=75`)
-- 특정 태그를 고정하려면 `NOTTEN_HOME_IMAGE=ghcr.io/.../notten_home:sha-abc1234`
-
-앞단에 nginx/Caddy 등 리버스 프록시를 두고 도메인·HTTPS를 연결하면 됩니다.

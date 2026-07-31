@@ -1,0 +1,8 @@
+# Caddy reverse proxy — automatic HTTPS (Let's Encrypt) for notten-home.
+# Domain comes from the environment (see deploy.env.example).
+# Want cert-expiry notices? Add a global block:  { email you@example.com }
+
+{$NOTTEN_HOME_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:8080
+}
