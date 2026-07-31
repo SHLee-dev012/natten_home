@@ -32,8 +32,8 @@
             <p class="hero-tagline" th:text="${festival.tagline()}">과거를 기록하고, 현재를 연결하고, 미래를 확장하는 축제</p>
             <div class="hero-meta">
                 <span class="pill pill--accent" th:text="${festival.dateRange()}">9월 12일 – 13일</span>
-                <span class="pill">SAT–SUN</span>
-                <a class="pill pill--link" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer"
+                <span class="pill pill--accent">SAT–SUN</span>
+                <a class="pill pill--accent pill--link" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer"
                    th:text="'📍 ' + ${venue.name()}">📍 사유의 서재</a>
             </div>
         </div>
