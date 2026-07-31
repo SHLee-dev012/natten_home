@@ -28,3 +28,9 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Only the Spring Boot fat jar — skip the plain jar so the Docker image has
+// a single, unambiguous build/libs/*.jar to copy.
+tasks.named('jar') {
+	enabled = false
+}
