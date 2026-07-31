@@ -404,20 +404,67 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 
 /* Footer */
 .foot {
-    max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 3.5rem;
-    display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+    position: relative;
+    margin-top: 2rem;
+    padding: 2.75rem 1.5rem 2.25rem;
+    background:
+        radial-gradient(900px 240px at 50% 0, rgba(129, 140, 248, 0.1), transparent 70%),
+        rgba(10, 12, 28, 0.5);
     border-top: 1px solid var(--line);
 }
+/* Thin gradient accent line along the top edge */
+.foot::before {
+    content: ""; position: absolute; top: -1px; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-solid), transparent);
+    opacity: 0.5;
+}
+.foot-inner {
+    max-width: 960px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: 2rem;
+    align-items: start;
+}
+.foot-brand { display: flex; align-items: center; gap: 1rem; }
 /* Emblem lockup on a paper seal — a closing brand stamp. */
-.foot-seal { margin: 0; }
+.foot-seal { margin: 0; flex-shrink: 0; }
 .foot-seal img {
-    display: block; width: 92px; height: auto; padding: 0.7rem 0.9rem;
-    background: #fff; border-radius: 0.8rem;
+    display: block; width: 74px; height: auto; padding: 0.6rem 0.7rem;
+    background: #fff; border-radius: 0.7rem;
     box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.8);
 }
+.foot-name {
+    margin: 0; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em;
+    background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.foot-eyebrow {
+    margin: 0.35rem 0 0; font-size: 0.66rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--faint);
+}
+.foot-col { display: flex; flex-direction: column; gap: 0.5rem; }
+.foot-col h3 {
+    margin: 0 0 0.35rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-solid);
+}
+.foot-col a, .foot-col p { margin: 0; font-size: 0.85rem; color: var(--muted); text-decoration: none; }
+.foot-col a { transition: color 0.15s ease; }
+.foot-col a:hover { color: var(--ink); }
+
 .foot-bar {
-    width: 100%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
-    font-size: 0.82rem; color: var(--muted);
+    max-width: 960px; margin: 2rem auto 0; padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 1rem;
+    font-size: 0.8rem; color: var(--muted);
 }
 .foot-bar .muted { color: var(--faint); }
+.foot-top {
+    color: var(--muted); text-decoration: none; margin-inline: auto;
+    transition: color 0.15s ease;
+}
+.foot-top:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+    .foot { padding: 2rem 1.15rem 1.75rem; }
+    .foot-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .foot-bar { justify-content: center; text-align: center; }
+    .foot-top { order: -1; margin: 0 auto; }
+}
 

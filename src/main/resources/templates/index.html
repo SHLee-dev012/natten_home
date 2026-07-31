@@ -113,11 +113,36 @@
 </main>
 
 <footer class="foot">
-    <figure class="foot-seal">
-        <img th:src="@{/img/emblem.png}" alt="낯텐축제"/>
-    </figure>
+    <div class="foot-inner">
+        <div class="foot-brand">
+            <figure class="foot-seal">
+                <img th:src="@{/img/emblem.png}" alt="낯텐축제"/>
+            </figure>
+            <div class="foot-brand-text">
+                <p class="foot-name" th:text="${festival.name()}">낯선대학 10주년 축제</p>
+                <p class="foot-eyebrow" th:text="${festival.eyebrow()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
+            </div>
+        </div>
+
+        <nav class="foot-col">
+            <h3>바로가기</h3>
+            <a href="#programs">프로그램</a>
+            <a href="#schedule">행사 일정</a>
+            <a href="#location">오시는 길</a>
+            <a href="/api/festival">API</a>
+        </nav>
+
+        <div class="foot-col">
+            <h3>정보</h3>
+            <p><span th:text="${festival.dateRange()}">9월 12일 – 13일</span> · SAT–SUN</p>
+            <p th:text="${venue.name()} + ' · ' + ${venue.areaLabel()}">사유의 서재 · 4층 · 5층 · 테라스</p>
+            <a th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 →</a>
+        </div>
+    </div>
+
     <div class="foot-bar">
-        <span th:text="${festival.name()} + ' · ' + ${festival.dateRange()}">notten 페스티벌</span>
+        <span th:text="'© 2026 ' + ${festival.name()}">© 2026 낯선대학 10주년 축제</span>
+        <a class="foot-top" href="#top">맨 위로 ↑</a>
         <span class="muted">notten-home · Spring Boot</span>
     </div>
 </footer>
