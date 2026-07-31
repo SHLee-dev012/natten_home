@@ -20,8 +20,6 @@ public class HomeController {
         model.addAttribute("festival", festivalService.festival());
         model.addAttribute("venue", festivalService.venue());
         model.addAttribute("programs", festivalService.programs());
-        model.addAttribute("archives", festivalService.archives());
-        model.addAttribute("anniversary", festivalService.anniversary());
         model.addAttribute("brackets", festivalService.brackets());
         model.addAttribute("days", festivalService.days());
         model.addAttribute("hours", festivalService.hours());

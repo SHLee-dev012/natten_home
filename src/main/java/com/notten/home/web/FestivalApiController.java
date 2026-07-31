@@ -1,6 +1,5 @@
 package com.notten.home.web;
 
-import com.notten.home.festival.Edition;
 import com.notten.home.festival.Festival;
 import com.notten.home.festival.FestivalService;
 import com.notten.home.festival.ProgramCard;
@@ -29,15 +28,13 @@ public class FestivalApiController {
                 festivalService.festival(),
                 festivalService.venue(),
                 festivalService.programs(),
-                festivalService.schedule(),
-                festivalService.archives());
+                festivalService.schedule());
     }
 
     public record FestivalInfo(
             Festival festival,
             Venue venue,
             List<ProgramCard> programs,
-            List<ScheduleZone> schedule,
-            List<Edition> archives) {
+            List<ScheduleZone> schedule) {
     }
 }

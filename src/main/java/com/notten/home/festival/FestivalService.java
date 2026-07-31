@@ -27,9 +27,6 @@ public class FestivalService {
             List.of("4층", "5층", "테라스"),
             "https://naver.me/xQe26Aqr");
 
-    // Founding year of the festival; this year's edition is the 10th anniversary.
-    private static final int FIRST_YEAR = 2016;
-
     // Detailed schedule by floor/zone. Slot hours are 24h; day: 0 = both, 1/2 = that day only.
     private final List<ScheduleZone> schedule = List.of(
             new ScheduleZone("1F", "교무처", "리셉션", "현장 운영", List.of(
@@ -74,21 +71,6 @@ public class FestivalService {
             }
         }
         return list;
-    }
-
-    /** The festival years from the first edition through this year, newest first. */
-    public List<Edition> archives() {
-        int thisYear = festival.startDate().getYear();
-        List<Edition> editions = new ArrayList<>();
-        for (int year = thisYear; year >= FIRST_YEAR; year--) {
-            editions.add(new Edition(year, year == thisYear));
-        }
-        return editions;
-    }
-
-    /** Anniversary number for this year's edition (e.g. 10 for the 10주년). */
-    public int anniversary() {
-        return festival.startDate().getYear() - FIRST_YEAR;
     }
 
     /** Detailed schedule, one entry per floor/zone. */
