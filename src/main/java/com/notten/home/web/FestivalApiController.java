@@ -1,5 +1,6 @@
 package com.notten.home.web;
 
+import com.notten.home.festival.Edition;
 import com.notten.home.festival.Festival;
 import com.notten.home.festival.FestivalService;
 import com.notten.home.festival.Program;
@@ -22,9 +23,12 @@ public class FestivalApiController {
 
     @GetMapping
     public FestivalInfo info() {
-        return new FestivalInfo(festivalService.festival(), festivalService.highlights());
+        return new FestivalInfo(
+                festivalService.festival(),
+                festivalService.highlights(),
+                festivalService.archives());
     }
 
-    public record FestivalInfo(Festival festival, List<Program> highlights) {
+    public record FestivalInfo(Festival festival, List<Program> highlights, List<Edition> archives) {
     }
 }

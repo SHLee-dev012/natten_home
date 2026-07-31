@@ -19,6 +19,8 @@ public class HomeController {
     public String home(Model model) {
         model.addAttribute("festival", festivalService.festival());
         model.addAttribute("highlights", festivalService.highlights());
+        model.addAttribute("archives", festivalService.archives());
+        model.addAttribute("anniversary", festivalService.anniversary());
         return "index";
     }
 }

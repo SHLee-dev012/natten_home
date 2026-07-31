@@ -3,6 +3,7 @@ package com.notten.home.festival;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /** Provides the festival details and highlight programs for the home page. */
@@ -24,11 +25,29 @@ public class FestivalService {
             new Program("재즈 나이트", "공연", "9/12 19:00", "메인 스테이지"),
             new Program("클로징 불꽃놀이", "공연", "9/13 20:30", "야외 광장"));
 
+    // Founding year of the festival; this year's edition is the 10th anniversary.
+    private static final int FIRST_YEAR = 2016;
+
     public Festival festival() {
         return festival;
     }
 
     public List<Program> highlights() {
         return highlights;
+    }
+
+    /** The festival years from the first edition through this year, newest first. */
+    public List<Edition> archives() {
+        int thisYear = festival.startDate().getYear();
+        List<Edition> editions = new ArrayList<>();
+        for (int year = thisYear; year >= FIRST_YEAR; year--) {
+            editions.add(new Edition(year, year == thisYear));
+        }
+        return editions;
+    }
+
+    /** Anniversary number for this year's edition (e.g. 10 for the 10주년). */
+    public int anniversary() {
+        return festival.startDate().getYear() - FIRST_YEAR;
     }
 }

@@ -15,6 +15,7 @@
     </a>
     <nav class="nav-links">
         <a href="#highlights">하이라이트</a>
+        <a href="#archive">아카이브</a>
         <a href="/api/festival">API</a>
     </nav>
 </header>
@@ -48,6 +49,25 @@
                 </p>
             </li>
         </ul>
+    </section>
+
+    <section id="archive" class="archive">
+        <figure class="archive-poster">
+            <img th:src="@{/img/poster-mono.png}" th:alt="${festival.name()} + ' 아카이브 포스터'"/>
+        </figure>
+        <div class="archive-copy">
+            <p class="eyebrow">ARCHIVE</p>
+            <h2>10년의 기록</h2>
+            <p class="archive-lede">
+                2016년 첫 회부터 지금까지, 낯선 이들이 만나 이어온 낯선대학 축제의 발자취입니다.
+            </p>
+            <ol class="timeline">
+                <li th:each="e : ${archives}" th:classappend="${e.current()} ? 'is-current' : ''">
+                    <span class="year" th:text="${e.year()}">2026</span>
+                    <span class="badge" th:if="${e.current()}" th:text="${anniversary} + '주년 · 올해'">10주년 · 올해</span>
+                </li>
+            </ol>
+        </div>
     </section>
 </main>
 
