@@ -5,7 +5,7 @@
 <div th:fragment="matrix(columns, hours, day)" class="matrix-scroll daypanel"
      th:classappend="'daypanel-' + ${day}">
     <div class="matrix"
-         th:style="'grid-template-columns: var(--mx-time) repeat(' + ${#lists.size(columns)} + ', minmax(148px, 1fr));'">
+         th:style="'grid-template-columns: var(--mx-time) repeat(' + ${#lists.size(columns)} + ', minmax(var(--mx-col), 1fr));'">
         <!-- corner -->
         <div class="mx-corner"></div>
         <!-- zone headers -->

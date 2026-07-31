@@ -192,14 +192,33 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 #day-2:checked ~ .daypanel-2 { display: block; }
 
 /* Time × zone matrix */
-.matrix-scroll { overflow-x: auto; padding-bottom: 0.75rem; }
+.matrix-scroll {
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+}
 .matrix {
     --mx-time: 58px;
+    --mx-col: 148px;
     display: grid;
     /* header · prep band · 10 hour rows · teardown band */
     grid-template-rows: auto auto repeat(10, minmax(58px, auto)) auto;
     gap: 6px;
-    min-width: 1040px; /* keeps columns readable; scrolls on narrow screens */
+    min-width: min-content; /* stays as wide as its columns; scrolls when needed */
+}
+/* Keep the time axis visible while scrolling zones horizontally */
+.mx-corner, .mx-time {
+    position: sticky;
+    left: 0;
+    background: rgba(9, 11, 24, 0.96);
+}
+.mx-corner { grid-column: 1; grid-row: 1; z-index: 3; }
+.mx-time { z-index: 2; }
+
+/* Optional scroll hint (mobile only) */
+.scroll-hint {
+    display: none; margin: 0 0 0.9rem; font-size: 0.78rem; color: var(--faint); text-align: center;
 }
 /* Full-width prep / teardown bands */
 .mx-band {
@@ -247,6 +266,20 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .mx-cell[data-cat="F&B"], .mx-head[data-cat="F&B"] { border-left-color: #fbbf24; border-bottom-color: #fbbf24; }
 .mx-cell[data-cat="전시"], .mx-head[data-cat="전시"] { border-left-color: #34d399; border-bottom-color: #34d399; }
 .mx-cell[data-cat="리셉션"], .mx-head[data-cat="리셉션"] { border-left-color: #c084fc; border-bottom-color: #c084fc; }
+
+/* Matrix on small screens: tighter columns, visible scroll hint */
+@media (max-width: 640px) {
+    .matrix { --mx-col: 124px; --mx-time: 46px; gap: 5px; }
+    .mx-head { padding: 0.45rem 0.5rem; gap: 0.25rem; }
+    .mx-zone { font-size: 0.68rem; }
+    .mx-floor { font-size: 0.66rem; }
+    .mx-time { font-size: 0.66rem; padding-right: 0.35rem; }
+    .mx-cell { padding: 0.45rem 0.5rem; }
+    .mx-cell-time { font-size: 0.64rem; }
+    .mx-cell-item { font-size: 0.74rem; }
+    .mx-band { font-size: 0.72rem; padding: 0.45rem 0.6rem; }
+    .scroll-hint { display: block; }
+}
 .zone {
     display: flex; flex-direction: column; border-radius: 1rem; padding: 1.25rem;
     background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
