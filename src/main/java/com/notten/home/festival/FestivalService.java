@@ -22,14 +22,6 @@ public class FestivalService {
             LocalDate.of(2026, 9, 12),
             LocalDate.of(2026, 9, 13));
 
-    private final List<Program> highlights = List.of(
-            new Program("오프닝 공연 — 인디 밴드 라이브", "공연", "9/12 12:00", "메인 스테이지"),
-            new Program("핸드메이드 마켓", "부스", "9/12 11:00", "A구역 부스존"),
-            new Program("도예 원데이 클래스", "체험", "9/12 14:00", "체험관 2층"),
-            new Program("푸드트럭 존", "먹거리", "9/12 11:30", "야외 광장"),
-            new Program("재즈 나이트", "공연", "9/12 19:00", "메인 스테이지"),
-            new Program("클로징 불꽃놀이", "공연", "9/13 20:30", "야외 광장"));
-
     // Founding year of the festival; this year's edition is the 10th anniversary.
     private static final int FIRST_YEAR = 2016;
 
@@ -64,8 +56,15 @@ public class FestivalService {
         return festival;
     }
 
-    public List<Program> highlights() {
-        return highlights;
+    /** Flat program list derived from the schedule (one card per time slot). */
+    public List<ProgramCard> programs() {
+        List<ProgramCard> list = new ArrayList<>();
+        for (ScheduleZone z : schedule) {
+            for (ScheduleZone.Slot s : z.slots()) {
+                list.add(new ProgramCard(z.floor(), z.zone(), z.category(), s.time(), s.content(), s.day()));
+            }
+        }
+        return list;
     }
 
     /** The festival years from the first edition through this year, newest first. */

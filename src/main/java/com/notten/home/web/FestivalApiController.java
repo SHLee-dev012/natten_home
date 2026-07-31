@@ -3,7 +3,7 @@ package com.notten.home.web;
 import com.notten.home.festival.Edition;
 import com.notten.home.festival.Festival;
 import com.notten.home.festival.FestivalService;
-import com.notten.home.festival.Program;
+import com.notten.home.festival.ProgramCard;
 import com.notten.home.festival.ScheduleZone;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,14 +26,14 @@ public class FestivalApiController {
     public FestivalInfo info() {
         return new FestivalInfo(
                 festivalService.festival(),
-                festivalService.highlights(),
+                festivalService.programs(),
                 festivalService.schedule(),
                 festivalService.archives());
     }
 
     public record FestivalInfo(
             Festival festival,
-            List<Program> highlights,
+            List<ProgramCard> programs,
             List<ScheduleZone> schedule,
             List<Edition> archives) {
     }

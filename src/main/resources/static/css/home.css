@@ -117,6 +117,12 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
     transform: translateY(-4px); border-color: rgba(170, 180, 255, 0.4);
     box-shadow: 0 20px 50px -16px rgba(129, 140, 248, 0.6);
 }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.day-badge {
+    flex-shrink: 0; font-size: 0.68rem; font-weight: 600; color: var(--accent-solid);
+    padding: 0.15rem 0.5rem; border-radius: 999px;
+    background: rgba(167, 139, 250, 0.14); border: 1px solid rgba(167, 139, 250, 0.4);
+}
 .card h3 { margin: 0.7rem 0 0.5rem; font-size: 1.05rem; letter-spacing: -0.01em; }
 .card .meta { margin: 0; color: var(--muted); font-size: 0.85rem; }
 .card .dot { color: var(--faint); margin: 0 0.35rem; }
