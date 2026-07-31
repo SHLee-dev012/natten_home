@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public record Festival(
         String name,
         String tagline,
-        String location,
+        String eyebrow,
         LocalDate startDate,
         LocalDate endDate) {
 

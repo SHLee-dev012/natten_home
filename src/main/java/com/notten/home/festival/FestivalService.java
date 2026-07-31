@@ -22,6 +22,11 @@ public class FestivalService {
             LocalDate.of(2026, 9, 12),
             LocalDate.of(2026, 9, 13));
 
+    private final Venue venue = new Venue(
+            "사유의 서재",
+            List.of("4층", "5층", "테라스"),
+            "https://naver.me/xQe26Aqr");
+
     // Founding year of the festival; this year's edition is the 10th anniversary.
     private static final int FIRST_YEAR = 2016;
 
@@ -54,6 +59,10 @@ public class FestivalService {
 
     public Festival festival() {
         return festival;
+    }
+
+    public Venue venue() {
+        return venue;
     }
 
     /** Flat program list derived from the schedule (one card per time slot). */

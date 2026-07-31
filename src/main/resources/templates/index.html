@@ -16,6 +16,7 @@
     <nav class="nav-links">
         <a href="#programs">프로그램</a>
         <a href="#schedule">행사 일정</a>
+        <a href="#location">오시는 길</a>
         <a href="#archive">아카이브</a>
         <a href="/api/festival">API</a>
     </nav>
@@ -24,12 +25,14 @@
 <main>
     <section class="hero">
         <div class="hero-copy">
-            <p class="eyebrow" th:text="${festival.location()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
+            <p class="eyebrow" th:text="${festival.eyebrow()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
             <h1 class="hero-title" th:text="${festival.name()}">낯선대학 10주년 축제</h1>
             <p class="hero-tagline" th:text="${festival.tagline()}">과거를 기록하고, 현재를 연결하고, 미래를 확장하는 축제</p>
             <div class="hero-meta">
                 <span class="pill pill--accent" th:text="${festival.dateRange()}">9월 12일 – 13일</span>
                 <span class="pill">SAT–SUN</span>
+                <a class="pill pill--link" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer"
+                   th:text="'📍 ' + ${venue.name()}">📍 사유의 서재</a>
             </div>
         </div>
         <figure class="hero-poster">
@@ -70,6 +73,20 @@
             </div>
             <div th:replace="~{fragments/matrix :: matrix(${gridDay1}, ${hours}, 1)}"></div>
             <div th:replace="~{fragments/matrix :: matrix(${gridDay2}, ${hours}, 2)}"></div>
+        </div>
+    </section>
+
+    <section id="location" class="location">
+        <div class="location-card">
+            <p class="eyebrow">VENUE</p>
+            <h2 class="location-name" th:text="${venue.name()}">사유의 서재</h2>
+            <p class="location-areas">
+                <span class="area-pill" th:each="a : ${venue.areas()}" th:text="${a}">4층</span>
+            </p>
+            <p class="location-desc">축제는 사유의 서재 4층 · 5층과 테라스 공간에서 열립니다.</p>
+            <a class="btn-map" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer">
+                네이버 지도에서 보기 →
+            </a>
         </div>
     </section>
 

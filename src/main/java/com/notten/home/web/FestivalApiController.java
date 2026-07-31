@@ -5,6 +5,7 @@ import com.notten.home.festival.Festival;
 import com.notten.home.festival.FestivalService;
 import com.notten.home.festival.ProgramCard;
 import com.notten.home.festival.ScheduleZone;
+import com.notten.home.festival.Venue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ public class FestivalApiController {
     public FestivalInfo info() {
         return new FestivalInfo(
                 festivalService.festival(),
+                festivalService.venue(),
                 festivalService.programs(),
                 festivalService.schedule(),
                 festivalService.archives());
@@ -33,6 +35,7 @@ public class FestivalApiController {
 
     public record FestivalInfo(
             Festival festival,
+            Venue venue,
             List<ProgramCard> programs,
             List<ScheduleZone> schedule,
             List<Edition> archives) {

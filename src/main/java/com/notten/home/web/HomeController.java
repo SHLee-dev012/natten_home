@@ -18,6 +18,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         model.addAttribute("festival", festivalService.festival());
+        model.addAttribute("venue", festivalService.venue());
         model.addAttribute("programs", festivalService.programs());
         model.addAttribute("archives", festivalService.archives());
         model.addAttribute("anniversary", festivalService.anniversary());
