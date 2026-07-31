@@ -57,8 +57,7 @@
             <h2>프로그램 · 행사 일정</h2>
             <p class="program-note">
                 매일
-                <strong th:each="b : ${brackets}" th:text="${b.time()} + ' ' + ${b.content()}"
-                        class="bracket">08:00–11:00 준비</strong>
+                <strong th:each="b : ${brackets}" th:text="${b}" class="bracket">08:00–11:00 준비</strong>
             </p>
         </div>
 
@@ -69,8 +68,8 @@
                 <label for="day-1"><b>1일차</b><span th:text="${days[0]}">9/12 (토)</span></label>
                 <label for="day-2"><b>2일차</b><span th:text="${days[1]}">9/13 (일)</span></label>
             </div>
-            <ul th:replace="~{fragments/program :: zonePanel(${schedule}, 1)}"></ul>
-            <ul th:replace="~{fragments/program :: zonePanel(${schedule}, 2)}"></ul>
+            <div th:replace="~{fragments/matrix :: matrix(${gridDay1}, ${hours}, 1)}"></div>
+            <div th:replace="~{fragments/matrix :: matrix(${gridDay2}, ${hours}, 2)}"></div>
         </div>
     </section>
 

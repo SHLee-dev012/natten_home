@@ -21,9 +21,11 @@ public class HomeController {
         model.addAttribute("highlights", festivalService.highlights());
         model.addAttribute("archives", festivalService.archives());
         model.addAttribute("anniversary", festivalService.anniversary());
-        model.addAttribute("schedule", festivalService.schedule());
         model.addAttribute("brackets", festivalService.brackets());
         model.addAttribute("days", festivalService.days());
+        model.addAttribute("hours", festivalService.hours());
+        model.addAttribute("gridDay1", festivalService.grid(1));
+        model.addAttribute("gridDay2", festivalService.grid(2));
         return "index";
     }
 }

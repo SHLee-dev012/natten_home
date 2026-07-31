@@ -180,8 +180,56 @@ main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 .daytab-input:focus-visible ~ .daytab-labels label[for="day-2"] { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 /* Panel visibility */
 .daypanel { display: none; }
-#day-1:checked ~ .daypanel-1 { display: grid; }
-#day-2:checked ~ .daypanel-2 { display: grid; }
+#day-1:checked ~ .daypanel-1 { display: block; }
+#day-2:checked ~ .daypanel-2 { display: block; }
+
+/* Time × zone matrix */
+.matrix-scroll { overflow-x: auto; padding-bottom: 0.75rem; }
+.matrix {
+    --mx-time: 58px;
+    display: grid;
+    grid-template-rows: auto repeat(10, minmax(58px, auto));
+    gap: 6px;
+    min-width: 1040px; /* keeps columns readable; scrolls on narrow screens */
+}
+.mx-corner { grid-column: 1; grid-row: 1; }
+.mx-head {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
+    padding: 0.6rem 0.7rem; border-radius: 0.6rem;
+    background: var(--glass); border: 1px solid var(--line);
+    border-bottom: 2px solid var(--accent-solid);
+}
+.mx-floor {
+    font-size: 0.72rem; font-weight: 700; color: var(--ink);
+    padding: 0.1rem 0.45rem; border-radius: 0.4rem;
+    background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+    font-variant-numeric: tabular-nums;
+}
+.mx-zone { font-size: 0.74rem; color: var(--faint); }
+.mx-time {
+    grid-column: 1; display: flex; justify-content: flex-end; padding: 0.15rem 0.5rem 0 0;
+    font-size: 0.72rem; color: var(--faint); font-variant-numeric: tabular-nums;
+    border-top: 1px solid var(--line);
+}
+.mx-cell {
+    display: flex; flex-direction: column; gap: 0.3rem; overflow: hidden;
+    padding: 0.55rem 0.65rem; border-radius: 0.6rem;
+    background: var(--glass); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-solid);
+}
+.mx-cell-time {
+    font-size: 0.68rem; font-weight: 600; color: var(--accent-solid);
+    font-variant-numeric: tabular-nums;
+}
+.mx-cell-item { font-size: 0.8rem; line-height: 1.4; color: var(--ink); }
+/* Category accents (cell left border + header underline) */
+.mx-cell[data-cat="공연"], .mx-head[data-cat="공연"] { border-left-color: #e879f9; border-bottom-color: #e879f9; }
+.mx-cell[data-cat="마켓"], .mx-head[data-cat="마켓"] { border-left-color: #818cf8; border-bottom-color: #818cf8; }
+.mx-cell[data-cat^="사람책"], .mx-head[data-cat^="사람책"] { border-left-color: #22d3ee; border-bottom-color: #22d3ee; }
+.mx-cell[data-cat="DJ"], .mx-head[data-cat="DJ"] { border-left-color: #a78bfa; border-bottom-color: #a78bfa; }
+.mx-cell[data-cat="F&B"], .mx-head[data-cat="F&B"] { border-left-color: #fbbf24; border-bottom-color: #fbbf24; }
+.mx-cell[data-cat="전시"], .mx-head[data-cat="전시"] { border-left-color: #34d399; border-bottom-color: #34d399; }
+.mx-cell[data-cat="리셉션"], .mx-head[data-cat="리셉션"] { border-left-color: #c084fc; border-bottom-color: #c084fc; }
 .zone {
     display: flex; flex-direction: column; border-radius: 1rem; padding: 1.25rem;
     background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
