@@ -4,6 +4,9 @@
 프로그램·행사 일정(시간×존 매트릭스)·오시는 길을 제공하고, `/api/festival` JSON API로
 다른 notten 서비스가 축제 정보를 소비할 수 있습니다.
 
+🔗 **라이브: https://shlee-dev012.github.io/notten_home/**
+(로그인·DB가 없어 정적 스냅샷으로 GitHub Pages에 배포됩니다. `main` 푸시마다 자동 갱신)
+
 ## 미리보기
 
 ![notten-home 데스크톱 화면](docs/screenshot-desktop.png)
