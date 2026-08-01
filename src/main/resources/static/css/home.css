@@ -305,7 +305,13 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
     padding: 0.55rem 0.65rem; border-radius: 0.6rem;
     background: var(--glass); border: 1px solid var(--line);
     border-left: 3px solid var(--accent-solid);
+    /* clickable: opens the program detail modal */
+    width: 100%; text-align: left; font: inherit; color: var(--ink);
+    appearance: none; cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
+.mx-cell:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35); }
+.mx-cell:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 .mx-cell-time {
     font-size: 0.68rem; font-weight: 600; color: var(--accent-solid);
     font-variant-numeric: tabular-nums;
@@ -421,7 +427,7 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .modal-title { margin: 0.85rem 0 0.5rem; font-size: 1.25rem; letter-spacing: -0.01em; line-height: 1.3; }
 .modal-meta { margin: 0 0 1.1rem; color: var(--muted); font-size: 0.9rem; }
 .modal-meta .modal-dot { color: var(--faint); margin: 0 0.35rem; }
-.modal-desc { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+.modal-desc { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.7; white-space: pre-line; }
 
 /* Footer */
 .foot {

@@ -26,8 +26,8 @@
     modal.showModal();
   }
 
-  document.querySelectorAll(".card[data-title]").forEach((card) => {
-    card.addEventListener("click", () => open(card));
+  document.querySelectorAll(".card[data-title], .mx-cell[data-title]").forEach((el) => {
+    el.addEventListener("click", () => open(el));
   });
 
   modal.querySelector(".modal-close").addEventListener("click", () => modal.close());

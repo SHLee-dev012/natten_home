@@ -97,8 +97,8 @@
                 <label for="day-2"><b>2일차</b><span th:text="${days[1]}">9/13 (일)</span></label>
             </div>
             <p class="scroll-hint">← 좌우로 스크롤하여 전체 시간표를 확인하세요 →</p>
-            <div th:replace="~{fragments/matrix :: matrix(${gridDay1}, ${hours}, 1)}"></div>
-            <div th:replace="~{fragments/matrix :: matrix(${gridDay2}, ${hours}, 2)}"></div>
+            <div th:replace="~{fragments/matrix :: matrix(${gridDay1}, ${hours}, 1, ${days[0]})}"></div>
+            <div th:replace="~{fragments/matrix :: matrix(${gridDay2}, ${hours}, 2, ${days[1]})}"></div>
         </div>
     </section>
 

@@ -119,11 +119,11 @@ public class FestivalService {
     public List<Grid.Column> grid(int day) {
         List<Grid.Column> columns = new ArrayList<>();
         for (ScheduleZone z : schedule) {
-            Map<List<Integer>, List<String>> byRange = new LinkedHashMap<>();
+            Map<List<Integer>, List<Grid.Item>> byRange = new LinkedHashMap<>();
             for (ScheduleZone.Slot s : z.slots()) {
                 if (s.on(day)) {
                     byRange.computeIfAbsent(List.of(s.start(), s.end()), k -> new ArrayList<>())
-                            .add(s.content());
+                            .add(new Grid.Item(s.content(), s.description()));
                 }
             }
             List<Grid.Cell> cells = byRange.entrySet().stream()

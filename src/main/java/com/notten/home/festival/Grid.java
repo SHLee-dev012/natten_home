@@ -1,6 +1,7 @@
 package com.notten.home.festival;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /** View model for the time × zone matrix. */
 public final class Grid {
@@ -12,8 +13,12 @@ public final class Grid {
     private Grid() {
     }
 
+    /** One program placed in a cell: its label and detail description. */
+    public record Item(String content, String description) {
+    }
+
     /** One program block placed in the grid, possibly holding several concurrent items. */
-    public record Cell(int start, int end, List<String> items) {
+    public record Cell(int start, int end, List<Item> items) {
 
         /** CSS grid row line where this cell begins.
          *  Rows: 1 = zone headers, 2.. = hours (hour 11 → line 2).
@@ -29,6 +34,21 @@ public final class Grid {
 
         public String time() {
             return String.format("%02d:00–%02d:00", start, end);
+        }
+
+        /** Modal title: all concurrent program labels joined. */
+        public String title() {
+            return items.stream().map(Item::content).collect(Collectors.joining(" · "));
+        }
+
+        /** Modal body: one description, or each program's label + description when concurrent. */
+        public String description() {
+            if (items.size() == 1) {
+                return items.get(0).description();
+            }
+            return items.stream()
+                    .map(it -> it.content() + "\n" + it.description())
+                    .collect(Collectors.joining("\n\n"));
         }
     }
 

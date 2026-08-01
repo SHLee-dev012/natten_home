@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <body>
 <!-- Time × zone matrix for one festival day. -->
-<div th:fragment="matrix(columns, hours, day)" class="matrix-block daypanel"
+<div th:fragment="matrix(columns, hours, day, dayLabel)" class="matrix-block daypanel"
      th:classappend="'daypanel-' + ${day}">
     <!-- prep / teardown as a single compact caption, outside the grid -->
     <p class="mx-caption">
@@ -27,13 +27,17 @@
             <div class="mx-time" th:each="h,hi : ${hours}"
                  th:style="'grid-column: 1; grid-row: ' + (${hi.index} + 2) + ';'"
                  th:text="${h} + ':00'">11:00</div>
-            <!-- program cells -->
+            <!-- program cells (click to open the detail modal) -->
             <th:block th:each="c,ci : ${columns}">
-                <div class="mx-cell" th:each="cell : ${c.cells()}" th:attr="data-cat=${c.category()}"
-                     th:style="'grid-column: ' + (${ci.index} + 2) + '; grid-row: ' + ${cell.rowStart()} + ' / span ' + ${cell.rowSpan()} + ';'">
+                <button type="button" class="mx-cell" th:each="cell : ${c.cells()}"
+                        th:attr="data-cat=${c.category()},
+                                 data-title=${cell.title()},data-category=${c.category()},
+                                 data-time=${cell.time()},data-place=${c.floor()} + ' · ' + ${c.zone()},
+                                 data-day=${day},data-day-label=${dayLabel},data-desc=${cell.description()}"
+                        th:style="'grid-column: ' + (${ci.index} + 2) + '; grid-row: ' + ${cell.rowStart()} + ' / span ' + ${cell.rowSpan()} + ';'">
                     <span class="mx-cell-time" th:text="${cell.time()}">11:00–17:00</span>
-                    <span class="mx-cell-item" th:each="it : ${cell.items()}" th:text="${it}">프로그램</span>
-                </div>
+                    <span class="mx-cell-item" th:each="it : ${cell.items()}" th:text="${it.content()}">프로그램</span>
+                </button>
             </th:block>
         </div>
     </div>
