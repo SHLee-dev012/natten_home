@@ -56,7 +56,7 @@ jobs:
 
           # Make absolute asset paths relative so they resolve under the
           # /natten_home/ project subpath on GitHub Pages.
-          sed -i 's#href="/css/#href="css/#g; s#src="/js/#src="js/#g; s#src="/img/#src="img/#g; s#href="/api/festival"#href="api/festival.json"#g' public/index.html
+          sed -i 's#href="/css/#href="css/#g; s#href="/img/#href="img/#g; s#src="/js/#src="js/#g; s#src="/img/#src="img/#g; s#href="/api/festival"#href="api/festival.json"#g' public/index.html
           sed -i 's#url("/img/#url("../img/#g' public/css/home.css
 
       - name: Upload Pages artifact
