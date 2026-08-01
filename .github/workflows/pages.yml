@@ -1,6 +1,6 @@
 name: Deploy to GitHub Pages
 
-# notten-home has no login/DB, so its rendered output is static — we render
+# natten-home has no login/DB, so its rendered output is static — we render
 # the app once in CI and publish the snapshot to GitHub Pages.
 # (Pages source must be set to "GitHub Actions" in the repo settings.)
 
@@ -55,7 +55,7 @@ jobs:
           touch public/.nojekyll
 
           # Make absolute asset paths relative so they resolve under the
-          # /notten_home/ project subpath on GitHub Pages.
+          # /natten_home/ project subpath on GitHub Pages.
           sed -i 's#href="/css/#href="css/#g; s#src="/js/#src="js/#g; s#src="/img/#src="img/#g; s#href="/api/festival"#href="api/festival.json"#g' public/index.html
           sed -i 's#url("/img/#url("../img/#g' public/css/home.css
 

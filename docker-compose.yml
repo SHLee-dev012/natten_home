@@ -1,4 +1,4 @@
-# notten-home — Spring Boot app behind a Caddy reverse proxy (auto HTTPS).
+# natten-home — Spring Boot app behind a Caddy reverse proxy (auto HTTPS).
 #
 # Set the domain (see deploy.env.example), then:
 #   docker compose pull && docker compose up -d      # pull CI image
@@ -6,7 +6,7 @@
 
 services:
   app:
-    image: "${NOTTEN_HOME_IMAGE:-ghcr.io/shlee-dev012/notten_home:latest}"
+    image: "${NATTEN_HOME_IMAGE:-ghcr.io/shlee-dev012/natten_home:latest}"
     build: .
     # Reached by Caddy over the internal network as app:8080. Publish 8080 to
     # the host too for direct testing; drop this line in production if you want
@@ -25,14 +25,14 @@ services:
       start_period: 20s
 
   # Reverse proxy: automatic HTTPS + domain routing.
-  # Set NOTTEN_HOME_DOMAIN (see deploy.env.example). Defaults to localhost
+  # Set NATTEN_HOME_DOMAIN (see deploy.env.example). Defaults to localhost
   # (self-signed) so Caddy always boots.
   caddy:
     image: caddy:2-alpine
     depends_on:
       - app
     environment:
-      NOTTEN_HOME_DOMAIN: "${NOTTEN_HOME_DOMAIN:-localhost}"
+      NATTEN_HOME_DOMAIN: "${NATTEN_HOME_DOMAIN:-localhost}"
     ports:
       - "80:80"
       - "443:443"
