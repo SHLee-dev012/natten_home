@@ -249,8 +249,8 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
     --mx-time: 58px;
     --mx-col: 148px;
     display: grid;
-    /* header · prep band · 10 hour rows · teardown band */
-    grid-template-rows: auto auto repeat(10, minmax(58px, auto)) auto;
+    /* header · 10 hour rows (prep/teardown moved to caption) */
+    grid-template-rows: auto repeat(10, minmax(40px, auto));
     gap: 6px;
     min-width: min-content; /* stays as wide as its columns; scrolls when needed */
 }
@@ -267,14 +267,20 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .scroll-hint {
     display: none; margin: 0 0 0.9rem; font-size: 0.78rem; color: var(--faint); text-align: center;
 }
-/* Full-width prep / teardown bands */
-.mx-band {
-    display: flex; align-items: center; justify-content: center; text-align: center;
-    padding: 0.5rem 0.8rem; border-radius: 0.5rem;
-    font-size: 0.8rem; font-weight: 500; color: var(--muted);
-    background: rgba(255, 255, 255, 0.04); border: 1px dashed var(--line);
+/* Prep / teardown compact caption (outside the grid) */
+.mx-caption {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem 0.6rem;
+    margin: 0 0 0.75rem; padding: 0.4rem 0.7rem; border-radius: 0.5rem;
+    font-size: 0.76rem; color: var(--muted);
+    background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--line);
     font-variant-numeric: tabular-nums;
 }
+.mx-caption-tag {
+    font-size: 0.68rem; font-weight: 700; color: var(--ink);
+    padding: 0.08rem 0.4rem; border-radius: 0.35rem;
+    background: rgba(255, 255, 255, 0.06); border: 1px solid var(--line);
+}
+.mx-caption-sep { color: var(--faint); }
 .mx-corner { grid-column: 1; grid-row: 1; }
 .mx-head {
     display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem;
@@ -324,7 +330,7 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
     .mx-cell { padding: 0.45rem 0.5rem; }
     .mx-cell-time { font-size: 0.64rem; }
     .mx-cell-item { font-size: 0.74rem; }
-    .mx-band { font-size: 0.72rem; padding: 0.45rem 0.6rem; }
+    .mx-caption { font-size: 0.7rem; padding: 0.4rem 0.55rem; }
     .scroll-hint { display: block; }
 
     /* Tighter vertical rhythm on phones */
