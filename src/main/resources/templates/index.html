@@ -42,7 +42,8 @@
             </div>
         </div>
         <figure class="hero-poster">
-            <img th:src="@{/img/poster.png}" th:alt="${festival.name()} + ' 포스터'"/>
+            <img th:src="@{/img/poster.jpg}" th:alt="${festival.name()} + ' 포스터'"
+                 width="1080" height="1518" decoding="async" fetchpriority="high"/>
         </figure>
     </section>
 
