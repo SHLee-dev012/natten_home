@@ -53,6 +53,8 @@ jobs:
           cp -r src/main/resources/static/js/. public/js/
           cp -r src/main/resources/static/img/. public/img/
           touch public/.nojekyll
+          # 커스텀 도메인 유지 (Actions 재배포 시 도메인 초기화 방지)
+          echo "knotsun.kr" > public/CNAME
 
           # Make absolute asset paths relative so they resolve under the
           # /natten_home/ project subpath on GitHub Pages.
