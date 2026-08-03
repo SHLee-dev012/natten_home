@@ -376,20 +376,6 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 }
 .zone-staff span:first-child { color: var(--accent-solid); font-weight: 600; }
 
-/* Community board (Padlet embed) */
-.board-embed {
-    width: 100%; height: min(72vh, 720px); min-height: 460px;
-    border-radius: 1rem; overflow: hidden;
-    background: var(--glass); border: 1px solid var(--line);
-    box-shadow: 0 20px 50px -28px rgba(129, 140, 248, 0.5);
-}
-.board-embed iframe { display: block; width: 100%; height: 100%; border: 0; }
-.board-fallback { margin: 0.9rem 0 0; font-size: 0.82rem; color: var(--muted); text-align: center; }
-.board-fallback a { color: var(--accent-solid); font-weight: 600; }
-@media (max-width: 640px) {
-    .board-embed { height: 78vh; min-height: 420px; }
-}
-
 /* Guestbook (Supabase-backed) */
 .gb-form {
     display: flex; flex-direction: column; gap: 0.6rem; margin: 0 0 1.75rem;

@@ -1,7 +1,7 @@
 # natten-home
 
 낯선대학 10주년 축제(낯텐축제) 홈 서비스. Spring Boot로 만든 축제 랜딩 페이지 —
-프로그램·행사 일정(시간×존 매트릭스)·소통(Padlet 보드)·오시는 길을 제공하고,
+프로그램·행사 일정(시간×존 매트릭스)·게시판(방명록)·오시는 길을 제공하고,
 `/api/festival` JSON API로 다른 notten 서비스가 축제 정보를 소비할 수 있습니다.
 
 🔗 **라이브: https://shlee-dev012.github.io/natten_home/**
@@ -11,12 +11,12 @@
 
 ![natten-home 데스크톱 화면](docs/screenshot-desktop.png)
 
-**소통 — 참가자 Padlet 보드를 페이지 안에 임베드**
+**게시판 — 누구나 글을 남기는 방명록 (Supabase 백엔드, 별도 서버·DB 세팅 불필요)**
 
-![소통 메뉴 (Padlet 보드)](docs/screenshot-board.png)
+![게시판 (Supabase 방명록)](docs/screenshot-board.png)
 
 <p align="center">
-  <img src="docs/screenshot-mobile.png" width="320" alt="소통 메뉴 모바일 화면"/>
+  <img src="docs/screenshot-mobile.png" width="320" alt="게시판 모바일 화면"/>
 </p>
 
 ## 기술 스택
