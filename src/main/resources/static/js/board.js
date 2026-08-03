@@ -45,14 +45,36 @@
     }
     list.innerHTML = posts.map(function (p) {
       return '<li class="gb-item">' +
-        '<div class="gb-item-top">' +
+        '<button type="button" class="gb-item-head" aria-expanded="false">' +
           '<span class="gb-item-name">' + esc(p.name || "익명") + '</span>' +
-          '<span class="gb-item-time">' + esc(timeago(p.created_at)) + '</span>' +
-        '</div>' +
-        '<p class="gb-item-msg">' + esc(p.message) + '</p>' +
+          '<span class="gb-item-meta">' +
+            '<span class="gb-item-time">' + esc(timeago(p.created_at)) + '</span>' +
+            '<span class="gb-chevron" aria-hidden="true">▾</span>' +
+          '</span>' +
+        '</button>' +
+        '<div class="gb-item-body"><div class="gb-item-body-inner">' +
+          '<p class="gb-item-msg">' + esc(p.message) + '</p>' +
+        '</div></div>' +
       '</li>';
     }).join("");
   }
+
+  // 아코디언: 제목(작성자·시간) 클릭 → 내용 펼침. 다른 글을 열면 이전 글은 닫힘.
+  list.addEventListener("click", function (e) {
+    var head = e.target.closest(".gb-item-head");
+    if (!head || !list.contains(head)) return;
+    var item = head.parentElement;
+    var willOpen = head.getAttribute("aria-expanded") !== "true";
+    var openHeads = list.querySelectorAll('.gb-item-head[aria-expanded="true"]');
+    for (var i = 0; i < openHeads.length; i++) {
+      openHeads[i].setAttribute("aria-expanded", "false");
+      openHeads[i].parentElement.classList.remove("is-open");
+    }
+    if (willOpen) {
+      head.setAttribute("aria-expanded", "true");
+      item.classList.add("is-open");
+    }
+  });
 
   // 페이지 번호 배열 (많으면 … 로 축약): [1, '…', 4, 5, 6, '…', 12]
   function pageList(cur, total) {
