@@ -453,11 +453,13 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .gb-confirm-q { font-size: 0.78rem; color: var(--muted); }
 
 /* 인라인 수정 폼 */
-.gb-edit { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.15rem 1rem 0.9rem; }
-.gb-edit .gb-inline-pw { width: 100%; }
-.gb-edit-foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem 0.75rem; }
-.gb-edit-btns { display: flex; align-items: center; gap: 0.4rem; }
-.gb-edit-save { padding: 0.35rem 0.95rem; font-size: 0.82rem; }
+.gb-edit { display: flex; flex-direction: column; gap: 0.55rem; padding: 0.15rem 1rem 0.9rem; }
+.gb-edit-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.gb-edit-foot .gb-edit-pw { flex: 1 1 9rem; width: auto; }
+.gb-edit-btns { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+.gb-edit-btns .gb-act { padding: 0.42rem 1.05rem; font-size: 0.82rem; }
+.gb-edit-save { color: #0a0c1c; font-weight: 600; background: var(--accent); border-color: transparent; }
+.gb-edit-save:hover:not(:disabled) { color: #0a0c1c; border-color: transparent; transform: translateY(-1px); }
 
 .gb-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35rem; margin-top: 1.4rem; }
 .gb-pager button {

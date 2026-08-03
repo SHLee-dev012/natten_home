@@ -143,14 +143,14 @@
       '<div class="gb-edit">' +
         '<input type="text" class="gb-title gb-edit-title" maxlength="60" placeholder="제목"/>' +
         '<textarea class="gb-message gb-edit-msg" rows="3" maxlength="500" placeholder="내용"></textarea>' +
-        '<input type="password" class="gb-inline-pw gb-edit-pw" placeholder="비밀번호" maxlength="40"/>' +
         '<div class="gb-edit-foot">' +
-          '<span class="gb-inline-msg"></span>' +
-          '<span class="gb-edit-btns">' +
+          '<input type="password" class="gb-inline-pw gb-edit-pw" placeholder="비밀번호 (본인 확인)" maxlength="40"/>' +
+          '<div class="gb-edit-btns">' +
             '<button type="button" class="gb-act" data-act="cancel">취소</button>' +
-            '<button type="button" class="gb-submit gb-edit-save" data-act="edit-save">저장</button>' +
-          '</span>' +
+            '<button type="button" class="gb-act gb-edit-save" data-act="edit-save">저장</button>' +
+          '</div>' +
         '</div>' +
+        '<span class="gb-inline-msg"></span>' +
       '</div>';
     inner.querySelector(".gb-edit-title").value = curTitle;
     inner.querySelector(".gb-edit-msg").value = curMsg;
