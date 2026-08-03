@@ -72,6 +72,7 @@
         '<button type="button" class="gb-item-head" aria-expanded="false">' +
           '<span class="gb-item-title">' + esc(title) + '</span>' +
           '<span class="gb-item-meta">' +
+            '<span class="gb-item-by">' + esc(p.name || "익명") + '</span>' +
             '<span class="gb-item-time">' + esc(timeago(p.created_at)) + '</span>' +
             '<span class="gb-chevron" aria-hidden="true">▾</span>' +
           '</span>' +
@@ -79,7 +80,6 @@
         '<div class="gb-item-body"><div class="gb-item-body-inner">' +
           '<p class="gb-item-msg">' + esc(p.message) + '</p>' +
           '<div class="gb-item-foot">' +
-            '<span class="gb-item-author">— ' + esc(p.name || "익명") + '</span>' +
             '<span class="gb-item-actions">' +
               '<button type="button" class="gb-act" data-act="edit">수정</button>' +
               '<button type="button" class="gb-act gb-act-del" data-act="delete">삭제</button>' +

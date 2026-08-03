@@ -422,6 +422,7 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .gb-item-head:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: -2px; }
 .gb-item-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gb-item-meta { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.gb-item-by { font-size: 0.78rem; font-weight: 500; color: var(--muted); max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gb-item-time { font-size: 0.74rem; color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gb-chevron { font-size: 0.7rem; color: var(--faint); transition: transform 0.2s ease; }
 .gb-item.is-open .gb-chevron { transform: rotate(180deg); }
@@ -430,10 +431,9 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .gb-item-body-inner { overflow: hidden; min-height: 0; }
 .gb-item-msg { margin: 0; padding: 0 1rem; font-size: 0.9rem; line-height: 1.6; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
 .gb-item-foot {
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap;
     gap: 0.5rem 0.75rem; padding: 0.7rem 1rem 0.85rem;
 }
-.gb-item-author { margin: 0; font-size: 0.78rem; color: var(--faint); }
 .gb-item-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 0.4rem; }
 .gb-act {
     font: inherit; font-size: 0.78rem; color: var(--muted); cursor: pointer;
