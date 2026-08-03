@@ -10,6 +10,7 @@
   var list = document.getElementById("gb-list");
   var pager = document.getElementById("gb-pager");
   var nameEl = document.getElementById("gb-name");
+  var titleEl = document.getElementById("gb-title");
   var msgEl = document.getElementById("gb-message");
   var countEl = document.getElementById("gb-count");
   var statusEl = document.getElementById("gb-status");
@@ -44,9 +45,10 @@
       return;
     }
     list.innerHTML = posts.map(function (p) {
+      var title = p.title || p.name || "(제목 없음)";
       return '<li class="gb-item">' +
         '<button type="button" class="gb-item-head" aria-expanded="false">' +
-          '<span class="gb-item-name">' + esc(p.name || "익명") + '</span>' +
+          '<span class="gb-item-title">' + esc(title) + '</span>' +
           '<span class="gb-item-meta">' +
             '<span class="gb-item-time">' + esc(timeago(p.created_at)) + '</span>' +
             '<span class="gb-chevron" aria-hidden="true">▾</span>' +
@@ -54,6 +56,7 @@
         '</button>' +
         '<div class="gb-item-body"><div class="gb-item-body-inner">' +
           '<p class="gb-item-msg">' + esc(p.message) + '</p>' +
+          '<p class="gb-item-author">— ' + esc(p.name || "익명") + '</p>' +
         '</div></div>' +
       '</li>';
     }).join("");
@@ -110,7 +113,7 @@
 
   function fetchPage(p) {
     var offset = (p - 1) * PAGE_SIZE;
-    var url = REST + "?select=id,created_at,name,message&order=created_at.desc" +
+    var url = REST + "?select=id,created_at,name,title,message&order=created_at.desc" +
       "&limit=" + PAGE_SIZE + "&offset=" + offset;
     return fetch(url, { headers: Object.assign({ Prefer: "count=exact" }, authHeaders) })
       .then(function (r) {
@@ -152,6 +155,8 @@
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    var title = titleEl.value.trim();
+    if (!title) { setStatus("제목을 입력해 주세요.", "err"); titleEl.focus(); return; }
     var message = msgEl.value.trim();
     if (!message) { setStatus("내용을 입력해 주세요.", "err"); msgEl.focus(); return; }
     var name = nameEl.value.trim().slice(0, 20) || "익명";
@@ -160,10 +165,11 @@
     fetch(REST, {
       method: "POST",
       headers: Object.assign({ "Content-Type": "application/json", Prefer: "return=minimal" }, authHeaders),
-      body: JSON.stringify({ name: name, message: message.slice(0, 500) })
+      body: JSON.stringify({ name: name, title: title.slice(0, 60), message: message.slice(0, 500) })
     })
       .then(function (r) { if (!r.ok) throw new Error(r.status); })
       .then(function () {
+        titleEl.value = "";
         msgEl.value = "";
         countEl.textContent = "0 / 500";
         setStatus("등록되었습니다 ✓", "ok");

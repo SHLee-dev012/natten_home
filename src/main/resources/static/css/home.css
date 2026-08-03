@@ -382,13 +382,14 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
     padding: 1.1rem; border-radius: 1rem;
     background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
 }
-.gb-name, .gb-message {
+.gb-name, .gb-title, .gb-message {
     width: 100%; font: inherit; color: var(--ink);
     background: rgba(9, 11, 24, 0.5); border: 1px solid var(--line);
     border-radius: 0.6rem; padding: 0.6rem 0.75rem; resize: vertical;
 }
-.gb-name::placeholder, .gb-message::placeholder { color: var(--faint); }
-.gb-name:focus, .gb-message:focus { outline: 2px solid var(--accent-solid); outline-offset: 1px; border-color: transparent; }
+.gb-title { font-weight: 600; }
+.gb-name::placeholder, .gb-title::placeholder, .gb-message::placeholder { color: var(--faint); }
+.gb-name:focus, .gb-title:focus, .gb-message:focus { outline: 2px solid var(--accent-solid); outline-offset: 1px; border-color: transparent; }
 .gb-message { min-height: 4.5rem; line-height: 1.5; }
 .gb-form-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .gb-count { font-size: 0.76rem; color: var(--faint); font-variant-numeric: tabular-nums; }
@@ -419,7 +420,7 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 }
 .gb-item-head:hover { background: rgba(255, 255, 255, 0.03); }
 .gb-item-head:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: -2px; }
-.gb-item-name { font-size: 0.9rem; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gb-item-title { font-size: 0.9rem; font-weight: 600; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .gb-item-meta { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 .gb-item-time { font-size: 0.74rem; color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gb-chevron { font-size: 0.7rem; color: var(--faint); transition: transform 0.2s ease; }
@@ -427,7 +428,8 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .gb-item-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.22s ease; }
 .gb-item.is-open .gb-item-body { grid-template-rows: 1fr; }
 .gb-item-body-inner { overflow: hidden; min-height: 0; }
-.gb-item-msg { margin: 0; padding: 0 1rem 0.9rem; font-size: 0.9rem; line-height: 1.6; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
+.gb-item-msg { margin: 0; padding: 0 1rem; font-size: 0.9rem; line-height: 1.6; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
+.gb-item-author { margin: 0.6rem 0 0; padding: 0 1rem 0.85rem; font-size: 0.78rem; color: var(--faint); text-align: right; }
 
 .gb-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35rem; margin-top: 1.4rem; }
 .gb-pager button {
