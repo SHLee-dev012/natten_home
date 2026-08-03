@@ -416,6 +416,19 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
 .gb-item-time { font-size: 0.74rem; color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .gb-item-msg { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
 
+.gb-pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.35rem; margin-top: 1.4rem; }
+.gb-pager button {
+    font: inherit; min-width: 2.2rem; height: 2.2rem; padding: 0 0.55rem;
+    color: var(--muted); background: var(--glass); border: 1px solid var(--line);
+    border-radius: 0.55rem; cursor: pointer; font-variant-numeric: tabular-nums;
+    transition: color 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
+}
+.gb-pager button:hover:not(:disabled) { color: var(--ink); border-color: var(--accent-solid); transform: translateY(-1px); }
+.gb-pager button[aria-current="page"] { color: #0a0c1c; font-weight: 700; background: var(--accent); border-color: transparent; }
+.gb-pager button:disabled { opacity: 0.4; cursor: default; }
+.gb-pager button:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
+.gb-pager .gb-ellipsis { color: var(--faint); padding: 0 0.15rem; }
+
 /* Location / venue */
 .location { padding: 1.75rem 0 2.5rem; }
 .location-card {
