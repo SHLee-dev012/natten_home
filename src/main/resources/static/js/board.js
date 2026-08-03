@@ -22,6 +22,19 @@
   var authHeaders = { apikey: SUPABASE_ANON, Authorization: "Bearer " + SUPABASE_ANON };
   var page = 1, totalCount = 0, currentPosts = [];
 
+  // 비밀번호 시도 제한 (같은 글 MAX_TRY회 실패 → LOCK_MS 잠금). localStorage 저장.
+  var MAX_TRY = 5, LOCK_MS = 30000;
+  function failKey(id) { return "gb_fail_" + id; }
+  function getFail(id) { try { return JSON.parse(localStorage.getItem(failKey(id))) || { n: 0, until: 0 }; } catch (e) { return { n: 0, until: 0 }; } }
+  function lockRemain(id) { var f = getFail(id); return (f.until && Date.now() < f.until) ? Math.ceil((f.until - Date.now()) / 1000) : 0; }
+  function recordFail(id) {
+    var f = getFail(id); f.n = (f.n || 0) + 1;
+    if (f.n >= MAX_TRY) { f.until = Date.now() + LOCK_MS; f.n = 0; }
+    try { localStorage.setItem(failKey(id), JSON.stringify(f)); } catch (e) {}
+  }
+  function clearFail(id) { try { localStorage.removeItem(failKey(id)); } catch (e) {} }
+  function lockMsg(id) { var r = lockRemain(id); return r ? ("시도가 많습니다. " + r + "초 후 다시 시도해 주세요.") : ""; }
+
   function esc(s) {
     var d = document.createElement("div");
     d.textContent = s == null ? "" : String(s);
@@ -90,16 +103,20 @@
   // 삭제: 인라인 비밀번호 확인 UI
   function showDeleteConfirm(item) {
     var box = item.querySelector(".gb-item-actions");
+    var id = item.getAttribute("data-id");
+    var locked = lockRemain(id) > 0;
     box.innerHTML =
-      '<input type="password" class="gb-inline-pw" placeholder="비밀번호" maxlength="40"/>' +
-      '<button type="button" class="gb-act gb-act-del" data-act="delete-confirm">삭제 확인</button>' +
+      '<span class="gb-confirm-q">정말 삭제할까요? 되돌릴 수 없습니다.</span>' +
+      '<input type="password" class="gb-inline-pw" placeholder="비밀번호" maxlength="40"' + (locked ? ' disabled' : '') + '/>' +
+      '<button type="button" class="gb-act gb-act-del" data-act="delete-confirm"' + (locked ? ' disabled' : '') + '>삭제</button>' +
       '<button type="button" class="gb-act" data-act="cancel">취소</button>' +
-      '<span class="gb-inline-msg"></span>';
+      '<span class="gb-inline-msg">' + esc(lockMsg(id)) + '</span>';
     var pw = box.querySelector(".gb-inline-pw");
-    if (pw) pw.focus();
+    if (pw && !locked) pw.focus();
   }
   function doDelete(item) {
     var id = parseInt(item.getAttribute("data-id"), 10);
+    if (lockRemain(id)) { inlineMsg(item, lockMsg(id)); return; }
     var pwInput = item.querySelector(".gb-inline-pw");
     var pw = pwInput ? pwInput.value : "";
     if (!pw) { if (pwInput) pwInput.focus(); return; }
@@ -107,8 +124,12 @@
     if (btn) btn.disabled = true;
     rpc("delete_post", { p_id: id, p_password: pw })
       .then(function (ok) {
-        if (ok === true) { load(page); }
-        else { inlineMsg(item, "비밀번호가 일치하지 않습니다."); if (btn) btn.disabled = false; }
+        if (ok === true) { clearFail(id); load(page); }
+        else {
+          recordFail(id);
+          if (lockRemain(id)) { showDeleteConfirm(item); } // 잠금 → 입력·버튼 비활성 재렌더
+          else { inlineMsg(item, "비밀번호가 일치하지 않습니다."); if (btn) btn.disabled = false; }
+        }
       })
       .catch(function () { inlineMsg(item, "삭제에 실패했습니다."); if (btn) btn.disabled = false; });
   }
@@ -137,6 +158,7 @@
   }
   function doUpdate(item) {
     var id = parseInt(item.getAttribute("data-id"), 10);
+    if (lockRemain(id)) { inlineMsg(item, lockMsg(id)); return; }
     var t = item.querySelector(".gb-edit-title").value.trim();
     var m = item.querySelector(".gb-edit-msg").value.trim();
     var pw = item.querySelector(".gb-edit-pw").value;
@@ -146,8 +168,13 @@
     if (btn) btn.disabled = true;
     rpc("update_post", { p_id: id, p_password: pw, p_title: t.slice(0, 60), p_message: m.slice(0, 500) })
       .then(function (ok) {
-        if (ok === true) { load(page); }
-        else { inlineMsg(item, "비밀번호가 일치하지 않습니다."); if (btn) btn.disabled = false; }
+        if (ok === true) { clearFail(id); load(page); }
+        else {
+          recordFail(id);
+          var locked = lockRemain(id) > 0;
+          inlineMsg(item, locked ? lockMsg(id) : "비밀번호가 일치하지 않습니다.");
+          if (btn) btn.disabled = locked; // 잠기면 저장 버튼 비활성 유지
+        }
       })
       .catch(function () { inlineMsg(item, "수정에 실패했습니다."); if (btn) btn.disabled = false; });
   }
