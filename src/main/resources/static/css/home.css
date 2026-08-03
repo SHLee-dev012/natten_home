@@ -390,6 +390,46 @@ a.pill--link:hover { color: var(--ink); border-color: var(--accent-solid); }
     .board-embed { height: 78vh; min-height: 420px; }
 }
 
+/* Guestbook (Supabase-backed) */
+.gb-form {
+    display: flex; flex-direction: column; gap: 0.6rem; margin: 0 0 1.75rem;
+    padding: 1.1rem; border-radius: 1rem;
+    background: var(--glass); border: 1px solid var(--line); backdrop-filter: blur(12px);
+}
+.gb-name, .gb-message {
+    width: 100%; font: inherit; color: var(--ink);
+    background: rgba(9, 11, 24, 0.5); border: 1px solid var(--line);
+    border-radius: 0.6rem; padding: 0.6rem 0.75rem; resize: vertical;
+}
+.gb-name::placeholder, .gb-message::placeholder { color: var(--faint); }
+.gb-name:focus, .gb-message:focus { outline: 2px solid var(--accent-solid); outline-offset: 1px; border-color: transparent; }
+.gb-message { min-height: 4.5rem; line-height: 1.5; }
+.gb-form-foot { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+.gb-count { font-size: 0.76rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.gb-submit {
+    font: inherit; font-weight: 600; color: #0a0c1c; cursor: pointer;
+    padding: 0.5rem 1.1rem; border-radius: 0.6rem; border: 1px solid transparent;
+    background: var(--accent); transition: transform 0.12s ease, opacity 0.12s ease;
+}
+.gb-submit:hover { transform: translateY(-1px); }
+.gb-submit:disabled { opacity: 0.55; cursor: default; transform: none; }
+.gb-submit:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.gb-status { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.gb-status--ok { color: #34d399; }
+.gb-status--err { color: #f87171; }
+
+.gb-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.gb-empty { padding: 1.5rem; text-align: center; color: var(--faint); font-size: 0.88rem; }
+.gb-item {
+    padding: 0.85rem 1rem; border-radius: 0.75rem;
+    background: var(--glass); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent-solid);
+}
+.gb-item-top { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; margin-bottom: 0.35rem; }
+.gb-item-name { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+.gb-item-time { font-size: 0.74rem; color: var(--faint); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.gb-item-msg { margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--muted); white-space: pre-wrap; word-break: break-word; }
+
 /* Location / venue */
 .location { padding: 1.75rem 0 2.5rem; }
 .location-card {

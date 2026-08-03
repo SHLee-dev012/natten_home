@@ -23,6 +23,7 @@
             <a href="#programs">프로그램</a>
             <a href="#schedule">행사 일정</a>
             <a href="#board">소통</a>
+            <a href="#guestbook">게시판</a>
             <a href="#location">오시는 길</a>
             <a href="/api/festival">API</a>
         </nav>
@@ -122,6 +123,28 @@
         </p>
     </section>
 
+    <section id="guestbook" class="program guestbook">
+        <div class="program-head">
+            <h2>게시판</h2>
+            <p class="program-note">누구나 자유롭게 글을 남길 수 있는 방명록입니다. 이름 없이도 작성돼요.</p>
+        </div>
+
+        <form class="gb-form" id="gb-form" autocomplete="off">
+            <input class="gb-name" id="gb-name" type="text" name="name" maxlength="20" placeholder="이름 (선택)"/>
+            <textarea class="gb-message" id="gb-message" name="message" rows="3" maxlength="500"
+                      placeholder="축제에 대한 이야기를 남겨주세요…" required></textarea>
+            <div class="gb-form-foot">
+                <span class="gb-count" id="gb-count">0 / 500</span>
+                <button class="gb-submit" id="gb-submit" type="submit">글 남기기</button>
+            </div>
+            <p class="gb-status" id="gb-status" role="status" aria-live="polite" hidden></p>
+        </form>
+
+        <ul class="gb-list" id="gb-list">
+            <li class="gb-empty" id="gb-loading">불러오는 중…</li>
+        </ul>
+    </section>
+
     <section id="location" class="location">
         <div class="location-card">
             <p class="eyebrow">VENUE</p>
@@ -154,6 +177,7 @@
             <a href="#programs">프로그램</a>
             <a href="#schedule">행사 일정</a>
             <a href="#board">소통</a>
+            <a href="#guestbook">게시판</a>
             <a href="#location">오시는 길</a>
             <a href="/api/festival">API</a>
         </nav>
@@ -174,5 +198,6 @@
 </footer>
 
 <script th:src="@{/js/modal.js}" defer></script>
+<script th:src="@{/js/board.js}" defer></script>
 </body>
 </html>
