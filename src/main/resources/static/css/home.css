@@ -270,25 +270,104 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .fd-row .fd-name { font-weight: 700; color: var(--ink); }
 .fd-row .fd-desc { color: var(--muted); line-height: 1.75; }
 
-/* ---------- FLOOR-5 library ---------- */
-.archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* ---------- FLOOR-5 도서관 (서가 · 목록카드) ---------- */
+/* 10년치 졸업앨범 서가 */
+.library-shelf { margin: 36px 0 8px; }
+.shelf-books { display: flex; align-items: flex-end; justify-content: center; flex-wrap: wrap; gap: 7px; padding: 0 6px; }
+.book {
+    position: relative; width: 50px; height: var(--h, 172px); flex: 0 0 auto;
+    border-radius: 3px 3px 1px 1px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.14), transparent 22%), linear-gradient(90deg, transparent 82%, rgba(0,0,0,0.35)), var(--spine, #2e2f5a);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 10px 20px -12px rgba(0,0,0,0.7);
+    display: flex; flex-direction: column; align-items: center;
+    padding: 12px 0 10px; cursor: default;
+    transition: transform 0.25s ease;
+}
+.book:hover { transform: translateY(-8px); }
+/* 상·하단 금박 밴드 */
+.book::before, .book::after {
+    content: ""; position: absolute; left: 5px; right: 5px; height: 1.5px;
+    background: rgba(251, 191, 36, 0.55);
+}
+.book::before { top: 26px; } .book::after { bottom: 24px; }
+.book .btag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; color: rgba(251, 191, 36, 0.9); }
+.book .bttl {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    font-family: var(--serif); font-weight: 700; font-size: 15px; letter-spacing: 0.06em;
+    color: #f0ead6; margin: auto 0; text-shadow: 0 1px 1px rgba(0,0,0,0.4);
+}
+.book-gold { background: linear-gradient(90deg, rgba(255,255,255,0.16), transparent 22%), linear-gradient(90deg, transparent 82%, rgba(0,0,0,0.35)), var(--spine, #4a3d2c); }
+.book-gold::before, .book-gold::after { background: rgba(251, 191, 36, 0.95); height: 2px; }
+.book-gold .btag, .book-gold .bttl { color: #fbbf24; }
+.book-ghost {
+    background: transparent; border: 1.5px dashed rgba(160, 170, 255, 0.35);
+    box-shadow: none; justify-content: center; gap: 8px;
+}
+.book-ghost::before, .book-ghost::after { display: none; }
+.book-ghost .btag { color: var(--faint); }
+.book-ghost .bttl { color: var(--faint); font-weight: 400; }
+.book-ghost .bghost-note { font-family: var(--mono); font-size: 8px; color: var(--accent-solid); letter-spacing: 0.05em; }
+.shelf-plank {
+    height: 12px; border-radius: 2px; margin: -2px 0 12px;
+    background: linear-gradient(180deg, #241d33, #14101f);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset, 0 16px 30px -18px rgba(0,0,0,0.8);
+    border: 1px solid var(--line);
+}
+.shelf-caption { text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.02em; color: var(--faint); }
+@media (max-width: 640px) {
+    .shelf-books { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+    .shelf-caption { padding: 0 8px; }
+}
+
+/* 도서 목록카드 (index card) */
+.archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
 @media (max-width: 820px) { .archive-grid { grid-template-columns: 1fr; } }
-.archive-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; padding: 22px 20px; }
-.archive-card .room-tag { font-family: var(--mono); font-size: 10.5px; color: var(--accent-solid); margin-bottom: 10px; display: block; }
+.archive-card {
+    position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 26px 22px 22px;
+    background:
+        linear-gradient(180deg, rgba(240, 234, 214, 0.05), rgba(240, 234, 214, 0.015)),
+        repeating-linear-gradient(180deg, transparent 0 30px, rgba(160, 170, 255, 0.09) 30px 31px);
+    background-position: 0 0, 0 62px;
+}
+/* 카드 상단 청구기호 탭 + 펀치 홀 */
+.archive-card::before {
+    content: ""; position: absolute; top: 12px; right: 16px; width: 9px; height: 9px;
+    border-radius: 50%; background: rgba(0,0,0,0.4); box-shadow: inset 0 0 0 1px var(--line);
+}
+.archive-card .room-tag { font-family: var(--mono); font-size: 10.5px; color: var(--accent-solid); margin-bottom: 12px; display: block; padding-bottom: 10px; border-bottom: 1px solid var(--line); letter-spacing: 0.03em; }
 .archive-card h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 10px; }
-.archive-card p { font-size: 13.5px; color: var(--muted); line-height: 1.8; margin: 0; }
-.founders-card { background: var(--glass); border: 1px solid var(--line); border-radius: 12px; padding: 28px 26px; }
+.archive-card p { font-size: 13.5px; color: var(--muted); line-height: 1.72; margin: 0; }
+
+/* 특별 소장 — 창립자 카드 */
+.founders-card { position: relative; background: var(--glass); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 12px; padding: 28px 26px; overflow: hidden; }
+.founders-card::after {
+    content: "특별 소장 · RARE"; position: absolute; top: 18px; right: -34px;
+    transform: rotate(35deg); background: rgba(251, 191, 36, 0.14); color: var(--gold);
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; padding: 4px 44px;
+    border-top: 1px solid rgba(251,191,36,0.4); border-bottom: 1px solid rgba(251,191,36,0.4);
+}
 .founders-card .eyebrow { color: var(--gold); }
 .founders-card h3 { font-family: var(--serif); font-weight: 700; font-size: 23px; margin: 10px 0 8px; }
 .founders-card p.d { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 20px; max-width: 520px; }
 .founders-list { display: flex; flex-wrap: wrap; gap: 10px; }
 .founder-chip { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; color: var(--ink); }
 .founder-chip span { color: var(--gold); }
-.album-progress { margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); }
+
+/* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
+.album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
+.due-stamp {
+    position: absolute; top: 20px; right: 22px; transform: rotate(-9deg);
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    border: 2px solid rgba(244, 114, 182, 0.6); border-radius: 6px; padding: 6px 14px;
+    color: rgba(244, 114, 182, 0.85);
+}
+.due-stamp b { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; }
+.due-stamp i { font-family: var(--serif); font-style: normal; font-weight: 700; font-size: 18px; letter-spacing: 0.04em; }
 .album-progress .bar { height: 6px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; margin: 14px 0 10px; }
 .album-progress .bar > i { display: block; height: 100%; width: 0%; background: var(--accent); }
 .album-progress small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
 .album-progress .cta-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; }
+@media (max-width: 520px) { .due-stamp { display: none; } }
 
 /* ---------- FLOOR-6 옥상광장 (루프탑 파티) ---------- */
 /* 노을~밤 루프탑 무드 배너 */
