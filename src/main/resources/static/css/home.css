@@ -90,10 +90,10 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
     background: linear-gradient(90deg, transparent 0%, var(--sec-color) 62%, #fff 100%);
     filter: drop-shadow(0 0 6px var(--sec-color)); opacity: 0; pointer-events: none; }
 /* 완료 반짝(sparkle) — 별똥별이 끝에 도달하면 '별'이 한 번 반짝 후 사라짐 (밑줄 없음) */
-.sec-head h2::before { content: ""; position: absolute; bottom: -7px; left: 100%; margin-left: -11px;
-    width: 22px; height: 22px; background: #fff;
-    clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
-    filter: drop-shadow(0 0 7px #fff) drop-shadow(0 0 16px var(--sec-color)); opacity: 0; transform: scale(0); pointer-events: none; }
+.sec-head h2::before { content: ""; position: absolute; bottom: -4px; left: 100%; margin-left: -8px;
+    width: 16px; height: 16px; background: #fff;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    filter: drop-shadow(0 0 6px #fff) drop-shadow(0 0 13px var(--sec-color)); opacity: 0; transform: scale(0); pointer-events: none; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; padding-bottom: 15px; }
 
 /* ---------- 섹션 진입 애니메이션 (뷰 진입 시마다 재생) ---------- */
@@ -113,10 +113,10 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
     100% { left: calc(100% + 6px); opacity: 0; }
 }
 @keyframes sh-star {
-    0%   { opacity: 0; transform: scale(0) rotate(0deg); }
-    40%  { opacity: 1; transform: scale(1.75) rotate(35deg); }
-    68%  { opacity: 1; transform: scale(1.15) rotate(45deg); }
-    100% { opacity: 0; transform: scale(2) rotate(64deg); }
+    0%   { opacity: 0; transform: scale(0) rotate(-12deg); }
+    42%  { opacity: 1; transform: scale(1.5) rotate(8deg); }
+    70%  { opacity: 1; transform: scale(1.05) rotate(0deg); }
+    100% { opacity: 0; transform: scale(1.65) rotate(6deg); }
 }
 @media (prefers-reduced-motion: reduce) {
     .sec-head .floor-mark, .sec-head h2, .sec-head .en { opacity: 1; transform: none; }
