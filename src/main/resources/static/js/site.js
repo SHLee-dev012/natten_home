@@ -1,5 +1,15 @@
 // 축제 홈 인터랙션 — 스크롤 스파이 · 리빌 · 일정표 탭 · 계좌복사 · 낯선가계도 데모
 (function () {
+  // 공지 티커 — 클릭 시 상세 펼침
+  var ticker = document.getElementById('notice');
+  var ntToggle = document.getElementById('ntToggle');
+  if (ticker && ntToggle) {
+    ntToggle.addEventListener('click', function () {
+      var open = ticker.classList.toggle('open');
+      ntToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
   // 헤더 스크롤 상태(고정 시 블러·그림자 강화)
   var siteNav = document.querySelector('header.site-nav');
   if (siteNav) {
