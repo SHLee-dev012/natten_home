@@ -68,13 +68,19 @@ a { color: inherit; } img { max-width: 100%; display: block; }
 .tag-rose { color: var(--rose); border-color: rgba(244,114,182,.5); background: rgba(244,114,182,.08); }
 
 .section-wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
-section { padding: 72px 0; position: relative; }
+section { padding: 82px 0; position: relative; }
 section[id] { scroll-margin-top: 72px; }
-.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 24px; margin-bottom: 34px; }
-.sec-head .floor-mark { width: 100%; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--accent-solid); }
-.sec-head h2 { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4vw, 36px); margin: 0; letter-spacing: -.01em;
+/* 섹션 경계선 — 섹션마다 명확히 구분 */
+section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
+
+.sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 24px; margin-bottom: 38px; }
+/* 섹션 라벨(키커) — 선행 틱 + 대문자 자간으로 '섹션 표시'임을 분명히 */
+.sec-head .floor-mark { width: 100%; display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-solid); margin-bottom: 10px; }
+.sec-head .floor-mark::before { content: ""; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
+/* 섹션 제목 — 크게 + 액센트 밑줄로 '섹션명'임을 분명히 */
+.sec-head h2 { font-family: var(--serif); font-weight: 800; font-size: clamp(27px, 4.2vw, 40px); margin: 0; letter-spacing: -.01em; line-height: 1.15; padding-bottom: 13px; border-bottom: 3px solid var(--accent-solid);
     background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; }
+.sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; padding-bottom: 15px; }
 .lead { max-width: 660px; font-size: 15.5px; line-height: 1.9; color: var(--muted); margin-bottom: 32px; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
@@ -82,11 +88,9 @@ section[id] { scroll-margin-top: 72px; }
 /* ---------- section rhythm on the fixed backdrop ---------- */
 .pillar-hook { text-align: left; margin-left: 0; }
 
-/* 은은한 다크 교차 — 일부 섹션을 '살짝 밝은 다크 패널'로 (전체 다크 유지, 큰 낙차 제거) */
+/* 은은한 다크 교차 — 일부 섹션을 '살짝 밝은 다크 패널'로 (경계선은 공통 규칙이 담당) */
 .sec-light {
-    background: linear-gradient(180deg, rgba(129, 140, 248, 0.06), rgba(129, 140, 248, 0.028));
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(129, 140, 248, 0.07), rgba(129, 140, 248, 0.03));
 }
 
 /* ---------- NAV ---------- */
