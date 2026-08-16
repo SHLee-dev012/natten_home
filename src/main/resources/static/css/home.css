@@ -85,8 +85,29 @@ section[id] { scroll-margin-top: 72px; }
 
 /* ---------- section rhythm on the fixed backdrop ---------- */
 #pillars, #floor-6, #familytree, #crew { background: var(--panel-dark); }
-#programs, #schedule, #floor-4, #archive, #howto, #prelude { background: var(--panel); }
+#programs, #archive { background: var(--panel); }
 #floor-6, #pillars { text-align: center; }
+
+/* ---------- LIGHT sections (라이트+다크 교차) — 변수 스코프 오버라이드 ---------- */
+.sec-light {
+    --ink: #1b1e33;
+    --muted: #4a4f6b;
+    --faint: #767c98;
+    --line: rgba(27, 30, 51, 0.12);
+    --glass: #ffffff;
+    --panel: transparent; --panel-dark: transparent;
+    --accent-solid: #7c3aed;
+    --gold: #b45309;
+    --stamp: #7c3aed;
+    --rose: #be185d;
+    background: #eaecf8;
+    color: var(--ink);
+}
+.sec-light .sec-head h2 { background: linear-gradient(120deg, #4f46e5, #7c3aed 45%, #0e7490); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.sec-light .photo-slot { background: repeating-linear-gradient(45deg, rgba(27,30,51,.06) 0 8px, transparent 8px 16px); color: var(--faint); border-bottom-color: var(--line); }
+.sec-light .rz-card, .sec-light .howto-card, .sec-light .lecture-card, .sec-light .archive-card, .sec-light .sched-chip, .sec-light .account-box, .sec-light .founders-card { box-shadow: 0 10px 26px -18px rgba(27, 30, 51, 0.35); }
+.sec-light .ov-note { background: rgba(124, 58, 237, 0.07); }
+.sec-light table.sched tr.today td { background: rgba(124, 58, 237, 0.09); }
 #pillars .sec-head, #floor-6 .sec-head { justify-content: center; text-align: center; }
 #pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: center; }
 
