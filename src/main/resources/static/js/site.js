@@ -29,6 +29,19 @@
     targets.forEach(function (t) { io.observe(t); });
   }
 
+  // 섹션 타이틀 진입 애니메이션 (섹션으로 이동할 때마다 재생)
+  var secHeads = document.querySelectorAll('.sec-head');
+  if (secHeads.length && 'IntersectionObserver' in window) {
+    var sho = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle('sh-in', entry.isIntersecting);
+      });
+    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.25 });
+    secHeads.forEach(function (el) { sho.observe(el); });
+  } else {
+    secHeads.forEach(function (el) { el.classList.add('sh-in'); });
+  }
+
   // 스크롤 리빌
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
