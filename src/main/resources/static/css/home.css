@@ -2,7 +2,7 @@
     --space: #05060f;
     --ink: #f4f5ff;
     --muted: #b7bce0;
-    --faint: #8b90b8;
+    --faint: #a3a8cc;
     --line: rgba(160, 170, 255, 0.2);
     --glass: rgba(26, 30, 66, 0.6);
     --panel: rgba(255, 255, 255, 0.02);
@@ -58,14 +58,14 @@ section[id] { scroll-margin-top: 72px; }
 .sec-head h2 { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4vw, 36px); margin: 0; letter-spacing: -.01em;
     background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; }
-.lead { max-width: 660px; font-size: 15px; line-height: 1.85; color: var(--muted); margin-bottom: 32px; }
+.lead { max-width: 660px; font-size: 15.5px; line-height: 1.9; color: var(--muted); margin-bottom: 32px; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ---------- section rhythm on the fixed backdrop ---------- */
 #floor-6, #pillars { text-align: center; }
 #pillars .sec-head, #floor-6 .sec-head { justify-content: center; text-align: center; }
-#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: center; }
+#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: left; }
 
 /* 은은한 다크 교차 — 일부 섹션을 '살짝 밝은 다크 패널'로 (전체 다크 유지, 큰 낙차 제거) */
 .sec-light {
@@ -74,7 +74,7 @@ section[id] { scroll-margin-top: 72px; }
     border-bottom: 1px solid var(--line);
 }
 #pillars .sec-head, #floor-6 .sec-head { justify-content: center; text-align: center; }
-#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: center; }
+#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: left; }
 
 /* ---------- NAV ---------- */
 header.site-nav {
@@ -168,7 +168,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .howto-card { background: var(--glass); border: 1px solid var(--line); border-radius: 12px; padding: 22px 20px; }
 .howto-card .howto-num { font-family: var(--serif); font-weight: 900; font-size: 24px; color: var(--accent-solid); display: block; margin-bottom: 10px; }
 .howto-card h4 { font-family: var(--serif); font-weight: 700; font-size: 16px; margin: 0 0 10px; line-height: 1.4; }
-.howto-card p { font-size: 12.5px; line-height: 1.8; color: var(--muted); margin: 0; }
+.howto-card p { font-size: 13.5px; line-height: 1.8; color: var(--muted); margin: 0; }
 .howto-footer { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; border-top: 1px solid var(--line); padding-top: 28px; }
 @media (max-width: 700px) { .howto-footer { grid-template-columns: 1fr; } }
 .howto-goods h4 { font-family: var(--serif); font-weight: 700; font-size: 18px; margin: 8px 0 8px; }
@@ -187,11 +187,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 520px) { .program-grid { grid-template-columns: 1fr !important; } }
 .program-card { display: block; background: var(--glass); border: 1px solid var(--line); border-top: 3px solid var(--p-color, var(--gold)); border-radius: 10px; padding: 20px 18px; text-decoration: none; color: inherit; transition: transform .15s ease, box-shadow .15s ease; }
 .program-card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.35); }
-.program-card .pc-code { font-family: var(--mono); font-size: 10px; color: var(--p-color, var(--accent-solid)); letter-spacing: .06em; }
-.program-card .pc-cat { display: block; font-family: var(--mono); font-size: 10px; color: var(--faint); letter-spacing: .03em; margin: 4px 0 10px; }
+.program-card .pc-code { font-family: var(--mono); font-size: 11px; color: var(--p-color, var(--accent-solid)); letter-spacing: .06em; }
+.program-card .pc-cat { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .03em; margin: 4px 0 10px; }
 .program-card h4 { font-family: var(--serif); font-weight: 700; font-size: 16px; margin: 0 0 8px; line-height: 1.4; }
-.program-card p { font-size: 12.5px; line-height: 1.7; color: var(--muted); margin: 0 0 12px; }
-.program-card .pc-meta { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--faint); margin-bottom: 10px; }
+.program-card p { font-size: 13.5px; line-height: 1.7; color: var(--muted); margin: 0 0 12px; }
+.program-card .pc-meta { display: block; font-family: var(--mono); font-size: 11px; color: var(--faint); margin-bottom: 10px; }
 .program-card .pc-more { font-family: var(--mono); font-size: 11px; color: var(--accent-solid); font-weight: 600; }
 
 /* ---------- PROGRAM (lecture cards) ---------- */
@@ -207,10 +207,10 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .lecture-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .photo-slot { aspect-ratio: 4/3; border-bottom: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px); color: var(--faint); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-align: center; padding: 8px; }
 .lecture-card .body { padding: 14px; }
-.lecture-card .room { font-family: var(--mono); font-size: 10.5px; color: var(--accent-solid); margin-bottom: 8px; letter-spacing: .04em; display: block; }
-.lecture-card .field { font-family: var(--mono); font-size: 9.5px; letter-spacing: .05em; color: var(--gold); border: 1px solid rgba(251,191,36,.5); border-radius: 999px; padding: 2px 8px; display: inline-block; margin-bottom: 9px; }
+.lecture-card .room { font-family: var(--mono); font-size: 11px; color: var(--accent-solid); margin-bottom: 8px; letter-spacing: .04em; display: block; }
+.lecture-card .field { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; color: var(--gold); border: 1px solid rgba(251,191,36,.5); border-radius: 999px; padding: 2px 8px; display: inline-block; margin-bottom: 9px; }
 .lecture-card .kw { font-family: var(--serif); font-size: 14.5px; font-weight: 700; line-height: 1.45; margin-bottom: 6px; }
-.lecture-card .who { font-size: 11.5px; color: var(--muted); }
+.lecture-card .who { font-size: 12.5px; color: var(--muted); }
 .why-box { max-width: 720px; margin: 0 0 44px; padding: 22px 24px; border-left: 3px solid var(--accent-solid); background: rgba(167,139,250,.07); border-radius: 0 8px 8px 0; }
 .why-box p { font-size: 14px; line-height: 1.9; color: var(--muted); margin: 0; }
 .why-box .tags { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -226,7 +226,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 640px) { .sched-zone { grid-template-columns: 1fr; } }
 .sched-zone-head { font-family: var(--serif); font-weight: 700; font-size: 14.5px; color: var(--ink); padding-left: 12px; border-left: 3px solid var(--z-color, var(--gold)); }
 .sched-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.sched-chip { font-size: 12px; line-height: 1.6; background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; color: var(--muted); }
+.sched-chip { font-size: 13px; line-height: 1.6; background: var(--glass); border: 1px solid var(--line); border-radius: 999px; padding: 7px 13px; color: var(--muted); }
 .sched-chip b { font-family: var(--mono); font-weight: 600; color: var(--ink); margin-right: 4px; }
 
 /* ---------- FLOOR-4 romance zone ---------- */
@@ -252,7 +252,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; padding: 22px 20px; }
 .archive-card .room-tag { font-family: var(--mono); font-size: 10.5px; color: var(--accent-solid); margin-bottom: 10px; display: block; }
 .archive-card h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 10px; }
-.archive-card p { font-size: 12.5px; color: var(--muted); line-height: 1.8; margin: 0; }
+.archive-card p { font-size: 13.5px; color: var(--muted); line-height: 1.8; margin: 0; }
 .founders-card { background: var(--glass); border: 1px solid var(--line); border-radius: 12px; padding: 28px 26px; }
 .founders-card .eyebrow { color: var(--gold); }
 .founders-card h3 { font-family: var(--serif); font-weight: 700; font-size: 23px; margin: 10px 0 8px; }
@@ -328,7 +328,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 .crew-lead .nm { font-size: 14px; line-height: 1.9; color: var(--ink); }
 .crew-table { display: grid; grid-template-columns: 200px 1fr; gap: 4px 24px; }
 @media (max-width: 700px) { .crew-table { grid-template-columns: 1fr; } }
-.crew-table .team { font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--faint); padding: 13px 0; border-top: 1px solid var(--line); }
+.crew-table .team { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; color: var(--faint); padding: 13px 0; border-top: 1px solid var(--line); }
 .crew-table .names { font-size: 14px; padding: 13px 0; border-top: 1px solid var(--line); line-height: 1.9; color: var(--ink); }
 @media (max-width: 700px) { .crew-table .team { border-top: none; padding-bottom: 2px; opacity: .7; } .crew-table .names { border-top: none; padding-top: 0; margin-bottom: 6px; } }
 
@@ -416,7 +416,7 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
     #cover { padding: 40px 0 48px; }
     .section-wrap { padding: 0 18px; }
     .sec-head { margin-bottom: 22px; gap: 8px 14px; }
-    .lead { margin-bottom: 22px; font-size: 14px; }
+    .lead { margin-bottom: 22px; font-size: 14.5px; }
     /* 컴팩트 카드 그리드는 모바일에서도 2열 유지 → 세로 길이 절반 */
     .program-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
     .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -438,6 +438,8 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 }
 @media (max-width: 380px) {
     /* 아주 좁은 화면: 카드는 2열 유지하되 폰트만 소폭 축소 */
-    .program-card .pc-cat, .program-card .pc-meta { font-size: 9.5px; }
+    .program-card .pc-cat, .program-card .pc-meta { font-size: 10.5px; }
     .lecture-card .kw { font-size: 12.5px; }
 }
+
+@media (max-width: 640px) { .sec-head .en { margin-left: 0; width: 100%; } }
