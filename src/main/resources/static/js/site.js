@@ -10,6 +10,23 @@
     });
   }
 
+  // 모바일 플로팅 스크롤 버튼 (맨 위로 / 맨 아래로)
+  var fab = document.getElementById('scrollFab');
+  if (fab) {
+    var sfTop = document.getElementById('sfTop');
+    var sfBottom = document.getElementById('sfBottom');
+    sfTop.addEventListener('click', function () { window.scrollTo(0, 0); });
+    sfBottom.addEventListener('click', function () { window.scrollTo(0, document.documentElement.scrollHeight); });
+    var updateFab = function () {
+      var y = window.scrollY, vh = window.innerHeight, dh = document.documentElement.scrollHeight;
+      sfTop.classList.toggle('sf-hide', y < 240);
+      sfBottom.classList.toggle('sf-hide', y + vh >= dh - 240);
+    };
+    updateFab();
+    window.addEventListener('scroll', updateFab, { passive: true });
+    window.addEventListener('resize', updateFab, { passive: true });
+  }
+
   // 헤더 스크롤 상태(고정 시 블러·그림자 강화)
   var siteNav = document.querySelector('header.site-nav');
   if (siteNav) {

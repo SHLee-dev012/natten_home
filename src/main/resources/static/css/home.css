@@ -787,3 +787,24 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 }
 
 @media (max-width: 640px) { .sec-head .en { margin-left: 0; width: 100%; } }
+
+/* ---------- 모바일 플로팅 스크롤 버튼 (맨 위로 / 맨 아래로) ---------- */
+.scroll-fab { display: none; }
+@media (max-width: 640px) {
+    .scroll-fab { display: flex; flex-direction: column; gap: 9px; position: fixed; right: 14px; bottom: 18px; z-index: 90; }
+    .sf-btn {
+        width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+        border: 1px solid rgba(160, 170, 255, 0.28);
+        background: rgba(18, 16, 30, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        color: var(--ink); font-size: 20px; line-height: 1; font-family: var(--sans);
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.75);
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.18s ease, opacity 0.22s ease, background 0.2s ease, visibility 0.22s;
+    }
+    .sf-btn:active { transform: scale(0.9); background: rgba(40, 36, 58, 0.9); }
+    .sf-btn.sf-hide { opacity: 0; visibility: hidden; transform: scale(0.7); pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sf-btn { transition: opacity 0.2s ease, visibility 0.2s; }
+}
