@@ -35,6 +35,27 @@
     window.addEventListener('resize', updateFab, { passive: true });
   }
 
+  // 캠퍼스 맵 모달 (플로팅 버튼으로 열기)
+  var mapModal = document.getElementById('mapModal');
+  var sfMap = document.getElementById('sfMap');
+  if (mapModal && sfMap) {
+    var openMap = function () {
+      mapModal.classList.add('open');
+      mapModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    var closeMap = function () {
+      mapModal.classList.remove('open');
+      mapModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+    sfMap.addEventListener('click', openMap);
+    mapModal.querySelectorAll('[data-mapclose]').forEach(function (el) { el.addEventListener('click', closeMap); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mapModal.classList.contains('open')) closeMap();
+    });
+  }
+
   // 헤더 스크롤 상태(고정 시 블러·그림자 강화)
   var siteNav = document.querySelector('header.site-nav');
   if (siteNav) {

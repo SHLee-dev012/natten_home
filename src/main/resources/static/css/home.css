@@ -798,23 +798,44 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 
 @media (max-width: 640px) { .sec-head .en { margin-left: 0; width: 100%; } }
 
-/* ---------- 모바일 플로팅 스크롤 버튼 (맨 위로 / 맨 아래로) ---------- */
-.scroll-fab { display: none; }
-@media (max-width: 640px) {
-    .scroll-fab { display: flex; flex-direction: column; gap: 9px; position: fixed; right: 14px; bottom: 18px; z-index: 90; }
-    .sf-btn {
-        width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
-        border: 1px solid rgba(160, 170, 255, 0.28);
-        background: rgba(18, 16, 30, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-        color: var(--ink); font-size: 20px; line-height: 1; font-family: var(--sans);
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.75);
-        -webkit-tap-highlight-color: transparent;
-        transition: transform 0.18s ease, opacity 0.22s ease, background 0.2s ease, visibility 0.22s;
-    }
-    .sf-btn:active { transform: scale(0.9); background: rgba(40, 36, 58, 0.9); }
-    .sf-btn.sf-hide { opacity: 0; visibility: hidden; transform: scale(0.7); pointer-events: none; }
+/* ---------- 플로팅 버튼 (맨위/맨아래 스크롤 · 캠퍼스 맵) ---------- */
+.scroll-fab { display: flex; flex-direction: column; gap: 9px; position: fixed; right: 14px; bottom: 18px; z-index: 90; }
+.sf-btn {
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1px solid rgba(160, 170, 255, 0.28);
+    background: rgba(18, 16, 30, 0.82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    color: var(--ink); font-size: 20px; line-height: 1; font-family: var(--sans);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.75);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.18s ease, opacity 0.22s ease, background 0.2s ease, visibility 0.22s;
 }
+.sf-btn:active { transform: scale(0.9); background: rgba(40, 36, 58, 0.9); }
+.sf-btn.sf-hide { opacity: 0; visibility: hidden; transform: scale(0.7); pointer-events: none; }
+/* 스크롤 이동 버튼은 모바일 전용 */
+.sf-top, .sf-bottom { display: none; }
+@media (max-width: 640px) { .sf-top, .sf-bottom { display: flex; } }
+/* 캠퍼스 맵 버튼 — PC·모바일 공통, 항상 표시 (맨 마지막), 액센트 톤 */
+.sf-map { font-size: 19px; border-color: rgba(167, 139, 250, 0.55); background: rgba(30, 24, 48, 0.86); }
+.sf-map:hover { background: rgba(46, 37, 68, 0.92); }
 @media (prefers-reduced-motion: reduce) {
     .sf-btn { transition: opacity 0.2s ease, visibility 0.2s; }
 }
+
+/* ---------- 캠퍼스 맵 모달 ---------- */
+.map-modal { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 24px; }
+.map-modal.open { display: flex; }
+.map-backdrop { position: absolute; inset: 0; background: rgba(3, 4, 12, 0.8); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); animation: ob-fade .3s ease; }
+.map-dialog { position: relative; z-index: 1; width: min(94vw, 640px); max-height: 86vh; overflow-y: auto;
+    background: linear-gradient(160deg, #16131f, #0a0912); border: 1px solid rgba(160, 170, 255, 0.22); border-radius: 14px;
+    padding: 30px 30px 26px; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    animation: map-pop .32s cubic-bezier(.2, .7, .2, 1); }
+.map-close { position: absolute; top: 14px; right: 14px; width: 34px; height: 34px; border-radius: 50%;
+    border: 1px solid var(--line); background: rgba(20, 18, 32, 0.9); color: var(--ink); font-size: 15px; line-height: 1; cursor: pointer; }
+.map-close:hover { background: rgba(40, 36, 58, 0.95); }
+.map-kicker { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--accent-solid); }
+.map-title { font-family: var(--serif); font-weight: 800; font-size: clamp(20px, 4vw, 26px); margin: 10px 0 6px; color: var(--ink); }
+.map-sub { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
+.map-floors .fd-row:first-child { border-top: 1px solid var(--line); }
+@keyframes map-pop { 0% { opacity: 0; transform: translateY(14px) scale(.97); } 100% { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .map-dialog, .map-backdrop { animation: none; } }
