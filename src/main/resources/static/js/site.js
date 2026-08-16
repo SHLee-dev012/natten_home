@@ -1,5 +1,13 @@
 // 축제 홈 인터랙션 — 스크롤 스파이 · 리빌 · 일정표 탭 · 계좌복사 · 낯선가계도 데모
 (function () {
+  // 헤더 스크롤 상태(고정 시 블러·그림자 강화)
+  var siteNav = document.querySelector('header.site-nav');
+  if (siteNav) {
+    var onNavScroll = function () { siteNav.classList.toggle('scrolled', window.scrollY > 10); };
+    onNavScroll();
+    window.addEventListener('scroll', onNavScroll, { passive: true });
+  }
+
   // 모바일 햄버거 메뉴
   var navToggle = document.getElementById('nav-toggle');
   var navLinksEl = document.getElementById('nav-links');
