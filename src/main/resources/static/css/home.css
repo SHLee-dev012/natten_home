@@ -80,9 +80,6 @@ section[id] { scroll-margin-top: 72px; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ---------- section rhythm on the fixed backdrop ---------- */
-#floor-6 { text-align: center; }
-#floor-6 .sec-head { justify-content: center; text-align: center; }
-#floor-6 .lead { margin-left: auto; margin-right: auto; text-align: center; }
 .pillar-hook { text-align: left; margin-left: 0; }
 
 /* 은은한 다크 교차 — 일부 섹션을 '살짝 밝은 다크 패널'로 (전체 다크 유지, 큰 낙차 제거) */
