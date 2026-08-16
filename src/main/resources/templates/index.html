@@ -3,185 +3,525 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title th:text="${festival.name()} + ' — 홈'">notten 페스티벌</title>
+    <meta name="color-scheme" content="dark"/>
+    <title>낯선대학 10주년 축제 · Stranger Univ. 10th Anniversary Festival</title>
     <link rel="icon" type="image/svg+xml" th:href="@{/img/favicon.svg}"/>
     <link rel="icon" type="image/png" sizes="32x32" th:href="@{/img/favicon-32.png}"/>
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon-16.png}"/>
     <link rel="apple-touch-icon" th:href="@{/img/apple-touch-icon.png}"/>
     <link rel="stylesheet" th:href="@{/css/home.css}"/>
 </head>
-<body>
+<body id="top">
 <div class="starfield" aria-hidden="true"></div>
 <div class="brand-bg" aria-hidden="true"></div>
 
-<header class="site-header">
-    <div class="nav">
-        <a class="brand" href="/">
-            <img class="brand-logo" th:src="@{/img/logo.png}" alt="낯텐"/>
+<header class="site-nav">
+    <div class="nav-inner">
+        <a href="#top" class="nav-logo">
+            <img th:src="@{/img/logo.png}" alt="낯선대학"/>
+            <span>10TH ANNIV.</span>
         </a>
         <nav class="nav-links">
-            <a href="#programs">프로그램</a>
-            <a href="#schedule">행사 일정</a>
-            <a href="#guestbook">게시판</a>
-            <a href="#location">오시는 길</a>
-            <a href="/api/festival">API</a>
+            <a href="#notice" data-nav>공지사항</a>
+            <a href="#overview" data-nav>축제개요</a>
+            <a href="#schedule" data-nav>일정표</a>
+            <a href="#floor-4" data-nav>캠퍼스라이프</a>
+            <a href="#floor-5" data-nav>진리탐구</a>
+            <a href="#floor-6" data-nav>우정과 사랑</a>
+            <a href="#archive" data-nav>아카이브</a>
+            <a href="#familytree" data-nav>낯선가계도</a>
+            <a href="#location" data-nav>오시는 길</a>
+            <a href="#crew" data-nav>축제를 만드는 사람들</a>
         </nav>
+        <a href="#location" class="btn btn-solid nav-cta">후원하기</a>
     </div>
 </header>
 
-<main>
-    <section class="hero">
-        <div class="hero-copy">
-            <p class="eyebrow" th:text="${festival.eyebrow()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
-            <h1 class="hero-title" th:text="${festival.name()}">낯선대학 10주년 축제</h1>
-            <p class="hero-tagline" th:text="${festival.tagline()}">과거를 기록하고, 현재를 연결하고, 미래를 확장하는 축제</p>
-            <div class="hero-meta">
-                <span class="pill pill--accent" th:text="${festival.dateRange()}">9월 12일 – 13일</span>
-                <span class="pill pill--accent">SAT–SUN</span>
-                <a class="pill pill--link" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer"
-                   th:text="'📍 ' + ${venue.name()}">📍 사유의 서재</a>
+<!-- 학사공지 -->
+<section id="notice">
+    <div class="section-wrap">
+        <div class="notice-banner reveal in">
+            <div class="notice-head">
+                <span class="notice-tag">📌 학사공지 · NOTICE</span>
+                <span class="notice-date">2026 가을학기</span>
             </div>
-        </div>
-        <figure class="hero-poster">
-            <img th:src="@{/img/poster.jpg}" th:alt="${festival.name()} + ' 포스터'"
-                 width="1080" height="1518" decoding="async" fetchpriority="high"/>
-        </figure>
-    </section>
-
-    <section id="programs" class="programs">
-        <h2>프로그램</h2>
-        <ul class="grid">
-            <li th:each="p : ${programs}">
-                <button type="button" class="card"
-                        th:attr="data-title=${p.title()},data-category=${p.category()},data-time=${p.time()},data-place=${p.place()},data-day=${p.day()},data-day-label=${p.dayLabel()},data-desc=${p.description()}">
-                    <span class="card-top">
-                        <span class="tag" th:attr="data-cat=${p.category()}" th:text="${p.category()}">공연</span>
-                        <span class="day-badge" th:if="${p.daySpecific()}" th:text="${p.dayLabel()}">2일차</span>
-                    </span>
-                    <span class="card-title" th:text="${p.title()}">프로그램 제목</span>
-                    <span class="card-meta">
-                        <span class="card-time" th:text="${p.time()}">11:00–17:00</span>
-                        <span class="card-place" th:text="${p.place()}">4F 캠퍼스 낭만존</span>
-                    </span>
-                    <span class="card-more">자세히 보기 →</span>
-                </button>
-            </li>
-        </ul>
-    </section>
-
-    <!-- Program detail modal (populated by /js/modal.js from the clicked card) -->
-    <dialog id="program-modal" class="modal">
-        <div class="modal-top">
-            <span class="tag" id="m-tag">공연</span>
-            <span class="day-badge" id="m-day" hidden>2일차</span>
-            <button type="button" class="modal-close" aria-label="닫기">×</button>
-        </div>
-        <h3 class="modal-title" id="m-title">프로그램 제목</h3>
-        <p class="modal-meta">
-            <span id="m-time">11:00–17:00</span>
-            <span class="modal-dot">·</span>
-            <span id="m-place">4F 캠퍼스 낭만존</span>
-        </p>
-        <p class="modal-desc" id="m-desc">설명</p>
-    </dialog>
-
-    <section id="schedule" class="program">
-        <div class="program-head">
-            <h2>행사 일정</h2>
-            <p class="program-note">층 · 존별 시간표입니다. 1~2일차 탭에서 각 날의 일정을 확인하세요.</p>
-        </div>
-
-        <div class="daytabs">
-            <input type="radio" name="day" id="day-1" class="daytab-input" checked/>
-            <input type="radio" name="day" id="day-2" class="daytab-input"/>
-            <div class="daytab-labels" role="tablist">
-                <label for="day-1"><b>1일차</b><span th:text="${days[0]}">9/12 (토)</span></label>
-                <label for="day-2"><b>2일차</b><span th:text="${days[1]}">9/13 (일)</span></label>
-            </div>
-            <p class="scroll-hint">← 좌우로 스크롤하여 전체 시간표를 확인하세요 →</p>
-            <div th:replace="~{fragments/matrix :: matrix(${gridDay1}, ${hours}, 1, ${days[0]})}"></div>
-            <div th:replace="~{fragments/matrix :: matrix(${gridDay2}, ${hours}, 2, ${days[1]})}"></div>
-        </div>
-    </section>
-
-    <section id="guestbook" class="program guestbook">
-        <div class="program-head">
-            <h2>게시판</h2>
-            <p class="program-note">누구나 자유롭게 글을 남길 수 있는 방명록입니다. 이름 없이도 작성돼요.</p>
-        </div>
-
-        <form class="gb-form" id="gb-form" autocomplete="off">
-            <input class="gb-name" id="gb-name" type="text" name="name" maxlength="20" placeholder="이름 낯대기수 (선택)"/>
-            <input class="gb-title" id="gb-title" type="text" name="title" maxlength="60" placeholder="제목" required/>
-            <textarea class="gb-message" id="gb-message" name="message" rows="3" maxlength="500"
-                      placeholder="내용을 남겨주세요…" required></textarea>
-            <input class="gb-pw" id="gb-password" type="password" maxlength="40"
-                   placeholder="비밀번호 (수정·삭제 시 필요)" required/>
-            <div class="gb-form-foot">
-                <span class="gb-count" id="gb-count">0 / 500</span>
-                <button class="gb-submit" id="gb-submit" type="submit">글 남기기</button>
-            </div>
-            <p class="gb-status" id="gb-status" role="status" aria-live="polite" hidden></p>
-        </form>
-
-        <ul class="gb-list" id="gb-list">
-            <li class="gb-empty" id="gb-loading">불러오는 중…</li>
-        </ul>
-        <nav class="gb-pager" id="gb-pager" aria-label="게시판 페이지" hidden></nav>
-    </section>
-
-    <section id="location" class="location">
-        <div class="location-card">
-            <p class="eyebrow">VENUE</p>
-            <h2 class="location-name" th:text="${venue.name()}">사유의 서재</h2>
-            <p class="location-areas">
-                <span class="area-pill" th:each="a : ${venue.areas()}" th:text="${a}">4층</span>
-            </p>
-            <p class="location-desc">축제는 사유의 서재 4층 · 5층과 테라스 공간에서 열립니다.</p>
-            <a class="btn-map" th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer">
-                네이버 지도에서 보기 →
-            </a>
-        </div>
-    </section>
-</main>
-
-<footer class="foot">
-    <div class="foot-inner">
-        <div class="foot-brand">
-            <figure class="foot-seal">
-                <img th:src="@{/img/emblem.png}" alt="낯텐축제"/>
-            </figure>
-            <div class="foot-brand-text">
-                <p class="foot-name" th:text="${festival.name()}">낯선대학 10주년 축제</p>
-                <p class="foot-eyebrow" th:text="${festival.eyebrow()}">STRANGER UNIV. 10TH ANNIVERSARY</p>
-            </div>
-        </div>
-
-        <nav class="foot-col">
-            <h3>바로가기</h3>
-            <a href="#programs">프로그램</a>
-            <a href="#schedule">행사 일정</a>
-            <a href="#guestbook">게시판</a>
-            <a href="#location">오시는 길</a>
-            <a href="/api/festival">API</a>
-        </nav>
-
-        <div class="foot-col">
-            <h3>정보</h3>
-            <p><span th:text="${festival.dateRange()}">9월 12일 – 13일</span> · SAT–SUN</p>
-            <p th:text="${venue.name()} + ' · ' + ${venue.areaLabel()}">사유의 서재 · 4층 · 5층 · 테라스</p>
-            <a th:href="${venue.mapUrl()}" target="_blank" rel="noopener noreferrer">네이버 지도에서 보기 →</a>
+            <h3>가을학기 개강 알림 — 단, 2일간의 학기가 열립니다</h3>
+            <p>1,000명이 모이는 단 한 번의 시간, 여기서 다시 시작되는 느슨하고 신나는 연결. 낯선대학 동문 여러분, 이번 가을 딱 2일짜리 특별 학기에 초대합니다. 수강신청은 따로 없습니다 — 그냥 오시면 됩니다.</p>
         </div>
     </div>
+</section>
 
-    <div class="foot-bar">
-        <span th:text="'© 2026 ' + ${festival.name()}">© 2026 낯선대학 10주년 축제</span>
-        <a class="foot-top" href="#top">맨 위로 ↑</a>
-        <span class="muted">natten-home · Spring Boot</span>
+<!-- HERO -->
+<section id="cover">
+    <div class="section-wrap">
+        <div class="hero-eyebrow">STRANGER UNIV. — 10TH ANNIVERSARY FESTIVAL</div>
+        <h1 class="hero-title">낯선대학 10주년 <em>축제</em></h1>
+        <div class="hero-en">이런 학기, 처음이지?</div>
+        <p class="hero-copy">10년에 단 한 번뿐인, 다시 오지 않을 시간. 과거를 기록하고 현재를 연결하고 미래를 확장하는, 낯선 우리들의 낯선 축제. 단 2일간, 명동에 다시 열리는 낯선대학 캠퍼스로 초대합니다.</p>
+        <div class="hero-facts">
+            <span>📅 <b>2026.9.12(토) – 9.13(일)</b></span>
+            <span>📍 <b>사유의서재 남산</b> · 명동</span>
+            <span>🎟️ <b>후원자 전원</b> 입장 가능</span>
+        </div>
+        <div class="hero-ctas">
+            <a class="btn btn-solid" href="#location">후원하기</a>
+            <a class="btn btn-ghost-dark" href="#overview">축제개요 보기</a>
+        </div>
+    </div>
+</section>
+
+<!-- 축제개요 -->
+<section id="overview">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">OFFICIAL</span><h2>축제개요</h2><span class="en">FESTIVAL OVERVIEW</span></div>
+        <div class="overview-grid">
+            <div class="ov-poster reveal"><img th:src="@{/img/poster.jpg}" alt="낯선대학 10주년 축제 공식 포스터"/></div>
+            <div class="ov-facts reveal">
+                <table class="ov-table">
+                    <tr><th>행사명</th><td>낯선대학 10주년 축제 (STRANGER UNIV. 10TH ANNIVERSARY FESTIVAL)</td></tr>
+                    <tr><th>일시</th><td>2026년 9월 12일(토) – 13일(일), 2일간</td></tr>
+                    <tr><th>장소</th><td>사유의서재 남산 · 서울 중구 퇴계로20길 13</td></tr>
+                    <tr><th>주최</th><td>낯선대학위원회 · 낯선대학문화예술축제조직위원회</td></tr>
+                    <tr><th>주관</th><td>낯선대학P 1기(낯텐)</td></tr>
+                    <tr><th>장소협찬</th><td>사유의서재 남산</td></tr>
+                </table>
+                <div class="ov-note">
+                    <b>이 축제는 자발적으로 운영됩니다.</b>
+                    정부지원금도 기업스폰서도 아닌, 낯선대학 동문 한 명 한 명의 후원으로 준비되고 있습니다. 여러분의 후원이 곧 이 축제의 유일한 예산입니다.
+                </div>
+                <div class="hero-ctas" style="justify-content:flex-start;">
+                    <a class="btn btn-solid" href="#location">후원하기</a>
+                    <a class="btn btn-ghost-light" href="#howto">참여방법 보기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3대 덕목 -->
+<section id="pillars">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">WHY WE COME BACK</span><h2>대학에서 우리가 배운 세 가지</h2><span class="en">CAMPUS LIFE · 진리탐구 · 우정과 사랑</span></div>
+        <p class="lead">학생일 때만 느낄 수 있는 낭만이 있습니다. 성적표엔 없지만 우리를 자라게 한 세 가지 — 캠퍼스라이프, 진리탐구, 우정과 사랑. 10년 만에, 다시 그 감각을 느끼러 오세요.</p>
+        <div class="pillar-grid">
+            <div class="pillar-card reveal" style="--p-color:var(--gold);">
+                <span class="p-floor">4F · 캠퍼스낭만존</span>
+                <h3>캠퍼스라이프</h3>
+                <span class="p-en">CAMPUS LIFE — 대학의 낭만</span>
+                <p>축제코인을 손에 쥐고 4F를 누비는 시간. 학생회관 매점 같은 낯선마켓, 동아리 무대 같은 낯선별밤, 뒤풀이 같은 낯선파티까지 — 먹고 마시고 즐기며 캠퍼스가 살아있다는 감각을 다시 느껴보세요.</p>
+                <ul class="p-list"><li>낯선마켓 · F&amp;B &amp; 플리마켓</li><li>낯선라디오 공개방송</li><li>낯선별밤 · 낯선파티</li></ul>
+            </div>
+            <div class="pillar-card reveal" style="--p-color:var(--stamp);">
+                <span class="p-floor">5F · 도서관</span>
+                <h3>진리탐구</h3>
+                <span class="p-en">QUEST FOR TRUTH — 성장과 성숙</span>
+                <p>필수전공과 교양선택 올 A+ 받자. 먼저 걸어본 선배들의 진로 이야기, 창립자 7인의 뿌리, 10년의 기록이 모이는 5F. 낯선대학을 졸업해도, 우리는 여전히 배우고 자랍니다.</p>
+                <ul class="p-list"><li>동문특강 · 사람책 라인업</li><li>뿌리를 찾아서 · 창립자 토크</li><li>졸업앨범 · 사진공모전</li></ul>
+            </div>
+            <div class="pillar-card reveal" style="--p-color:var(--rose);">
+                <span class="p-floor">6F · 옥상광장</span>
+                <h3>우정과 사랑</h3>
+                <span class="p-en">FRIENDSHIP &amp; LOVE — 만남과 인연의 시작</span>
+                <p>남산타워가 보이는 루프탑에서 이어지는 다양한 연결과 연합. 낯선 얼굴이 친구가 되고, 작은 설렘이 시작되던 그 감각. 10년 만에 다시, 낯선 인연을 만나보세요.</p>
+                <ul class="p-list"><li>동문 네트워킹 라운지</li><li>기수를 넘나드는 연결</li><li>다시 만나는 낯선 얼굴들</li></ul>
+            </div>
+        </div>
+        <p class="pillar-hook">"10년에 한 번, 어쩌면 다시 오지 않을 순간. 멋지지 않나요? 10년 전 7명이 10년 후 1,000명의 우주가 되기까지 — 우리의 대단한 여정을 함께 축하해요."</p>
+    </div>
+</section>
+
+<!-- 참여방법 -->
+<section id="howto">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">HOW TO JOIN</span><h2>축제 참여방법</h2><span class="en">단 2일, 놓치면 10년 후</span></div>
+        <p class="lead">이 축제는 스폰서도 지원금도 아닌, 낯선대학 동문 한 명 한 명의 자발적인 후원으로 준비되고 있습니다. 거창한 준비는 필요 없어요. 아래 네 가지만 하시면 됩니다.</p>
+        <div class="howto-grid">
+            <div class="howto-card reveal"><span class="howto-num">01</span><h4>낯선 동기 소환하기</h4><p>단체 채팅방에 링크 하나만 던지세요. "우리 그때 걔도 온대?" — 소문이 가장 빠른 초대장입니다. 오랜만에 이름 불러보는 것부터 시작하세요.</p></div>
+            <div class="howto-card reveal"><span class="howto-num">02</span><h4>나에게 맞는 방식으로 후원하기</h4><p>계좌후원도 좋고, 낯선라이브마켓에 물건이나 재능을 내놓아도 좋습니다. 방식은 달라도 마음은 같으니까요. 후원자 명단은 명예의 전당에 영원히 남습니다. 기업후원은 더 멋지게 그 이름을 빛나게 해드릴게요!</p></div>
+            <div class="howto-card reveal"><span class="howto-num">03</span><h4>캘린더에 콕 박아두기</h4><p>9월 12일(토)–13일(일). 다이어리에 별표 치듯 미리 빼두세요. 그날만큼은 다른 약속 다 제쳐도 됩니다. 10년에 한 번뿐이니까요.</p></div>
+            <div class="howto-card reveal"><span class="howto-num">04</span><h4>드레스코드는 '그 시절'</h4><p>과잠 있으면 꺼내 입고, 없으면 편한 캠퍼스룩으로. 넥타이도 정장도 필요 없습니다. 오늘만큼은 다시, 낯선대학 학생입니다.</p></div>
+        </div>
+        <div class="howto-footer reveal">
+            <div class="howto-goods">
+                <span class="tag tag-gold">10주년 한정판</span>
+                <h4>축제 기념 굿즈</h4>
+                <p>낯선대학 10주년을 기념하는 한정판 굿즈가 준비되고 있습니다. 온라인 판매 없이, 4F 낯선마켓 현장에서만 만날 수 있어요.</p>
+                <span class="tag tag-tba">현장 판매 예정</span>
+            </div>
+            <div class="howto-cta">
+                <p>입장 방법과 오시는 길이 궁금하다면</p>
+                <a class="btn btn-ghost-light" href="#location">오시는 길 확인하기 →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 핵심 프로그램 -->
+<section id="programs">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">CAMPUS LIFE</span><h2>핵심 프로그램</h2><span class="en">한눈에 보는 낯텐 캠퍼스 생활</span></div>
+        <p class="lead">진짜 학기처럼, 전공 수업도 있고 동아리 공연도 있고 뒤풀이도 있습니다. 캠퍼스라이프 · 진리탐구 · 우정과 사랑 — 세 가지 테마로 이틀간의 프로그램을 미리 확인해보세요.</p>
+
+        <div class="pgroup reveal">
+            <div class="pgroup-head" style="--p-color:var(--gold);"><span class="pgroup-tag">01 · 캠퍼스라이프</span><span class="pgroup-en">4F 캠퍼스낭만존 · 대학의 낭만</span></div>
+            <div class="program-grid" style="grid-template-columns:repeat(4,1fr);">
+                <a href="#floor-4" class="program-card" style="--p-color:var(--gold);"><span class="pc-code">CAMP 210</span><span class="pc-cat">학생회관 매점 · 낭만존</span><h4>낯선마켓</h4><p>동문 셀러들의 먹거리와 플리마켓, 축제코인으로 즐기기.</p><span class="pc-meta">4F · 토·일 13:00–19:00</span><span class="pc-more">자세히 보기 →</span></a>
+                <a href="#floor-4" class="program-card" style="--p-color:var(--gold);"><span class="pc-code">CAMP 214</span><span class="pc-cat">교내방송국 · 낭만존</span><h4>낯선라디오 공개방송</h4><p>캠퍼스 방송국이 현장으로 나오는 라이브 방송 시간.</p><span class="pc-meta">4F · 토·일 17:30–18:30</span><span class="pc-more">자세히 보기 →</span></a>
+                <a href="#floor-4" class="program-card" style="--p-color:var(--gold);"><span class="pc-code">CAMP 220</span><span class="pc-cat">동아리 정기공연</span><h4>낯선별밤</h4><p>10년의 감성이 폭발하는 밤, 동문 아티스트 라이브 무대.</p><span class="pc-meta">4F · 토 19:00–20:30</span><span class="pc-more">자세히 보기 →</span></a>
+                <a href="#floor-4" class="program-card" style="--p-color:var(--gold);"><span class="pc-code">CAMP 221</span><span class="pc-cat">뒤풀이 · MT 감성</span><h4>낯선파티</h4><p>오늘 밤이 아쉬운 자여, DJ와 함께 즐기는 뒤풀이 파티.</p><span class="pc-meta">4F · 토 20:30–22:00</span><span class="pc-more">자세히 보기 →</span></a>
+            </div>
+        </div>
+
+        <div class="pgroup reveal">
+            <div class="pgroup-head" style="--p-color:var(--stamp);"><span class="pgroup-tag">02 · 진리탐구</span><span class="pgroup-en">5F 도서관 · 성장과 성숙</span></div>
+            <div class="program-grid">
+                <a href="#program" class="program-card" style="--p-color:var(--stamp);"><span class="pc-code">CAMP 101</span><span class="pc-cat">전공필수 · 강의실</span><h4>동문특강 — 낯선 진로개론</h4><p>진로 고민, 먼저 겪어본 선배들에게 직접 묻는 시간.</p><span class="pc-meta">사람책 8+4강 · 토·일</span><span class="pc-more">자세히 보기 →</span></a>
+                <a href="#floor-5" class="program-card" style="--p-color:var(--stamp);"><span class="pc-code">CAMP 305</span><span class="pc-cat">특별공개강좌 · 도서관</span><h4>뿌리를 찾아서</h4><p>낯선대학 시초 7인이 처음 한자리에 모이는 토크콘서트.</p><span class="pc-meta">5F · 일 18:00–19:00</span><span class="pc-more">자세히 보기 →</span></a>
+                <a href="#floor-5" class="program-card" style="--p-color:var(--stamp);"><span class="pc-code">CAMP 310</span><span class="pc-cat">학보사 특별전시 · 도서관</span><h4>졸업앨범 사진전</h4><p>10년치 사진 500~700장, 아직 미완성인 우리의 앨범.</p><span class="pc-meta">5F · 토·일 13:00–19:00</span><span class="pc-more">자세히 보기 →</span></a>
+            </div>
+        </div>
+
+        <div class="pgroup reveal" style="margin-bottom:0;">
+            <div class="pgroup-head" style="--p-color:var(--rose);"><span class="pgroup-tag">03 · 우정과 사랑</span><span class="pgroup-en">6F 옥상광장 · 만남과 인연의 시작</span></div>
+            <div class="program-grid" style="grid-template-columns:repeat(3,1fr);">
+                <a href="#floor-6" class="program-card" style="--p-color:var(--rose);"><span class="pc-code">CAMP 601</span><span class="pc-cat">동문 라운지 · 루프탑</span><h4>옥상 네트워킹</h4><p>남산타워 보이는 루프탑에서 반가운 얼굴들과 한 잔.</p><span class="pc-meta">6F · 상시</span><span class="pc-more">자세히 보기 →</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 일정표 -->
+<section id="schedule">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">TIMETABLE</span><h2>일정표</h2><span class="en">장소별 · 시간대별 프로그램</span></div>
+        <p class="lead">층·존별 시간표입니다. 요일 탭을 눌러 토요일과 일요일의 일정을 각각 확인하세요.</p>
+        <div class="sched-tabs">
+            <button type="button" class="sched-tab active" data-day="sat">토요일 · 9/12(토)</button>
+            <button type="button" class="sched-tab" data-day="sun">일요일 · 9/13(일)</button>
+        </div>
+        <div class="sched-zones" data-day-panel="sat">
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span><span class="sched-chip"><b>19:00–20:30</b> 낯선별밤</span><span class="sched-chip"><b>20:30–22:00</b> 낯선파티</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (토요일 8강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
+        </div>
+        <div class="sched-zones" data-day-panel="sun" style="display:none;">
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (일요일 4강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span><span class="sched-chip"><b>18:00–19:00</b> 뿌리를 찾아서 · 창립자 토크콘서트</span></div></div>
+            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
+        </div>
+        <p class="lead" style="margin-top:20px; font-size:12px;">※ 동문특강 세부 시간표와 리셉션 운영시간은 확정되는 대로 이 표에 업데이트됩니다.</p>
+    </div>
+</section>
+
+<!-- 동문특강 -->
+<section id="program">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">CAMP 101</span><h2>동문특강 — 사람책 라인업</h2><span class="en">ALUMNI LECTURES · HUMAN LIBRARY</span></div>
+        <p class="lead">1,000명에게 다시 듣고 싶은 사람책 강의를 물었습니다. 10년 중 가장 기억에 남았던 8인의 이야기를 다시 듣습니다. 그들의 10년 전, 그들의 10년 후 — 궁금하지 않나요? <span class="tag tag-tba">라인업 순차 공개</span></p>
+        <div class="why-box reveal">
+            <div class="eyebrow" style="color:var(--accent-solid); margin-bottom:8px;">WHY WE PREPARED THIS · 동문특강을 준비한 이유</div>
+            <p>요즘 대학생들의 가장 큰 고민은 여전히 '진로'입니다. 정답이 없는 시대, 낯선대학 동문들이 먼저 걸어본 낯선 진로의 갈림길을 나눕니다. 금융에서 콘텐츠로, 기자에서 헤드헌터로, 조경에서 플랫폼으로 — 하나의 전공, 하나의 직업에 갇히지 않아도 괜찮다는 걸, 먼저 겪어본 선배들의 이야기로 보여드리고 싶었습니다.</p>
+            <div class="tags" style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+                <span class="tag tag-gold">진로 탐색</span><span class="tag tag-gold">커리어 전환</span><span class="tag tag-gold">N잡 &amp; 사이드 프로젝트</span><span class="tag tag-gold">현직자 Q&amp;A</span>
+            </div>
+            <p class="why-highlight">강의가 끝나면 Q&amp;A와 네트워킹 시간이 이어집니다. 그냥 듣고 가는 특강이 아니에요 — 만나고 연결되는 시간!</p>
+        </div>
+
+        <div class="day-block reveal">
+            <div class="day-title"><span class="dchip">SAT</span><h3>토요일 동문특강</h3></div>
+            <p class="moderator-line">모더레이터 — <b>이민재</b> ((주)사자가온다 대표, C4·C5) · <b>조휘영</b> (세종문화회관 공연예술본부, 낯1·Y0·Y1·Y2·C1)</p>
+            <div class="card-grid">
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">낯3·4 · 이선용</span><span class="field">금융 · 이색 커리어</span><div class="kw">월스트리트에서 라따뚜이까지</div><div class="who">낯선 진로의 곡선을 그리다</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C2·3·5·6 · 반기훈</span><span class="field">리테일 · 네트워킹</span><div class="kw">인맥왕이 빈티지를 고르는 법</div><div class="who">허클베리북스로 이어진 안목</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C3 · 이혜인</span><span class="field">미디어 · 콘텐츠</span><div class="kw">대학내일에서 메타몽까지</div><div class="who">콘텐츠로 넓혀온 진로</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C4 · 서보경</span><span class="field">과학 · 전문직</span><div class="kw">별 박사가 그리는 낯선 커리어 지도</div><div class="who">퍼플섹터에서 만난 다음 챕터</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">Y2 · 배준영</span><span class="field">핀테크</span><div class="kw">토스인컴이 알려준 낯선 이직</div><div class="who">CC로 이어진 커리어 실험</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">Y7·8·9 · 심원희</span><span class="field">커뮤니티 · 리더십</span><div class="kw">성수율의 법칙</div><div class="who">Y세대 리더로 서기까지</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">Y1 · 마지혜</span><span class="field">저널리즘 · 경제</span><div class="kw">경제전문 기자가 본 낯선 진로</div><div class="who">기자의 시선으로 읽는 커리어</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">낯5·6 · 이상환</span><span class="field">엔터테인먼트 · HR</span><div class="kw">K-POP 산업, 채용의 진실</div><div class="who">헤드헌터가 보는 낯선 취업 시장</div></div></div>
+            </div>
+        </div>
+
+        <div class="day-block reveal" style="margin-bottom:0;">
+            <div class="day-title"><span class="dchip">SUN</span><h3>일요일 동문특강</h3></div>
+            <p class="moderator-line">모더레이터 — <b>온은주</b> ((주)소셜프로그 대표, 비주얼 씽킹 저자 · 낯3)</p>
+            <div class="card-grid">
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">Y0 · 고보경</span><span class="field">이커머스 · 마케팅</span><div class="kw">무신사가 브랜드를 말하는 법</div><div class="who">마케팅 파트장의 낯선 관점</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C2 · 김청</span><span class="field">공간 · 브랜딩</span><div class="kw">성수를 만든 낯선 공간 기획</div><div class="who">피스레이어 대표의 창업 이야기</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C6 · 김정민</span><span class="field">디자인 · 테크</span><div class="kw">조경에서 NHN LINK까지</div><div class="who">낯선 확장을 거듭한 커리어</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">PHOTO<br>PENDING</div><div class="body"><span class="room">C1·3 · 김유철</span><span class="field">공연 · 프로덕션</span><div class="kw">TEAM KEKE에서 무대 뒤편으로</div><div class="who">뮤지컬 '어쩌면 해피엔딩' 프로듀서의 여정</div></div></div>
+            </div>
+            <p class="lead" style="margin-top:22px; font-size:12.5px;">※ 소개 문구는 자료로 전달받은 강연 키워드를 바탕으로 흥미를 돋우기 위해 재구성한 가안이며, 강연자–강의실 매칭 역시 순서 기준으로 재구성된 것입니다. 확정 전 본인 확인 및 원본 대조를 권장드려요.</p>
+        </div>
+    </div>
+</section>
+
+<!-- 4F 캠퍼스낭만존 -->
+<section id="floor-4">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark" style="color:var(--gold);">01 · 캠퍼스라이프</span><h2>캠퍼스낭만존</h2><span class="en">CAMPUS LIFE · 4F · 대학의 낭만</span></div>
+        <p class="lead">낭만에 살고 낭만에 죽는다! 학생회관과 동아리방을 합쳐놓은 것 같은 4F. 축제코인을 들고 먹고 마시고 즐기며, 캠퍼스가 살아있다는 감각을 다시 느껴보세요.</p>
+        <div class="romance-grid">
+            <div class="rz-card reveal"><span class="time">CAMP 210 · 토·일 13:00–19:00</span><h4>낯선마켓 — 학생회관 매점</h4><p>동문 셀러들이 준비한 다양한 먹거리와 즐길거리. 축제 코인으로 즐기는 낯선 마켓을 만나보세요.</p><div class="tags"><span class="tag tag-tba">F&amp;B 라인업 공개예정</span><span class="tag tag-tba">플리마켓 라인업 공개예정</span></div></div>
+            <div class="rz-card reveal"><span class="time">CAMP 214 · 토·일 17:30–18:30</span><h4>낯선라디오 — 교내방송국</h4><p>캠퍼스 방송국이 명동 현장으로 나옵니다. 실시간 사연 신청, 낯선 라이브 마켓, 현장의 열기를 담은 특별 이벤트.</p><div class="tags"><span class="tag tag-live">공개방송</span></div></div>
+            <div class="rz-card reveal"><span class="time">CAMP 220 · 토 19:00–20:30</span><h4>낯선별밤 — 동아리 정기공연</h4><p>10년의 감성이 폭발하는 밤. 오직 동문들만을 위한 특별한 라이브 무대가 펼쳐집니다.</p><div class="tags"><span class="tag tag-tba">아티스트 라인업 아래 참고</span></div></div>
+            <div class="rz-card reveal"><span class="time">CAMP 221 · 토 20:30–22:00</span><h4>낯선파티 — MT 뒤풀이</h4><p>오늘 밤이 아쉬운 자여, DJ의 음악과 함께 즐겨라. 낯선대학 DJ 파티.</p><div class="tags"><span class="tag tag-tba">DJ 라인업 공개예정</span></div></div>
+        </div>
+        <div class="day-block reveal" style="margin-top:52px;">
+            <div class="day-title"><span class="dchip">SAT 19:00–20:30</span><h3>낯선별밤 — 아티스트 라인업</h3></div>
+            <p class="moderator-line">동아리 축제 무대처럼, 10년의 감성이 폭발하는 밤을 채울 동문 아티스트들을 소개합니다. 라인업은 순차적으로 채워질 예정이에요.</p>
+            <div class="card-grid">
+                <div class="lecture-card"><div class="photo-slot">ARTIST<br>PHOTO PENDING</div><div class="body"><span class="room">STAGE 01</span><span class="field">장르 공개예정</span><div class="kw">아티스트명 공개예정</div><div class="who">라인업 순차 공개</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">ARTIST<br>PHOTO PENDING</div><div class="body"><span class="room">STAGE 02</span><span class="field">장르 공개예정</span><div class="kw">아티스트명 공개예정</div><div class="who">라인업 순차 공개</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">ARTIST<br>PHOTO PENDING</div><div class="body"><span class="room">STAGE 03</span><span class="field">장르 공개예정</span><div class="kw">아티스트명 공개예정</div><div class="who">라인업 순차 공개</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">ARTIST<br>PHOTO PENDING</div><div class="body"><span class="room">STAGE 04</span><span class="field">장르 공개예정</span><div class="kw">아티스트명 공개예정</div><div class="who">라인업 순차 공개</div></div></div>
+            </div>
+        </div>
+        <div class="floor-directory reveal">
+            <h3>캠퍼스맵 — 층별 공간구성</h3>
+            <div class="fd-row"><div class="fd-floor">1F</div><div class="fd-name">학생처</div><div class="fd-desc">입학안내부터 축제 전용 코인까지, 낯대 축제의 첫 관문. 학생증부터 발급받아요.</div></div>
+            <div class="fd-row"><div class="fd-floor">4F</div><div class="fd-name">캠퍼스낭만존</div><div class="fd-desc">미식과 음악, 라디오가 흐르는 축제의 메인 광장.</div></div>
+            <div class="fd-row"><div class="fd-floor">5F</div><div class="fd-name">도서관</div><div class="fd-desc">최초 7인 창립자 토크콘서트를 비롯한 동문 인생 전공 특강과 10주년 졸업앨범 기획전시.</div></div>
+            <div class="fd-row"><div class="fd-floor">6F</div><div class="fd-name">옥상광장</div><div class="fd-desc">도심 속 남산타워가 한눈에 보이는 오픈 루프탑. 반가운 동문들과 잔을 기울이는 프라이빗 네트워킹 공간.</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- 5F 도서관 -->
+<section id="floor-5">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark" style="color:var(--stamp);">02 · 진리탐구</span><h2>도서관</h2><span class="en">QUEST FOR TRUTH · 5F · 성장과 성숙</span></div>
+        <p class="lead">필수전공과 교양선택 올 A+ 받자 — 먼저 걸어본 선배들의 이야기와 10년의 기록이 모이는 공간. 낯선대학을 졸업해도, 우리는 여전히 배우고 자랍니다.</p>
+        <div class="founders-card reveal">
+            <div class="eyebrow">CAMP 305 · SUN 18:00–19:00 · 5F</div>
+            <h3>뿌리를 찾아서</h3>
+            <p class="d">단 7명이 시작했던 낯선대학, 10년 뒤 1,000명의 우주가 되었습니다. 낯선대학 시초 7인이 처음으로 한자리에 모이는 토크콘서트. 모더레이터 — 용경빈 (EBS 아나운서, 낯3)</p>
+            <div class="founders-list">
+                <span class="founder-chip">백영선 <span>(록담)</span></span><span class="founder-chip">김상미</span><span class="founder-chip">김연지</span><span class="founder-chip">박종환</span><span class="founder-chip">손석호</span><span class="founder-chip">오지원</span><span class="founder-chip">이현재</span>
+            </div>
+        </div>
+        <div class="archive-grid reveal" style="margin-top:20px;">
+            <div class="archive-card"><span class="room-tag">CAMP 310 · ROOM A · 13:00–19:00</span><h4>졸업앨범</h4><p>1기부터 최신 기수까지, 10년치 사진 500~700장을 시간순으로 이어붙인 아카이브. 크기에 위계를 두어 전시합니다. 현장에서 폴라로이드 사진도 추가할 수 있어요.</p></div>
+            <div class="archive-card"><span class="room-tag">CAMP 311 · ROOM B · 13:00–19:00</span><h4>낯텐 사진공모전</h4><p>지난 10년 낯선대학을 거쳐간 모든 동문이 대상인 특별 사진전. 응모작 약 50여 점을 동일 규격으로 전시하고, 현장 스티커 투표로 시상합니다.</p></div>
+            <div class="archive-card"><span class="room-tag">ONLINE · 상시</span><h4>온라인 아카이브</h4><p>접수된 사진과 사연 전량이 축제 이후에도 온라인에서 무제한·영구 공개됩니다.</p></div>
+        </div>
+        <div class="album-progress reveal">
+            <span class="eyebrow" style="color:var(--accent-solid);">졸업앨범, 아직 미완성입니다</span>
+            <div class="bar"><i style="width:48%"></i></div>
+            <small>10년치 사진, 아직 절반이 비어 있습니다 · 여러분의 사진이 있어야 채워집니다</small>
+            <div class="cta-line">
+                <div>
+                    <div style="font-family:var(--serif); font-weight:700; font-size:16px; margin-bottom:4px;">사진 접수 마감 8월 26일(수)</div>
+                    <div style="font-size:12.5px; color:var(--muted);">단체 사진, 뒤풀이 사진, 뒷모습, 그날의 칠판 — 어떤 사진이든 좋습니다. 기수와 한 줄 사연을 함께 보내주세요.</div>
+                </div>
+                <a class="btn btn-solid" href="#archive">사진 보내기 →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6F 옥상광장 -->
+<section id="floor-6">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark" style="color:var(--rose);">03 · 우정과 사랑</span><h2>옥상광장</h2><span class="en">FRIENDSHIP &amp; LOVE · 6F · 만남과 인연의 시작</span></div>
+        <p class="lead">도심 속 남산타워가 한눈에 보이는 오픈 루프탑. 낯선 얼굴이 친구가 되고, 작은 설렘이 시작되던 그 감각. 반가운 동문들과 잔을 기울이며 낯선 인연을 다시 만나보세요.</p>
+        <p class="rooftop-line">"10년 만에 다시 마주치는 얼굴들, 그 사이를 채우는 건 결국 짧은 대화 한 잔."</p>
+    </div>
+</section>
+
+<!-- 전야제 -->
+<section id="prelude">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">PRE-SEMESTER</span><h2>축제 전야제</h2><span class="en">PRELUDE PROGRAMS</span></div>
+        <p class="lead">개강 전 오리엔테이션처럼, 9월 12일 명동에서 만나기 전에 미리 온도를 올려두는 시간. 일요일 밤 낯선라디오와 함께 축제를 준비합니다.</p>
+        <div class="prelude-block reveal">
+            <div class="prelude-head"><h3>낯선라디오</h3><span class="tag tag-live">매주 일요일 밤 9시 · YouTube Live</span></div>
+            <p style="font-size:14px; line-height:1.85; color:var(--muted); max-width:640px;">세상의 모든 '낯선' 순간부터 이야기는 시작됩니다. 기수가 달라 한 번도 마주친 적 없는 사람들이 라디오 하나로 조금씩 연결되어 가는 60분. 진행 — 전영희, 스페셜 DJ · 스튜디오 — 서울창업허브(마포 공덕)</p>
+            <table class="sched">
+                <thead><tr><th>회차</th><th>날짜</th><th>DJ</th><th>게스트</th><th>비고</th></tr></thead>
+                <tbody>
+                    <tr><td>파일럿 1</td><td>8/5(수)</td><td>전영희</td><td>문차</td><td>다시보기</td></tr>
+                    <tr><td>파일럿 2</td><td>8/7(금)</td><td>전영희</td><td>이가혁, 류지현</td><td>다시보기</td></tr>
+                    <tr><td>1회</td><td>8/16(일)</td><td>전영희, 문차</td><td>서상혁, 방은혁</td><td>다시보기</td></tr>
+                    <tr><td>2회</td><td>8/23(일)</td><td>전영희</td><td>미정</td><td>알림 신청</td></tr>
+                    <tr><td>3회</td><td>8/30(일)</td><td>전영희</td><td>미정</td><td>알림 신청</td></tr>
+                    <tr><td>특별</td><td>9/6(일) 20:00</td><td>전영희</td><td>낯선라이브마켓 생방송</td><td>공개 예정</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="prelude-block reveal">
+            <div class="prelude-head"><h3>낯선라이브마켓</h3><span class="tag tag-tba">9월 6일(일) 저녁 8시 생방송</span></div>
+            <p style="font-size:14px; line-height:1.85; color:var(--muted); max-width:640px;">동문들이 내놓은 물건과 재능을 라이브로 소개하고 나눕니다. 박물관 투어, 노동법 상담, 커리어 커피챗, 보컬 레슨 — 상자에 담아 부칠 수 없는 것들이 절반을 넘습니다. 수익금 전액은 10주년 축제 운영비로 쓰입니다.</p>
+            <div class="market-cols">
+                <div>
+                    <h5>재능 (7)</h5>
+                    <ul>
+                        <li><span>낯선 박물관투어 (토요일 3회)</span><span class="g">이승민</span></li>
+                        <li><span>노동법 무료상담 1회권</span><span class="g">이순호</span></li>
+                        <li><span>커리어 컨설팅 2시간 커피챗</span><span class="g">록담</span></li>
+                        <li><span>보컬레슨 1회권</span><span class="g">김누림</span></li>
+                        <li><span>발성 &amp; 노래 원데이 레슨권</span><span class="g">오영훈</span></li>
+                        <li><span>톤의 비밀 (보컬 온라인 미팅)</span><span class="g">조세정</span></li>
+                        <li><span>스피치 발성레슨 1회권</span><span class="g">김누림</span></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5>물품 (4)</h5>
+                    <ul>
+                        <li><span>복부 스톤마사지기 (벨트형)</span><span class="g">김경민</span></li>
+                        <li><span>올리바나 제품 세트</span><span class="g">이순호</span></li>
+                        <li><span>피엘라벤 칸켄 배낭</span><span class="g">류지현</span></li>
+                        <li><span>상주 곶감 선물세트 10세트</span><span class="g">정형섭</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="account-box">
+                <div><span class="al">후원상품 기부 · 축제 운영비 후원</span><span class="an">하나은행 101-910061-06104 (낯대 문화예술축제조직위)</span></div>
+                <button class="copy-btn" id="copyAcctBtn">계좌번호 복사</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 아카이브 + 게시판 -->
+<section id="archive">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">ARCHIVE</span><h2>아카이브</h2><span class="en">사전·사후 기록 &amp; 게시판</span></div>
+        <p class="lead">축제를 준비하는 과정과 그날의 기록이 쌓이는 공간입니다. 사전 홍보 이미지·영상부터, 축제가 끝난 뒤의 사진과 영상, 그리고 누구나 남길 수 있는 게시판까지.</p>
+        <div class="archive-sub reveal">
+            <h4>사전 홍보 · 티저</h4>
+            <div class="card-grid">
+                <div class="lecture-card"><div class="photo-slot">TEASER<br>IMAGE PENDING</div><div class="body"><span class="room">사전 홍보 이미지</span><div class="who">공개 예정</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">TEASER<br>VIDEO PENDING</div><div class="body"><span class="room">티저 영상</span><div class="who">공개 예정</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">SNS<br>CARD PENDING</div><div class="body"><span class="room">SNS 홍보 카드뉴스</span><div class="who">공개 예정</div></div></div>
+                <div class="lecture-card"><div class="photo-slot">D-DAY<br>CARD PENDING</div><div class="body"><span class="room">D-DAY 카운트다운</span><div class="who">공개 예정</div></div></div>
+            </div>
+        </div>
+        <div class="archive-sub reveal">
+            <h4>사후 아카이브 <span class="tag tag-tba" style="margin-left:8px;">축제 이후 업데이트</span></h4>
+            <p style="font-size:13px; color:var(--muted); line-height:1.8; margin:0;">9월 12일–13일, 현장의 사진과 영상이 축제가 끝난 뒤 이 자리를 채웁니다. 낯선별밤 무대 영상, 낯선라디오 다시보기, 졸업앨범 전시 스케치까지 모두 모아둘 예정이에요.</p>
+        </div>
+        <div class="archive-sub reveal" style="margin-bottom:0;">
+            <h4>참가자 게시판 <span class="tag tag-gold" style="margin-left:8px;">누구나 자유롭게</span></h4>
+            <p style="font-size:13px; color:var(--muted); line-height:1.8; margin:0 0 18px;">기대평도, 축하 인사도, 오랜만에 남기는 안부도 좋습니다. 이름 없이도 남길 수 있어요. 비밀번호를 정하면 본인 글을 수정·삭제할 수 있습니다.</p>
+
+            <form class="gb-form" id="gb-form" autocomplete="off">
+                <input class="gb-name" id="gb-name" type="text" name="name" maxlength="20" placeholder="이름 낯대기수 (선택)"/>
+                <input class="gb-title" id="gb-title" type="text" name="title" maxlength="60" placeholder="제목" required/>
+                <textarea class="gb-message" id="gb-message" name="message" rows="3" maxlength="500" placeholder="내용을 남겨주세요…" required></textarea>
+                <input class="gb-pw" id="gb-password" type="password" maxlength="40" placeholder="비밀번호 (수정·삭제 시 필요)" required/>
+                <div class="gb-form-foot">
+                    <span class="gb-count" id="gb-count">0 / 500</span>
+                    <button class="gb-submit" id="gb-submit" type="submit">글 남기기</button>
+                </div>
+                <p class="gb-status" id="gb-status" role="status" aria-live="polite" hidden></p>
+            </form>
+            <ul class="gb-list" id="gb-list"><li class="gb-empty" id="gb-loading">불러오는 중…</li></ul>
+            <nav class="gb-pager" id="gb-pager" aria-label="게시판 페이지" hidden></nav>
+        </div>
+    </div>
+</section>
+
+<!-- 낯선가계도 -->
+<section id="familytree">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">FAMILY TREE</span><h2>낯선가계도</h2><span class="en">나의 낯대 조상·선배 찾기</span></div>
+        <p class="lead">7명에서 시작해 1,000명의 우주가 된 낯선대학. 나의 기수와 이름을 입력하면, 나를 있게 한 낯선 선배들의 계보를 만나볼 수 있어요.</p>
+        <div class="ft-panel reveal">
+            <div class="ft-form">
+                <label>기수
+                    <select id="ftGen"><option>1기</option><option>2기</option><option>3기</option><option>4기</option><option>5기</option><option>6기</option><option>7기</option><option>8기</option><option>9기</option><option>10기</option></select>
+                </label>
+                <label>이름
+                    <input type="text" id="ftName" placeholder="이름을 입력하세요" maxlength="10"/>
+                </label>
+                <button type="button" id="ftFindBtn" class="btn btn-solid">나의 조상 찾기 →</button>
+            </div>
+            <div id="ftResult" class="ft-result" style="display:none;"></div>
+        </div>
+        <p class="lead" style="margin-top:18px; font-size:12px;">※ 지금은 낯선가계도 기능을 미리 체험해보는 데모입니다. 1,000명의 실제 계보 데이터가 연결되면 정확한 나의 조상을 찾아드립니다.</p>
+    </div>
+</section>
+
+<!-- 오시는 길 -->
+<section id="location">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">VENUE</span><h2>오시는 길</h2><span class="en">LOCATION &amp; ADMISSION</span></div>
+        <p class="lead">단 2일간 열리는 낯선대학 캠퍼스는 사유의서재 남산에 있습니다. 입장은 1F 학생처(리셉션)에서 시작돼요.</p>
+        <div class="location-grid">
+            <div class="reveal">
+                <h4>사유의서재 남산</h4>
+                <div class="addr">서울 중구 퇴계로20길 13, 4층<br>명동역 3번 출구 → 퍼시픽호텔 갈림길에서 좌측<br>가급적 대중교통 이용을 부탁드립니다.</div>
+                <div class="hero-ctas" style="justify-content:flex-start;">
+                    <a class="btn btn-ghost-light" href="https://naver.me/xQe26Aqr" target="_blank" rel="noopener">네이버 지도에서 보기 →</a>
+                    <a class="btn btn-solid" href="#archive">후원 바로가기 →</a>
+                </div>
+                <div class="stitch" style="margin:22px 0 16px;"></div>
+                <div style="font-size:12.5px; color:var(--muted); line-height:1.9;">
+                    <b style="color:var(--ink);">주최</b> 낯선대학위원회 · 낯선대학문화예술축제조직위원회<br>
+                    <b style="color:var(--ink);">주관</b> 낯선대학P 1기(낯텐) &nbsp;·&nbsp; <b style="color:var(--ink);">장소협찬</b> 사유의서재 남산
+                </div>
+            </div>
+            <ul class="steps reveal">
+                <li><div class="step-body"><b>후원자 확인</b><span>낯선대학 후원자분들은 누구나 참여하실 수 있습니다. 위 버튼으로 후원 페이지에서 먼저 확인해주세요.</span></div></li>
+                <li><div class="step-body"><b>1F 리셉션 명단 확인</b><span>사유의서재 남산 1층 리셉션 데스크에서 후원명단 확인 후 입장하실 수 있습니다.</span></div></li>
+                <li><div class="step-body"><b>학생증 &amp; 축제코인 발급</b><span>입장과 동시에 학생증과 축제 전용 코인을 발급받아요. 코인은 4F 낯선마켓과 학생식당 특별메뉴에 바로 사용할 수 있습니다.</span></div></li>
+                <li><div class="step-body"><b>캠퍼스 낭만 즐기기</b><span>먹고, 마시고, 즐기며 — 동문특강부터 낯선별밤, 옥상 네트워킹까지 전 프로그램을 자유롭게 이용하세요.</span></div></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- 크루 -->
+<section id="crew">
+    <div class="section-wrap">
+        <div class="sec-head"><span class="floor-mark">STAFF</span><h2>축제를 만드는 사람들</h2><span class="en">FESTIVAL CREW</span></div>
+        <p class="lead">낯선대학 10주년 축제는 낯선대학P 1기(낯텐)와 여러 동문들의 손을 거쳐 만들어지고 있습니다.</p>
+        <div class="crew-lead reveal">
+            <div><div class="role">고문</div><div class="nm">김연지</div></div>
+            <div><div class="role">고문</div><div class="nm">백영선</div></div>
+            <div><div class="role">고문</div><div class="nm">손석호</div></div>
+            <div><div class="role">총괄감독</div><div class="nm">서상혁</div></div>
+            <div><div class="role">운영국장</div><div class="nm">박수홍</div></div>
+            <div><div class="role">기획실장</div><div class="nm">방은영</div></div>
+        </div>
+        <div class="crew-table reveal">
+            <div class="team">운영팀 · 후원관리</div><div class="names">오주영, 이시현, 문근아, 유지연, 이은택, 전영희</div>
+            <div class="team">운영팀 · 스폰서십</div><div class="names">김제나</div>
+            <div class="team">운영팀 · 데이터</div><div class="names">문근아</div>
+            <div class="team">운영팀 · 낯선라이브마켓</div><div class="names">류지현, 이가혁, 이승민</div>
+            <div class="team">운영팀 · 현장운영</div><div class="names">이유민, 이현아, 김유진</div>
+            <div class="team">홈페이지</div><div class="names">이시현</div>
+            <div class="team">프로그램팀 (공연·강연)</div><div class="names">심재욱, 강다혜, 김누림, 온은주</div>
+            <div class="team">F&amp;B · 플리마켓</div><div class="names">강다혜, 한정은</div>
+            <div class="team">전시</div><div class="names">최근우, 김민수</div>
+            <div class="team">홍보마케팅</div><div class="names">문지현, 김민수, 이순호</div>
+            <div class="team">언론 홍보</div><div class="names">이순호, 이채호</div>
+            <div class="team">낯선라디오</div><div class="names">문지현, 정형섭, 전영희</div>
+            <div class="team">디자인</div><div class="names">장재민</div>
+            <div class="team">미디어 · 촬영 · 편집</div><div class="names">김민수, 정형섭, 최원철, 최근우</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="section-wrap">
+        <div class="foot-grid">
+            <div>
+                <div class="fmark">낯선대학 10주년 축제</div>
+                <div>2026.09.12(토) – 09.13(일)<br>사유의서재 남산, 서울 중구 퇴계로20길 13 4층</div>
+            </div>
+            <div class="fcol"><b>주최</b>낯선대학위원회<br>낯선대학문화예술축제조직위원회</div>
+            <div class="fcol"><b>주관 · 협찬</b>낯선대학P 1기(낯텐)<br>장소협찬 · 사유의서재 남산</div>
+            <div class="fcol"><b>후원 계좌</b>하나은행 101-910061-06104<br>(낯대 문화예술축제조직위)</div>
+        </div>
+        <div class="fline">© 2026 낯선대학문화예술축제조직위원회 · natten-home · Spring Boot. 세부 일정과 라인업은 순차적으로 업데이트됩니다.</div>
     </div>
 </footer>
 
-<script th:src="@{/js/modal.js}" defer></script>
+<script th:src="@{/js/site.js}" defer></script>
 <script th:src="@{/js/board.js}" defer></script>
 </body>
 </html>
