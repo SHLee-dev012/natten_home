@@ -4,10 +4,18 @@
   var ticker = document.getElementById('notice');
   var ntToggle = document.getElementById('ntToggle');
   if (ticker && ntToggle) {
+    var collapseNotice = function () {
+      ticker.classList.remove('open');
+      ntToggle.setAttribute('aria-expanded', 'false');
+    };
     ntToggle.addEventListener('click', function () {
       var open = ticker.classList.toggle('open');
       ntToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
+    // 스크롤을 내리면 펼쳐진 공지 자동 접힘
+    window.addEventListener('scroll', function () {
+      if (ticker.classList.contains('open') && window.scrollY > 40) collapseNotice();
+    }, { passive: true });
   }
 
   // 모바일 플로팅 스크롤 버튼 (맨 위로 / 맨 아래로)
