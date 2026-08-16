@@ -659,6 +659,13 @@ table.sched th { text-align: left; font-family: var(--mono); font-size: 10.5px; 
 table.sched td { padding: 11px 10px; border-bottom: 1px dotted var(--line); vertical-align: top; color: var(--muted); }
 table.sched tr.today td { background: rgba(167,139,250,.1); }
 table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 700; }
+/* 비고 → 버튼 (PC 위치는 표의 마지막 열 그대로) */
+.sched-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; padding: 5px 11px; border-radius: 999px;
+    border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--ink); cursor: pointer; white-space: nowrap;
+    transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.sched-btn:hover { border-color: var(--accent-solid); background: rgba(167,139,250,.12); color: var(--accent-solid); }
+.sched-btn-alert { border-color: rgba(167,139,250,.5); color: var(--accent-solid); background: rgba(167,139,250,.08); }
+.sched-btn-alert:hover { background: rgba(167,139,250,.16); }
 .market-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px; }
 @media (max-width: 700px) { .market-cols { grid-template-columns: 1fr; } }
 .market-cols h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-solid); margin: 0 0 10px; }
@@ -677,15 +684,21 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     table.sched { margin-top: 12px; }
     table.sched thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     table.sched, table.sched tbody { display: block; }
-    /* 회차=제목(전체 폭) + 날짜·DJ·게스트·비고를 2열 그리드로 컴팩트하게 */
-    table.sched tr { display: grid; grid-template-columns: 1fr 1fr; column-gap: 14px; row-gap: 8px;
-        border: 1px solid var(--line); border-radius: 12px; padding: 12px 15px; margin-bottom: 9px; background: var(--panel); }
+    /* 1행: 회차 + 날짜 + 비고버튼(맨 우측) / 2행: DJ + 게스트 한 줄 */
+    table.sched tr { display: grid; grid-template-columns: auto 1fr auto;
+        grid-template-areas: "num date remark" "dj guest guest";
+        align-items: baseline; column-gap: 10px; row-gap: 8px;
+        border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 9px; background: var(--panel); }
     table.sched tr.today { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.4); }
-    table.sched td { display: flex; align-items: baseline; gap: 6px; padding: 0; border: none; color: var(--ink); font-size: 13.5px; line-height: 1.35; }
+    table.sched td { display: flex; align-items: baseline; gap: 5px; padding: 0; border: none; color: var(--ink); font-size: 13.5px; line-height: 1.35; }
     table.sched td::before { content: attr(data-label); font-family: var(--mono); font-size: 9.5px; letter-spacing: .03em; color: var(--faint); flex-shrink: 0; }
-    table.sched td:first-child { grid-column: 1 / -1; font-family: var(--serif); font-weight: 700; font-size: 15px; color: var(--ink);
-        padding-bottom: 7px; margin-bottom: 1px; border-bottom: 1px dotted var(--line); }
-    table.sched td:first-child::before { display: none; }
+    table.sched td:nth-child(1) { grid-area: num; font-family: var(--serif); font-weight: 700; font-size: 15px; }
+    table.sched td:nth-child(1)::before { display: none; }
+    table.sched td:nth-child(2) { grid-area: date; }
+    table.sched td:nth-child(3) { grid-area: dj; }
+    table.sched td:nth-child(4) { grid-area: guest; }
+    table.sched td:nth-child(5) { grid-area: remark; justify-self: end; align-self: center; }
+    table.sched .sched-btn { padding: 5px 12px; }
     .account-box { flex-direction: column; align-items: flex-start; gap: 12px; }
     .account-box .an { word-break: break-all; }
     .copy-btn { margin-left: 0; align-self: stretch; text-align: center; padding: 11px 12px; }
