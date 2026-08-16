@@ -54,7 +54,7 @@ a { color: inherit; } img { max-width: 100%; display: block; }
 section { padding: 72px 0; position: relative; }
 section[id] { scroll-margin-top: 72px; }
 .sec-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 24px; margin-bottom: 34px; }
-.sec-head .floor-mark { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--accent-solid); }
+.sec-head .floor-mark { width: 100%; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; color: var(--accent-solid); }
 .sec-head h2 { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4vw, 36px); margin: 0; letter-spacing: -.01em;
     background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; }
@@ -63,9 +63,10 @@ section[id] { scroll-margin-top: 72px; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ---------- section rhythm on the fixed backdrop ---------- */
-#floor-6, #pillars { text-align: center; }
-#pillars .sec-head, #floor-6 .sec-head { justify-content: center; text-align: center; }
-#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: left; }
+#floor-6 { text-align: center; }
+#floor-6 .sec-head { justify-content: center; text-align: center; }
+#floor-6 .lead { margin-left: auto; margin-right: auto; text-align: center; }
+.pillar-hook { text-align: left; margin-left: 0; }
 
 /* 은은한 다크 교차 — 일부 섹션을 '살짝 밝은 다크 패널'로 (전체 다크 유지, 큰 낙차 제거) */
 .sec-light {
@@ -73,8 +74,6 @@ section[id] { scroll-margin-top: 72px; }
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
 }
-#pillars .sec-head, #floor-6 .sec-head { justify-content: center; text-align: center; }
-#pillars .lead, #floor-6 .lead { margin-left: auto; margin-right: auto; text-align: left; }
 
 /* ---------- NAV ---------- */
 header.site-nav {
