@@ -115,12 +115,23 @@
   if (copyBtn) {
     copyBtn.addEventListener('click', function () {
       var text = '101-910061-06104';
-      var done = function () { copyBtn.textContent = '복사 완료 ✓'; setTimeout(function () { copyBtn.textContent = '계좌번호 복사'; }, 1800); };
+      var reset = function () { setTimeout(function () { copyBtn.textContent = '계좌번호 복사'; }, 1800); };
+      var done = function () { copyBtn.textContent = '복사 완료 ✓'; reset(); };
+      var fail = function () { copyBtn.textContent = '복사 실패'; reset(); };
+      // 폴백: clipboard API 실패 시 execCommand로 복사
+      var legacy = function () {
+        try {
+          var ta = document.createElement('textarea');
+          ta.value = text; ta.setAttribute('readonly', '');
+          ta.style.cssText = 'position:fixed;top:-1000px;left:0;opacity:0';
+          document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+          var ok = document.execCommand('copy'); document.body.removeChild(ta);
+          ok ? done() : fail();
+        } catch (e) { fail(); }
+      };
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done).catch(function () {
-          copyBtn.textContent = '복사 실패'; setTimeout(function () { copyBtn.textContent = '계좌번호 복사'; }, 1800);
-        });
-      } else { done(); }
+        navigator.clipboard.writeText(text).then(done).catch(legacy);
+      } else { legacy(); }
     });
   }
 
