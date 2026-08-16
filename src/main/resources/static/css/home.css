@@ -842,8 +842,9 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 .sf-top, .sf-bottom { display: none; }
 @media (max-width: 640px) { .sf-top, .sf-bottom { display: flex; } }
 /* 캠퍼스 맵 버튼 — PC·모바일 공통, 항상 표시 (맨 마지막), 액센트 톤 */
-.sf-map { font-size: 19px; border-color: rgba(167, 139, 250, 0.55); background: rgba(30, 24, 48, 0.86); }
-.sf-map:hover { background: rgba(46, 37, 68, 0.92); }
+.sf-map { border-color: rgba(167, 139, 250, 0.55); background: rgba(30, 24, 48, 0.86); color: #d6d9f7; }
+.sf-map:hover { background: rgba(46, 37, 68, 0.92); color: #fff; }
+.sf-map svg { width: 22px; height: 22px; display: block; }
 @media (prefers-reduced-motion: reduce) {
     .sf-btn { transition: opacity 0.2s ease, visibility 0.2s; }
 }
