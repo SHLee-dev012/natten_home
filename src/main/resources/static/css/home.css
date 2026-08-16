@@ -399,3 +399,36 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 .gb-pager button:disabled { opacity: 0.4; cursor: default; }
 .gb-pager button:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 .gb-pager .gb-ellipsis { color: var(--faint); padding: 0 0.15rem; }
+
+/* ================= 모바일 컴팩트화 ================= */
+@media (max-width: 640px) {
+    section { padding: 44px 0; }
+    #notice { padding: 24px 0 4px; }
+    #cover { padding: 40px 0 48px; }
+    .section-wrap { padding: 0 18px; }
+    .sec-head { margin-bottom: 22px; gap: 8px 14px; }
+    .lead { margin-bottom: 22px; font-size: 14px; }
+    /* 컴팩트 카드 그리드는 모바일에서도 2열 유지 → 세로 길이 절반 */
+    .program-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+    .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .howto-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    /* 카드 내부 여백 축소 */
+    .program-card { padding: 14px 12px; }
+    .program-card h4 { font-size: 15px; }
+    .program-card p { display: none; }              /* 모바일 카드에선 설명 생략(제목·코드·시간만) */
+    .lecture-card .body { padding: 11px 11px 13px; }
+    .lecture-card .kw { font-size: 13.5px; }
+    .howto-card { padding: 16px 15px; }
+    .pillar-card { padding: 20px 18px; }
+    /* 그룹·블록 간격 축소 */
+    .pgroup { margin-bottom: 28px; }
+    .day-block { margin-bottom: 34px; }
+    .prelude-block { margin-bottom: 36px; }
+    .floor-directory { margin-top: 34px; padding-top: 24px; }
+    .crew-lead { gap: 20px; margin-bottom: 28px; padding-bottom: 24px; }
+}
+@media (max-width: 380px) {
+    /* 아주 좁은 화면: 카드는 2열 유지하되 폰트만 소폭 축소 */
+    .program-card .pc-cat, .program-card .pc-meta { font-size: 9.5px; }
+    .lecture-card .kw { font-size: 12.5px; }
+}
