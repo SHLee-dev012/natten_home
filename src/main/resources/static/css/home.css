@@ -218,7 +218,6 @@ header.site-nav.scrolled {
 .nt-set { display: inline-flex; align-items: center; flex-shrink: 0; }
 .nt-item { font-size: 14px; color: var(--ink); }
 .nt-sep { color: var(--gold); opacity: 0.55; padding: 0 16px; font-size: 10px; }
-.nt-bar:hover .nt-track, .nt-bar:focus-visible .nt-track, .notice-ticker.open .nt-track { animation-play-state: paused; }
 .nt-more { flex-shrink: 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--faint); }
 .nt-toggle-icon { flex-shrink: 0; color: var(--gold); font-size: 15px; line-height: 1; transition: transform 0.25s ease; }
 .notice-ticker.open .nt-toggle-icon { transform: rotate(180deg); }
