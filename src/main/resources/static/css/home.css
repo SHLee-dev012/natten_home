@@ -89,9 +89,11 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 .sec-head h2::after { content: ""; position: absolute; bottom: 0; left: -92px; width: 92px; height: 3px; border-radius: 3px;
     background: linear-gradient(90deg, transparent 0%, var(--sec-color) 62%, #fff 100%);
     filter: drop-shadow(0 0 6px var(--sec-color)); opacity: 0; pointer-events: none; }
-/* 완료 반짝(flash) — 밑줄 라인이 한 번 빛났다가 사라짐 (지속되지 않음) */
-.sec-head h2::before { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; border-radius: 3px;
-    background: var(--sec-color); box-shadow: 0 0 16px 2px var(--sec-color); opacity: 0; pointer-events: none; }
+/* 완료 반짝(sparkle) — 별똥별이 끝에 도달하면 '별'이 한 번 반짝 후 사라짐 (밑줄 없음) */
+.sec-head h2::before { content: ""; position: absolute; bottom: -4px; left: 100%; margin-left: -7px;
+    width: 14px; height: 14px; background: #fff;
+    clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+    filter: drop-shadow(0 0 5px var(--sec-color)); opacity: 0; transform: scale(0); pointer-events: none; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; padding-bottom: 15px; }
 
 /* ---------- 섹션 진입 애니메이션 (뷰 진입 시마다 재생) ---------- */
@@ -101,19 +103,20 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 .sec-head.sh-in .floor-mark { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
 .sec-head.sh-in h2 { opacity: 1; transform: none; transition: opacity .6s ease .08s, transform .6s cubic-bezier(.2, .7, .2, 1) .08s; }
 .sec-head.sh-in .en { opacity: 1; transform: none; transition: opacity .5s ease .2s, transform .5s ease .2s; }
-/* 별똥별이 지나간 뒤(완료) 한 번 반짝 — 어느 것도 남지 않도록 fill 없음 */
+/* 별똥별이 끝에 도달한 뒤 별이 반짝 — 어느 것도 남지 않도록 fill 없음 */
 .sec-head.sh-in h2::after { animation: sh-comet .8s cubic-bezier(.3, .5, .25, 1) .28s; }
-.sec-head.sh-in h2::before { animation: sh-flash .42s ease-out 1.02s; }
+.sec-head.sh-in h2::before { animation: sh-star .55s ease-out .95s; }
 @keyframes sh-comet {
     0%   { left: -92px; opacity: 0; }
     12%  { opacity: 1; }
-    80%  { opacity: 1; }
-    100% { left: calc(100% + 26px); opacity: 0; }
+    78%  { left: calc(100% - 10px); opacity: 1; }
+    100% { left: calc(100% + 6px); opacity: 0; }
 }
-@keyframes sh-flash {
-    0%   { opacity: 0; }
-    35%  { opacity: 1; }
-    100% { opacity: 0; }
+@keyframes sh-star {
+    0%   { opacity: 0; transform: scale(0) rotate(0deg); }
+    45%  { opacity: 1; transform: scale(1.35) rotate(35deg); }
+    72%  { opacity: 1; transform: scale(0.9) rotate(45deg); }
+    100% { opacity: 0; transform: scale(1.5) rotate(62deg); }
 }
 @media (prefers-reduced-motion: reduce) {
     .sec-head .floor-mark, .sec-head h2, .sec-head .en { opacity: 1; transform: none; }
