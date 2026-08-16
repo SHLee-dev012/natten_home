@@ -1,5 +1,19 @@
 // 축제 홈 인터랙션 — 스크롤 스파이 · 리빌 · 일정표 탭 · 계좌복사 · 낯선가계도 데모
 (function () {
+  // 모바일 햄버거 메뉴
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinksEl = document.getElementById('nav-links');
+  if (navToggle && navLinksEl) {
+    var setOpen = function (open) {
+      navLinksEl.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+      navToggle.textContent = open ? '✕' : '☰';
+    };
+    navToggle.addEventListener('click', function () { setOpen(!navLinksEl.classList.contains('open')); });
+    navLinksEl.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  }
+
   // 내비게이션 스크롤 스파이
   var navLinks = document.querySelectorAll('.nav-links a[data-nav]');
   var targets = Array.prototype.map.call(navLinks, function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);

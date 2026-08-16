@@ -21,7 +21,8 @@
             <img th:src="@{/img/logo.png}" alt="낯선대학"/>
             <span>10TH ANNIV.</span>
         </a>
-        <nav class="nav-links">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">☰</button>
+        <nav class="nav-links" id="nav-links">
             <a href="#notice" data-nav>공지사항</a>
             <a href="#overview" data-nav>축제개요</a>
             <a href="#schedule" data-nav>일정표</a>
