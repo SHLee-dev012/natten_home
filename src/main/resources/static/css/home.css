@@ -85,7 +85,13 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 /* 섹션 제목 — 크게 + 테마색 밑줄(그려지는 애니메이션)로 '섹션명'임을 분명히 */
 .sec-head h2 { position: relative; font-family: var(--serif); font-weight: 800; font-size: clamp(27px, 4.2vw, 40px); margin: 0; letter-spacing: -.01em; line-height: 1.15; padding-bottom: 13px;
     background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.sec-head h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 3px; border-radius: 2px; background: var(--sec-color); transform: scaleX(0); transform-origin: left center; }
+/* 별똥별(comet) — 밑줄 자리를 좌→우로 가로지름 (머리 흰빛 + 테마색 꼬리) */
+.sec-head h2::after { content: ""; position: absolute; bottom: 0; left: -92px; width: 92px; height: 3px; border-radius: 3px;
+    background: linear-gradient(90deg, transparent 0%, var(--sec-color) 62%, #fff 100%);
+    filter: drop-shadow(0 0 6px var(--sec-color)); opacity: 0; pointer-events: none; }
+/* 완료 반짝(flash) — 밑줄 라인이 한 번 빛났다가 사라짐 (지속되지 않음) */
+.sec-head h2::before { content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; border-radius: 3px;
+    background: var(--sec-color); box-shadow: 0 0 16px 2px var(--sec-color); opacity: 0; pointer-events: none; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; padding-bottom: 15px; }
 
 /* ---------- 섹션 진입 애니메이션 (뷰 진입 시마다 재생) ---------- */
@@ -94,12 +100,25 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 .sec-head .en { opacity: 0; transform: translateY(10px); }
 .sec-head.sh-in .floor-mark { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
 .sec-head.sh-in h2 { opacity: 1; transform: none; transition: opacity .6s ease .08s, transform .6s cubic-bezier(.2, .7, .2, 1) .08s; }
-.sec-head.sh-in h2::after { transform: scaleX(1); transition: transform .65s cubic-bezier(.2, .7, .2, 1) .32s; }
 .sec-head.sh-in .en { opacity: 1; transform: none; transition: opacity .5s ease .2s, transform .5s ease .2s; }
+/* 별똥별이 지나간 뒤(완료) 한 번 반짝 — 어느 것도 남지 않도록 fill 없음 */
+.sec-head.sh-in h2::after { animation: sh-comet .8s cubic-bezier(.3, .5, .25, 1) .28s; }
+.sec-head.sh-in h2::before { animation: sh-flash .42s ease-out 1.02s; }
+@keyframes sh-comet {
+    0%   { left: -92px; opacity: 0; }
+    12%  { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { left: calc(100% + 26px); opacity: 0; }
+}
+@keyframes sh-flash {
+    0%   { opacity: 0; }
+    35%  { opacity: 1; }
+    100% { opacity: 0; }
+}
 @media (prefers-reduced-motion: reduce) {
     .sec-head .floor-mark, .sec-head h2, .sec-head .en { opacity: 1; transform: none; }
-    .sec-head h2::after { transform: scaleX(1); }
-    .sec-head.sh-in .floor-mark, .sec-head.sh-in h2, .sec-head.sh-in .en, .sec-head.sh-in h2::after { transition: none; }
+    .sec-head.sh-in .floor-mark, .sec-head.sh-in h2, .sec-head.sh-in .en { transition: none; }
+    .sec-head h2::after, .sec-head h2::before { animation: none !important; opacity: 0; }
 }
 .lead { max-width: 660px; font-size: 15.5px; line-height: 1.9; color: var(--muted); margin-bottom: 32px; }
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
