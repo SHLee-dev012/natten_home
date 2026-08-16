@@ -81,6 +81,57 @@
     });
   }
 
+  // 도서관 책 열람 (클릭하면 책이 펼쳐짐)
+  var reader = document.getElementById('bookReader');
+  if (reader) {
+    var books = document.querySelectorAll('.shelf-books .book');
+    var obTitle = document.getElementById('obTitle');
+    var obYear = document.getElementById('obYear');
+    var obNote = document.getElementById('obNote');
+    var obMark = document.getElementById('obMark');
+    var obCap = document.getElementById('obCap');
+    var openBook = reader.querySelector('.open-book');
+
+    var openReader = function (book) {
+      var gi = (book.querySelector('.btag') || {}).textContent || '';
+      var yr = (book.querySelector('.bttl') || {}).textContent || '';
+      var ghost = book.classList.contains('book-ghost');
+      obTitle.textContent = ghost ? '아직 비어 있는 한 권' : gi;
+      obYear.textContent = yr;
+      if (ghost) {
+        obNote.innerHTML = '<b>' + yr + '</b>년, 지금 함께 채워가는 중입니다.';
+        obMark.textContent = '접수 중';
+        obCap.textContent = '여러분이 보내주신 사진과 사연으로 채워질 예정입니다.';
+      } else {
+        obNote.innerHTML = '낯선대학 <b>' + gi + '</b> 기수(' + yr + ')의 기록.';
+        obMark.textContent = '준비 중';
+        obCap.textContent = '이 페이지의 내용은 곧 채워집니다.';
+      }
+      reader.classList.add('open');
+      reader.setAttribute('aria-hidden', 'false');
+      // 애니메이션 재생(재열람 시)
+      if (openBook) { openBook.style.animation = 'none'; void openBook.offsetWidth; openBook.style.animation = ''; }
+      document.body.style.overflow = 'hidden';
+    };
+    var closeReader = function () {
+      reader.classList.remove('open');
+      reader.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+    books.forEach(function (b) {
+      b.setAttribute('role', 'button');
+      b.setAttribute('tabindex', '0');
+      b.addEventListener('click', function () { openReader(b); });
+      b.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openReader(b); }
+      });
+    });
+    reader.querySelectorAll('[data-close]').forEach(function (el) { el.addEventListener('click', closeReader); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && reader.classList.contains('open')) closeReader();
+    });
+  }
+
   // 낯선가계도 데모
   var ftBtn = document.getElementById('ftFindBtn');
   if (ftBtn) {

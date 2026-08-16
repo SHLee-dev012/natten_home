@@ -311,6 +311,30 @@
             </div>
             <div class="shelf-plank"></div>
             <div class="shelf-caption">10년치 졸업앨범 서가 · 낯1(2016) → 낯10(2025), 그리고 아직 비어 있는 2026 한 권</div>
+            <div class="shelf-hint">← 책을 넘겨보세요 · 한 권을 눌러 펼치기 →</div>
+        </div>
+
+        <!-- 책 열람(펼침) 오버레이 -->
+        <div class="book-reader" id="bookReader" aria-hidden="true">
+            <div class="reader-backdrop" data-close></div>
+            <div class="open-book" role="dialog" aria-modal="true" aria-label="졸업앨범 열람">
+                <button class="reader-close" type="button" data-close aria-label="닫기">✕</button>
+                <div class="ob-pages">
+                    <div class="ob-page ob-left">
+                        <span class="ob-kicker">낯선대학 졸업앨범</span>
+                        <h4 class="ob-title" id="obTitle">낯1</h4>
+                        <span class="ob-year" id="obYear">2016</span>
+                        <p class="ob-note" id="obNote">낯선대학 <b>낯1</b> 기수의 기록.</p>
+                    </div>
+                    <div class="ob-page ob-right">
+                        <div class="ob-placeholder">
+                            <span class="ob-ph-mark" id="obMark">준비 중</span>
+                            <div class="ob-lines"><i></i><i></i><i></i><i></i><i></i></div>
+                            <span class="ob-ph-cap" id="obCap">이 페이지의 내용은 곧 채워집니다.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="founders-card reveal">
