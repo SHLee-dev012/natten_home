@@ -45,11 +45,6 @@ a { color: inherit; } img { max-width: 100%; display: block; }
         radial-gradient(1.5px 1.5px at 360px 60px, rgba(200,210,255,0.85), transparent);
     background-size: 400px 400px; opacity: 0.55;
 }
-.brand-bg {
-    position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background: url("/img/brand-mark.png") no-repeat center 45%;
-    background-size: min(760px, 92vw) auto; filter: invert(1); opacity: 0.035;
-}
 
 /* ---------- shared bits ---------- */
 .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
