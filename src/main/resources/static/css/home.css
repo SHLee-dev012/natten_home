@@ -110,12 +110,13 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 .sec-head.sh-in .en { opacity: 1; transform: none; transition: opacity .5s ease .2s, transform .5s ease .2s; }
 /* 별똥별이 끝에 도달한 뒤 별이 반짝 — 어느 것도 남지 않도록 fill 없음 */
 .sec-head.sh-in h2::after { animation: sh-comet .8s cubic-bezier(.3, .5, .25, 1) .28s; }
-.sec-head.sh-in h2::before { animation: sh-burst .6s ease-out .95s; }
+.sec-head.sh-in h2::before { animation: sh-burst .6s ease-out .86s; }
 @keyframes sh-comet {
     0%   { left: -92px; opacity: 0; }
     12%  { opacity: 1; }
-    78%  { left: calc(100% - 10px); opacity: 1; }
-    100% { left: calc(100% + 6px); opacity: 0; }
+    66%  { left: calc(100% - 88px); opacity: 1; }
+    80%  { left: calc(100% - 88px); opacity: 1; }
+    100% { left: calc(100% - 88px); opacity: 0; }
 }
 @keyframes sh-burst {
     0%   { opacity: 0; transform: scale(0.2); }
