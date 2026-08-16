@@ -510,20 +510,39 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 10px; }
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
-/* 특별 소장 — 창립자 카드 */
-.founders-card { position: relative; background: var(--glass); border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 12px; padding: 28px 26px; overflow: hidden; }
-.founders-card::after {
-    content: "특별 소장 · RARE"; position: absolute; top: 18px; right: -34px;
-    transform: rotate(35deg); background: rgba(251, 191, 36, 0.14); color: var(--gold);
-    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; padding: 4px 44px;
-    border-top: 1px solid rgba(251,191,36,0.4); border-bottom: 1px solid rgba(251,191,36,0.4);
+/* 뿌리를 찾아서 — 펼친 책 (도서관 컨셉) */
+.founders-book { position: relative; background: linear-gradient(145deg, #251d35, #12101b);
+    border: 1px solid rgba(160, 170, 255, 0.18); border-radius: 8px 13px 13px 8px; padding: 13px;
+    box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.05); }
+.fb-ribbon { position: absolute; top: -2px; right: 42px; width: 26px; height: 52px; z-index: 3;
+    background: linear-gradient(180deg, #b3452f, #8a2c1e);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.55); }
+.fb-pages { display: flex; border-radius: 4px; overflow: hidden; }
+.fb-page { flex: 1 1 0; min-height: 290px; padding: 36px 34px; position: relative;
+    background: linear-gradient(180deg, #f5f0e4, #e9e2d0); color: #2a2620; }
+.fb-page::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(120% 82% at 50% 0%, transparent 62%, rgba(80, 60, 20, 0.06)); }
+.fb-left { display: flex; flex-direction: column; border-right: 1px solid rgba(0, 0, 0, 0.12); box-shadow: inset -22px 0 30px -22px rgba(0, 0, 0, 0.5); }
+.fb-right { box-shadow: inset 22px 0 30px -22px rgba(0, 0, 0, 0.5); }
+.fb-kicker { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: #9a7b2a; }
+.fb-title { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4.5vw, 32px); margin: 12px 0 14px; color: #1e1a14; line-height: 1.15; }
+.fb-desc { font-size: 14px; line-height: 1.85; color: #4a4436; margin: 0; }
+.fb-moderator { margin: 18px 0 0; font-family: var(--serif); font-size: 13.5px; color: #2a2620; }
+.fb-moderator span { display: block; font-family: var(--mono); font-size: 11px; color: #9a7b2a; margin-top: 3px; }
+.fb-index-label { display: block; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: #9a7b2a; margin-bottom: 14px; }
+.fb-founders { list-style: none; margin: 0; padding: 0; }
+.fb-founders li { display: flex; align-items: baseline; gap: 10px; font-family: var(--serif); font-size: 15.5px; color: #2a2620; padding: 8px 2px; border-bottom: 1px dotted rgba(60, 45, 15, 0.25); }
+.fb-founders li:last-child { border-bottom: none; }
+.fb-founders .fb-no { font-family: var(--mono); font-size: 11px; color: #b08a2e; flex-shrink: 0; }
+.fb-founders em { font-style: normal; font-family: var(--mono); font-size: 11.5px; color: #9a7b2a; margin-left: auto; }
+@media (max-width: 620px) {
+    .fb-pages { flex-direction: column; }
+    .fb-page { min-height: 0; padding: 26px 22px; }
+    .fb-left { border-right: none; border-bottom: 1px solid rgba(0, 0, 0, 0.12); box-shadow: none; }
+    .fb-right { box-shadow: none; }
+    .fb-ribbon { right: 26px; }
 }
-.founders-card .eyebrow { color: var(--gold); }
-.founders-card h3 { font-family: var(--serif); font-weight: 700; font-size: 23px; margin: 10px 0 8px; }
-.founders-card p.d { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 20px; max-width: 520px; }
-.founders-list { display: flex; flex-wrap: wrap; gap: 10px; }
-.founder-chip { font-family: var(--mono); font-size: 12.5px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; color: var(--ink); }
-.founder-chip span { color: var(--gold); }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
 .album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
