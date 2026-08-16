@@ -25,7 +25,24 @@ body {
     margin: 0; min-height: 100vh; color: var(--ink);
     font-family: var(--sans);
     background-color: var(--space);
+    /* 은은한 성운 글로우 (우주 느낌, 과하지 않게) */
+    background-image:
+        radial-gradient(1200px 820px at 15% -12%, rgba(99, 102, 241, 0.13), transparent 55%),
+        radial-gradient(1000px 720px at 88% 6%, rgba(168, 85, 247, 0.10), transparent 55%),
+        radial-gradient(1100px 760px at 50% 118%, rgba(34, 211, 238, 0.07), transparent 55%);
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
+}
+/* 아주 성긴 별 (희미하게) */
+body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+        radial-gradient(1.3px 1.3px at 60px 80px, rgba(255, 255, 255, 0.55), transparent),
+        radial-gradient(1px 1px at 260px 180px, rgba(200, 210, 255, 0.4), transparent),
+        radial-gradient(1.4px 1.4px at 440px 340px, rgba(255, 255, 255, 0.45), transparent),
+        radial-gradient(1px 1px at 560px 110px, rgba(210, 220, 255, 0.35), transparent);
+    background-size: 620px 620px;
+    opacity: 0.45;
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
 a { color: inherit; } img { max-width: 100%; display: block; }
