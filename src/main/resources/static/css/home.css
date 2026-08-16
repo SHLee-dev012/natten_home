@@ -205,8 +205,8 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
 .lecture-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .photo-slot { aspect-ratio: 4/3; border-bottom: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px); color: var(--faint); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-align: center; padding: 8px; }
-/* 동문특강(토·일) + 낯선별밤 아티스트 카드: PHOTO PENDING 자리에 coming-soon 배지 */
-#program .photo-slot, #floor-4 .photo-slot {
+/* 동문특강(토·일) + 낯선별밤 아티스트 + 아카이브 티저 카드: PENDING 자리에 coming-soon 배지 */
+#program .photo-slot, #floor-4 .photo-slot, #archive .photo-slot {
     aspect-ratio: auto; height: 92px;
     background: rgba(255, 255, 255, 0.03) url("/img/coming-soon1.jpg") center / auto 72% no-repeat;
     color: transparent; border-bottom: 1px solid var(--line);
