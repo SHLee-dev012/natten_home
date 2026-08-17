@@ -1,30 +1,20 @@
 package com.notten.home.web;
 
-import com.notten.home.festival.FestivalService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/** Renders the festival home (landing) page. */
+/**
+ * Renders the festival home (landing) page.
+ *
+ * <p>The page content lives in the template itself, so no model attributes are
+ * needed here. The festival data in {@code FestivalService} is served as JSON by
+ * {@link FestivalApiController} instead.
+ */
 @Controller
 public class HomeController {
 
-    private final FestivalService festivalService;
-
-    public HomeController(FestivalService festivalService) {
-        this.festivalService = festivalService;
-    }
-
     @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("festival", festivalService.festival());
-        model.addAttribute("venue", festivalService.venue());
-        model.addAttribute("programs", festivalService.programs());
-        model.addAttribute("brackets", festivalService.brackets());
-        model.addAttribute("days", festivalService.days());
-        model.addAttribute("hours", festivalService.hours());
-        model.addAttribute("gridDay1", festivalService.grid(1));
-        model.addAttribute("gridDay2", festivalService.grid(2));
+    public String home() {
         return "index";
     }
 }

@@ -16,11 +16,6 @@ public record ScheduleZone(
      */
     public record Slot(int start, int end, String content, int day, String description) {
 
-        /** Whether this slot runs on the given day number (1 or 2). */
-        public boolean on(int d) {
-            return day == 0 || day == d;
-        }
-
         /** e.g. "11:00–17:00". */
         public String time() {
             return String.format("%02d:00–%02d:00", start, end);

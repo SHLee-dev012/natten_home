@@ -3,15 +3,10 @@ package com.notten.home.festival;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.IntStream;
 
-/** Provides the festival details and highlight programs for the home page. */
+/** Provides the festival details and programs, served as JSON by the festival API. */
 @Service
 public class FestivalService {
 
@@ -61,11 +56,6 @@ public class FestivalService {
                     new ScheduleZone.Slot(11, 21, "포토존 · 낯선대학 WALL · 가계도 · 사진전 · 원티드 게시판 · 공모전", 0,
                             "포토존과 낯선대학 WALL, 가계도, 사진전, 원티드 게시판, 공모전 출품작을 상시 전시합니다."))));
 
-    // Whole-venue brackets that apply to every zone, each day.
-    private final List<String> brackets = List.of(
-            "08:00–11:00 현장 준비 및 사전 리허설",
-            "22:00–23:00 현장 정리 및 행사 종료");
-
     public Festival festival() {
         return festival;
     }
@@ -89,48 +79,5 @@ public class FestivalService {
     /** Detailed schedule, one entry per floor/zone. */
     public List<ScheduleZone> schedule() {
         return schedule;
-    }
-
-    /** Date label for each festival day, e.g. ["9/12 (토)", "9/13 (일)"]. */
-    public List<String> days() {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("M/d (E)", Locale.KOREAN);
-        List<String> labels = new ArrayList<>();
-        for (LocalDate d = festival.startDate(); !d.isAfter(festival.endDate()); d = d.plusDays(1)) {
-            labels.add(d.format(fmt));
-        }
-        return labels;
-    }
-
-    /** Whole-venue time brackets (prep / teardown) shared by every zone. */
-    public List<String> brackets() {
-        return brackets;
-    }
-
-    /** Hour labels down the matrix time axis (11:00 … 20:00). */
-    public List<Integer> hours() {
-        return IntStream.range(Grid.START_HOUR, Grid.END_HOUR).boxed().toList();
-    }
-
-    /**
-     * The schedule as a time × zone matrix for one day: each zone's slots are
-     * filtered to that day and concurrent slots (same time range) merge into one
-     * cell so nothing overlaps in the grid.
-     */
-    public List<Grid.Column> grid(int day) {
-        List<Grid.Column> columns = new ArrayList<>();
-        for (ScheduleZone z : schedule) {
-            Map<List<Integer>, List<Grid.Item>> byRange = new LinkedHashMap<>();
-            for (ScheduleZone.Slot s : z.slots()) {
-                if (s.on(day)) {
-                    byRange.computeIfAbsent(List.of(s.start(), s.end()), k -> new ArrayList<>())
-                            .add(new Grid.Item(s.content(), s.description()));
-                }
-            }
-            List<Grid.Cell> cells = byRange.entrySet().stream()
-                    .map(e -> new Grid.Cell(e.getKey().get(0), e.getKey().get(1), e.getValue()))
-                    .toList();
-            columns.add(new Grid.Column(z.floor(), z.zone(), z.category(), z.staff(), cells));
-        }
-        return columns;
     }
 }
