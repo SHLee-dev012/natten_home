@@ -16,6 +16,10 @@
   var countEl = document.getElementById("gb-count");
   var statusEl = document.getElementById("gb-status");
   var submitEl = document.getElementById("gb-submit");
+  var modalEl = document.getElementById("gb-modal");
+  var writeBtn = document.getElementById("gb-write");
+  var flashEl = document.getElementById("gb-flash");
+  var totalEl = document.getElementById("gb-total");
 
   var REST = SUPABASE_URL + "/rest/v1/posts";
   var RPC = SUPABASE_URL + "/rest/v1/rpc/";
@@ -53,6 +57,43 @@
     statusEl.textContent = msg || "";
     statusEl.className = "gb-status" + (kind ? " gb-status--" + kind : "");
   }
+  var flashTimer = null;
+  function flash(msg) {
+    if (!flashEl) return;
+    flashEl.hidden = false;
+    flashEl.textContent = msg;
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () { flashEl.hidden = true; }, 4000);
+  }
+
+  // 작성 모달 — 목록은 본문에, 신규 작성은 모달에서
+  var lastFocus = null;
+  function openModal() {
+    if (!modalEl) return;
+    lastFocus = document.activeElement;
+    setStatus("");
+    modalEl.classList.add("open");
+    modalEl.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    setTimeout(function () { titleEl.focus(); }, 60);
+  }
+  function closeModal() {
+    if (!modalEl) return;
+    modalEl.classList.remove("open");
+    modalEl.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  if (writeBtn) writeBtn.addEventListener("click", openModal);
+  if (modalEl) {
+    modalEl.querySelectorAll("[data-gbclose]").forEach(function (el) {
+      el.addEventListener("click", closeModal);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modalEl.classList.contains("open")) closeModal();
+    });
+  }
+
   function rpc(fn, args) {
     return fetch(RPC + fn, {
       method: "POST",
@@ -251,6 +292,7 @@
         currentPosts = posts;
         renderPosts(posts);
         renderPager();
+        if (totalEl) totalEl.textContent = totalCount ? "총 " + totalCount + "개의 글" : "";
         list.removeAttribute("aria-busy");
         if (scroll) {
           var top = document.getElementById("guestbook");
@@ -285,7 +327,9 @@
       .then(function () {
         titleEl.value = ""; msgEl.value = ""; pwEl.value = "";
         countEl.textContent = "0 / 500";
-        setStatus("등록되었습니다 ✓", "ok");
+        setStatus("");
+        closeModal();
+        flash("등록되었습니다 ✓");
         load(1);
       })
       .catch(function () { setStatus("등록에 실패했습니다. 잠시 후 다시 시도해 주세요.", "err"); })
