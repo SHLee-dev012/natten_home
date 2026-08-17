@@ -452,20 +452,15 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     .fb-left { border-right: none; border-bottom: 1px solid rgba(160, 170, 255, 0.16); box-shadow: none; }
     .fb-right { box-shadow: none; }
     .fb-ribbon { right: 26px; }
-    /* 시초 7인: 밋밋한 목록 대신 대출 도장을 찍어둔 것처럼 (창립자 1인 + 6인 그리드) */
-    .fb-founders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; }
+    /* 시초 7인: 번호 없이 이름만, 7인 모두 같은 크기 (원탁 미지원 시 대체 배치) */
+    .fb-founders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .fb-founders li { flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-        text-align: center; font-size: 16px; padding: 13px 8px 12px;
-        border: 1.5px solid rgba(167, 139, 250, 0.45); border-radius: 9px;
-        background: rgba(167, 139, 250, 0.07); box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.18); }
-    .fb-founders li:nth-child(odd) { transform: rotate(-1.5deg); }
-    .fb-founders li:nth-child(even) { transform: rotate(1.3deg); }
-    /* 창립자는 한 줄 전체를 써서 머릿돌처럼 */
-    .fb-founders li:first-child { grid-column: 1 / -1; transform: rotate(-0.8deg); }
-    .fb-founders li:last-child { border-bottom: 1.5px solid rgba(167, 139, 250, 0.45); }
-    .fb-founders .fb-no { margin-right: 0; margin-bottom: 3px; padding-bottom: 3px; font-size: 10.5px;
-        letter-spacing: .12em; border-bottom: 1px solid rgba(251, 191, 36, 0.30); }
-    .fb-founders em { font-size: 11.5px; }
+        text-align: center; font-size: 15px; padding: 11px 6px;
+        border: 1px solid rgba(167, 139, 250, 0.35); border-radius: 8px;
+        background: rgba(167, 139, 250, 0.06); }
+    .fb-founders li:last-child { border-bottom: 1px solid rgba(167, 139, 250, 0.35); }
+    .fb-founders .fb-no { display: none; }
+    .fb-founders em { font-size: 11px; }
 }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
@@ -647,6 +642,37 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     .account-box { flex-direction: column; align-items: flex-start; gap: 12px; }
     .account-box .an { word-break: break-all; }
     .copy-btn { margin-left: 0; align-self: stretch; text-align: center; padding: 11px 12px; }
+}
+
+/* 시초 7인을 원탁의 기사처럼 둘러앉힌다.
+   좌석 반지름·이름칸을 컨테이너 폭(cqw)에 비례시켜 어떤 폭에서도 겹치지 않게 한다.
+   (반지름 34cqw → 좌석 간 호 길이 30.5cqw > 이름칸 27cqw) */
+@supports (container-type: inline-size) {
+    @media (max-width: 620px) {
+        .fb-founders { container-type: inline-size; display: block; position: relative;
+            width: min(100%, 300px); margin: 8px auto 0; aspect-ratio: 1; }
+        /* 가운데 원탁 */
+        .fb-founders::before { content: ""; position: absolute; left: 50%; top: 50%;
+            width: 40cqw; height: 40cqw; margin: -20cqw 0 0 -20cqw; border-radius: 50%;
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            background: radial-gradient(circle at 50% 32%, rgba(167, 139, 250, 0.17), rgba(167, 139, 250, 0.04) 70%),
+                repeating-radial-gradient(circle at 50% 50%, transparent 0 7px, rgba(167, 139, 250, 0.06) 7px 8px); }
+        /* 좌석을 잇는 희미한 원 */
+        .fb-founders::after { content: ""; position: absolute; left: 50%; top: 50%;
+            width: 68cqw; height: 68cqw; margin: -34cqw 0 0 -34cqw; border-radius: 50%;
+            border: 1px dashed rgba(167, 139, 250, 0.20); }
+        .fb-founders li { position: absolute; left: 50%; top: 50%;
+            width: 27cqw; height: 13cqw; margin: -6.5cqw 0 0 -13.5cqw;
+            padding: 0; border: none; background: none; gap: 0; }
+        .fb-founders li:last-child { border-bottom: none; }
+        .fb-founders li:nth-child(1) { transform: rotate(0deg) translateY(-34cqw) rotate(0deg); }
+        .fb-founders li:nth-child(2) { transform: rotate(51.43deg) translateY(-34cqw) rotate(-51.43deg); }
+        .fb-founders li:nth-child(3) { transform: rotate(102.86deg) translateY(-34cqw) rotate(-102.86deg); }
+        .fb-founders li:nth-child(4) { transform: rotate(154.29deg) translateY(-34cqw) rotate(-154.29deg); }
+        .fb-founders li:nth-child(5) { transform: rotate(205.71deg) translateY(-34cqw) rotate(-205.71deg); }
+        .fb-founders li:nth-child(6) { transform: rotate(257.14deg) translateY(-34cqw) rotate(-257.14deg); }
+        .fb-founders li:nth-child(7) { transform: rotate(308.57deg) translateY(-34cqw) rotate(-308.57deg); }
+    }
 }
 
 /* 좁은 화면에서는 첫 열과 버튼을 조여 날짜·게스트가 한 줄에 들어가게 한다 */
