@@ -639,6 +639,30 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
 .market-cols li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px dotted var(--line); font-size: 14px; color: var(--ink); }
 .market-cols li:last-child { border-bottom: 1px dotted var(--line); }
+/* 출품 목록 공개 전 티저 — 내용을 흐리게 덮고 COMING SOON을 얹는다.
+   blur는 시각적 처리일 뿐이므로 소스에는 그대로 남는다(비공개가 목적이면 마크업에서 제거해야 함). */
+.market-veil { position: relative; margin-top: 16px; border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; background: var(--panel-dark); }
+.market-veil > .market-cols { margin-top: 0; padding: 18px;
+    max-height: 300px; overflow: hidden;
+    filter: blur(7px); opacity: 0.42; pointer-events: none; user-select: none; }
+/* 배지 뒤에 어둡게 깔아 글자가 또렷하게 */
+.market-veil::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+    background: radial-gradient(65% 55% at 50% 50%, rgba(5, 6, 15, 0.82), rgba(5, 6, 15, 0.42)); }
+.market-veil-badge { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 9px; text-align: center; padding: 20px; }
+.mv-kicker { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--accent-solid); }
+.mv-title { font-family: var(--mono); font-weight: 800; letter-spacing: .1em; line-height: 1;
+    font-size: clamp(28px, 8vw, 46px); color: var(--ink); text-shadow: 0 6px 28px rgba(0, 0, 0, 0.75); }
+.mv-sub { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+@media (max-width: 700px) {
+    .market-veil > .market-cols { max-height: 230px; padding: 14px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .mv-title { animation: mv-pulse 3.2s ease-in-out infinite; }
+}
+@keyframes mv-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .72; } }
 .market-cols li .g { color: var(--faint); font-family: var(--mono); font-size: 11.5px; }
 @media (max-width: 700px) {
     .market-cols { grid-template-columns: 1fr; gap: 20px; }
@@ -650,6 +674,13 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     .market-cols li .g { font-size: 12.5px; font-weight: 700; color: var(--accent-solid); }
     .market-cols li .g::before { content: "· 기부 "; color: var(--faint); font-weight: 400; }
 }
+/* 공개 전 스켈레톤 — 실데이터 대신 형태만 흉내낸다(소스에 아무 정보도 남지 않는다) */
+.mk-skeleton li { min-height: 1.9em; align-items: center; }
+.mk-skeleton li > span { display: block; height: 0.8em; border-radius: 4px; width: var(--w, 70%);
+    background: linear-gradient(90deg, rgba(160, 170, 255, 0.20), rgba(160, 170, 255, 0.07)); }
+.mk-skeleton li > span.g { width: 46px; flex-shrink: 0; }
+/* 모바일에서 .g 앞에 붙는 '· 기부' 문구가 더미 막대에 새어들지 않게 */
+.mk-skeleton li > span.g::before { content: none; }
 .account-box { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; background: var(--glass); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
 .account-box .an { font-family: var(--mono); font-size: 14px; color: var(--ink); }
 .account-box .al { font-family: var(--mono); font-size: 11px; color: var(--faint); display: block; margin-bottom: 4px; }

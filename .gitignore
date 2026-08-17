@@ -39,3 +39,5 @@ out/
 # macOS
 .DS_Store
 **/.DS_Store
+# 공개 전 실데이터 보관 (git에 올리지 않는다)
+/local/
