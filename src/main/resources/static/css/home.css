@@ -635,18 +635,21 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 .sched-btn-alert { border-color: rgba(167,139,250,.5); color: var(--accent-solid); background: rgba(167,139,250,.08); }
 .sched-btn-alert:hover { background: rgba(167,139,250,.16); }
 .market-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px; }
-@media (max-width: 700px) {
-    .market-cols { grid-template-columns: 1fr; gap: 24px; }
-    /* 좌우 끝으로 갈라지면 품목과 기부자의 연결이 끊겨 보인다 → 세로로 쌓는다 */
-    .market-cols li { flex-direction: column; align-items: flex-start; gap: 3px; padding: 11px 0; }
-    .market-cols li .g { font-size: 12.5px; font-weight: 600; color: var(--accent-solid); }
-    .market-cols li .g::before { content: "기부 · "; color: var(--faint); font-weight: 400; }
-}
 .market-cols h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-solid); margin: 0 0 10px; }
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
 .market-cols li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px dotted var(--line); font-size: 14px; color: var(--ink); }
 .market-cols li:last-child { border-bottom: 1px dotted var(--line); }
 .market-cols li .g { color: var(--faint); font-family: var(--mono); font-size: 11.5px; }
+@media (max-width: 700px) {
+    .market-cols { grid-template-columns: 1fr; gap: 20px; }
+    .market-cols h5 { font-size: 12.5px; font-weight: 700; }
+    /* 무조건 2줄로 쌓으면 세로로 너무 길어진다 → 기부자를 품목 뒤에 붙이고,
+       한 줄에 안 들어갈 때만 다음 줄로 흘린다 */
+    .market-cols li { flex-wrap: wrap; justify-content: flex-start; align-items: baseline;
+        gap: 1px 8px; padding: 8px 0; font-size: 15px; font-weight: 600; }
+    .market-cols li .g { font-size: 12.5px; font-weight: 700; color: var(--accent-solid); }
+    .market-cols li .g::before { content: "· 기부 "; color: var(--faint); font-weight: 400; }
+}
 .account-box { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; background: var(--glass); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
 .account-box .an { font-family: var(--mono); font-size: 14px; color: var(--ink); }
 .account-box .al { font-family: var(--mono); font-size: 11px; color: var(--faint); display: block; margin-bottom: 4px; }
@@ -661,8 +664,8 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     /* 1행: 회차 + 날짜 + 비고버튼(맨 우측) / 구분선 / 2행: DJ + 게스트 한 줄 */
     /* tr마다 독립된 grid라 1열(회차/DJ)이 auto면 행마다 폭이 달라진다.
        고정폭으로 묶어 모든 행의 날짜·게스트가 같은 x에서 시작하게 한다. */
-    table.sched tr { display: grid; grid-template-columns: var(--sched-c1, 118px) 1fr auto;
-        grid-template-areas: "num date remark" "dj guest guest";
+    table.sched tr { display: grid; grid-template-columns: var(--sched-c1, 116px) 1fr auto;
+        grid-template-areas: "num dj remark" "date guest guest";
         align-items: baseline; column-gap: 0; row-gap: 0;
         border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; margin-bottom: 10px; background: var(--panel); }
     table.sched tr.today { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.4); }
@@ -672,9 +675,12 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     table.sched td:nth-child(1) { grid-area: num; font-family: var(--serif); font-weight: 700; font-size: 16.5px;
         padding: 0 8px 11px 0; border-right: 1px dotted var(--line); }
     table.sched td:nth-child(1)::before { display: none; }
-    table.sched td:nth-child(2) { grid-area: date; padding: 0 0 11px 6px; }
-    table.sched td:nth-child(3) { grid-area: dj; border-top: 1px dotted var(--line); padding: 11px 8px 0 0;
-        border-right: 1px dotted var(--line); }
+    /* 날짜는 회차 아래(왼쪽 열)로 — 열이 '언제 / 누가'로 나뉜다.
+       회차 바로 아래라 라벨이 없어도 읽히고, 그만큼 폭을 게스트에 넘긴다 */
+    table.sched td:nth-child(2) { grid-area: date; border-top: 1px dotted var(--line);
+        padding: 11px 8px 0 0; border-right: 1px dotted var(--line); }
+    table.sched td:nth-child(2)::before { display: none; }
+    table.sched td:nth-child(3) { grid-area: dj; padding: 0 0 11px 6px; }
     table.sched td:nth-child(4) { grid-area: guest; border-top: 1px dotted var(--line); padding: 11px 0 0 6px; }
     table.sched td:nth-child(5) { grid-area: remark; justify-self: end; align-self: center; padding-bottom: 11px; }
     table.sched .sched-btn { padding: 6px 13px; font-size: 11.5px; }
@@ -716,7 +722,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 
 /* 좁은 화면에서는 첫 열과 버튼을 조여 날짜·게스트가 한 줄에 들어가게 한다 */
 @media (max-width: 400px) {
-    table.sched tr { --sched-c1: 109px; padding: 13px 9px; }
+    table.sched tr { --sched-c1: 108px; padding: 13px 9px; }
     table.sched .sched-btn { padding: 5px 7px; font-size: 10px; letter-spacing: 0; }
 }
 
