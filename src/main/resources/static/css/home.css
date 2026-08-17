@@ -396,62 +396,76 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
 /* 뿌리를 찾아서 — 오래된 장서(펼친 책, 도서관 컨셉) */
-/* 낡은 가죽 표지: 결 + 모서리 마모 */
+/* 표지: 주변 카드와 같은 남보라 계열 + 낡은 결, 금박 괘선만 남긴다 */
 .founders-book { position: relative;
     background:
-        repeating-linear-gradient(97deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 4px),
-        radial-gradient(120% 100% at 28% 0%, rgba(255, 224, 168, 0.10), transparent 62%),
-        radial-gradient(80% 70% at 100% 100%, rgba(0, 0, 0, 0.35), transparent 60%),
-        linear-gradient(150deg, #4a3726, #2a1d13 55%, #150e08);
-    border: 1px solid rgba(196, 155, 86, 0.26); border-radius: 4px 12px 12px 4px; padding: 15px;
-    box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 224, 168, 0.10),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.35); }
+        repeating-linear-gradient(97deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 4px),
+        radial-gradient(120% 100% at 28% 0%, rgba(167, 139, 250, 0.14), transparent 62%),
+        radial-gradient(80% 70% at 100% 100%, rgba(0, 0, 0, 0.40), transparent 60%),
+        linear-gradient(150deg, #262046, #171334 55%, #0b0918);
+    border: 1px solid var(--line); border-radius: 4px 12px 12px 4px; padding: 15px;
+    box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.30); }
 /* 표지 금박 이중 괘선 (색이 바래 흐릿하게) */
 .founders-book::before { content: ""; position: absolute; inset: 6px; z-index: 2; pointer-events: none;
-    border: 1px solid rgba(198, 158, 88, 0.30); border-radius: 2px 9px 9px 2px;
-    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.16), inset 0 0 0 4px rgba(198, 158, 88, 0.13); }
+    border: 1px solid rgba(251, 191, 36, 0.22); border-radius: 2px 9px 9px 2px;
+    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.20), inset 0 0 0 4px rgba(251, 191, 36, 0.10); }
+/* 가름끈 — 바로 아래 대출 도장(.due-stamp)과 같은 로즈 계열 */
 .fb-ribbon { position: absolute; top: -2px; right: 42px; width: 26px; height: 52px; z-index: 3;
-    background: linear-gradient(180deg, #8c3a22, #55200f);
+    background: linear-gradient(180deg, #f472b6, #9d3465);
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
     box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.6); }
 .fb-pages { display: flex; border-radius: 2px; overflow: hidden;
     box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5); }
-/* 누렇게 바랜 종이 + 폭싱(갈변 반점) */
+/* 지면: 아카이브 카드와 같은 결(옅은 종이 톤 + 보랏빛 괘선) + 세월 얼룩 */
 .fb-page { flex: 1 1 0; min-height: 290px; padding: 36px 34px; position: relative;
     background:
-        radial-gradient(9px 6px at 17% 21%, rgba(146, 102, 42, 0.14), transparent 70%),
-        radial-gradient(5px 4px at 73% 37%, rgba(146, 102, 42, 0.12), transparent 70%),
-        radial-gradient(11px 7px at 41% 73%, rgba(138, 96, 38, 0.11), transparent 72%),
-        radial-gradient(6px 5px at 87% 81%, rgba(146, 102, 42, 0.13), transparent 70%),
-        radial-gradient(7px 5px at 9% 61%, rgba(138, 96, 38, 0.10), transparent 72%),
-        linear-gradient(180deg, #eee1c2, #dcc9a2);
-    color: #34291a; }
-/* 가장자리 때·그을림 */
+        radial-gradient(9px 6px at 17% 21%, rgba(167, 139, 250, 0.10), transparent 70%),
+        radial-gradient(11px 7px at 41% 73%, rgba(167, 139, 250, 0.08), transparent 72%),
+        radial-gradient(6px 5px at 87% 81%, rgba(251, 191, 36, 0.07), transparent 70%),
+        repeating-linear-gradient(180deg, transparent 0 30px, rgba(160, 170, 255, 0.07) 30px 31px),
+        linear-gradient(180deg, rgba(240, 234, 214, 0.06), rgba(240, 234, 214, 0.02)),
+        linear-gradient(180deg, #1a1636, #12102a);
+    color: var(--ink); }
+/* 가장자리 그늘 */
 .fb-page::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(128% 88% at 50% 0%, transparent 56%, rgba(92, 62, 20, 0.17)),
-        radial-gradient(100% 62% at 0% 100%, rgba(104, 70, 24, 0.13), transparent 62%); }
-.fb-left { display: flex; flex-direction: column; border-right: 1px solid rgba(70, 48, 14, 0.18); box-shadow: inset -22px 0 30px -22px rgba(0, 0, 0, 0.55); }
-.fb-right { box-shadow: inset 22px 0 30px -22px rgba(0, 0, 0, 0.55); }
-.fb-kicker { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #7d5f22; }
-.fb-title { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4.5vw, 32px); margin: 12px 0 14px; color: #241a0d; line-height: 1.15;
-    text-shadow: 0 1px 0 rgba(255, 246, 219, 0.55); }
-.fb-desc { font-size: 14px; line-height: 1.85; color: #4b3c26; margin: 0; }
-.fb-moderator { margin: 18px 0 0; font-family: var(--serif); font-size: 15px; font-weight: 700; color: #2f2415; }
-.fb-moderator span { display: block; font-family: var(--mono); font-size: 12px; font-weight: 600; color: #7d5f22; margin-top: 3px; }
-.fb-index-label { display: block; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: #7d5f22; margin-bottom: 14px; }
+    background: radial-gradient(128% 88% at 50% 0%, transparent 56%, rgba(0, 0, 0, 0.35)),
+        radial-gradient(100% 62% at 0% 100%, rgba(167, 139, 250, 0.06), transparent 62%); }
+.fb-left { display: flex; flex-direction: column; border-right: 1px solid rgba(160, 170, 255, 0.16); box-shadow: inset -22px 0 30px -22px rgba(0, 0, 0, 0.6); }
+.fb-right { box-shadow: inset 22px 0 30px -22px rgba(0, 0, 0, 0.6); }
+.fb-kicker { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-solid); }
+.fb-title { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4.5vw, 32px); margin: 12px 0 14px; color: var(--ink); line-height: 1.15; }
+.fb-desc { font-size: 14px; line-height: 1.85; color: var(--muted); margin: 0; }
+.fb-moderator { margin: 18px 0 0; font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink); }
+.fb-moderator span { display: block; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent-solid); margin-top: 3px; }
+.fb-index-label { display: block; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--faint); margin-bottom: 14px; }
 .fb-founders { list-style: none; margin: 0; padding: 0; }
-.fb-founders li { display: flex; align-items: baseline; gap: 6px; font-family: var(--serif); font-size: 17px; font-weight: 700; color: #2f2415; padding: 9px 2px; border-bottom: 1px dotted rgba(80, 58, 20, 0.32); }
+.fb-founders li { display: flex; align-items: baseline; gap: 6px; font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--ink); padding: 9px 2px; border-bottom: 1px dotted var(--line); }
 .fb-founders li:last-child { border-bottom: none; }
-.fb-founders .fb-no { font-family: var(--mono); font-size: 12px; font-weight: 700; color: #97731f; flex-shrink: 0; margin-right: 4px; }
+.fb-founders .fb-no { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--gold); flex-shrink: 0; margin-right: 4px; }
 /* 별호는 이름 바로 뒤에 붙인다 (행 끝으로 밀지 않음) */
-.fb-founders em { font-style: normal; font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: #7d5f22; }
+.fb-founders em { font-style: normal; font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--accent-solid); }
 @media (max-width: 620px) {
     .fb-pages { flex-direction: column; }
     /* 세로로 쌓일 때 flex-basis 0이 '높이'에 걸려 페이지가 붕괴하므로 내용 높이를 따르게 한다 */
     .fb-page { flex: 0 0 auto; min-height: 0; padding: 26px 22px; }
-    .fb-left { border-right: none; border-bottom: 1px solid rgba(70, 48, 14, 0.20); box-shadow: none; }
+    .fb-left { border-right: none; border-bottom: 1px solid rgba(160, 170, 255, 0.16); box-shadow: none; }
     .fb-right { box-shadow: none; }
     .fb-ribbon { right: 26px; }
+    /* 시초 7인: 밋밋한 목록 대신 대출 도장을 찍어둔 것처럼 (창립자 1인 + 6인 그리드) */
+    .fb-founders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; }
+    .fb-founders li { flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+        text-align: center; font-size: 16px; padding: 13px 8px 12px;
+        border: 1.5px solid rgba(167, 139, 250, 0.45); border-radius: 9px;
+        background: rgba(167, 139, 250, 0.07); box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.18); }
+    .fb-founders li:nth-child(odd) { transform: rotate(-1.5deg); }
+    .fb-founders li:nth-child(even) { transform: rotate(1.3deg); }
+    /* 창립자는 한 줄 전체를 써서 머릿돌처럼 */
+    .fb-founders li:first-child { grid-column: 1 / -1; transform: rotate(-0.8deg); }
+    .fb-founders li:last-child { border-bottom: 1.5px solid rgba(167, 139, 250, 0.45); }
+    .fb-founders .fb-no { margin-right: 0; margin-bottom: 3px; padding-bottom: 3px; font-size: 10.5px;
+        letter-spacing: .12em; border-bottom: 1px solid rgba(251, 191, 36, 0.30); }
+    .fb-founders em { font-size: 11.5px; }
 }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
