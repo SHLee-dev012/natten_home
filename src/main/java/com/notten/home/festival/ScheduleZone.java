@@ -2,23 +2,20 @@ package com.notten.home.festival;
 
 import java.util.List;
 
-/** A floor/zone in the festival schedule and its time slots. */
+/** A floor/zone in the festival schedule and its programs, mirroring the 일정표 section. */
 public record ScheduleZone(
         String floor,
         String zone,
         String category,
-        String staff,
         List<Slot> slots) {
 
     /**
-     * A single time block within a zone. Hours are 24h (e.g. 11–17).
-     * {@code day}: 0 = both days, 1 = day 1 only, 2 = day 2 only.
+     * A single program within a zone.
+     *
+     * <p>{@code time} is the label exactly as the timetable shows it — a range
+     * ("13:00–19:00"), "상시", or "시간 추후 확정" for slots still being fixed.
+     * {@code day}: 0 = both days, 1 = 토요일(9/12) only, 2 = 일요일(9/13) only.
      */
-    public record Slot(int start, int end, String content, int day, String description) {
-
-        /** e.g. "11:00–17:00". */
-        public String time() {
-            return String.format("%02d:00–%02d:00", start, end);
-        }
+    public record Slot(String time, String content, int day, String description) {
     }
 }
