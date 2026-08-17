@@ -215,9 +215,16 @@ header.site-nav.scrolled {
         padding: 14px 6px; border-radius: 0; border-bottom: 1px solid var(--line);
     }
     .nav-links a:last-child { border-bottom: none; }
-    /* 드로어는 스크롤되므로 그룹을 풀어 전 항목을 한 줄씩 노출한다 */
+    /* 드로어는 스크롤되므로 그룹을 펼쳐 두고, 트리거는 구분 라벨로 쓴다 */
     .nav-group { display: block; }
-    .nav-group-trigger { display: none; }
+    .nav-group-trigger { display: block; width: 100%; text-align: left; cursor: default;
+        font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: .12em;
+        color: var(--accent-solid); padding: 16px 6px 7px; border-radius: 0; }
+    .nav-group:hover .nav-group-trigger, .nav-group:focus-within .nav-group-trigger,
+    .nav-group:has(a.active) .nav-group-trigger { background: none; color: var(--accent-solid); font-weight: 700; }
+    .nav-caret { display: none; }
+    /* 하위 항목은 들여써서 라벨에 속함을 보이게 */
+    .nav-submenu a { padding-left: 18px; }
     .nav-submenu { position: static; transform: none; display: flex; flex-direction: column; min-width: 0; padding: 0; gap: 0;
         background: none; border: none; border-radius: 0; box-shadow: none; backdrop-filter: none;
         -webkit-backdrop-filter: none; opacity: 1; visibility: visible; pointer-events: auto; }
