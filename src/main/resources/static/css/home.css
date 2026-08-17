@@ -695,7 +695,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     /* 1행: 회차 + 날짜 + 비고버튼(맨 우측) / 구분선 / 2행: DJ + 게스트 한 줄 */
     /* tr마다 독립된 grid라 1열(회차/DJ)이 auto면 행마다 폭이 달라진다.
        고정폭으로 묶어 모든 행의 날짜·게스트가 같은 x에서 시작하게 한다. */
-    table.sched tr { display: grid; grid-template-columns: var(--sched-c1, 116px) 1fr auto;
+    table.sched tr { display: grid; grid-template-columns: var(--sched-c1, 124px) 1fr auto;
         grid-template-areas: "num dj remark" "date guest guest";
         align-items: baseline; column-gap: 0; row-gap: 0;
         border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; margin-bottom: 10px; background: var(--panel); }
@@ -753,7 +753,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 
 /* 좁은 화면에서는 첫 열과 버튼을 조여 날짜·게스트가 한 줄에 들어가게 한다 */
 @media (max-width: 400px) {
-    table.sched tr { --sched-c1: 108px; padding: 13px 9px; }
+    table.sched tr { --sched-c1: 116px; padding: 13px 9px; }
     table.sched .sched-btn { padding: 5px 7px; font-size: 10px; letter-spacing: 0; }
 }
 
