@@ -318,8 +318,27 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .howto-card p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0; }
 .howto-footer { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; border-top: 1px solid var(--line); padding-top: 28px; }
 @media (max-width: 700px) { .howto-footer { grid-template-columns: 1fr; } }
-.howto-goods h4 { font-family: var(--serif); font-weight: 700; font-size: 18px; margin: 8px 0 8px; }
-.howto-goods p { font-size: 14px; line-height: 1.8; color: var(--muted); margin: 0 0 10px; max-width: 480px; }
+/* 축제 기념 굿즈 — 배경도 테두리도 없는 맨 문단이라 위 카드 4장에 묻혔다.
+   4F 낯선마켓에서만 파는 물건이라 층 색(--gold)에 맞춘 카드로 세운다. */
+.howto-goods { position: relative; overflow: hidden; padding: 24px 26px; border-radius: 14px;
+    border: 1px solid rgba(251, 191, 36, 0.34);
+    background:
+        radial-gradient(130% 110% at 0% 0%, rgba(251, 191, 36, 0.14), transparent 62%),
+        linear-gradient(180deg, rgba(251, 191, 36, 0.075), rgba(251, 191, 36, 0.02));
+    box-shadow: 0 20px 44px -24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.07); }
+/* 오른쪽 위 금박 광택 */
+.howto-goods::after { content: ""; position: absolute; top: -40%; right: -12%; width: 46%; height: 180%;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgba(251, 191, 36, 0.16), transparent); }
+.howto-goods > * { position: relative; z-index: 1; }
+/* 제목도 카드 톤에 맞춰 금색 그라디언트 (사이트의 섹션 제목과 같은 방식) */
+.howto-goods h4 { display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--serif); font-weight: 800; font-size: clamp(19px, 2.4vw, 23px);
+    margin: 12px 0 10px; letter-spacing: -.01em;
+    background: linear-gradient(100deg, #fde68a, #fbbf24 52%, #f59e0b);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+.howto-goods h4::before { content: "✦"; font-size: 0.7em; }
+.howto-goods p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0 0 12px; max-width: 520px; }
 .howto-cta { text-align: right; }
 @media (max-width: 700px) { .howto-cta { text-align: left; } }
 .howto-cta p { font-size: 12.5px; color: var(--muted); margin: 0 0 8px; font-family: var(--mono); }
@@ -965,6 +984,7 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
     .lecture-card .body { padding: 11px 11px 13px; }
     .lecture-card .kw { font-size: 14.5px; }
     .howto-card { padding: 16px 15px; }
+    .howto-goods { padding: 18px 17px; }
     .pillar-card { padding: 20px 18px; }
     /* 그룹·블록 간격 축소 */
     .pgroup { margin-bottom: 28px; }
