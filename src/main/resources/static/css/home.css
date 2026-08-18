@@ -362,7 +362,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 
 /* ---------- PROGRAM (lecture cards) ---------- */
 .day-block { margin-bottom: 52px; } .day-block:last-child { margin-bottom: 0; }
-.day-title { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.day-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
 .day-title .dchip { font-family: var(--mono); font-size: 13.5px; letter-spacing: .05em; background: var(--accent); color: #0a0c1c; font-weight: 800; padding: 5px 11px; border-radius: 6px; }
 .day-title h3 { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0; }
 .moderator-line { font-size: 14.5px; color: var(--muted); margin: 10px 0 20px; line-height: 1.8; }
@@ -373,7 +373,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .lecture-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .photo-slot { aspect-ratio: 4/3; border-bottom: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px); color: var(--faint); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-align: center; padding: 8px; }
 /* 동문특강(토·일) + 낯선별밤 아티스트 + 아카이브 티저 카드: PENDING 자리에 coming-soon 배지 */
-#program .photo-slot, #floor-4 .photo-slot, #archive .photo-slot {
+#program .photo-slot, #floor-4 .photo-slot, #floor-5 .photo-slot, #archive .photo-slot {
     aspect-ratio: auto; height: 92px;
     background: rgba(255, 255, 255, 0.03) url("/img/coming-soon1.jpg") center / auto 72% no-repeat;
     color: transparent; border-bottom: 1px solid var(--line);
@@ -444,73 +444,49 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 10px; }
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
-/* 뿌리를 찾아서 — 오래된 장서(펼친 책, 도서관 컨셉) */
-/* 표지: 주변 카드와 같은 남보라 계열 + 낡은 결, 금박 괘선만 남긴다 */
-.founders-book { position: relative;
+
+/* ---------- 도서관 톤 (5F) — 높이를 늘리지 않는 선에서 결만 입힌다 ---------- */
+/* 섹션 바탕에 아주 옅은 괘선 — 열람지 느낌 */
+#floor-5 { position: relative; }
+#floor-5::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: repeating-linear-gradient(180deg, transparent 0 33px, rgba(160, 170, 255, 0.045) 33px 34px);
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent); }
+#floor-5 .section-wrap { position: relative; z-index: 1; }
+
+/* 인물 카드는 사진칸을 낮게 — 8장이라 세로가 금방 길어진다 */
+#floor-5 .founder-card .photo-slot { height: 76px; }
+@media (max-width: 640px) { #floor-5 .founder-card .photo-slot { height: 68px; } }
+/* 시초 7인 카드 — 도서관 색인카드처럼 (아카이브 카드와 같은 언어) */
+.founder-card {
     background:
-        repeating-linear-gradient(97deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 4px),
-        radial-gradient(120% 100% at 28% 0%, rgba(167, 139, 250, 0.14), transparent 62%),
-        radial-gradient(80% 70% at 100% 100%, rgba(0, 0, 0, 0.40), transparent 60%),
-        linear-gradient(150deg, #262046, #171334 55%, #0b0918);
-    border: 1px solid var(--line); border-radius: 4px 12px 12px 4px; padding: 15px;
-    box-shadow: 0 34px 80px -34px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        inset 0 0 0 1px rgba(0, 0, 0, 0.30); }
-/* 표지 금박 이중 괘선 (색이 바래 흐릿하게) */
-.founders-book::before { content: ""; position: absolute; inset: 6px; z-index: 2; pointer-events: none;
-    border: 1px solid rgba(251, 191, 36, 0.22); border-radius: 2px 9px 9px 2px;
-    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.20), inset 0 0 0 4px rgba(251, 191, 36, 0.10); }
-/* 가름끈 — 바로 아래 대출 도장(.due-stamp)과 같은 로즈 계열 */
-.fb-ribbon { position: absolute; top: -2px; right: 42px; width: 26px; height: 52px; z-index: 3;
-    background: linear-gradient(180deg, #f472b6, #9d3465);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
-    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.6); }
-.fb-pages { display: flex; border-radius: 2px; overflow: hidden;
-    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5); }
-/* 지면: 아카이브 카드와 같은 결(옅은 종이 톤 + 보랏빛 괘선) + 세월 얼룩 */
-.fb-page { flex: 1 1 0; min-height: 290px; padding: 36px 34px; position: relative;
+        linear-gradient(180deg, rgba(240, 234, 214, 0.05), rgba(240, 234, 214, 0.015)),
+        repeating-linear-gradient(180deg, transparent 0 26px, rgba(160, 170, 255, 0.07) 26px 27px);
+    background-position: 0 0, 0 58px; }
+.founder-card .body { position: relative; padding: 13px 14px 15px; }
+/* 색인카드 펀치 홀 */
+.founder-card .body::after { content: ""; position: absolute; top: 9px; right: 12px;
+    width: 7px; height: 7px; border-radius: 50%; background: rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 0 0 1px var(--line); }
+.founder-card .kw { font-size: 17px; font-weight: 800; margin-bottom: 3px; }
+.founder-card .who { font-family: var(--mono); font-size: 11.5px; font-weight: 600; color: var(--accent-solid); }
+
+/* 8번째 칸 — '낯선대학' 각인 카드 (7인 + 1 = 모바일 2열 4행) */
+.fc-seal { display: flex; align-items: center; justify-content: center; padding: 14px;
+    border-color: rgba(251, 191, 36, 0.34);
     background:
-        radial-gradient(9px 6px at 17% 21%, rgba(167, 139, 250, 0.10), transparent 70%),
-        radial-gradient(11px 7px at 41% 73%, rgba(167, 139, 250, 0.08), transparent 72%),
-        radial-gradient(6px 5px at 87% 81%, rgba(251, 191, 36, 0.07), transparent 70%),
-        repeating-linear-gradient(180deg, transparent 0 30px, rgba(160, 170, 255, 0.07) 30px 31px),
-        linear-gradient(180deg, rgba(240, 234, 214, 0.06), rgba(240, 234, 214, 0.02)),
-        linear-gradient(180deg, #1a1636, #12102a);
-    color: var(--ink); }
-/* 가장자리 그늘 */
-.fb-page::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(128% 88% at 50% 0%, transparent 56%, rgba(0, 0, 0, 0.35)),
-        radial-gradient(100% 62% at 0% 100%, rgba(167, 139, 250, 0.06), transparent 62%); }
-.fb-left { display: flex; flex-direction: column; border-right: 1px solid rgba(160, 170, 255, 0.16); box-shadow: inset -22px 0 30px -22px rgba(0, 0, 0, 0.6); }
-.fb-right { box-shadow: inset 22px 0 30px -22px rgba(0, 0, 0, 0.6); }
-.fb-kicker { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-solid); }
-.fb-title { font-family: var(--serif); font-weight: 800; font-size: clamp(24px, 4.5vw, 32px); margin: 12px 0 14px; color: var(--ink); line-height: 1.15; }
-.fb-desc { font-size: 14px; line-height: 1.85; color: var(--muted); margin: 0; }
-.fb-moderator { margin: 18px 0 0; font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--ink); }
-.fb-moderator span { display: block; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent-solid); margin-top: 3px; }
-.fb-index-label { display: block; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--faint); margin-bottom: 14px; }
-.fb-founders { list-style: none; margin: 0; padding: 0; }
-/* 궤도용 래퍼 — 데스크톱에서는 없는 것처럼 취급해 기존 목록 레이아웃을 유지한다 */
-.fb-founders .fb-orb { display: contents; }
-.fb-founders li { display: flex; align-items: baseline; gap: 6px; font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--ink); padding: 9px 2px; border-bottom: 1px dotted var(--line); }
-.fb-founders li:last-child { border-bottom: none; }
-/* 별호는 이름 바로 뒤에 붙인다 (행 끝으로 밀지 않음) */
-.fb-founders em { font-style: normal; font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--accent-solid); }
-@media (max-width: 620px) {
-    .fb-pages { flex-direction: column; }
-    /* 세로로 쌓일 때 flex-basis 0이 '높이'에 걸려 페이지가 붕괴하므로 내용 높이를 따르게 한다 */
-    .fb-page { flex: 0 0 auto; min-height: 0; padding: 26px 22px; }
-    .fb-left { border-right: none; border-bottom: 1px solid rgba(160, 170, 255, 0.16); box-shadow: none; }
-    .fb-right { box-shadow: none; }
-    .fb-ribbon { right: 26px; }
-    /* 시초 7인: 번호 없이 이름만, 7인 모두 같은 크기 (원탁 미지원 시 대체 배치) */
-    .fb-founders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .fb-founders li { flex-direction: column; align-items: center; justify-content: center; gap: 2px;
-        text-align: center; font-size: 15px; padding: 11px 6px;
-        border: 1px solid rgba(167, 139, 250, 0.35); border-radius: 8px;
-        background: rgba(167, 139, 250, 0.06); }
-    .fb-founders li:last-child { border-bottom: 1px solid rgba(167, 139, 250, 0.35); }
-    .fb-founders em { font-size: 11px; }
-}
+        radial-gradient(120% 100% at 30% 0%, rgba(251, 191, 36, 0.14), transparent 62%),
+        linear-gradient(180deg, rgba(251, 191, 36, 0.07), rgba(251, 191, 36, 0.02)); }
+.fc-seal-in { font-family: var(--serif); font-weight: 800; letter-spacing: -.01em; text-align: center;
+    font-size: clamp(19px, 4.4vw, 26px); line-height: 1.25;
+    background: linear-gradient(100deg, #fde68a, #fbbf24 52%, #f59e0b);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* 카드 아래 서가 선반 — 두께만 있는 얇은 띠 */
+.fc-shelf { height: 7px; margin-top: 10px; border-radius: 2px;
+    background: linear-gradient(180deg, #2b2340, #14101f 70%);
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset, 0 12px 22px -14px rgba(0, 0, 0, 0.85); }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
 .album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
@@ -771,56 +747,6 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     .copy-btn { margin-left: 0; align-self: stretch; text-align: center; padding: 11px 12px; }
 }
 
-/* 시초 7인을 태양(가운데) 주위를 도는 행성으로 — 본문의 '1,000명의 우주'와 맞춘 표현.
-   반지름·이름칸을 컨테이너 폭(cqw)에 비례시켜 어떤 폭에서도 겹치지 않게 한다.
-   (반지름 34cqw → 행성 간 호 길이 30.5cqw > 이름칸 27cqw)
-   회전은 목록 전체를 돌리고 라벨을 같은 주기로 역회전시켜 글자를 항상 똑바로 세운다. */
-@supports (container-type: inline-size) {
-        .fb-founders { container-type: inline-size; display: block; position: relative;
-            width: min(100%, 340px); margin: 10px auto 0; aspect-ratio: 1;
-            animation: fb-orbit 46s linear infinite; }
-        /* 태양 */
-        .fb-founders::before { content: ""; position: absolute; left: 50%; top: 50%;
-            width: 21cqw; height: 21cqw; margin: -10.5cqw 0 0 -10.5cqw; border-radius: 50%;
-            background: radial-gradient(circle at 40% 36%, #fff8de, #fbbf24 44%, #f59e0b 72%, #b45309);
-            box-shadow: 0 0 0 0.9cqw rgba(251, 191, 36, 0.10), 0 0 7cqw rgba(251, 191, 36, 0.55),
-                0 0 16cqw rgba(251, 191, 36, 0.22);
-            animation: fb-sun 5s ease-in-out infinite; }
-        /* 궤도 */
-        .fb-founders::after { content: ""; position: absolute; left: 50%; top: 50%;
-            width: 68cqw; height: 68cqw; margin: -34cqw 0 0 -34cqw; border-radius: 50%;
-            border: 1px dashed rgba(167, 139, 250, 0.22); }
-        .fb-founders li { position: absolute; left: 50%; top: 50%;
-            width: 27cqw; height: 13cqw; margin: -6.5cqw 0 0 -13.5cqw;
-            padding: 0; border: none; background: none; gap: 0; }
-        .fb-founders li:last-child { border-bottom: none; }
-        /* 라벨은 같은 주기로 역회전 → 궤도를 돌아도 글자는 수평 */
-        .fb-founders .fb-orb { display: flex; flex-direction: column; align-items: center;
-            justify-content: center; gap: 1px; width: 100%; height: 100%;
-            animation: fb-orbit 46s linear infinite reverse; }
-        /* 행성 */
-        .fb-founders .fb-orb::before { content: ""; display: block; border-radius: 50%; margin-bottom: 3px; }
-        .fb-founders li:nth-child(1) { transform: rotate(0deg) translateY(-34cqw) rotate(-0deg); }
-        .fb-founders li:nth-child(2) { transform: rotate(51.43deg) translateY(-34cqw) rotate(-51.43deg); }
-        .fb-founders li:nth-child(3) { transform: rotate(102.86deg) translateY(-34cqw) rotate(-102.86deg); }
-        .fb-founders li:nth-child(4) { transform: rotate(154.29deg) translateY(-34cqw) rotate(-154.29deg); }
-        .fb-founders li:nth-child(5) { transform: rotate(205.71deg) translateY(-34cqw) rotate(-205.71deg); }
-        .fb-founders li:nth-child(6) { transform: rotate(257.14deg) translateY(-34cqw) rotate(-257.14deg); }
-        .fb-founders li:nth-child(7) { transform: rotate(308.57deg) translateY(-34cqw) rotate(-308.57deg); }
-        .fb-founders li:nth-child(1) .fb-orb::before { width: 11px; height: 11px; background: radial-gradient(circle at 34% 30%, #fff, var(--gold) 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px var(--gold); }
-        .fb-founders li:nth-child(2) .fb-orb::before { width: 8px; height: 8px; background: radial-gradient(circle at 34% 30%, #fff, #22d3ee 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px #22d3ee; }
-        .fb-founders li:nth-child(3) .fb-orb::before { width: 9.5px; height: 9.5px; background: radial-gradient(circle at 34% 30%, #fff, var(--rose) 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px var(--rose); }
-        .fb-founders li:nth-child(4) .fb-orb::before { width: 8.5px; height: 8.5px; background: radial-gradient(circle at 34% 30%, #fff, var(--accent-solid) 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px var(--accent-solid); }
-        .fb-founders li:nth-child(5) .fb-orb::before { width: 10px; height: 10px; background: radial-gradient(circle at 34% 30%, #fff, #34d399 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px #34d399; }
-        .fb-founders li:nth-child(6) .fb-orb::before { width: 8px; height: 8px; background: radial-gradient(circle at 34% 30%, #fff, var(--gold) 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px var(--gold); }
-        .fb-founders li:nth-child(7) .fb-orb::before { width: 9px; height: 9px; background: radial-gradient(circle at 34% 30%, #fff, #818cf8 62%, rgba(0,0,0,.35)); box-shadow: 0 0 12px #818cf8; }
-}
-
-@keyframes fb-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-@keyframes fb-sun { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.18); } }
-@media (prefers-reduced-motion: reduce) {
-    .fb-founders, .fb-founders .fb-orb, .fb-founders::before { animation: none; }
-}
 
 /* 좁은 화면에서는 첫 열과 버튼을 조여 날짜·게스트가 한 줄에 들어가게 한다 */
 @media (max-width: 400px) {
