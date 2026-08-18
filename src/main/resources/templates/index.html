@@ -425,10 +425,13 @@
             <!-- 출품 목록은 공개 전 — 내용을 흐리게 덮고 COMING SOON을 얹는다.
                  주의: blur는 시각적 처리일 뿐이라 소스에는 그대로 남는다. -->
             <div class="market-veil">
+              <div class="mv-awning" aria-hidden="true"></div>
               <div class="market-veil-badge">
-                <span class="mv-kicker">낯선라이브마켓</span>
-                <strong class="mv-title">COMING SOON</strong>
-                <span class="mv-sub">출품 목록 공개예정</span>
+                <div class="mv-board">
+                  <span class="mv-kicker">낯선라이브마켓</span>
+                  <strong class="mv-title">COMING SOON</strong>
+                  <span class="mv-sub">출품 목록 공개예정</span>
+                </div>
               </div>
             <!-- [LIVE-MARKET] 출품 목록은 공개 전이라 실데이터를 넣지 않는다(소스에 남으면 blur로 가려도 읽힌다).
                  아래는 형태만 흉내내는 스켈레톤 더미. 공개 시 복원 방법은 local/live-market-items.html 참고. -->

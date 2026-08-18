@@ -639,25 +639,57 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
 .market-cols li { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-top: 1px dotted var(--line); font-size: 14px; color: var(--ink); }
 .market-cols li:last-child { border-bottom: 1px dotted var(--line); }
-/* 출품 목록 공개 전 티저 — 내용을 흐리게 덮고 COMING SOON을 얹는다.
-   blur는 시각적 처리일 뿐이므로 소스에는 그대로 남는다(비공개가 목적이면 마크업에서 제거해야 함). */
-.market-veil { position: relative; margin-top: 16px; border: 1px solid var(--line); border-radius: 12px;
-    overflow: hidden; background: var(--panel-dark); }
-.market-veil > .market-cols { margin-top: 0; padding: 18px;
+/* 출품 목록 공개 전 티저 — 유럽 마켓 가판대(줄무늬 차양 + 나무틀 칠판)로 덮는다.
+   blur는 시각적 처리일 뿐이므로 실데이터는 마크업에서 이미 제거했다. */
+.market-veil { position: relative; margin-top: 16px; border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(196, 132, 74, 0.34);
+    background: linear-gradient(180deg, #17110c, #0c0a10 60%, #0a0812);
+    box-shadow: 0 22px 46px -26px rgba(0, 0, 0, 0.85); }
+.market-veil > .market-cols { margin-top: 0; padding: 52px 18px 18px;
     max-height: 300px; overflow: hidden;
-    filter: blur(7px); opacity: 0.42; pointer-events: none; user-select: none; }
-/* 배지 뒤에 어둡게 깔아 글자가 또렷하게 */
+    filter: blur(7px); opacity: 0.36; pointer-events: none; user-select: none; }
+/* 간판 뒤를 따뜻하게 어둡혀 글자가 또렷하게 */
 .market-veil::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
-    background: radial-gradient(65% 55% at 50% 50%, rgba(5, 6, 15, 0.82), rgba(5, 6, 15, 0.42)); }
-.market-veil-badge { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 9px; text-align: center; padding: 20px; }
+    background: radial-gradient(66% 58% at 50% 56%, rgba(14, 9, 5, 0.86), rgba(10, 8, 14, 0.48)); }
+
+/* 줄무늬 차양 — 아래 가장자리를 반원으로 파낸 가판대 지붕 */
+.mv-awning { position: absolute; top: 0; left: 0; right: 0; height: 38px; z-index: 3; pointer-events: none;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.22)),
+        repeating-linear-gradient(90deg, #b8472a 0 24px, #f0e2c6 24px 48px);
+    -webkit-mask:
+        radial-gradient(circle 12px at 12px 0, #000 11.5px, #0000 12px) 0 100% / 24px 12px repeat-x,
+        linear-gradient(#000, #000) 0 0 / 100% calc(100% - 12px) no-repeat;
+    mask:
+        radial-gradient(circle 12px at 12px 0, #000 11.5px, #0000 12px) 0 100% / 24px 12px repeat-x,
+        linear-gradient(#000, #000) 0 0 / 100% calc(100% - 12px) no-repeat;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.55)); }
+
+.market-veil-badge { position: absolute; inset: 0; z-index: 2; display: flex;
+    align-items: center; justify-content: center; text-align: center; padding: 44px 18px 18px; }
+/* 나무틀 칠판 간판 */
+.mv-board { position: relative; display: flex; flex-direction: column; align-items: center; gap: 7px;
+    padding: 18px 26px 16px; border-radius: 7px;
+    border: 7px solid #7c4a22;
+    background: linear-gradient(158deg, #23302a, #14201b 60%, #101a16);
+    box-shadow: 0 16px 34px -16px rgba(0, 0, 0, 0.85),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06), inset 0 0 44px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(0, 0, 0, 0.5); }
+/* 분필로 그은 안쪽 테두리 */
+.mv-board::before { content: ""; position: absolute; inset: 7px; border-radius: 3px;
+    border: 1px dashed rgba(246, 239, 226, 0.30); pointer-events: none; }
+
 .mv-kicker { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--accent-solid); }
-.mv-title { font-family: var(--mono); font-weight: 800; letter-spacing: .1em; line-height: 1;
-    font-size: clamp(28px, 8vw, 46px); color: var(--ink); text-shadow: 0 6px 28px rgba(0, 0, 0, 0.75); }
-.mv-sub { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+    text-transform: uppercase; color: #e8b473; }
+.mv-title { font-family: Georgia, "Times New Roman", serif; font-weight: 700; letter-spacing: .07em;
+    line-height: 1; font-size: clamp(21px, 7.2vw, 42px); color: #f7f0e2;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55), 0 0 20px rgba(247, 240, 226, 0.22); }
+.mv-sub { font-size: 13px; font-weight: 600; color: rgba(240, 226, 198, 0.78); }
 @media (max-width: 700px) {
-    .market-veil > .market-cols { max-height: 230px; padding: 14px; }
+    .market-veil > .market-cols { max-height: 250px; padding: 48px 14px 14px; }
+    .mv-awning { height: 32px; }
+    .market-veil-badge { padding: 38px 14px 14px; }
+    .mv-board { padding: 15px 14px 13px; border-width: 6px; }
 }
 @media (prefers-reduced-motion: no-preference) {
     .mv-title { animation: mv-pulse 3.2s ease-in-out infinite; }
