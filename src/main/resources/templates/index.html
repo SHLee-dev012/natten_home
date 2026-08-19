@@ -28,7 +28,8 @@
             <div class="nav-group">
                 <button type="button" class="nav-group-trigger">프로그램<span class="nav-caret" aria-hidden="true">⌄</span></button>
                 <div class="nav-submenu">
-                    <a href="#programs" data-nav>핵심 프로그램</a>
+                    <!--/* TEMP(미노출): 핵심 프로그램 — 다시 켤 때 th:remove만 지운다 */-->
+                    <a href="#programs" data-nav th:remove="all">핵심 프로그램</a>
                     <a href="#program" data-nav>동문특강</a>
                     <a href="#prelude" data-nav>축제 전야제</a>
                 </div>
@@ -193,8 +194,9 @@
     </div>
 </section>
 
-<!-- 핵심 프로그램 -->
-<section id="programs">
+<!--/* 핵심 프로그램 — TEMP(미노출): 섹션 전체를 렌더에서 제외한다.
+        다시 켤 때 th:remove만 지운다 */-->
+<section id="programs" th:remove="all">
     <div class="section-wrap">
         <div class="sec-head"><span class="floor-mark">CAMPUS LIFE</span><h2>핵심 프로그램</h2><span class="en">한눈에 보는 낯텐 캠퍼스 생활</span></div>
         <p class="lead">진짜 학기처럼, 전공 수업도 있고 동아리 공연도 있고 뒤풀이도 있습니다. 캠퍼스라이프 · 진리탐구 · 우정과 사랑 — 세 가지 테마로 이틀간의 프로그램을 미리 확인해보세요.</p>
