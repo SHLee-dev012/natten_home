@@ -979,14 +979,20 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 /* 스크롤 이동 버튼은 모바일 전용 */
 .sf-top, .sf-bottom { display: none; }
 @media (max-width: 640px) { .sf-top, .sf-bottom { display: flex; } }
-/* 소셜 버튼 — PC·모바일 공통, 항상 표시. 평소엔 다른 버튼과 같은 톤이고
-   hover에서만 브랜드 색이 올라온다(다크 배경에서 원색 두 개는 과하다) */
-.sf-yt, .sf-ig { text-decoration: none; }
-.sf-yt svg, .sf-ig svg { width: 21px; height: 21px; display: block; }
-/* 배경·테두리를 브랜드 색으로 진하게 깔고 아이콘은 밝게 — 아이콘 대비는
-   비텍스트 기준 3:1 위로(유튜브 3.68:1, 인스타 3.98:1) 남겨둔다 */
-.sf-yt:hover { background: rgba(122, 12, 22, 0.96); border-color: rgba(255, 0, 51, 0.95); color: #ff5566; }
-.sf-ig:hover { background: rgba(108, 20, 88, 0.96); border-color: rgba(221, 42, 123, 0.95); color: #ff58ae; }
+/* 소셜 버튼 — PC·모바일 공통, 항상 표시. 브랜드 로고 이미지를 쓴다 */
+.sf-yt, .sf-ig { text-decoration: none; overflow: hidden; }
+/* 브랜드 이미지라 색을 CSS로 못 바꾼다. 원본 비율이 달라 크기를 따로 준다
+   — 유튜브는 가로형(1280x897), 인스타는 정사각(1280x1280) */
+.sf-yt img, .sf-ig img { display: block; transition: transform .18s ease; }
+.sf-yt img { width: 23px; height: auto; }
+.sf-ig img { width: 21px; height: 21px; border-radius: 6px; }
+/* 아이콘이 스스로 브랜드 색을 갖게 되어, 배경까지 브랜드 색으로 깔면
+   빨강 위 빨강·마젠타 위 그라디언트로 서로 묻힌다. 바닥은 살짝만 밝혀
+   눌린 느낌을 주고, 강조는 아이콘 확대와 테두리로 준다 */
+.sf-yt:hover, .sf-ig:hover { background: rgba(38, 34, 58, 0.94); }
+.sf-yt:hover { border-color: rgba(255, 0, 51, 0.85); }
+.sf-ig:hover { border-color: rgba(221, 42, 123, 0.85); }
+.sf-yt:hover img, .sf-ig:hover img { transform: scale(1.12); }
 .sf-yt:focus-visible, .sf-ig:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
     .sf-btn { transition: opacity 0.2s ease, visibility 0.2s; }
