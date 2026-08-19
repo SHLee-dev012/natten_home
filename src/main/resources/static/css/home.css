@@ -175,9 +175,6 @@ header.site-nav.scrolled {
 .nav-links a { font-family: var(--mono); font-size: 13.5px; font-weight: 700; color: var(--muted); text-decoration: none; white-space: nowrap; padding: 8px 11px; border-radius: 6px; transition: background .15s ease, color .15s ease; }
 .nav-links a:hover { background: rgba(255,255,255,.05); color: var(--ink); }
 .nav-links a.active { color: var(--accent-solid); font-weight: 800; }
-/* gap:0 — .btn의 gap 8px이 남아 있으면 라벨을 감싼 .nav-cta-tail이
-   flex 아이템이라 PC에서 "후원 하기"로 벌어진다 */
-.nav-cta { flex-shrink: 0; gap: 0; padding: 9px 15px; font-size: 12.5px; font-weight: 700; }
 /* 일정표 — 링크가 아니라 버튼. PC는 가장 우측, 모바일은 햄버거 왼쪽 */
 .nav-sched { order: 5; flex-shrink: 0; cursor: pointer; white-space: nowrap;
     font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .02em;
@@ -206,14 +203,12 @@ header.site-nav.scrolled {
 .nav-submenu a { text-align: left; }
 .nav-toggle { display: none; }
 @media (max-width: 1024px) {
-    /* 후원하기도 모바일에서 노출. 순서는 PC와 동일하게 후원 → 일정표 → 햄버거 */
+    /* .nav-links가 absolute라 흐름에서 빠진다 — 남는 flex 아이템은 로고·
+       일정표·햄버거뿐이라, margin-left:auto를 일정표가 들어 둘을 우측에 붙인다 */
     .nav-inner { gap: 8px; }
-    .nav-cta { display: inline-flex; order: 1; margin-left: auto; padding: 8px 12px; font-size: 12px; }
-    /* 좁은 헤더라 라벨을 '후원'으로 줄인다 */
-    .nav-cta-tail { display: none; }
-    .nav-sched { order: 2; margin-left: 0; padding: 8px 13px; font-size: 12px; }
+    .nav-sched { order: 1; margin-left: auto; padding: 8px 13px; font-size: 12px; }
     .nav-toggle {
-        display: inline-flex; align-items: center; justify-content: center; order: 3; margin-left: 0;
+        display: inline-flex; align-items: center; justify-content: center; order: 2; margin-left: 0;
         width: 40px; height: 40px; font-size: 18px; line-height: 1;
         background: none; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); cursor: pointer;
     }
@@ -249,9 +244,9 @@ header.site-nav.scrolled {
 
 /* 1024px 블록보다 뒤에 와야 한다 — 두 쿼리가 함께 매치되는 폭에서
    선택자 우선순위가 같아, 앞에 두면 위 블록에 그대로 덮인다.
-   로고 + 후원 + 일정표 + 햄버거를 좁은 폭에서 단계적으로 조인다. */
+   로고 + 일정표 + 햄버거를 좁은 폭에서 단계적으로 조인다. */
 @media (max-width: 400px) {
-    .nav-cta, .nav-sched { padding: 7px 10px; font-size: 11.5px; }
+    .nav-sched { padding: 7px 10px; font-size: 11.5px; }
     .nav-toggle { width: 36px; height: 36px; }
 }
 @media (max-width: 340px) {
