@@ -176,6 +176,15 @@ header.site-nav.scrolled {
 .nav-links a:hover { background: rgba(255,255,255,.05); color: var(--ink); }
 .nav-links a.active { color: var(--accent-solid); font-weight: 800; }
 .nav-cta { flex-shrink: 0; padding: 9px 15px; font-size: 12.5px; font-weight: 700; }
+/* 일정표 — 링크가 아니라 버튼. PC는 가장 우측, 모바일은 햄버거 왼쪽 */
+.nav-sched { order: 5; flex-shrink: 0; cursor: pointer; white-space: nowrap;
+    font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .02em;
+    padding: 9px 15px; border-radius: 8px;
+    color: var(--ink); background: rgba(167, 139, 250, 0.12);
+    border: 1px solid rgba(167, 139, 250, 0.55);
+    transition: background .15s ease, border-color .15s ease, transform .12s ease; }
+.nav-sched:hover { background: rgba(167, 139, 250, 0.22); border-color: var(--accent-solid); transform: translateY(-1px); }
+.nav-sched:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 /* 드롭다운 그룹 — 가로 메뉴 폭 안에서 전 섹션을 담기 위해 묶는다 */
 .nav-group { position: relative; display: flex; align-items: center; }
 .nav-group-trigger { font-family: var(--mono); font-size: 13.5px; font-weight: 700; color: var(--muted);
@@ -196,8 +205,10 @@ header.site-nav.scrolled {
 .nav-toggle { display: none; }
 @media (max-width: 1024px) {
     .nav-cta { display: none; }
+    /* 일정표 버튼이 오른쪽으로 밀고, 햄버거가 그 바로 옆에 붙는다 */
+    .nav-sched { order: 0; margin-left: auto; padding: 8px 13px; font-size: 12px; }
     .nav-toggle {
-        display: inline-flex; align-items: center; justify-content: center; margin-left: auto;
+        display: inline-flex; align-items: center; justify-content: center; margin-left: 8px;
         width: 40px; height: 40px; font-size: 18px; line-height: 1;
         background: none; border: 1px solid var(--line); border-radius: 8px; color: var(--ink); cursor: pointer;
     }
@@ -429,27 +440,13 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
 @media (max-width: 820px) { .archive-grid { grid-template-columns: 1fr; } }
 .archive-card {
-    position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 26px 22px 22px;
+    position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 22px 20px;
     background: var(--glass);
-}
-/* 카드 상단 청구기호 탭 + 펀치 홀 */
-.archive-card::before {
-    content: ""; position: absolute; top: 12px; right: 16px; width: 9px; height: 9px;
-    border-radius: 50%; background: rgba(0,0,0,0.4); box-shadow: inset 0 0 0 1px var(--line);
 }
 .archive-card .room-tag { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--accent-solid); margin-bottom: 12px; display: block; padding-bottom: 10px; border-bottom: 1px solid var(--line); letter-spacing: 0.03em; }
 .archive-card h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 10px; }
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
-
-/* ---------- 도서관 톤 (5F) — 높이를 늘리지 않는 선에서 결만 입힌다 ---------- */
-/* 섹션 바탕에 아주 옅은 괘선 — 열람지 느낌 */
-#floor-5 { position: relative; }
-#floor-5::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0;
-    background: repeating-linear-gradient(180deg, transparent 0 33px, rgba(160, 170, 255, 0.045) 33px 34px);
-    -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent); }
-#floor-5 .section-wrap { position: relative; z-index: 1; }
 
 /* 인물 카드는 사진칸을 낮게 — 8장이라 세로가 금방 길어진다 */
 #floor-5 .founder-card .photo-slot { height: 76px; }
@@ -470,12 +467,6 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     font-size: clamp(19px, 4.4vw, 26px); line-height: 1.25;
     background: linear-gradient(100deg, #fde68a, #fbbf24 52%, #f59e0b);
     -webkit-background-clip: text; background-clip: text; color: transparent; }
-
-/* 카드 아래 서가 선반 — 두께만 있는 얇은 띠 */
-.fc-shelf { height: 7px; margin-top: 10px; border-radius: 2px;
-    background: linear-gradient(180deg, #2b2340, #14101f 70%);
-    border: 1px solid var(--line);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) inset, 0 12px 22px -14px rgba(0, 0, 0, 0.85); }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
 .album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
@@ -996,5 +987,7 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 .map-title { font-family: var(--serif); font-weight: 800; font-size: clamp(20px, 4vw, 26px); margin: 10px 0 6px; color: var(--ink); }
 .map-sub { font-size: 14px; color: var(--muted); margin: 0 0 16px; }
 .map-floors .fd-row:first-child { border-top: 1px solid var(--line); }
+.sched-modal .map-dialog { width: min(94vw, 760px); }
+.sched-modal .sched-tabs { margin-top: 4px; }
 @keyframes map-pop { 0% { opacity: 0; transform: translateY(14px) scale(.97); } 100% { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .map-dialog, .map-backdrop { animation: none; } }

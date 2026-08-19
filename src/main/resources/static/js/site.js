@@ -119,6 +119,36 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
+  // 일정표 모달 (메뉴의 일정표 버튼으로 연다)
+  var schedModal = document.getElementById('schedModal');
+  var schedBtn = document.getElementById('schedBtn');
+  if (schedModal && schedBtn) {
+    var lastSchedFocus = null;
+    var openSched = function () {
+      lastSchedFocus = document.activeElement;
+      schedModal.classList.add('open');
+      schedModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var close = schedModal.querySelector('.map-close');
+      if (close) setTimeout(function () { close.focus(); }, 60);
+    };
+    var closeSched = function () {
+      schedModal.classList.remove('open');
+      schedModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastSchedFocus && lastSchedFocus.focus) lastSchedFocus.focus();
+    };
+    schedBtn.addEventListener('click', function () {
+      // 모바일 드로어가 열려 있으면 먼저 닫는다
+      if (navLinksEl && navLinksEl.classList.contains('open')) navToggle.click();
+      openSched();
+    });
+    schedModal.querySelectorAll('[data-schedclose]').forEach(function (el) { el.addEventListener('click', closeSched); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && schedModal.classList.contains('open')) closeSched();
+    });
+  }
+
   // 일정표 요일 탭
   var schedTabs = document.querySelectorAll('.sched-tab');
   schedTabs.forEach(function (tab) {

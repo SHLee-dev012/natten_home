@@ -19,6 +19,7 @@
             <img th:src="@{/img/logo.png}" alt="낯선대학"/>
             <span>10TH ANNIV.</span>
         </a>
+        <button type="button" class="nav-sched" id="schedBtn" aria-haspopup="dialog" aria-controls="schedModal">일정표</button>
         <button type="button" class="nav-toggle" id="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">☰</button>
         <nav class="nav-links" id="nav-links">
             <a href="#overview" data-nav>축제개요</a>
@@ -31,7 +32,6 @@
                     <a href="#prelude" data-nav>축제 전야제</a>
                 </div>
             </div>
-            <a href="#schedule" data-nav>일정표</a>
             <div class="nav-group">
                 <button type="button" class="nav-group-trigger">캠퍼스<span class="nav-caret" aria-hidden="true">⌄</span></button>
                 <div class="nav-submenu">
@@ -228,29 +228,6 @@
 </section>
 
 <!-- 일정표 -->
-<section id="schedule" class="sec-light">
-    <div class="section-wrap">
-        <div class="sec-head"><span class="floor-mark">TIMETABLE</span><h2>일정표</h2><span class="en">장소별 · 시간대별 프로그램</span></div>
-        <p class="lead">층·존별 시간표입니다. 요일 탭을 눌러 토요일과 일요일의 일정을 각각 확인하세요.</p>
-        <div class="sched-tabs">
-            <button type="button" class="sched-tab active" data-day="sat">토요일 · 9/12(토)</button>
-            <button type="button" class="sched-tab" data-day="sun">일요일 · 9/13(일)</button>
-        </div>
-        <div class="sched-zones" data-day-panel="sat">
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span><span class="sched-chip"><b>19:00–20:30</b> 낯선별밤</span><span class="sched-chip"><b>20:30–22:00</b> 낯선파티</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (토요일 8강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
-        </div>
-        <div class="sched-zones" data-day-panel="sun" style="display:none;">
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (일요일 4강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span><span class="sched-chip"><b>18:00–19:00</b> 뿌리를 찾아서 · 창립자 토크콘서트</span></div></div>
-            <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
-        </div>
-        <p class="lead" style="margin-top:20px; font-size:12px;">※ 동문특강 세부 시간표와 리셉션 운영시간은 확정되는 대로 이 표에 업데이트됩니다.</p>
-    </div>
-</section>
 
 <!-- 동문특강 -->
 <section id="program">
@@ -339,7 +316,6 @@
             <div class="lecture-card founder-card"><div class="photo-slot">PHOTO<br/>PENDING</div><div class="body"><div class="kw">이현재</div></div></div>
             <div class="lecture-card founder-card fc-seal"><span class="fc-seal-in">낯선대학</span></div>
             </div>
-            <div class="fc-shelf" aria-hidden="true"></div>
         </div>
         <div class="archive-grid reveal" style="margin-top:20px;">
             <div class="archive-card"><span class="room-tag">CAMP 310 · ROOM A · 13:00–19:00</span><h4>졸업앨범</h4><p>1기부터 최신 기수까지, 10년치 사진 500~700장을 시간순으로 이어붙인 아카이브. 크기에 위계를 두어 전시합니다. 현장에서 폴라로이드 사진도 추가할 수 있어요.</p></div>
@@ -600,6 +576,34 @@
             <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14"/><path d="M15 6v14"/>
         </svg>
     </button>
+</div>
+
+<!-- 일정표 모달 — 메뉴의 일정표 버튼으로 연다 -->
+<div class="map-modal sched-modal" id="schedModal" aria-hidden="true">
+    <div class="map-backdrop" data-schedclose></div>
+    <div class="map-dialog" role="dialog" aria-modal="true" aria-labelledby="sched-modal-title">
+        <button class="map-close" type="button" data-schedclose aria-label="닫기">✕</button>
+        <span class="map-kicker">TIMETABLE</span>
+        <h3 class="map-title" id="sched-modal-title">일정표</h3>
+        <p class="map-sub">층·존별 시간표입니다. 요일 탭을 눌러 토요일과 일요일의 일정을 각각 확인하세요.</p>
+        <div class="sched-tabs">
+        <button type="button" class="sched-tab active" data-day="sat">토요일 · 9/12(토)</button>
+        <button type="button" class="sched-tab" data-day="sun">일요일 · 9/13(일)</button>
+        </div>
+        <div class="sched-zones" data-day-panel="sat">
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span><span class="sched-chip"><b>19:00–20:30</b> 낯선별밤</span><span class="sched-chip"><b>20:30–22:00</b> 낯선파티</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (토요일 8강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
+        </div>
+        <div class="sched-zones" data-day-panel="sun" style="display:none;">
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:#8a8f9c;">1F · 학생처</div><div class="sched-chips"><span class="sched-chip">상시 · 리셉션 입장 &amp; 학생증·코인 발급</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--gold);">4F · 캠퍼스낭만존</div><div class="sched-chips"><span class="sched-chip"><b>13:00–19:00</b> 낯선마켓 (F&amp;B·플리마켓)</span><span class="sched-chip"><b>17:30–18:30</b> 낯선라디오 공개방송</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--stamp);">5F · 도서관</div><div class="sched-chips"><span class="sched-chip"><b>시간 추후 확정</b> 동문특강 · 사람책 (일요일 4강)</span><span class="sched-chip"><b>13:00–19:00</b> 졸업앨범 · 낯텐 사진공모전 전시</span><span class="sched-chip"><b>18:00–19:00</b> 뿌리를 찾아서 · 창립자 토크콘서트</span></div></div>
+        <div class="sched-zone"><div class="sched-zone-head" style="--z-color:var(--rose);">6F · 옥상광장</div><div class="sched-chips"><span class="sched-chip">상시 · 동문 네트워킹 라운지</span></div></div>
+        </div>
+        <p class="lead" style="margin-top:20px; font-size:12px;">※ 동문특강 세부 시간표와 리셉션 운영시간은 확정되는 대로 이 표에 업데이트됩니다.</p>
+    </div>
 </div>
 
 <!-- 캠퍼스 맵 모달 -->
