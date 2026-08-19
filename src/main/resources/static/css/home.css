@@ -979,6 +979,13 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 /* 스크롤 이동 버튼은 모바일 전용 */
 .sf-top, .sf-bottom { display: none; }
 @media (max-width: 640px) { .sf-top, .sf-bottom { display: flex; } }
+/* 소셜 버튼 — PC·모바일 공통, 항상 표시. 평소엔 다른 버튼과 같은 톤이고
+   hover에서만 브랜드 색이 올라온다(다크 배경에서 원색 두 개는 과하다) */
+.sf-yt, .sf-ig { text-decoration: none; }
+.sf-yt svg, .sf-ig svg { width: 21px; height: 21px; display: block; }
+.sf-yt:hover { background: rgba(60, 18, 22, 0.92); border-color: rgba(255, 0, 51, 0.6); color: #ff4d63; }
+.sf-ig:hover { background: rgba(52, 22, 48, 0.92); border-color: rgba(221, 42, 123, 0.6); color: #f06ab4; }
+.sf-yt:focus-visible, .sf-ig:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) {
     .sf-btn { transition: opacity 0.2s ease, visibility 0.2s; }
 }
