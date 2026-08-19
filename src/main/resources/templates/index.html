@@ -19,6 +19,7 @@
             <img th:src="@{/img/logo.png}" alt="낯선대학"/>
             <span>10TH ANNIV.</span>
         </a>
+        <button type="button" class="nav-map" id="mapBtn" aria-haspopup="dialog" aria-controls="mapModal">캠퍼스맵</button>
         <button type="button" class="nav-sched" id="schedBtn" aria-haspopup="dialog" aria-controls="schedModal">일정표</button>
         <button type="button" class="nav-toggle" id="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">☰</button>
         <nav class="nav-links" id="nav-links">
@@ -566,18 +567,13 @@
     </div>
 </footer>
 
-<!-- 플로팅 버튼 (모바일: 맨위/맨아래 스크롤 · 공통: 캠퍼스 맵) -->
+<!-- 플로팅 버튼 (모바일 전용: 맨위/맨아래 스크롤) -->
 <div class="scroll-fab" id="scrollFab">
     <button type="button" class="sf-btn sf-top sf-hide" id="sfTop" aria-label="맨 위로">↑</button>
     <button type="button" class="sf-btn sf-bottom" id="sfBottom" aria-label="맨 아래로">↓</button>
-    <button type="button" class="sf-btn sf-map" id="sfMap" aria-label="캠퍼스 맵 보기" aria-haspopup="dialog">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14"/><path d="M15 6v14"/>
-        </svg>
-    </button>
 </div>
 
-<!-- 일정표 모달 — 메뉴의 일정표 버튼으로 연다 -->
+<!-- 일정표 모달 — 상단 일정표 버튼으로 연다 -->
 <div class="map-modal sched-modal" id="schedModal" aria-hidden="true">
     <div class="map-backdrop" data-schedclose></div>
     <div class="map-dialog" role="dialog" aria-modal="true" aria-labelledby="sched-modal-title">

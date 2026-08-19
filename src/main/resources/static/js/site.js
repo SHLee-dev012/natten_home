@@ -35,27 +35,6 @@
     window.addEventListener('resize', updateFab, { passive: true });
   }
 
-  // 캠퍼스 맵 모달 (플로팅 버튼으로 열기)
-  var mapModal = document.getElementById('mapModal');
-  var sfMap = document.getElementById('sfMap');
-  if (mapModal && sfMap) {
-    var openMap = function () {
-      mapModal.classList.add('open');
-      mapModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    };
-    var closeMap = function () {
-      mapModal.classList.remove('open');
-      mapModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    };
-    sfMap.addEventListener('click', openMap);
-    mapModal.querySelectorAll('[data-mapclose]').forEach(function (el) { el.addEventListener('click', closeMap); });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && mapModal.classList.contains('open')) closeMap();
-    });
-  }
-
   // 헤더 스크롤 상태(고정 시 블러·그림자 강화)
   var siteNav = document.querySelector('header.site-nav');
   if (siteNav) {
@@ -146,6 +125,36 @@
     schedModal.querySelectorAll('[data-schedclose]').forEach(function (el) { el.addEventListener('click', closeSched); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && schedModal.classList.contains('open')) closeSched();
+    });
+  }
+
+  // 캠퍼스 맵 모달 — 상단 캠퍼스맵 버튼으로 연다 (일정표와 같은 패턴)
+  var mapModal = document.getElementById('mapModal');
+  var mapBtn = document.getElementById('mapBtn');
+  if (mapModal && mapBtn) {
+    var lastMapFocus = null;
+    var openMap = function () {
+      lastMapFocus = document.activeElement;
+      mapModal.classList.add('open');
+      mapModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var close = mapModal.querySelector('.map-close');
+      if (close) setTimeout(function () { close.focus(); }, 60);
+    };
+    var closeMap = function () {
+      mapModal.classList.remove('open');
+      mapModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastMapFocus && lastMapFocus.focus) lastMapFocus.focus();
+    };
+    mapBtn.addEventListener('click', function () {
+      // 모바일 드로어가 열려 있으면 먼저 닫는다
+      if (navLinksEl && navLinksEl.classList.contains('open')) navToggle.click();
+      openMap();
+    });
+    mapModal.querySelectorAll('[data-mapclose]').forEach(function (el) { el.addEventListener('click', closeMap); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mapModal.classList.contains('open')) closeMap();
     });
   }
 
