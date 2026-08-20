@@ -158,15 +158,46 @@
     });
   }
 
-  // 일정표 요일 탭
-  var schedTabs = document.querySelectorAll('.sched-tab');
-  schedTabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var day = tab.getAttribute('data-day');
-      schedTabs.forEach(function (t) { t.classList.toggle('active', t === tab); });
-      document.querySelectorAll('.sched-zones').forEach(function (panel) {
-        panel.style.display = (panel.getAttribute('data-day-panel') === day) ? 'flex' : 'none';
-      });
+  // 모달 포커스 트랩 — 열려 있는 동안 Tab이 배경으로 새지 않게 가둔다.
+  // 세 모달(.map-modal)이 같은 구조라 한 곳에서 처리한다.
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var open = document.querySelector('.map-modal.open');
+    if (!open) return;
+    var dialog = open.querySelector('.map-dialog');
+    if (!dialog) return;
+    var items = Array.prototype.slice.call(dialog.querySelectorAll(
+      'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter(function (el) {
+      return !el.disabled && el.offsetWidth > 0 && el.offsetHeight > 0;
+    });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (!dialog.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  // 일정표 요일 탭 (role=tab 패턴: 클릭 + 좌우 화살표)
+  var schedTabs = Array.prototype.slice.call(document.querySelectorAll('.sched-tab'));
+  var selectDay = function (tab) {
+    var day = tab.getAttribute('data-day');
+    schedTabs.forEach(function (t) {
+      var on = t === tab;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('.sched-zones').forEach(function (panel) {
+      panel.style.display = (panel.getAttribute('data-day-panel') === day) ? 'flex' : 'none';
+    });
+  };
+  schedTabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectDay(tab); });
+    tab.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var next = schedTabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + schedTabs.length) % schedTabs.length];
+      next.focus(); selectDay(next);
     });
   });
 

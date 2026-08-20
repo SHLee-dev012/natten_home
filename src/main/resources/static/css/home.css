@@ -437,7 +437,9 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .why-highlight { margin: 16px 0 0; padding-top: 14px; border-top: 1px dashed rgba(167,139,250,.35); font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--accent-solid); line-height: 1.7; }
 
 /* ---------- SCHEDULE ---------- */
-.sched-tabs { display: flex; gap: 10px; margin-bottom: 26px; }
+/* flex-wrap 필수 — 320px에서 탭 2개(98px+98px+gap)가 175px 컨테이너를
+   33px 넘쳐 일요일 탭이 다이얼로그 밖으로 잘렸다 */
+.sched-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
 .sched-tab { font-family: var(--mono); font-size: 13.5px; font-weight: 600; letter-spacing: .03em; background: none; border: 1px solid var(--line); color: var(--muted); padding: 10px 18px; border-radius: 999px; cursor: pointer; transition: all .15s ease; }
 .sched-tab.active { background: var(--accent); border-color: transparent; color: #0a0c1c; font-weight: 700; }
 .sched-zones { display: flex; flex-direction: column; gap: 2px; }
