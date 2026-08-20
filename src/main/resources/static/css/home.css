@@ -414,6 +414,14 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .lecture-card .field { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; color: var(--gold); border: 1px solid rgba(251,191,36,.5); border-radius: 999px; padding: 2px 8px; display: inline-block; margin-bottom: 9px; }
 .lecture-card .kw { font-family: var(--serif); font-size: 14.5px; font-weight: 700; line-height: 1.45; margin-bottom: 6px; }
 .lecture-card .who { font-size: 12.5px; color: var(--muted); }
+/* 동문특강 카드 — 사진칸 없이 시간·이름·기수를 앞세운다 */
+.lecture-card .lc-time { display: block; font-family: var(--mono); font-size: 12.5px; font-weight: 700;
+    letter-spacing: .03em; color: var(--accent-solid); margin-bottom: 5px; }
+/* 기수는 이름 옆에 한 톤 낮춰 붙인다 — 이름이 먼저 읽히도록 */
+#program .lecture-card .room i { font-style: normal; font-family: var(--mono); font-size: 12px;
+    font-weight: 700; color: var(--muted); margin-left: 5px; letter-spacing: .03em; }
+/* 소속 배지는 길어질 수 있어 줄바꿈을 허용한다 */
+#program .lecture-card .field { white-space: normal; }
 .why-box { max-width: 720px; margin: 0 0 44px; padding: 22px 24px; border-left: 3px solid var(--accent-solid); background: rgba(167,139,250,.07); border-radius: 0 8px 8px 0; }
 .why-box p { font-size: 14px; line-height: 1.9; color: var(--muted); margin: 0; }
 .why-box .tags { display: flex; gap: 8px; flex-wrap: wrap; }
