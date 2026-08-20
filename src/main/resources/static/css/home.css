@@ -43,7 +43,10 @@ p, li, dt, dd, td, th, blockquote, figcaption, .lead,
     word-break: keep-all; overflow-wrap: break-word;
 }
 h1, h2, h3, h4, h5, h6 { word-break: keep-all; text-wrap: balance; }
-p, .lead { text-wrap: pretty; }
+/* 본문도 balance — 한글은 keep-all이라 어절이 안 쪼개져 마지막 줄에 한두
+   어절만 남는 일이 잦다. pretty보다 외톨이 줄이 확실히 줄고(1280px 4→2,
+   768px 4→1건) 줄 수·문서 높이는 그대로라 레이아웃이 밀리지 않는다 */
+p, .lead { text-wrap: balance; }
 /* 아주 성긴 별 (희미하게) */
 body::before {
     content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
