@@ -430,6 +430,10 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .day-title h3 { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0; }
 .moderator-line { font-size: 14.5px; color: var(--muted); margin: 10px 0 20px; line-height: 1.8; }
 .moderator-line b { color: var(--ink); font-weight: 700; }
+/* 모더레이터는 한 명씩 줄을 차지한다. 두 명이 '·'로 이어지거나
+   소개문 뒤에 붙어 있으면 이름이 문장 속에 묻힌다. */
+.moderator-line .mod { display: block; }
+.moderator-line .mod + .mod { margin-top: 2px; }
 .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
