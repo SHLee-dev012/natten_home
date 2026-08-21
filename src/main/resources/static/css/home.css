@@ -50,6 +50,8 @@ p, .lead { text-wrap: balance; }
 /* 카드 제목도 같이 — 폭이 좁아(약 208px) 마지막 줄에 두 글자만 남는 일이
    생긴다(예: "…연결에 대한 / 가치"). PC 전 폭에서 외톨이 줄 2건 → 0건 */
 .kw { text-wrap: balance; }
+/* 짧은 배지·부제는 마지막 줄에 두 글자만 남기 쉬워 줄을 고르게 나눈다 */
+.lecture-card .field, .pillar-card .p-en { text-wrap: balance; }
 /* 캠퍼스맵 모달 본문 — div라 위 p/.lead 규칙에서 빠진다. 좁은 폭에서
    설명 마지막 줄에 "공간." 두 글자만 남는 일이 있었다(430px 10%) */
 .map-sub, .fd-desc { text-wrap: balance; }
