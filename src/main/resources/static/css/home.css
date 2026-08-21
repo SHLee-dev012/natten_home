@@ -318,6 +318,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .hero-copy { font-size: 15.5px; line-height: 1.9; color: var(--muted); max-width: 580px; margin: 0 auto 30px; }
 .hero-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 20px; margin-bottom: 32px; font-family: var(--mono); font-size: 14px; color: var(--muted); }
 .hero-facts b { color: var(--ink); font-weight: 700; }
+/* 일정이 두 줄이 되어 한 행을 통째로 쓴다. 📍·🎟️와 같은 줄에 두면
+   그 둘의 높이가 일정 블록에 끌려 어긋난다. */
+.hero-facts .hf-when { flex: 0 0 100%; display: flex; justify-content: center;
+    align-items: baseline; gap: 7px; }
+.hf-when .hf-days { display: grid; gap: 3px; justify-items: start; text-align: left; }
 .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 /* ---------- OVERVIEW ---------- */
