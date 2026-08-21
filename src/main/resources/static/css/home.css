@@ -673,18 +673,19 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 }
 .prelude-head { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 16px; }
 .prelude-head h3 { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0; }
-table.sched { width: 100%; border-collapse: collapse; font-size: 15px; margin-top: 14px; }
-table.sched th { text-align: left; font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; color: var(--faint); text-transform: uppercase; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-table.sched td { padding: 11px 10px; border-bottom: 1px dotted var(--line); vertical-align: top; color: var(--ink); font-weight: 600; }
+table.sched { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 14px; }
+table.sched th { text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: .05em; color: var(--faint); text-transform: uppercase; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+table.sched td { padding: 10px 10px; border-bottom: 1px dotted var(--line); vertical-align: top; color: var(--ink); font-weight: 400; line-height: 1.55; word-break: keep-all; }
+/* 이름은 살짝 올리고, 기수·소속은 한 단계 내려 본문과 구별한다 */
+table.sched td b { font-weight: 600; }
+table.sched td i { font-style: normal; font-weight: 400; font-size: 11.5px; color: var(--faint); }
+/* 게스트·주제가 여러 개면 줄로 나눈다 */
+table.sched .g { display: block; }
+table.sched .g + .g { margin-top: 4px; }
+table.sched td:first-child { font-family: var(--mono); font-size: 12px; color: var(--faint); white-space: nowrap; }
+table.sched .s-topic { color: var(--accent-solid); font-weight: 500; }
 table.sched tr.today td { background: rgba(167,139,250,.1); }
 table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 700; }
-/* 비고 → 버튼 (PC 위치는 표의 마지막 열 그대로) */
-.sched-btn { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; padding: 5px 11px; border-radius: 999px;
-    border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--ink); cursor: pointer; white-space: nowrap;
-    transition: background .15s ease, border-color .15s ease, color .15s ease; }
-.sched-btn:hover { border-color: var(--accent-solid); background: rgba(167,139,250,.12); color: var(--accent-solid); }
-.sched-btn-alert { border-color: rgba(167,139,250,.5); color: var(--accent-solid); background: rgba(167,139,250,.08); }
-.sched-btn-alert:hover { background: rgba(167,139,250,.16); }
 .market-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px; }
 .market-cols h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-solid); margin: 0 0 10px; }
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
@@ -775,39 +776,45 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     table.sched { margin-top: 12px; }
     table.sched thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     table.sched, table.sched tbody { display: block; }
-    /* 1행: 회차 + 날짜 + 비고버튼(맨 우측) / 구분선 / 2행: DJ + 게스트 한 줄 */
-    /* tr마다 독립된 grid라 1열(회차/DJ)이 auto면 행마다 폭이 달라진다.
-       고정폭으로 묶어 모든 행의 날짜·게스트가 같은 x에서 시작하게 한다. */
-    table.sched tr { display: grid; grid-template-columns: var(--sched-c1, 124px) 1fr auto;
-        grid-template-areas: "num dj remark" "date guest guest";
-        align-items: baseline; column-gap: 0; row-gap: 0;
-        border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; margin-bottom: 10px; background: var(--panel); }
+    /* 본문이 길어져 5열 표 → 카드로 쌓는다.
+       1행: 회차 + 주제(우측) / 2행: 날짜 / 3행: DJ / 4행: 게스트 */
+    table.sched tr { display: grid; grid-template-columns: auto 1fr;
+        grid-template-areas: "num topic" "date date" "dj dj" "guest guest";
+        align-items: baseline; column-gap: 10px; row-gap: 0;
+        border: 1px solid var(--line); border-radius: 12px; padding: 12px 15px; margin-bottom: 10px; background: var(--panel); }
     table.sched tr.today { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.4); }
-    table.sched td { display: flex; align-items: baseline; gap: 6px; padding: 0; border: none; color: var(--ink); font-size: 15.5px; font-weight: 600; line-height: 1.4; }
-    table.sched td::before { content: attr(data-label); font-family: var(--mono); font-size: 10.5px; letter-spacing: .03em; color: var(--faint); flex-shrink: 0; }
-    /* 1열(회차/DJ)과 2열(날짜/게스트)을 세로 구분선으로 나눈다 */
-    table.sched td:nth-child(1) { grid-area: num; font-family: var(--serif); font-weight: 700; font-size: 16.5px;
-        padding: 0 8px 11px 0; border-right: 1px dotted var(--line); }
+    table.sched td { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; padding: 0; border: none;
+        color: var(--ink); font-size: 13px; font-weight: 400; line-height: 1.5; }
+    table.sched td::before { content: attr(data-label); font-family: var(--mono); font-size: 9.5px; letter-spacing: .03em; color: var(--faint); flex-shrink: 0; }
+    table.sched td i { font-size: 11px; }
+    table.sched td:nth-child(1) { grid-area: num; font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
     table.sched td:nth-child(1)::before { display: none; }
-    /* 날짜는 회차 아래(왼쪽 열)로 — 열이 '언제 / 누가'로 나뉜다.
-       회차 바로 아래라 라벨이 없어도 읽히고, 그만큼 폭을 게스트에 넘긴다 */
-    table.sched td:nth-child(2) { grid-area: date; border-top: 1px dotted var(--line);
-        padding: 11px 8px 0 0; border-right: 1px dotted var(--line); }
+    table.sched td:nth-child(2) { grid-area: date; font-weight: 500;
+        padding: 3px 0 9px; margin-bottom: 9px; border-bottom: 1px dotted var(--line); }
     table.sched td:nth-child(2)::before { display: none; }
-    table.sched td:nth-child(3) { grid-area: dj; padding: 0 0 11px 6px; }
-    table.sched td:nth-child(4) { grid-area: guest; border-top: 1px dotted var(--line); padding: 11px 0 0 6px; }
-    table.sched td:nth-child(5) { grid-area: remark; justify-self: end; align-self: center; padding-bottom: 11px; }
-    table.sched .sched-btn { padding: 6px 13px; font-size: 11.5px; }
+    table.sched td:nth-child(3) { grid-area: dj; padding-bottom: 6px; }
+    /* 게스트가 둘이면 라벨 옆 한 열에 세로로 쌓는다.
+       flex로 두면 .g가 flex 아이템이 되어 가로로 붙어버린다 */
+    table.sched td:nth-child(4) { grid-area: guest; display: grid;
+        grid-template-columns: auto 1fr; column-gap: 6px; align-items: baseline; }
+    table.sched td:nth-child(4) .g { grid-column: 2; }
+    /* 주제는 회차 옆 오른쪽 어깨 — 카드 제목처럼 읽힌다 */
+    table.sched td:nth-child(5) { grid-area: topic; justify-content: flex-end; text-align: right;
+        font-size: 12.5px; line-height: 1.45; }
+    table.sched td:nth-child(5) .g { flex: 0 0 100%; }
+    table.sched td:nth-child(5)::before { display: none; }
     .account-box { flex-direction: column; align-items: flex-start; gap: 12px; }
     .account-box .an { word-break: break-all; }
     .copy-btn { margin-left: 0; align-self: stretch; text-align: center; padding: 11px 12px; }
 }
 
 
-/* 좁은 화면에서는 첫 열과 버튼을 조여 날짜·게스트가 한 줄에 들어가게 한다 */
+/* 좁은 화면에서는 카드 여백과 자형을 한 단계 더 조인다 */
 @media (max-width: 400px) {
-    table.sched tr { --sched-c1: 116px; padding: 13px 9px; }
-    table.sched .sched-btn { padding: 5px 7px; font-size: 10px; letter-spacing: 0; }
+    table.sched tr { padding: 11px 11px; column-gap: 8px; }
+    table.sched td { font-size: 12.5px; }
+    table.sched td i { font-size: 10.5px; }
+    table.sched td:nth-child(5) { font-size: 11.5px; }
 }
 
 /* ---------- ARCHIVE ---------- */
