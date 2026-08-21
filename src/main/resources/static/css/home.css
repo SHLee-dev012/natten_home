@@ -482,27 +482,24 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
 
-/* 인물 카드는 사진칸을 낮게 — 8장이라 세로가 금방 길어진다. 같은 섹션의
-   다른 특강 카드는 92px. #program .photo-slot이 ID 선택자라 클래스만으로는
-   못 이기므로 여기도 ID 스코프를 유지한다 */
-#program .founder-card .photo-slot { height: 76px; }
-@media (max-width: 640px) { #program .founder-card .photo-slot { height: 68px; } }
-/* 시초 7인 카드 — 배경·테두리는 다른 영역 카드(.lecture-card)와 동일하게 두고
-   본문 여백과 이름 크기만 인물 카드에 맞춘다 */
-.founder-card .body { padding: 13px 14px 15px; }
-.founder-card .kw { font-size: 17px; font-weight: 800; margin-bottom: 3px; }
-.founder-card .who { font-family: var(--mono); font-size: 11.5px; font-weight: 600; color: var(--accent-solid); }
-
-/* 8번째 칸 — '낯선대학' 각인 카드 (7인 + 1 = 모바일 2열 4행) */
-.fc-seal { display: flex; align-items: center; justify-content: center; padding: 14px;
-    border-color: rgba(251, 191, 36, 0.34);
-    background:
-        radial-gradient(120% 100% at 30% 0%, rgba(251, 191, 36, 0.14), transparent 62%),
-        linear-gradient(180deg, rgba(251, 191, 36, 0.07), rgba(251, 191, 36, 0.02)); }
-.fc-seal-in { font-family: var(--serif); font-weight: 800; letter-spacing: -.01em; text-align: center;
-    font-size: clamp(19px, 4.4vw, 26px); line-height: 1.25;
-    background: linear-gradient(100deg, #fde68a, #fbbf24 52%, #f59e0b);
-    -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* 시초 7인 — 사진칸 없이 이름만 담은 카드.
+   7은 어떤 열 수로도 나누어떨어지지 않아, grid 대신 flex + justify-content:center로
+   마지막 줄을 가운데 정렬한다(끝에 빈칸이 남지 않는다). */
+.founders-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.founders-grid .founder-card { flex: 0 0 calc((100% - 72px) / 7);
+    display: flex; align-items: center; justify-content: center;
+    padding: 17px 10px; text-align: center; }
+.fc-name { font-family: var(--serif); font-size: 17px; font-weight: 800;
+    letter-spacing: -.01em; white-space: nowrap; }
+/* 한 줄에 7장 → 4장(4+3) → 3장(3+3+1) */
+@media (max-width: 760px) {
+    .founders-grid .founder-card { flex-basis: calc((100% - 36px) / 4); }
+}
+@media (max-width: 480px) {
+    .founders-grid { gap: 10px; }
+    .founders-grid .founder-card { flex-basis: calc((100% - 20px) / 3); padding: 15px 8px; }
+    .fc-name { font-size: 16px; }
+}
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
 .album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
