@@ -490,7 +490,10 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     display: flex; align-items: center; justify-content: center;
     padding: 17px 10px; text-align: center; }
 .fc-name { font-family: var(--serif); font-size: 17px; font-weight: 800;
-    letter-spacing: -.01em; white-space: nowrap; }
+    letter-spacing: -.01em; word-break: keep-all; }
+/* 별칭(록담) — 이름 옆에 한 단계 작게. 좁아지면 다음 줄로 접힌다 */
+.fc-alias { font-family: var(--mono); font-style: normal; font-size: 11.5px;
+    font-weight: 600; color: var(--accent-solid); }
 /* 한 줄에 7장 → 4장(4+3) → 3장(3+3+1) */
 @media (max-width: 760px) {
     .founders-grid .founder-card { flex-basis: calc((100% - 36px) / 4); }
