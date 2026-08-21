@@ -324,11 +324,14 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .hero-facts b { color: var(--ink); font-weight: 700; }
 /* 일정이 두 줄이 되어 한 행을 통째로 쓴다. 📍·🎟️와 같은 줄에 두면
    그 둘의 높이가 일정 블록에 끌려 어긋난다. */
-.hero-facts .hf-when { flex: 0 0 100%; display: flex; justify-content: center;
-    align-items: baseline; gap: 7px; }
-/* 넓은 화면에서는 두 날짜를 한 줄에 나란히. flex-wrap이라 폭이 모자라면
-   알아서 두 줄로 접히므로 별도 분기점이 필요 없다. */
-.hf-when .hf-days { display: flex; flex-wrap: wrap; gap: 4px 20px; text-align: left; }
+/* 날짜 두 개를 .hf-when이 직접 감싸는 flex 줄바꿈 컨테이너로 둔다.
+   gap은 줄 앞에 남지 않아, 접혔을 때 각 줄이 정확히 가운데로 온다
+   (inline-block + margin-left는 둘째 줄이 여백만큼 밀렸다). */
+.hero-facts .hf-when { flex: 0 0 100%; display: flex; flex-wrap: wrap;
+    justify-content: center; align-items: baseline; column-gap: 20px; row-gap: 4px; }
+/* 좁은 폭에서는 📅(14px) + gap + 날짜(241px)가 컨테이너를 넘겨 📅만 한 줄에
+   남는다. 그 구간에서만 gap을 좁힌다. */
+@media (max-width: 400px) { .hero-facts .hf-when { column-gap: 10px; } }
 /* 장소를 눌러 지도로. 전역 a는 color:inherit만 있어 밑줄이 그대로 나오므로
    장소명에만 옅은 밑줄을 둬 누를 수 있다는 걸 알리고 hover에서 진해진다. */
 .hf-place { text-decoration: none; color: inherit; border-radius: 6px; }
