@@ -359,6 +359,18 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 
 /* ---------- HOWTO ---------- */
 /* 안내 카드 4장의 소제목 — 섹션 제목(h2)과 카드 제목(h4 16px) 사이 단계 */
+/* 참여 방식 3가지 — 설명이 두세 문장이라 폭을 넓게 쓰도록 항상 세로로 쌓는다.
+   좌측 액센트 보더는 같은 섹션의 .ov-note와 같은 결. */
+.join-ways { list-style: none; margin: 0 0 30px; padding: 0; display: grid; gap: 12px; }
+.join-ways li { background: rgba(167,139,250,.07); border-left: 3px solid var(--accent-solid);
+    border-radius: 0 10px 10px 0; padding: 15px 18px; }
+.jw-name { display: block; font-family: var(--serif); font-weight: 700; font-size: 16px;
+    color: var(--ink); margin-bottom: 7px; }
+.jw-desc { display: block; font-size: 14.5px; line-height: 1.85; color: var(--muted); word-break: keep-all; }
+@media (max-width: 640px) {
+    .join-ways li { padding: 13px 15px; }
+    .jw-desc { font-size: 14px; }
+}
 .howto-sub { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0 0 16px; }
 .howto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 34px; }
 @media (max-width: 900px) { .howto-grid { grid-template-columns: repeat(2, 1fr); } }
