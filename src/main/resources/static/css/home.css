@@ -324,7 +324,9 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
    그 둘의 높이가 일정 블록에 끌려 어긋난다. */
 .hero-facts .hf-when { flex: 0 0 100%; display: flex; justify-content: center;
     align-items: baseline; gap: 7px; }
-.hf-when .hf-days { display: grid; gap: 3px; justify-items: start; text-align: left; }
+/* 넓은 화면에서는 두 날짜를 한 줄에 나란히. flex-wrap이라 폭이 모자라면
+   알아서 두 줄로 접히므로 별도 분기점이 필요 없다. */
+.hf-when .hf-days { display: flex; flex-wrap: wrap; gap: 4px 20px; text-align: left; }
 /* 장소를 눌러 지도로. 전역 a는 color:inherit만 있어 밑줄이 그대로 나오므로
    장소명에만 옅은 밑줄을 둬 누를 수 있다는 걸 알리고 hover에서 진해진다. */
 .hf-place { text-decoration: none; color: inherit; border-radius: 6px; }
