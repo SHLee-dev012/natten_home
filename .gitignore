@@ -41,3 +41,13 @@ out/
 **/.DS_Store
 # 공개 전 실데이터 보관 (git에 올리지 않는다)
 /local/
+
+# 아티스트 원본 사진 — 합계 약 40MB(최대 19MB). static/img/ 전체가 Pages로
+# 복사돼 배포되므로 원본은 올리지 않는다. 웹용 축소본은 img/artist/ 에 있다.
+# 축소본과 파일명이 겹쳐(Oh.jpg 등) 경로를 '/'로 고정해야 artist/ 쪽이 안 걸린다.
+/src/main/resources/static/img/heemoon.png
+/src/main/resources/static/img/SY.jpg
+/src/main/resources/static/img/Junkim.jpg
+/src/main/resources/static/img/Oh.jpg
+/src/main/resources/static/img/Heeno.jpg
+/src/main/resources/static/img/LMST.jpg
