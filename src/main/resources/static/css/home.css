@@ -1012,7 +1012,10 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
     /* 컴팩트 카드 그리드는 모바일에서도 2열 유지 → 세로 길이 절반 */
     .program-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
     .card-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .howto-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    /* 참여방법 카드는 본문이 길어 2열이면 글줄이 너무 좁다.
+       열 수는 위 @520px의 1열을 그대로 두고 간격만 조인다.
+       (여기서 열을 지정하면 나중에 선언돼 520px 규칙을 덮는다) */
+    .howto-grid { gap: 10px; }
     /* 카드 내부 여백 축소 */
     .program-card { padding: 14px 12px; }
     .program-card h4 { font-size: 15px; }
