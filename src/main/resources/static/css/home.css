@@ -325,6 +325,13 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .hero-facts .hf-when { flex: 0 0 100%; display: flex; justify-content: center;
     align-items: baseline; gap: 7px; }
 .hf-when .hf-days { display: grid; gap: 3px; justify-items: start; text-align: left; }
+/* 장소를 눌러 지도로. 전역 a는 color:inherit만 있어 밑줄이 그대로 나오므로
+   장소명에만 옅은 밑줄을 둬 누를 수 있다는 걸 알리고 hover에서 진해진다. */
+.hf-place { text-decoration: none; color: inherit; border-radius: 6px; }
+.hf-place b { text-decoration: underline; text-decoration-color: rgba(255,255,255,.3);
+    text-underline-offset: 4px; transition: text-decoration-color .15s ease, color .15s ease; }
+.hf-place:hover b, .hf-place:focus-visible b { text-decoration-color: var(--accent-solid); color: var(--accent-solid); }
+.hf-place:focus-visible { outline: 2px solid var(--accent-solid); outline-offset: 3px; }
 .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
 /* ---------- OVERVIEW ---------- */
