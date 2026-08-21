@@ -358,6 +358,8 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .pillar-hook { font-family: var(--serif); font-style: italic; font-size: clamp(16px, 2.2vw, 20px); color: var(--ink); max-width: 620px; margin: 40px auto 0; line-height: 1.8; }
 
 /* ---------- HOWTO ---------- */
+/* 안내 카드 4장의 소제목 — 섹션 제목(h2)과 카드 제목(h4 16px) 사이 단계 */
+.howto-sub { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0 0 16px; }
 .howto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 34px; }
 @media (max-width: 900px) { .howto-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .howto-grid { grid-template-columns: 1fr; } }
