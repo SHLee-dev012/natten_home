@@ -686,6 +686,17 @@ table.sched td:first-child { font-family: var(--mono); font-size: 12px; color: v
 table.sched .s-topic { color: var(--accent-solid); font-weight: 500; }
 table.sched tr.today td { background: rgba(167,139,250,.1); }
 table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 700; }
+/* 바로가기 버튼 — 링크가 등록되면 <a>, 아니면 눌리지 않는 <span>(.is-pending)으로 렌더된다 */
+table.sched th:last-child, table.sched .sched-go { text-align: right; white-space: nowrap; }
+.sched-btn { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .02em;
+    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.03);
+    color: var(--ink); text-decoration: none; white-space: nowrap;
+    transition: background .15s ease, border-color .15s ease, color .15s ease; }
+a.sched-btn:hover, a.sched-btn:focus-visible { border-color: var(--accent-solid); background: rgba(167,139,250,.14); color: var(--accent-solid); }
+.sched-btn-alert { border-color: rgba(167,139,250,.45); color: var(--accent-solid); background: rgba(167,139,250,.07); }
+a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,139,250,.18); }
+/* 링크 미등록: 점선 테두리로 '아직 아님'을 드러내고 클릭 대상에서 뺀다 */
+.sched-btn.is-pending { border-style: dashed; opacity: .42; cursor: default; }
 .market-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px; }
 .market-cols h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-solid); margin: 0 0 10px; }
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
@@ -779,7 +790,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     /* 본문이 길어져 5열 표 → 카드로 쌓는다.
        1행: 회차 + 주제(우측) / 2행: 날짜 / 3행: DJ / 4행: 게스트 */
     table.sched tr { display: grid; grid-template-columns: auto 1fr;
-        grid-template-areas: "num topic" "date date" "dj dj" "guest guest";
+        grid-template-areas: "num topic" "date date" "dj dj" "guest guest" "go go";
         align-items: baseline; column-gap: 10px; row-gap: 0;
         border: 1px solid var(--line); border-radius: 12px; padding: 12px 15px; margin-bottom: 10px; background: var(--panel); }
     table.sched tr.today { background: rgba(167,139,250,.1); border-color: rgba(167,139,250,.4); }
@@ -802,6 +813,9 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     table.sched td:nth-child(5) { grid-area: topic; justify-content: flex-end; text-align: right;
         font-size: 12.5px; line-height: 1.45; }
     table.sched td:nth-child(5) .g { flex: 0 0 100%; }
+    table.sched td:nth-child(6) { grid-area: go; justify-content: flex-end; margin-top: 10px; }
+    table.sched td:nth-child(6)::before { display: none; }
+    table.sched .sched-btn { font-size: 11px; padding: 6px 13px; }
     table.sched td:nth-child(5)::before { display: none; }
     .account-box { flex-direction: column; align-items: flex-start; gap: 12px; }
     .account-box .an { word-break: break-all; }
@@ -815,6 +829,7 @@ table.sched tr.today td:first-child { color: var(--accent-solid); font-weight: 7
     table.sched td { font-size: 12.5px; }
     table.sched td i { font-size: 10.5px; }
     table.sched td:nth-child(5) { font-size: 11.5px; }
+    table.sched .sched-btn { font-size: 10.5px; padding: 6px 11px; }
 }
 
 /* ---------- ARCHIVE ---------- */
