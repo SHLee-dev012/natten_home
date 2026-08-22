@@ -601,14 +601,25 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
         var(--glass);
     box-shadow: 0 0 0 1px rgba(251,191,36,.06), 0 18px 44px -26px rgba(251,191,36,.45);
 }
-/* 네 귀를 잡는 ㄱ자 선. 채운 삼각형은 카드 안에 떠 있는 조각처럼 보여서
-   테두리만 남겼다 — 사진을 끼워 넣는 자리처럼 안쪽을 향해 열려 있다. */
-.ph-corner { position: absolute; width: 24px; height: 24px; pointer-events: none;
-    border: 2px solid color-mix(in srgb, var(--gold) 55%, transparent); }
-.ph-corner.tl { top: 12px; left: 12px;  border-right: 0; border-bottom: 0; border-radius: 6px 0 0 0; }
-.ph-corner.tr { top: 12px; right: 12px; border-left: 0;  border-bottom: 0; border-radius: 0 6px 0 0; }
-.ph-corner.bl { bottom: 12px; left: 12px;  border-right: 0; border-top: 0; border-radius: 0 0 0 6px; }
-.ph-corner.br { bottom: 12px; right: 12px; border-left: 0;  border-top: 0; border-radius: 0 0 6px 0; }
+/* 사진 모서리 홀더 — 카드 귀에 딱 붙이고 바깥 곡률을 카드와 맞춘다.
+   안쪽으로 떨어뜨려 두면 떠 있는 조각처럼 보여서 inset을 0으로 뒀다.
+   빗변의 밝은 선은 사진을 끼워 넣는 입구다. 이 선이 없으면 모서리를
+   잘라낸 모양으로 읽힌다. 한 장만 그리고 나머지 셋은 뒤집어 쓴다. */
+.ph-corner { position: absolute; width: 34px; height: 34px; pointer-events: none; }
+.ph-corner::after {
+    content: ""; position: absolute; inset: 0; border-radius: 14px 0 0 0;
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--gold) 42%, transparent) 0 62%,
+        color-mix(in srgb, var(--gold) 95%, transparent) 62% 67%,
+        transparent 67%);
+}
+.ph-corner.tl { top: 0; left: 0; }
+.ph-corner.tr { top: 0; right: 0; }
+.ph-corner.bl { bottom: 0; left: 0; }
+.ph-corner.br { bottom: 0; right: 0; }
+.ph-corner.tr::after { transform: scaleX(-1); }
+.ph-corner.bl::after { transform: scaleY(-1); }
+.ph-corner.br::after { transform: scale(-1, -1); }
 .due-stamp {
     position: absolute; top: 30px; right: 46px; transform: rotate(-9deg);
     display: flex; flex-direction: column; align-items: center; gap: 2px;
@@ -626,11 +637,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 520px) {
     .due-stamp { display: none; }
     .album-progress { padding: 24px 20px; }
-    .ph-corner { width: 17px; height: 17px; border-width: 1.5px; }
-    .ph-corner.tl, .ph-corner.tr { top: 9px; }
-    .ph-corner.bl, .ph-corner.br { bottom: 9px; }
-    .ph-corner.tl, .ph-corner.bl { left: 9px; }
-    .ph-corner.tr, .ph-corner.br { right: 9px; }
+    .ph-corner { width: 26px; height: 26px; }
 }
 
 /* ---------- FLOOR-6 옥상광장 (루프탑 파티) ---------- */
