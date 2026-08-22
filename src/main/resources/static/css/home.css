@@ -1139,3 +1139,40 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
 .sched-modal .sched-tabs { margin-top: 4px; }
 @keyframes map-pop { 0% { opacity: 0; transform: translateY(14px) scale(.97); } 100% { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .map-dialog, .map-backdrop { animation: none; } }
+
+/* ---------- 터치 타깃 (최소 44×44) ---------- */
+/* 손가락으로 누르는 영역의 최소 크기. 두 방식을 나눠 쓴다.
+   (1) 겉보기를 키워도 배치가 흐트러지지 않는 곳은 min-height로 실제로 키운다.
+       헤더는 .nav-inner의 height가 58px로 고정이라 버튼이 44px가 돼도 안 밀린다.
+   (2) 표나 본문에 박혀 있어 키우면 주변이 흐트러지는 곳은 겉보기를 두고
+       보이지 않는 오버레이로 누를 수 있는 범위만 넓힌다. */
+.nav-logo { min-height: 44px; }
+.nav-map, .nav-sched { min-height: 44px; }
+.copy-btn { min-height: 44px; }
+.gb-act { min-height: 44px; }
+@media (max-width: 1024px) {
+    .nav-toggle { width: 44px; height: 44px; }
+}
+/* 좁은 폭에서는 가로가 모자란다. 높이만 44px로 두고 가로는 오버레이로 넓힌다 */
+@media (max-width: 400px) {
+    .nav-toggle { width: 36px; height: 44px; }
+}
+
+/* (2) 오버레이 — 겉보기는 그대로, 누를 수 있는 범위만 44px로 넓힌다.
+   미등록 링크(span.is-pending)는 누를 대상이 아니므로 a에만 건다. */
+.hf-place, a.sched-btn, .nav-toggle { position: relative; }
+.hf-place::after,
+a.sched-btn::after,
+.nav-toggle::after {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    min-width: 44px; min-height: 44px;
+}
+.btn { min-height: 44px; }
+.gb-write { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+/* 가로 메뉴는 데스크톱에서만 39px이다. 드로어(≤1024px)에서는 블록 행이라 이미 넘는다 */
+@media (min-width: 1025px) {
+    .nav-links a { display: inline-flex; align-items: center; min-height: 44px; }
+    .nav-group-trigger { min-height: 44px; }
+}
