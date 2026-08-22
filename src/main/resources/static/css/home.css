@@ -104,8 +104,10 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 #floor-5 .sec-head { --sec-color: var(--stamp); }
 #floor-6 .sec-head { --sec-color: var(--rose); }
 /* 섹션 라벨(키커) — 선행 틱 + 대문자 자간으로 '섹션 표시'임을 분명히 */
-.sec-head .floor-mark { width: 100%; display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--sec-color); margin-bottom: 10px; }
-.sec-head .floor-mark::before { content: ""; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
+.sec-head .floor-mark { width: 100%; display: inline-flex; align-items: baseline; gap: 10px; font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sec-color); margin-bottom: 10px; }
+/* 층수는 키커 안에서도 한 단계 더 크게 — 어느 층 이야기인지 먼저 읽히게 */
+.sec-head .floor-mark b { font-size: 17px; font-weight: 800; letter-spacing: .04em; line-height: 1; }
+.sec-head .floor-mark::before { content: ""; flex: none; align-self: center; width: 26px; height: 2px; background: currentColor; border-radius: 2px; }
 /* 섹션 제목 — 크게 + 테마색 밑줄(그려지는 애니메이션)로 '섹션명'임을 분명히 */
 .sec-head h2 { position: relative; font-family: var(--serif); font-weight: 800; font-size: clamp(27px, 4.2vw, 40px); margin: 0; letter-spacing: -.01em; line-height: 1.15; padding-bottom: 13px;
     background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
