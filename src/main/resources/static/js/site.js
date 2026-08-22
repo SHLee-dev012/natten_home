@@ -286,4 +286,72 @@
       result.style.display = 'block';
     });
   }
+  // ---------- D-day ----------
+  // 축제 시작일까지 남은 날. 보는 사람의 시계가 어느 지역이든 같은 숫자가 나오도록
+  // 한국 시간(UTC+9 고정, 서머타임 없음) 기준의 '오늘'로 계산한다.
+  // 탭을 오래 열어둬도 자정에 스스로 갱신한다.
+  (function () {
+    var el = document.getElementById('dday');
+    if (!el) return;
+    var label = el.querySelector('.dd-label');
+    var value = el.querySelector('.dd-value');
+    if (!label || !value) return;
+
+    var KST_OFFSET_MS = 9 * 3600000;
+    var DAY_MS = 86400000;
+
+    // 날짜를 '1970-01-01로부터 며칠째'인 정수로 바꾼다. 시각·시간대가 섞이지 않아
+    // 뺄셈만으로 안전하게 날짜 차이를 얻는다.
+    var dayOf = function (text) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(text || '').trim());
+      if (!m) return null;
+      return Date.UTC(+m[1], +m[2] - 1, +m[3]) / DAY_MS;
+    };
+    // epoch 밀리초에 +9시간을 더하고 UTC 필드로 읽으면 한국의 벽시계가 된다.
+    // 보는 사람의 시간대와 무관하게 같은 값이 나온다.
+    var kstNowMs = function () { return Date.now() + KST_OFFSET_MS; };
+    var kstToday = function () {
+      var k = new Date(kstNowMs());
+      return Date.UTC(k.getUTCFullYear(), k.getUTCMonth(), k.getUTCDate()) / DAY_MS;
+    };
+
+    var start = dayOf(el.dataset.start);
+    var end = dayOf(el.dataset.end);
+    if (start === null) return;
+    if (end === null || end < start) end = start;
+
+    var render = function () {
+      var today = kstToday();
+      var left = start - today;
+      if (left > 0) {
+        label.textContent = '축제까지';
+        label.hidden = false;
+        value.textContent = 'D-' + left;
+      } else if (today <= end) {
+        label.hidden = true;
+        value.textContent = today === start ? 'D-DAY' : '축제 ' + (today - start + 1) + '일차';
+      } else {
+        el.hidden = true;   // 끝난 뒤에는 숫자를 남기지 않는다
+        return;
+      }
+      el.hidden = false;
+    };
+
+    render();
+
+    // 다음 한국 시간 자정에 한 번, 그 뒤로는 하루 간격으로 다시 그린다.
+    var msToKstMidnight = function () {
+      var ms = kstNowMs();
+      return DAY_MS - (((ms % DAY_MS) + DAY_MS) % DAY_MS);
+    };
+    setTimeout(function tick() {
+      render();
+      setTimeout(tick, DAY_MS);
+    }, msToKstMidnight() + 1000);
+
+    // 절전 상태로 며칠이 지난 기기에서 돌아왔을 때를 대비해, 탭이 보일 때도 확인한다.
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) render();
+    });
+  })();
 })();
