@@ -1,5 +1,10 @@
 // 축제 홈 인터랙션 — 스크롤 스파이 · 리빌 · 일정표 탭 · 계좌복사 · 낯선가계도 데모
 (function () {
+  // 진입 애니메이션 스위치. 이게 붙어야 CSS가 초기 상태를 숨긴다.
+  // 관찰자를 걸 수 없는 환경에서는 붙이지 않아 내용이 그대로 보인다.
+  var canObserve = 'IntersectionObserver' in window;
+  if (canObserve) document.documentElement.classList.add('js-anim');
+
   // 공지 티커 — 클릭 시 상세 펼침
   var ticker = document.getElementById('notice');
   var ntToggle = document.getElementById('ntToggle');
@@ -96,6 +101,27 @@
     reveals.forEach(function (el) { rio.observe(el); });
   } else {
     reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // 안전망 — 숨은 탭에서는 IntersectionObserver 콜백이 오지 않아 화면이 빈 채로
+  // 남는다. load 시점과 탭이 다시 보이는 시점에 화면 안의 것들을 직접 확인한다.
+  if (canObserve) {
+    var settle = function () {
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      document.querySelectorAll('.reveal:not(.in)').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) el.classList.add('in');
+      });
+      document.querySelectorAll('.sec-head').forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < vh * 0.82 && r.bottom > 0) el.classList.add('sh-in');
+      });
+    };
+    if (document.readyState === 'complete') settle();
+    else window.addEventListener('load', settle);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) settle();
+    });
   }
 
   // 일정표 모달 (메뉴의 일정표 버튼으로 연다)

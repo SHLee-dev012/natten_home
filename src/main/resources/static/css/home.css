@@ -125,10 +125,13 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
     opacity: 0; transform: scale(0); pointer-events: none; }
 .sec-head .en { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--faint); margin-left: auto; padding-bottom: 15px; }
 
-/* ---------- 섹션 진입 애니메이션 (뷰 진입 시마다 재생) ---------- */
-.sec-head .floor-mark { opacity: 0; transform: translateX(-12px); }
-.sec-head h2 { opacity: 0; transform: translateY(18px); }
-.sec-head .en { opacity: 0; transform: translateY(10px); }
+/* ---------- 섹션 진입 애니메이션 (뷰 진입 시마다 재생) ----------
+   초기 숨김은 .js-anim이 붙었을 때만. site.js가 IntersectionObserver를
+   실제로 걸었을 때만 이 클래스를 붙이므로, JS가 죽거나 관찰자가 돌지
+   못하면 글자가 그냥 보인다(빈 화면 방지). */
+.js-anim .sec-head .floor-mark { opacity: 0; transform: translateX(-12px); }
+.js-anim .sec-head h2 { opacity: 0; transform: translateY(18px); }
+.js-anim .sec-head .en { opacity: 0; transform: translateY(10px); }
 .sec-head.sh-in .floor-mark { opacity: 1; transform: none; transition: opacity .5s ease, transform .5s ease; }
 .sec-head.sh-in h2 { opacity: 1; transform: none; transition: opacity .6s ease .08s, transform .6s cubic-bezier(.2, .7, .2, 1) .08s; }
 .sec-head.sh-in .en { opacity: 1; transform: none; transition: opacity .5s ease .2s, transform .5s ease .2s; }
@@ -153,7 +156,8 @@ section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
     .sec-head h2::after, .sec-head h2::before { animation: none !important; opacity: 0; }
 }
 .lead { max-width: 680px; font-size: 16.5px; line-height: 1.95; color: var(--muted); margin-bottom: 32px; }
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+.js-anim .reveal { opacity: 0; transform: translateY(18px); }
+.reveal { transition: opacity .7s ease, transform .7s ease; }
 .reveal.in { opacity: 1; transform: translateY(0); }
 
 /* ---------- section rhythm on the fixed backdrop ---------- */
