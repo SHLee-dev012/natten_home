@@ -293,6 +293,23 @@ header.site-nav.scrolled {
 .nt-set { display: inline-flex; align-items: center; flex-shrink: 0; }
 .nt-item { font-size: 14px; color: var(--ink); }
 .nt-sep { color: var(--gold); opacity: 0.55; padding: 0 16px; font-size: 10px; }
+/* 공지가 하나뿐일 때 — 한 세트(약 317px)가 뷰포트(최대 822px)보다 좁아
+   흐르게 두면 빈 구간이 생긴다. 흐름을 멈추고 한 줄로 세운다.
+   공지를 하나 더 넣으면 템플릿에서 nt-single만 떼면 다시 흐른다. */
+/* 좌우 페이드 마스크는 흘러갈 때 이음매를 감추는 용도다. 정지 상태에서는
+   왼쪽 끝 첫 글자를 먹어버리므로 끈다. */
+.nt-viewport.nt-single { -webkit-mask-image: none; mask-image: none; }
+.nt-viewport.nt-single .nt-track { animation: none; }
+.nt-viewport.nt-single .nt-set[aria-hidden="true"] { display: none; }
+.nt-viewport.nt-single .nt-sep { display: none; }
+/* 단 400px 이하에서는 문구(약 277px)가 뷰포트보다 넓어 잘린다. 거기서는
+   다시 흐르게 한다 — 복제 세트와 구분자를 살려야 이음매가 안 보인다. */
+@media (max-width: 400px) {
+    .nt-viewport.nt-single { -webkit-mask-image: linear-gradient(90deg, transparent, #000 22px, #000 calc(100% - 22px), transparent); mask-image: linear-gradient(90deg, transparent, #000 22px, #000 calc(100% - 22px), transparent); }
+    .nt-viewport.nt-single .nt-track { animation: nt-roll 26s linear infinite; }
+    .nt-viewport.nt-single .nt-set[aria-hidden="true"] { display: inline-flex; }
+    .nt-viewport.nt-single .nt-sep { display: inline; }
+}
 .nt-more { flex-shrink: 0; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em; color: var(--faint); }
 .nt-toggle-icon { flex-shrink: 0; color: var(--gold); font-size: 15px; line-height: 1; transition: transform 0.25s ease; }
 .notice-ticker.open .nt-toggle-icon { transform: rotate(180deg); }
