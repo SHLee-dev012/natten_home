@@ -587,20 +587,50 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
-.album-progress { position: relative; margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; padding: 22px; background: var(--glass); overflow: hidden; }
+/* 사진 접수 — 졸업앨범 대지(臺紙)처럼 보이게 한다.
+   위 세 카드가 보라 계열이라 이 카드만 금색으로 잡아 눈에 먼저 들어오게 했다.
+   배경의 옅은 모눈은 앨범 속지, 네 귀의 삼각형은 사진을 끼우는 모서리 홀더다. */
+.album-progress {
+    position: relative; margin-top: 30px; border-radius: 14px; padding: 30px 28px; overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent);
+    background:
+        /* 모눈 — 22px 간격으로 아주 옅게 */
+        repeating-linear-gradient(90deg, rgba(251,191,36,.05) 0 1px, transparent 1px 22px),
+        repeating-linear-gradient(0deg,  rgba(251,191,36,.05) 0 1px, transparent 1px 22px),
+        radial-gradient(120% 90% at 12% 0%, rgba(251,191,36,.10), transparent 58%),
+        var(--glass);
+    box-shadow: 0 0 0 1px rgba(251,191,36,.06), 0 18px 44px -26px rgba(251,191,36,.45);
+}
+/* 사진 모서리 홀더 */
+.ph-corner { position: absolute; width: 26px; height: 26px; pointer-events: none;
+    background: linear-gradient(135deg, rgba(251,191,36,.85), rgba(251,191,36,.32)); }
+.ph-corner.tl { top: 9px; left: 9px;  clip-path: polygon(0 0, 100% 0, 0 100%); }
+.ph-corner.tr { top: 9px; right: 9px; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+.ph-corner.bl { bottom: 9px; left: 9px;  clip-path: polygon(0 0, 0 100%, 100% 100%); }
+.ph-corner.br { bottom: 9px; right: 9px; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
 .due-stamp {
-    position: absolute; top: 20px; right: 22px; transform: rotate(-9deg);
+    position: absolute; top: 30px; right: 46px; transform: rotate(-9deg);
     display: flex; flex-direction: column; align-items: center; gap: 2px;
     border: 2px solid rgba(244, 114, 182, 0.6); border-radius: 6px; padding: 6px 14px;
     color: rgba(244, 114, 182, 0.85);
 }
 .due-stamp b { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; }
 .due-stamp i { font-family: var(--serif); font-style: normal; font-weight: 700; font-size: 18px; letter-spacing: 0.04em; }
-.album-progress .bar { height: 6px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; margin: 14px 0 10px; }
-.album-progress .bar > i { display: block; height: 100%; width: 0%; background: var(--accent); }
+.album-progress .bar { height: 9px; background: rgba(0,0,0,.28); border-radius: 5px; overflow: hidden;
+    margin: 16px 0 11px; box-shadow: inset 0 1px 2px rgba(0,0,0,.35); }
+.album-progress .bar > i { display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, #fbbf24, #f472b6); border-radius: 5px; }
 .album-progress small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
 .album-progress .cta-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; }
-@media (max-width: 520px) { .due-stamp { display: none; } }
+@media (max-width: 520px) {
+    .due-stamp { display: none; }
+    .album-progress { padding: 24px 20px; }
+    .ph-corner { width: 19px; height: 19px; top: auto; bottom: auto; }
+    .ph-corner.tl, .ph-corner.tr { top: 7px; }
+    .ph-corner.bl, .ph-corner.br { bottom: 7px; }
+    .ph-corner.tl, .ph-corner.bl { left: 7px; }
+    .ph-corner.tr, .ph-corner.br { right: 7px; }
+}
 
 /* ---------- FLOOR-6 옥상광장 (루프탑 파티) ---------- */
 /* 노을~밤 루프탑 무드 배너 */
