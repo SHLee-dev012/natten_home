@@ -522,14 +522,22 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 /* 캠퍼스낭만존(낯선별밤·낯선파티·낯선커리어) 카드 — 이름과 기수를 앞세운다.
    여기 카드는 .room 공통 규칙만 받아 이름이 해시태그와 같은 크기였고,
    기수는 전용 규칙이 없어 브라우저 기본 기울임으로만 보였다.
-   동문특강 카드와 같은 방식으로 맞춘다: 이름은 크고 밝게, 기수는 한 톤 낮춰 옆에. */
+   이름과 기수를 같은 보라로 두고, 크기·굵기·서체로만 층을 나눈다. */
 #floor-4 .lecture-card .room {
-    font-family: var(--sans); font-size: 15px; font-weight: 800; color: var(--ink);
+    font-family: var(--sans); font-size: 15px; font-weight: 800; color: var(--accent-solid);
     letter-spacing: normal; margin-bottom: 9px;
 }
 #floor-4 .lecture-card .room i {
     font-style: normal; font-family: var(--mono); font-size: 12px; font-weight: 700;
     color: var(--accent-solid); margin-left: 6px; letter-spacing: .03em;
+}
+/* 아주 좁은 화면에서는 카드 폭이 128px까지 줄어, 기수가 긴 카드(낯C3,5,7 ·
+   낯1,2,3,4)는 기수만 다음 줄로 내려갔다. 글자와 여백을 조여 한 줄에 넣는다.
+   nowrap만 걸면 넘치므로 크기를 먼저 줄인 뒤 건다. */
+@media (max-width: 360px) {
+    #floor-4 .lecture-card .body { padding: 12px 10px; }
+    #floor-4 .lecture-card .room { font-size: 14px; white-space: nowrap; }
+    #floor-4 .lecture-card .room i { font-size: 10.5px; margin-left: 4px; letter-spacing: 0; }
 }
 .why-box { max-width: 720px; margin: 0 0 44px; padding: 22px 24px; border-left: 3px solid var(--accent-solid); background: rgba(167,139,250,.07); border-radius: 0 8px 8px 0; }
 .why-box p { font-size: 14px; line-height: 1.9; color: var(--muted); margin: 0; }
