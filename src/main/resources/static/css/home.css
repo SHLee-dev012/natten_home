@@ -536,6 +536,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 /* ---------- FLOOR-4 romance zone ---------- */
 .romance-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
 @media (max-width: 760px) { .romance-grid { grid-template-columns: 1fr; } }
+/* 카드가 홀수면 마지막 한 장이 반 칸만 차지해 옆이 비어 보인다. 두 칸을 쓰게 한다.
+   장수가 짝수로 돌아가면 :nth-child(odd)가 안 맞아 규칙이 저절로 꺼진다. */
+@media (min-width: 761px) {
+    .romance-grid > .rz-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
 .rz-card { border: 1px solid var(--line); border-radius: 12px; padding: 22px 20px; background: var(--glass); }
 .rz-card .time { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent-solid); margin-bottom: 10px; display: block; }
 .rz-card h4 { font-family: var(--serif); font-weight: 700; font-size: 18px; margin: 0 0 8px; }
