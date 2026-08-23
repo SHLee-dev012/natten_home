@@ -476,6 +476,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
+/* DJ 라인업 — 세 장이라 2열에서도 4열에서도 한 칸이 남는다. 격자 대신 flex로 두고
+   마지막 줄을 가운데 정렬한다(창립자 명패와 같은 방식). */
+.dj-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+.dj-grid > .lecture-card { flex: 0 0 calc((100% - 28px) / 3); }
+@media (max-width: 900px) { .dj-grid > .lecture-card { flex-basis: calc((100% - 14px) / 2); } }
 .lecture-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .photo-slot { aspect-ratio: 4/3; border-bottom: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px); color: var(--faint); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-align: center; padding: 8px; }
 /* 동문특강(토·일) + 낯선별밤 아티스트 + 아카이브 티저 카드: PENDING 자리에 coming-soon 배지 */
