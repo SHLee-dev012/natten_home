@@ -348,35 +348,21 @@
                        실제 사진이 생기면 .photo-slot 안에 img를 넣고 이 타일을 지우면 된다. */-->
                 <div class="lecture-card dj-mood" aria-hidden="true">
                     <div class="photo-slot artist-photo dj-mood-art">
-                        <svg class="dj-deck" viewBox="0 0 160 120" role="img" aria-hidden="true" focusable="false">
-                            <!-- 데크 본체 -->
-                            <rect x="16" y="60" width="128" height="44" rx="9" class="dk-body"/>
-                            <!-- 턴테이블: 판 · 홈 · 축 -->
-                            <circle cx="50" cy="82" r="17" class="dk-platter"/>
-                            <circle cx="50" cy="82" r="10" class="dk-groove"/>
-                            <circle cx="50" cy="82" r="2.6" class="dk-spindle"/>
-                            <!-- 톤암 -->
-                            <path d="M80 66 L62 78" class="dk-arm"/>
-                            <circle cx="80" cy="66" r="2.6" class="dk-spindle"/>
-                            <!-- 페이더 두 줄과 손잡이 -->
-                            <rect x="92" y="72" width="38" height="3" rx="1.5" class="dk-rail"/>
-                            <rect x="92" y="86" width="38" height="3" rx="1.5" class="dk-rail"/>
-                            <rect x="102" y="69" width="6" height="9" rx="3" class="dk-knob-a"/>
-                            <rect x="116" y="83" width="6" height="9" rx="3" class="dk-knob-b"/>
-                            <!-- 흘러나오는 음표 -->
-                            <g class="dk-note dk-note1">
-                                <ellipse cx="0" cy="0" rx="5" ry="3.6" transform="rotate(-20)"/>
-                                <rect x="3.4" y="-16" width="1.8" height="15" rx=".9"/>
-                                <path d="M5.2 -16 q6 2.6 4 8" fill="none" stroke-width="1.8" stroke-linecap="round"/>
-                            </g>
-                            <g class="dk-note dk-note2">
-                                <ellipse cx="0" cy="0" rx="4" ry="2.9" transform="rotate(-20)"/>
-                                <rect x="2.7" y="-13" width="1.5" height="12" rx=".75"/>
-                                <path d="M4.2 -13 q5 2.2 3.2 6.6" fill="none" stroke-width="1.5" stroke-linecap="round"/>
-                            </g>
-                            <g class="dk-note dk-note3">
-                                <ellipse cx="0" cy="0" rx="3.2" ry="2.3" transform="rotate(-20)"/>
-                                <rect x="2.1" y="-10.5" width="1.3" height="10" rx=".65"/>
+                        <svg class="dj-lp" viewBox="0 0 120 120" role="img" aria-hidden="true" focusable="false">
+                            <g class="lp-spin">
+                                <!-- 판 -->
+                                <circle cx="60" cy="60" r="52" class="lp-disc"/>
+                                <!-- 소릿골 -->
+                                <circle cx="60" cy="60" r="46" class="lp-groove"/>
+                                <circle cx="60" cy="60" r="40" class="lp-groove"/>
+                                <circle cx="60" cy="60" r="34" class="lp-groove"/>
+                                <circle cx="60" cy="60" r="28" class="lp-groove"/>
+                                <!-- 도는 게 보이도록 한 줄만 밝게 -->
+                                <path d="M60 8 A52 52 0 0 1 103 33" class="lp-shine"/>
+                                <!-- 라벨 -->
+                                <circle cx="60" cy="60" r="18" class="lp-label"/>
+                                <path d="M60 42 A18 18 0 0 1 78 60 L60 60 Z" class="lp-label-wedge"/>
+                                <circle cx="60" cy="60" r="3" class="lp-hole"/>
                             </g>
                         </svg>
                     </div>
