@@ -615,6 +615,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     background: linear-gradient(90deg, #fbbf24, #f472b6); border-radius: 5px; }
 .album-progress small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
 .album-progress .cta-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; }
+/* 사진 접수 카드가 이 섹션의 끝이다. 섹션 공통 하단 여백 82px이 카드 아래
+   그대로 남아 빈 공간이 유난히 넓어 보인다 — 다른 섹션은 카드 격자나 문단으로
+   끝나 경계가 덜 느껴진다. 이 섹션만 줄인다. */
+#floor-5 { padding-bottom: 40px; }
+@media (max-width: 640px) { #floor-5 { padding-bottom: 22px; } }
 @media (max-width: 520px) {
     .due-stamp { display: none; }
     .album-progress { padding: 24px 20px; }
