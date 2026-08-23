@@ -478,9 +478,29 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
 /* DJ 라인업 — 세 장이라 2열에서도 4열에서도 한 칸이 남는다. 격자 대신 flex로 두고
    마지막 줄을 가운데 정렬한다(창립자 명패와 같은 방식). */
-.dj-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-.dj-grid > .lecture-card { flex: 0 0 calc((100% - 28px) / 3); }
-@media (max-width: 900px) { .dj-grid > .lecture-card { flex-basis: calc((100% - 14px) / 2); } }
+/* 카드 셋에 파티 타일 한 장을 더해 넷이 됐다. 넷이면 어느 열 수로도 딱 떨어져
+   아티스트 격자와 같은 리듬(넓은 화면 4열, 900px 이하 2열)을 그대로 쓴다. */
+.dj-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 900px) { .dj-grid { grid-template-columns: repeat(2, 1fr); } }
+
+/* 파티 타일 — 사진 자리를 CSS로 채운다. 이퀄라이저 막대는 낯선라디오의 것을 쓴다. */
+.dj-mood-art { position: relative; display: flex; align-items: center; justify-content: center;
+    background:
+        radial-gradient(120% 90% at 20% 15%, rgba(167,139,250,.55), transparent 58%),
+        radial-gradient(110% 90% at 85% 80%, rgba(244,114,182,.5), transparent 60%),
+        linear-gradient(150deg, #1b1740, #2b1140 55%, #0b1030) !important; }
+.dj-mood-art .eq { display: inline-flex; align-items: flex-end; gap: 5px; height: 38%; }
+.dj-mood-art .eq i { width: 6px; height: 100%; border-radius: 3px; transform-origin: bottom;
+    background: linear-gradient(180deg, #f9a8d4, #a78bfa);
+    animation: eq-bounce 1.1s ease-in-out infinite; }
+.dj-mood-art .eq i:nth-child(1) { animation-delay: -.90s; }
+.dj-mood-art .eq i:nth-child(2) { animation-delay: -.35s; }
+.dj-mood-art .eq i:nth-child(3) { animation-delay: -.70s; }
+.dj-mood-art .eq i:nth-child(4) { animation-delay: -.15s; }
+.dj-mood-art .eq i:nth-child(5) { animation-delay: -.55s; }
+@media (prefers-reduced-motion: reduce) {
+    .dj-mood-art .eq i { animation: none; transform: scaleY(.65); }
+}
 .lecture-card { background: var(--glass); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
 .photo-slot { aspect-ratio: 4/3; border-bottom: 1px dashed var(--line); display: flex; align-items: center; justify-content: center; background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 8px, transparent 8px 16px); color: var(--faint); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-align: center; padding: 8px; }
 /* 동문특강(토·일) + 낯선별밤 아티스트 + 아카이브 티저 카드: PENDING 자리에 coming-soon 배지 */
