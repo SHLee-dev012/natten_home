@@ -573,14 +573,14 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
         radial-gradient(130% 100% at 50% 0%, color-mix(in srgb, var(--stamp) 9%, transparent), transparent 62%),
         var(--panel-dark); }
 .fp-label { display: flex; align-items: center; justify-content: center; gap: 12px;
-    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .12em;
-    color: var(--stamp); margin-bottom: 18px; }
+    font-family: var(--mono); font-size: 15px; font-weight: 700; letter-spacing: .12em;
+    color: var(--stamp); margin-bottom: 20px; }
 .fp-label::before, .fp-label::after { content: ""; flex: 1; height: 1px; max-width: 120px;
     background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--stamp) 45%, transparent)); }
 .fp-label::after { transform: scaleX(-1); }
 @media (max-width: 480px) {
     .founders-panel { padding: 16px 14px 18px; }
-    .fp-label { font-size: 11px; letter-spacing: .08em; gap: 8px; margin-bottom: 14px; }
+    .fp-label { font-size: 13px; letter-spacing: .06em; gap: 8px; margin-bottom: 16px; }
 }
 
 /* 시초 7인 — 사진칸 없이 이름만 담은 카드.
@@ -589,11 +589,11 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .founders-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .founders-grid .founder-card { flex: 0 0 calc((100% - 72px) / 7);
     display: flex; align-items: center; justify-content: center;
-    padding: 17px 10px; text-align: center; }
-.fc-name { font-family: var(--serif); font-size: 17px; font-weight: 800;
+    padding: 15px 10px; text-align: center; }
+.fc-name { font-family: var(--serif); font-size: 15px; font-weight: 800;
     letter-spacing: -.01em; word-break: keep-all; }
 /* 별칭(록담) — 이름 옆에 한 단계 작게. 좁아지면 다음 줄로 접힌다 */
-.fc-alias { font-family: var(--mono); font-style: normal; font-size: 11.5px;
+.fc-alias { font-family: var(--mono); font-style: normal; font-size: 10.5px;
     font-weight: 600; color: var(--accent-solid); }
 /* 한 줄에 7장 → 4장(4+3) → 3장(3+3+1) */
 @media (max-width: 760px) {
@@ -601,8 +601,8 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 }
 @media (max-width: 480px) {
     .founders-grid { gap: 10px; }
-    .founders-grid .founder-card { flex-basis: calc((100% - 20px) / 3); padding: 15px 8px; }
-    .fc-name { font-size: 16px; }
+    .founders-grid .founder-card { flex-basis: calc((100% - 20px) / 3); padding: 13px 8px; }
+    .fc-name { font-size: 14px; }
 }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
