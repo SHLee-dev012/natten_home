@@ -573,14 +573,14 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
         radial-gradient(130% 100% at 50% 0%, color-mix(in srgb, var(--stamp) 9%, transparent), transparent 62%),
         var(--panel-dark); }
 .fp-label { display: flex; align-items: center; justify-content: center; gap: 12px;
-    font-family: var(--mono); font-size: 15px; font-weight: 700; letter-spacing: .12em;
+    font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: .12em;
     color: var(--stamp); margin-bottom: 20px; }
 .fp-label::before, .fp-label::after { content: ""; flex: 1; height: 1px; max-width: 120px;
     background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--stamp) 45%, transparent)); }
 .fp-label::after { transform: scaleX(-1); }
 @media (max-width: 480px) {
     .founders-panel { padding: 16px 14px 18px; }
-    .fp-label { font-size: 13px; letter-spacing: .06em; gap: 8px; margin-bottom: 16px; }
+    .fp-label { font-size: 14px; letter-spacing: .04em; gap: 8px; margin-bottom: 16px; }
 }
 
 /* 시초 7인 — 사진칸 없이 이름만 담은 카드.
@@ -602,7 +602,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 480px) {
     .founders-grid { gap: 10px; }
     .founders-grid .founder-card { flex-basis: calc((100% - 20px) / 3); padding: 13px 8px; }
-    .fc-name { font-size: 14px; }
+    .fc-name { font-size: 13px; }
 }
 
 /* 대출카드 — 접수 마감 (DATE DUE 스탬프) */
