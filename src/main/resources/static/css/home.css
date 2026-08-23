@@ -485,7 +485,7 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 
 /* 파티 타일 — 사진 자리에 LP 한 장이 돈다. */
 .dj-mood-art { position: relative; display: flex; align-items: center; justify-content: center;
-    padding: 9% !important;   /* .artist-photo의 padding:0을 덮어 판에 여백을 준다 */
+    padding: 3% !important;   /* .artist-photo의 padding:0을 덮어 판이 테두리에 닿지 않게만 띄운다 */
     background:
         radial-gradient(120% 90% at 20% 15%, rgba(167,139,250,.55), transparent 58%),
         radial-gradient(110% 90% at 85% 80%, rgba(244,114,182,.5), transparent 60%),
