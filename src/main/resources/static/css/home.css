@@ -518,6 +518,19 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     font-weight: 700; color: var(--muted); margin-left: 5px; letter-spacing: .03em; }
 /* 소속 배지는 길어질 수 있어 줄바꿈을 허용한다 */
 #program .lecture-card .field { white-space: normal; }
+
+/* 캠퍼스낭만존(낯선별밤·낯선파티·낯선커리어) 카드 — 이름과 기수를 앞세운다.
+   여기 카드는 .room 공통 규칙만 받아 이름이 해시태그와 같은 크기였고,
+   기수는 전용 규칙이 없어 브라우저 기본 기울임으로만 보였다.
+   동문특강 카드와 같은 방식으로 맞춘다: 이름은 크고 밝게, 기수는 한 톤 낮춰 옆에. */
+#floor-4 .lecture-card .room {
+    font-family: var(--sans); font-size: 15px; font-weight: 800; color: var(--ink);
+    letter-spacing: normal; margin-bottom: 9px;
+}
+#floor-4 .lecture-card .room i {
+    font-style: normal; font-family: var(--mono); font-size: 12px; font-weight: 700;
+    color: var(--accent-solid); margin-left: 6px; letter-spacing: .03em;
+}
 .why-box { max-width: 720px; margin: 0 0 44px; padding: 22px 24px; border-left: 3px solid var(--accent-solid); background: rgba(167,139,250,.07); border-radius: 0 8px 8px 0; }
 .why-box p { font-size: 14px; line-height: 1.9; color: var(--muted); margin: 0; }
 .why-box .tags { display: flex; gap: 8px; flex-wrap: wrap; }
