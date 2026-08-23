@@ -564,6 +564,25 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .archive-card p { font-size: 14.5px; color: var(--muted); line-height: 1.72; margin: 0; }
 
 
+/* 창립자 명패 — 이름 일곱을 하나의 테두리 안에 넣고 그 묶음에 제목을 단다.
+   라벨을 테두리 위에 걸치는 방식은 쓰지 않았다. 배경이 화면에 고정된
+   그라디언트 레이어라 라벨 뒤를 단색으로 덮으면 스크롤에 따라 이음매가 보인다. */
+.founders-panel { margin-top: 24px; padding: 20px 20px 22px; border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--stamp) 34%, transparent);
+    background:
+        radial-gradient(130% 100% at 50% 0%, color-mix(in srgb, var(--stamp) 9%, transparent), transparent 62%),
+        var(--panel-dark); }
+.fp-label { display: flex; align-items: center; justify-content: center; gap: 12px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .12em;
+    color: var(--stamp); margin-bottom: 18px; }
+.fp-label::before, .fp-label::after { content: ""; flex: 1; height: 1px; max-width: 120px;
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--stamp) 45%, transparent)); }
+.fp-label::after { transform: scaleX(-1); }
+@media (max-width: 480px) {
+    .founders-panel { padding: 16px 14px 18px; }
+    .fp-label { font-size: 11px; letter-spacing: .08em; gap: 8px; margin-bottom: 14px; }
+}
+
 /* 시초 7인 — 사진칸 없이 이름만 담은 카드.
    7은 어떤 열 수로도 나누어떨어지지 않아, grid 대신 flex + justify-content:center로
    마지막 줄을 가운데 정렬한다(끝에 빈칸이 남지 않는다). */
