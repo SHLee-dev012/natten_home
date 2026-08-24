@@ -704,13 +704,22 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .cta-line-solo > div { min-width: 0; }
 
 /* 커피챗 타임 구분 — 시간 표시가 그 아래 카드 묶음의 제목 노릇을 한다.
-   day-title의 dchip과 같은 알약 모양을 쓰되, 한 단계 아래 제목이므로
-   글자를 조금 줄여 부모 칩과 서열이 뒤집히지 않게 한다. */
-.slot-group + .slot-group { margin-top: 20px; }
-.slot-time { display: inline-block; margin-bottom: 11px;
-    font-family: var(--mono); font-size: 12.5px; font-weight: 800; letter-spacing: .05em;
-    background: var(--accent); color: #0a0c1c; padding: 5px 11px; border-radius: 6px; }
-@media (max-width: 480px) { .slot-time { font-size: 11.5px; padding: 4px 9px; margin-bottom: 9px; } .slot-group + .slot-group { margin-top: 16px; } }
+   day-title의 dchip과 같은 알약을 쓰고, 뒤로 선을 끌어 격자 폭까지 이어
+   "여기서부터 이 시간대"라는 경계가 눈에 먼저 들어오게 한다. */
+.slot-group + .slot-group { margin-top: 28px; }
+.slot-head { display: flex; align-items: center; gap: 14px; margin-bottom: 13px; }
+.slot-head::after { content: ""; flex: 1; height: 1px;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent-solid) 55%, transparent), transparent); }
+.slot-time { flex: none;
+    font-family: var(--mono); font-size: 13.5px; font-weight: 800; letter-spacing: .06em;
+    background: var(--accent); color: #0a0c1c; padding: 7px 14px; border-radius: 7px;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent-solid) 30%, transparent),
+                0 6px 18px -8px color-mix(in srgb, var(--accent-solid) 70%, transparent); }
+@media (max-width: 480px) {
+    .slot-time { font-size: 12px; padding: 6px 11px; }
+    .slot-head { gap: 10px; margin-bottom: 11px; }
+    .slot-group + .slot-group { margin-top: 22px; }
+}
 
 /* 타임이 둘로 갈리면서 격자도 둘이 됐다. grid-auto-rows는 격자 안에서만
    높이를 맞추므로, 좁은 폭에서 한쪽 소속만 두 줄이 되면 묶음끼리 어긋난다.
