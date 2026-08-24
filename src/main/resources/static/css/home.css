@@ -374,6 +374,14 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 .ov-table th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--faint); padding: 11px 14px 11px 0; border-top: 1px solid var(--line); vertical-align: top; white-space: nowrap; width: 72px; }
 .ov-table tr:first-child th, .ov-table tr:first-child td { border-top: none; }
 .ov-table td { padding: 11px 0; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.7; color: var(--muted); }
+
+/* 한 칸에 두 줄이 들어가는 항목 — 괄호 안 영문명, 이틀치 일시.
+   길어서 저절로 감기는 것과 뜻이 있어 나눈 것을 구분해야 하므로
+   블록으로 세운다. 영문명은 한 단계 낮춰 부제로 읽히게 한다. */
+.ov-line { display: block; }
+.ov-line + .ov-line { margin-top: 3px; }
+.ov-sub { font-family: var(--mono); font-size: 12px; letter-spacing: .02em; color: var(--faint); }
+@media (max-width: 480px) { .ov-sub { font-size: 11px; } }
 .ov-note { background: rgba(167,139,250,.08); border-left: 3px solid var(--accent-solid); border-radius: 0 8px 8px 0; padding: 16px 18px; font-size: 14px; line-height: 1.85; color: var(--muted); margin-bottom: 20px; }
 .ov-note b { display: block; color: var(--ink); font-size: 14px; margin-bottom: 6px; }
 
