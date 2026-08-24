@@ -473,14 +473,16 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
    소개문 뒤에 붙어 있으면 이름이 문장 속에 묻힌다. */
 .moderator-line .mod { display: block; }
 .moderator-line .mod + .mod { margin-top: 2px; }
-.card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+/* 행 높이를 서로 맞춘다. 해시태그 줄 수가 카드마다 달라 행끼리 20px 남짓
+   어긋나 보였다. 1fr 행은 가장 높은 행에 맞춰 모두 같아진다. */
+.card-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 14px; }
 @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
 /* DJ 라인업 — 세 장이라 2열에서도 4열에서도 한 칸이 남는다. 격자 대신 flex로 두고
    마지막 줄을 가운데 정렬한다(창립자 명패와 같은 방식). */
 /* 카드 셋에 파티 타일 한 장을 더해 넷이 됐다. 넷이면 어느 열 수로도 딱 떨어져
    아티스트 격자와 같은 리듬(넓은 화면 4열, 900px 이하 2열)을 그대로 쓴다. */
-.dj-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.dj-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 14px; }
 @media (max-width: 900px) { .dj-grid { grid-template-columns: repeat(2, 1fr); } }
 
 /* 파티 타일 — 사진 자리에 LP 한 장이 돈다. */
