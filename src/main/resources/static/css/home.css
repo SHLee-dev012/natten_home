@@ -707,7 +707,18 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
    day-title의 dchip과 같은 알약을 쓰고, 뒤로 선을 끌어 격자 폭까지 이어
    "여기서부터 이 시간대"라는 경계가 눈에 먼저 들어오게 한다. */
 .slot-group + .slot-group { margin-top: 28px; }
-.slot-head { display: flex; align-items: center; gap: 14px; margin-bottom: 13px; }
+/* 두 타임은 낯선커리어에 딸린 하위 구역이다. 왼쪽에 세로줄을 세우고 안으로
+   들여써서, 위 day-title에 매달린 묶음으로 읽히게 한다. 줄에서 알약까지
+   가로로 짧게 이어 "여기서 갈라져 나왔다"는 걸 눈으로 잇는다. */
+.slot-group { position: relative; padding-left: 22px; }
+.slot-group::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 4px; width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg,
+        color-mix(in srgb, var(--accent-solid) 55%, transparent),
+        color-mix(in srgb, var(--accent-solid) 8%, transparent)); }
+.slot-head { display: flex; align-items: center; gap: 14px; margin-bottom: 13px; position: relative; }
+.slot-head::before { content: ""; position: absolute; left: -22px; top: 50%; width: 22px; height: 1px;
+    background: color-mix(in srgb, var(--accent-solid) 45%, transparent); }
 .slot-head::after { content: ""; flex: 1; height: 1px;
     background: linear-gradient(90deg, color-mix(in srgb, var(--accent-solid) 55%, transparent), transparent); }
 .slot-time { flex: none;
@@ -718,6 +729,8 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 @media (max-width: 480px) {
     .slot-time { font-size: 12px; padding: 6px 11px; }
     .slot-head { gap: 10px; margin-bottom: 11px; }
+    .slot-head::before { left: -13px; width: 13px; }
+    .slot-group { padding-left: 13px; }
     .slot-group + .slot-group { margin-top: 22px; }
 }
 
