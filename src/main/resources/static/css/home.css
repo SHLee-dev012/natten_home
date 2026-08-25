@@ -94,6 +94,7 @@ a { color: inherit; } img { max-width: 100%; display: block; }
 .section-wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
 section { padding: 82px 0; position: relative; }
 section[id] { scroll-margin-top: 72px; }
+#livemarket { scroll-margin-top: 84px; }
 /* 섹션 경계선 — 섹션마다 명확히 구분 */
 section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 
