@@ -716,45 +716,8 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
     background: radial-gradient(120% 90% at 12% 0%, color-mix(in srgb, var(--accent-solid) 11%, transparent), transparent 58%), var(--glass); }
 .cta-line-solo > div { min-width: 0; }
 
-/* 커피챗 타임 구분 — 시간 표시가 그 아래 카드 묶음의 제목 노릇을 한다.
-   day-title의 dchip과 같은 알약을 쓰고, 뒤로 선을 끌어 격자 폭까지 이어
-   "여기서부터 이 시간대"라는 경계가 눈에 먼저 들어오게 한다. */
-.slot-group + .slot-group { margin-top: 28px; }
-/* 두 타임은 낯선커리어에 딸린 하위 구역이다. 왼쪽에 세로줄을 세우고 안으로
-   들여써서, 위 day-title에 매달린 묶음으로 읽히게 한다. 줄에서 알약까지
-   가로로 짧게 이어 "여기서 갈라져 나왔다"는 걸 눈으로 잇는다. */
-.slot-group { position: relative; padding-left: 22px; }
-.slot-group::before { content: ""; position: absolute; left: 0; top: 8px; bottom: 4px; width: 2px;
-    border-radius: 2px;
-    background: linear-gradient(180deg,
-        color-mix(in srgb, var(--accent-solid) 55%, transparent),
-        color-mix(in srgb, var(--accent-solid) 8%, transparent)); }
-.slot-head { display: flex; align-items: center; gap: 14px; margin-bottom: 13px; position: relative; }
-.slot-head::before { content: ""; position: absolute; left: -22px; top: 50%; width: 22px; height: 1px;
-    background: color-mix(in srgb, var(--accent-solid) 45%, transparent); }
-.slot-head::after { content: ""; flex: 1; height: 1px;
-    background: linear-gradient(90deg, color-mix(in srgb, var(--accent-solid) 55%, transparent), transparent); }
-/* 위계는 세로줄이 이미 말해 준다. 알약까지 꽉 찬 색으로 두면 본문보다
-   먼저 튀므로, 옅은 바탕에 테두리만 두르고 글자로만 읽히게 낮춘다. */
-.slot-time { flex: none;
-    font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .06em;
-    color: var(--accent-solid); padding: 5px 11px; border-radius: 6px;
-    background: color-mix(in srgb, var(--accent-solid) 11%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent-solid) 28%, transparent); }
-@media (max-width: 480px) {
-    .slot-time { font-size: 11.5px; padding: 4px 9px; }
-    .slot-head { gap: 10px; margin-bottom: 11px; }
-    .slot-head::before { left: -13px; width: 13px; }
-    .slot-group { padding-left: 13px; }
-    .slot-group + .slot-group { margin-top: 22px; }
-}
 
-/* 타임이 둘로 갈리면서 격자도 둘이 됐다. grid-auto-rows는 격자 안에서만
-   높이를 맞추므로, 좁은 폭에서 한쪽 소속만 두 줄이 되면 묶음끼리 어긋난다.
-   소속 자리를 두 줄로 미리 잡아 두 묶음을 같은 높이로 세운다. */
-@media (max-width: 430px) {
-    .slot-group .lecture-card .kw { min-height: calc(2 * 1.45em); }
-}
+
 .cta-line-solo .btn { flex: none; }
 @media (max-width: 560px) {
     .cta-line-solo { padding: 16px; gap: 13px; }
