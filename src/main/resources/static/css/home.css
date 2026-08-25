@@ -379,6 +379,10 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
    길어서 저절로 감기는 것과 뜻이 있어 나눈 것을 구분해야 하므로
    블록으로 세운다. 영문명은 한 단계 낮춰 부제로 읽히게 한다. */
 .ov-line { display: block; }
+
+/* 글쓴이가 뜻을 두고 나눈 줄. 폭이 좁아 저절로 감기는 것과 구분되어야 하므로
+   블록으로 세운다. 줄 안에서는 평소대로 감긴다. */
+.ln { display: block; }
 .ov-line + .ov-line { margin-top: 3px; }
 .ov-sub { font-family: var(--mono); font-size: 12px; letter-spacing: .02em; color: var(--faint); }
 @media (max-width: 480px) { .ov-sub { font-size: 11px; } }
