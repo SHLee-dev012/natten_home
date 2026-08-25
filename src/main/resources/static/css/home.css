@@ -1396,11 +1396,13 @@ a.sched-btn::after,
 }
 .btn { min-height: 44px; }
 .gb-write { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
-/* 가로 메뉴는 데스크톱에서만 39px이다. 드로어(≤1024px)에서는 블록 행이라 이미 넘는다 */
+/* 가로 메뉴는 데스크톱에서만 39px이다. 드로어(≤1024px)의 링크는 블록 행이라 57px로 이미 넘는다. */
 @media (min-width: 1025px) {
     .nav-links a { display: inline-flex; align-items: center; min-height: 44px; }
-    .nav-group-trigger { min-height: 44px; }
 }
+/* 그룹 트리거는 폭을 가리지 않는다. 드로어에서는 구분 라벨로 쓰여 작은 글씨에
+   위아래 여백만 붙어 42.5px에 그쳤는데, 여전히 button이라 초점과 탭이 닿는다. */
+.nav-group-trigger { min-height: 44px; }
 
 /* 모달 안 요소 — 닫혀 있을 땐 display:none이라 앞선 점검에서 빠져 있었다 */
 .map-close { width: 44px; height: 44px; }
