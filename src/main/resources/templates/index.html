@@ -30,8 +30,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <img th:src="@{/img/logo.png}" alt="낯선대학"/>
             <span>10TH ANNIV.</span>
         </a>
-        <button type="button" class="nav-map" id="mapBtn" aria-haspopup="dialog" aria-controls="mapModal">캠퍼스맵</button>
-        <button type="button" class="nav-sched" id="schedBtn" aria-haspopup="dialog" aria-controls="schedModal">일정표</button>
+        <button type="button" class="nav-map" id="mapBtn" data-gtm="campus-map" aria-haspopup="dialog" aria-controls="mapModal">캠퍼스맵</button>
+        <button type="button" class="nav-sched" id="schedBtn" data-gtm="schedule" aria-haspopup="dialog" aria-controls="schedModal">일정표</button>
         <button type="button" class="nav-toggle" id="nav-toggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="nav-links">☰</button>
         <nav class="nav-links" id="nav-links">
             <a href="#overview" data-nav>축제개요</a>
@@ -123,11 +123,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p class="hero-copy">10년에 단 한 번뿐인, 다시 오지 않을 시간. 과거를 기록하고 현재를 연결하고 미래를 확장하는, 낯선 우리들의 낯선 축제. 단 2일간, 명동에 다시 열리는 낯선대학 캠퍼스로 초대합니다.</p>
         <div class="hero-facts">
             <span class="hf-when">📅 <span><b>2026년 9월 12일&#8288;(토)</b> 13:00~22:00</span><span><b>2026년 9월 13일&#8288;(일)</b> 13:00~19:00</span></span>
-            <a class="hf-place" href="https://naver.me/xQe26Aqr" target="_blank" rel="noopener noreferrer"
+            <a class="hf-place" data-gtm="naver-map-hero" href="https://naver.me/xQe26Aqr" target="_blank" rel="noopener noreferrer"
                aria-label="사유의서재 남산 위치 네이버 지도에서 보기 (새 창)">📍 <b>사유의서재 남산</b> · 명동</a>
         </div>
         <div class="hero-ctas">
-            <a class="btn btn-solid" href="#howto">축제 참여하기</a>
+            <a class="btn btn-solid" data-gtm="join-hero" href="#howto">축제 참여하기</a>
         </div>
     </div>
 </section>
@@ -152,7 +152,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     정부지원금도 기업스폰서도 아닌, 낯선대학 동문 한 명 한 명의 후원으로 준비되고 있습니다. 여러분의 후원이 곧 이 축제의 유일한 예산입니다.
                 </div>
                 <div class="hero-ctas" style="justify-content:flex-start;">
-                    <a class="btn btn-solid" href="#howto">축제 참여하기</a>
+                    <a class="btn btn-solid" data-gtm="join-overview" href="#howto">축제 참여하기</a>
                 </div>
             </div>
         </div>
@@ -197,10 +197,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="sec-head"><span class="floor-mark">HOW TO JOIN</span><h2>축제 참여방법</h2><span class="en">단 2일, 놓치면 10년 후</span></div>
         <p class="lead">낯선대학 10주년 축제는 동문 한 분 한 분의 참여로 완성됩니다. 축제에 직접 참석하고, 마음을 더하는 모든 분들이 이번 축제의 주인공입니다.</p>
         <div class="hero-ctas howto-cta" style="justify-content:flex-start;">
-            <a class="btn btn-solid" href="https://docs.google.com/forms/d/e/1FAIpQLSfckokhFYzlqNMnWxIpQLjTJfE883Zgi06c8as23GClWOoEgA/viewform"
+            <a class="btn btn-solid" data-gtm="donate-form" href="https://docs.google.com/forms/d/e/1FAIpQLSfckokhFYzlqNMnWxIpQLjTJfE883Zgi06c8as23GClWOoEgA/viewform"
                target="_blank" rel="noopener noreferrer">후원하기</a>
             <!-- 라이브마켓은 아직 별도 신청 창구가 없다. 전야제 안에 있는 소개로 보낸다. -->
-            <a class="btn btn-ghost-light" href="#livemarket">라이브마켓 →</a>
+            <a class="btn btn-ghost-light" data-gtm="livemarket" href="#livemarket">라이브마켓 →</a>
         </div>
         <ul class="join-ways">
             <li><span class="jw-name">🎟️ 출석후원</span><span class="jw-desc">함께하는 것만으로도 큰 힘이 됩니다. 1일 또는 2일 모두 참석할 수 있는 축제 입장권입니다. 축제에 함께해 주시는 것만으로도 10주년 축제를 풍성하게 만듭니다.😎</span></li>
@@ -211,7 +211,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
              바로 송금하려는 사람이 준비물까지 내려가지 않아도 되게. -->
         <div class="account-box">
             <div><span class="al">후원상품 기부 · 축제 운영비 후원</span><span class="an">하나은행 101-910061-06104 (낯대 문화예술축제조직위)</span></div>
-            <button class="copy-btn" id="copyAcctBtn">계좌번호 복사</button>
+            <button class="copy-btn" id="copyAcctBtn" data-gtm="copy-account">계좌번호 복사</button>
         </div>
         <h3 class="howto-sub">축제 준비물</h3>
         <div class="howto-grid">
@@ -229,7 +229,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
             <div class="howto-cta">
                 <p>입장 방법과 오시는 길이 궁금하다면</p>
-                <a class="btn btn-ghost-light" href="#location">오시는 길 확인하기 →</a>
+                <a class="btn btn-ghost-light" data-gtm="location" href="#location">오시는 길 확인하기 →</a>
             </div>
         </div>
     </div>
@@ -430,7 +430,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div style="font-family:var(--serif); font-weight:700; font-size:16px; margin-bottom:4px;">1:1 커피챗 사전 신청</div>
                     <div style="font-size:12.5px; color:var(--muted);">한 사람당 20분, 자리가 정해져 있어 미리 신청한 분들과 짝을 지어드립니다.</div>
                 </div>
-                <a class="btn btn-solid" href="https://docs.google.com/forms/d/e/1FAIpQLSddjBiEVQxzWyhLdsghDMmwKbwJeph99nsvaSup8EeUhM2ePg/viewform"
+                <a class="btn btn-solid" data-gtm="coffeechat-form" href="https://docs.google.com/forms/d/e/1FAIpQLSddjBiEVQxzWyhLdsghDMmwKbwJeph99nsvaSup8EeUhM2ePg/viewform"
                    target="_blank" rel="noopener noreferrer"
                    aria-label="낯선커리어 1:1 커피챗 신청하기 (구글 폼, 새 창)">신청하기 &#8594;</a>
             </div>
@@ -459,7 +459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <div style="font-family:var(--serif); font-weight:700; font-size:16px; margin-bottom:4px;">사진 접수 마감 8월 31일(월)</div>
                     <div style="font-size:12.5px; color:var(--muted);">단체 사진, 뒤풀이 사진, 뒷모습, 그날의 칠판 — 어떤 사진이든 좋습니다. 기수와 한 줄 사연을 함께 보내주세요.</div>
                 </div>
-                <a class="btn btn-solid" href="https://forms.gle/2EuizH6Ph2iGNXKw6"
+                <a class="btn btn-solid" data-gtm="album-photo-form" href="https://forms.gle/2EuizH6Ph2iGNXKw6"
                    target="_blank" rel="noopener noreferrer"
                    aria-label="졸업앨범 사진 보내기 (구글 폼, 새 창)">사진 보내기 →</a>
             </div>
@@ -507,14 +507,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <table class="sched" th:with="ytLinks=${ {'1':'https://youtube.com/live/J38vsKY0Owg?feature=share', '2':'https://youtube.com/live/ZJxsleVw9mw?feature=share', '3':'https://youtube.com/live/8wdkmIERspE?feature=share', '4':'https://youtube.com/live/ltwfjHqbRGg?feature=share', '5':'https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g', '6':'https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g', '7':'https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g', '8':'https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g'} }">
                 <thead><tr><th>회차</th><th>날짜</th><th>DJ</th><th>게스트</th><th>방송 주제</th><th>바로가기</th></tr></thead>
                 <tbody>
-                    <tr><td data-label="회차">1회</td><td data-label="날짜">8/5(수) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>최원철</b> <i>낯Y8 · PD</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 잘생김</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['1']}" class="sched-btn" th:href="${ytLinks['1']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['1']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
-                    <tr><td data-label="회차">2회</td><td data-label="날짜">8/7(금) <i>오후 9:00</i></td><td data-label="DJ">전영희</td><td data-label="게스트"><span class="g"><b>류지현</b> <i>낯4 · 약사</i></span><span class="g"><b>이가혁</b> <i>낯C5 · 프리랜서 마케터</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선라이브마켓</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['2']}" class="sched-btn" th:href="${ytLinks['2']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['2']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
-                    <tr><td data-label="회차">3회</td><td data-label="날짜">8/16(일) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>방은영</b> <i>낯5 · 한국조폐공사</i></span><span class="g"><b>서상혁</b> <i>낯3, 낯C1,2,3,4&#160;· 축제행성</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 회사, 낯선 축제</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['3']}" class="sched-btn" th:href="${ytLinks['3']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['3']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
-                    <tr><td data-label="회차">4회</td><td data-label="날짜">8/23(일) <i>오후 9:00</i></td><td data-label="DJ">전영희</td><td data-label="게스트"><span class="g"><b>오주영</b> <i>낯5,6,7 · 피아니스트, 교육자</i></span><span class="g"><b>이시현</b> <i>낯6,7 · SK텔레콤</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 짝꿍</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['4']}" class="sched-btn" th:href="${ytLinks['4']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['4']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
-                    <tr><td data-label="회차">5회</td><td data-label="날짜">8/30(일) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>박혜민</b> <i>낯Y8</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 도시, 마케팅</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['5']}" class="sched-btn sched-btn-alert" th:href="${ytLinks['5']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['5']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
-                    <tr><td data-label="회차">6회</td><td data-label="날짜">9/6(일) <i>오후 8:00–10:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>오영훈</b> <i>낯6,7,8</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선라이브마켓 특별 생방송 <i>120분&#160;편성</i></span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['6']}" class="sched-btn sched-btn-alert" th:href="${ytLinks['6']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['6']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
-                    <tr><td data-label="회차">7회</td><td data-label="날짜">9/12(토) <i>오후 5:30</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>공개 예정</b></span></td><td data-label="주제" class="s-topic"><span class="g">낯선대학 10주년 축제 공개방송</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['7']}" class="sched-btn sched-btn-alert" th:href="${ytLinks['7']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['7']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
-                    <tr><td data-label="회차">8회</td><td data-label="날짜">9/13(일) <i>오후 5:30</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>공개 예정</b></span></td><td data-label="주제" class="s-topic"><span class="g">낯선대학 10주년 축제 공개방송</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['8']}" class="sched-btn sched-btn-alert" th:href="${ytLinks['8']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['8']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
+                    <tr><td data-label="회차">1회</td><td data-label="날짜">8/5(수) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>최원철</b> <i>낯Y8 · PD</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 잘생김</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['1']}" class="sched-btn" data-gtm="radio-watch-1" th:href="${ytLinks['1']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['1']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
+                    <tr><td data-label="회차">2회</td><td data-label="날짜">8/7(금) <i>오후 9:00</i></td><td data-label="DJ">전영희</td><td data-label="게스트"><span class="g"><b>류지현</b> <i>낯4 · 약사</i></span><span class="g"><b>이가혁</b> <i>낯C5 · 프리랜서 마케터</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선라이브마켓</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['2']}" class="sched-btn" data-gtm="radio-watch-2" th:href="${ytLinks['2']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['2']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
+                    <tr><td data-label="회차">3회</td><td data-label="날짜">8/16(일) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>방은영</b> <i>낯5 · 한국조폐공사</i></span><span class="g"><b>서상혁</b> <i>낯3, 낯C1,2,3,4&#160;· 축제행성</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 회사, 낯선 축제</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['3']}" class="sched-btn" data-gtm="radio-watch-3" th:href="${ytLinks['3']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['3']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
+                    <tr><td data-label="회차">4회</td><td data-label="날짜">8/23(일) <i>오후 9:00</i></td><td data-label="DJ">전영희</td><td data-label="게스트"><span class="g"><b>오주영</b> <i>낯5,6,7 · 피아니스트, 교육자</i></span><span class="g"><b>이시현</b> <i>낯6,7 · SK텔레콤</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 짝꿍</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['4']}" class="sched-btn" data-gtm="radio-watch-4" th:href="${ytLinks['4']}" target="_blank" rel="noopener noreferrer">다시보기</a><span th:unless="${ytLinks['4']}" class="sched-btn is-pending" aria-disabled="true" title="링크 준비 중">다시보기</span></td></tr>
+                    <tr><td data-label="회차">5회</td><td data-label="날짜">8/30(일) <i>오후 9:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>박혜민</b> <i>낯Y8</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선 도시, 마케팅</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['5']}" class="sched-btn sched-btn-alert" data-gtm="radio-alert-5" th:href="${ytLinks['5']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['5']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
+                    <tr><td data-label="회차">6회</td><td data-label="날짜">9/6(일) <i>오후 8:00–10:00</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>오영훈</b> <i>낯6,7,8</i></span></td><td data-label="주제" class="s-topic"><span class="g">낯선라이브마켓 특별 생방송 <i>120분&#160;편성</i></span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['6']}" class="sched-btn sched-btn-alert" data-gtm="radio-alert-6" th:href="${ytLinks['6']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['6']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
+                    <tr><td data-label="회차">7회</td><td data-label="날짜">9/12(토) <i>오후 5:30</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>공개 예정</b></span></td><td data-label="주제" class="s-topic"><span class="g">낯선대학 10주년 축제 공개방송</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['7']}" class="sched-btn sched-btn-alert" data-gtm="radio-alert-7" th:href="${ytLinks['7']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['7']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
+                    <tr><td data-label="회차">8회</td><td data-label="날짜">9/13(일) <i>오후 5:30</i></td><td data-label="DJ">전영희,&#160;문차</td><td data-label="게스트"><span class="g"><b>공개 예정</b></span></td><td data-label="주제" class="s-topic"><span class="g">낯선대학 10주년 축제 공개방송</span></td><td data-label="바로가기" class="sched-go"><a th:if="${ytLinks['8']}" class="sched-btn sched-btn-alert" data-gtm="radio-alert-8" th:href="${ytLinks['8']}" target="_blank" rel="noopener noreferrer">알림 신청</a><span th:unless="${ytLinks['8']}" class="sched-btn sched-btn-alert is-pending" aria-disabled="true" title="링크 준비 중">알림 신청</span></td></tr>
                 </tbody>
             </table>
         </div>
@@ -637,7 +637,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h4>사유의서재 남산</h4>
                 <div class="addr">서울 중구 퇴계로20길 13, 4층<br>명동역 3번 출구 → 퍼시픽호텔 갈림길에서 좌측<br>가급적 대중교통 이용을 부탁드립니다.</div>
                 <div class="hero-ctas" style="justify-content:flex-start;">
-                    <a class="btn btn-ghost-light" href="https://naver.me/xQe26Aqr" target="_blank" rel="noopener">네이버 지도에서 보기 →</a>
+                    <a class="btn btn-ghost-light" data-gtm="naver-map" href="https://naver.me/xQe26Aqr" target="_blank" rel="noopener">네이버 지도에서 보기 →</a>
                 </div>
             </div>
             <ul class="steps reveal">
@@ -701,10 +701,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="scroll-fab" id="scrollFab">
     <button type="button" class="sf-btn sf-top sf-hide" id="sfTop" aria-label="맨 위로">↑</button>
     <button type="button" class="sf-btn sf-bottom" id="sfBottom" aria-label="맨 아래로">↓</button>
-    <a class="sf-btn sf-yt" href="https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g" target="_blank" rel="noopener noreferrer" aria-label="유튜브 채널 열기 (새 창)">
+    <a class="sf-btn sf-yt" data-gtm="youtube" href="https://youtube.com/channel/UCjZpJ2Uxo9wg61StbonOf_g" target="_blank" rel="noopener noreferrer" aria-label="유튜브 채널 열기 (새 창)">
         <img th:src="@{/img/youtube.svg.webp}" src="/img/youtube.svg.webp" alt="" width="1280" height="897" decoding="async"/>
     </a>
-    <a class="sf-btn sf-ig" href="https://www.instagram.com/natten.taptap/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램 계정 열기 (새 창)">
+    <a class="sf-btn sf-ig" data-gtm="instagram" href="https://www.instagram.com/natten.taptap/" target="_blank" rel="noopener noreferrer" aria-label="인스타그램 계정 열기 (새 창)">
         <img th:src="@{/img/instagram2.svg}" src="/img/instagram2.svg" alt="" width="1000" height="1000" decoding="async"/>
     </a>
 </div>
