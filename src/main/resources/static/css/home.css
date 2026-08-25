@@ -1161,7 +1161,9 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .steps li .step-body span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; line-height: 1.7; }
 
 /* ---------- CREW ---------- */
-.crew-lead { display: flex; flex-wrap: wrap; gap: 32px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+/* 여섯 명을 두 줄로 세운다. flex는 폭에 따라 3–4–5개씩 제멋대로 접혀
+   줄 수가 오락가락했다. 3열 격자면 언제나 3+3이다. */
+.crew-lead { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
 .crew-lead .role { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--gold); margin-bottom: 6px; text-transform: uppercase; }
 .crew-lead .nm { font-size: 15.5px; font-weight: 700; line-height: 1.9; color: var(--ink); }
 .crew-table { display: grid; grid-template-columns: 200px 1fr; gap: 4px 24px; }
@@ -1295,7 +1297,7 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
     .day-block { margin-bottom: 34px; }
     .prelude-block { margin-bottom: 36px; }
     .floor-directory { margin-top: 34px; padding-top: 24px; }
-    .crew-lead { gap: 20px; margin-bottom: 28px; padding-bottom: 24px; }
+    .crew-lead { gap: 16px 20px; margin-bottom: 28px; padding-bottom: 24px; }
 }
 @media (max-width: 380px) {
     /* 아주 좁은 화면: 카드는 2열 유지하되 폰트만 소폭 축소 */
