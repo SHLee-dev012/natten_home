@@ -1183,21 +1183,26 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .crew-sub-en { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
     color: var(--accent-solid); margin-bottom: 18px; }
 .thanks-lead { font-size: 14.5px; line-height: 1.85; color: var(--muted); margin: 0 0 28px; }
+/* 낯 / 낯Y / 낯C / 낯M / 낯W 를 줄로 나눈다. 격자를 계열마다 따로 두면 각자
+   새 줄에서 시작하고, 열 자리는 컨테이너 폭이 같아 계열끼리 그대로 맞는다.
+   줄 간격은 격자 안 행 간격과 같게 둬 한 목록으로 읽히게 한다. */
 .thanks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px 24px; margin-bottom: 30px; }
+    gap: 20px 24px; }
+.thanks-grid + .thanks-grid { margin-top: 20px; }
 .thanks-grid .role { font-family: var(--mono); font-size: 11px; letter-spacing: .05em;
     color: var(--accent-solid); margin-bottom: 5px; }
 .thanks-grid .nm { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.5; }
 .thanks-founders { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
-    padding-top: 22px; border-top: 1px solid var(--line); }
+    margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
 .tf-label { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--accent-solid); }
 .tf-names { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.75; }
 @media (max-width: 700px) {
     .thanks-block { margin-top: 30px; padding-top: 24px; }
     .crew-sub-en { margin-bottom: 14px; }
     .thanks-lead { margin-bottom: 22px; }
-    .thanks-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
-        gap: 16px 18px; margin-bottom: 24px; }
+    .thanks-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 16px 18px; }
+    .thanks-grid + .thanks-grid { margin-top: 16px; }
+    .thanks-founders { margin-top: 24px; }
     .thanks-grid .nm, .tf-names { font-size: 13.5px; }
 }
 .crew-table { display: grid; grid-template-columns: 200px 1fr; gap: 4px 24px; }
