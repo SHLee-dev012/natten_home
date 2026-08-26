@@ -366,7 +366,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .animated-main-title .firework-particle { transform-box: fill-box; transform-origin: center; will-change: transform, opacity; }
 
 
-/* ---------- 걸어오는 사람들 (축제개요 오른쪽 칸) ---------- */
+/* ---------- 걸어오는 사람들 (축제개요 왼쪽 칸) ---------- */
 .ov-walkers { width: 100%; margin: 0; overflow: hidden; }
 .walkers-stage { position: relative; aspect-ratio: 1078.04 / 911.06; }
 .walkers-stage > div, .walkers-stage svg { display: block; width: 100%; height: 100%; }
@@ -409,7 +409,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* ---------- OVERVIEW ---------- */
 /* 포스터가 빠지면서 한 열이 됐다. 표를 폭 끝까지 늘리면 행이 너무 길어져
    항목과 내용이 멀어지므로, 읽기 좋은 폭에서 끊는다. */
-.overview-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: start; }
+.overview-grid { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 40px; align-items: start; }
 /* 두 칸이 좁아지면 표의 항목과 내용이 붙어버린다. 한 열로 떨어뜨린다. */
 @media (max-width: 900px) { .overview-grid { grid-template-columns: minmax(0, 680px); } }
 .ov-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
