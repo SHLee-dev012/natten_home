@@ -354,4 +354,131 @@
       if (!document.hidden) render();
     });
   })();
+  // ---------- 히어로 제목: 글자 레이어 + 불꽃 레이어 ----------
+  // SVG 안에서 맨 앞 <g> 하나가 글자이고, 나머지 조각이 전부 불꽃이다.
+  // 둘을 갈라 겹쳐 놓고, 불꽃만 스크롤에 맞춰 퍼뜨린다.
+  (function () {
+    var root = document.getElementById('mainTitle');
+    if (!root || !root.dataset.svg || !window.fetch || !window.DOMParser) return;
+
+    fetch(root.dataset.svg).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(function (markup) {
+      var doc = new DOMParser().parseFromString(markup, 'image/svg+xml');
+      var svg = doc.querySelector('svg');
+      if (!svg || doc.querySelector('parsererror')) return;
+      var titleGroup = svg.querySelector(':scope > g');
+      if (!titleGroup) return;
+
+      // 글자 레이어 — defs와 첫 g만 남긴다
+      var titleSvg = svg.cloneNode(true);
+      Array.prototype.slice.call(titleSvg.children).forEach(function (el) {
+        var t = el.tagName.toLowerCase();
+        if (t !== 'defs' && t !== 'g') el.remove();
+      });
+      titleSvg.setAttribute('aria-hidden', 'true');
+      titleSvg.setAttribute('focusable', 'false');
+
+      // 불꽃 레이어 — 첫 g만 빼고 나머지에 표식을 단다
+      var fxSvg = svg.cloneNode(true);
+      var firstG = fxSvg.querySelector(':scope > g');
+      if (firstG) firstG.remove();
+      Array.prototype.slice.call(fxSvg.children).forEach(function (el) {
+        if (el.tagName.toLowerCase() !== 'defs') el.classList.add('firework-particle');
+      });
+      fxSvg.setAttribute('aria-hidden', 'true');
+      fxSvg.setAttribute('focusable', 'false');
+
+      var stage = document.createElement('span');
+      stage.className = 'main-title-layers';
+      var fxWrap = document.createElement('span');
+      fxWrap.className = 'fireworks-layer';
+      fxWrap.appendChild(fxSvg);
+      var titleWrap = document.createElement('span');
+      titleWrap.className = 'static-title-layer';
+      titleWrap.appendChild(titleSvg);
+      stage.appendChild(fxWrap);
+      stage.appendChild(titleWrap);
+
+      root.textContent = '';
+      root.appendChild(stage);
+      root.classList.add('is-loaded');
+
+      var sparks = Array.prototype.slice.call(root.querySelectorAll('.firework-particle'));
+      if (!sparks.length) return;
+
+      var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var frame = 0;
+
+      var update = function () {
+        frame = 0;
+        var distance = Math.max(220, Math.min(480, window.innerHeight * 0.56));
+        var progress = mq.matches ? 1 : Math.max(0, Math.min(1, window.scrollY / distance));
+        sparks.forEach(function (spark, i) {
+          var delay = (i % 11) * 0.018;
+          var local = Math.max(0, Math.min(1, (progress - delay) / 0.8));
+          var eased = 1 - Math.pow(1 - local, 3);
+          var dir = i % 2 === 0 ? 1 : -1;
+          spark.style.opacity = String(eased);
+          spark.style.transform = 'translateY(' + ((1 - eased) * (12 + (i % 4) * 5)) + 'px)' +
+            ' scale(' + (0.16 + eased * 0.84) + ')' +
+            ' rotate(' + (dir * (1 - eased) * (9 + (i % 5) * 4)) + 'deg)';
+        });
+      };
+      var schedule = function () { if (!frame) frame = requestAnimationFrame(update); };
+
+      update();
+      window.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+      if (mq.addEventListener) mq.addEventListener('change', schedule);
+    }).catch(function () { /* 못 받아오면 글자 대체본이 그대로 남는다 */ });
+  })();
+
+  // ---------- 히어로 하단: 걸어오는 사람들 ----------
+  // 두 SVG가 모두 .st0~ 클래스를 쓰고 색이 달라, 한쪽 이름을 바꿔야 서로 덮어쓰지 않는다.
+  (function () {
+    var fig = document.getElementById('heroWalkers');
+    if (!fig || !fig.dataset.svg || !window.fetch) return;
+    var stage = fig.querySelector('.walkers-stage');
+    if (!stage) return;
+
+    fetch(fig.dataset.svg).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.text();
+    }).then(function (markup) {
+      stage.innerHTML = markup
+        .replace(/\bst(\d+)\b/g, 'walk-st$1')
+        .replace('<svg ', '<svg aria-hidden="true" focusable="false" ');
+      fig.classList.add('is-loaded');
+
+      var people = stage.querySelector('[data-name="레이어_1"]');
+      var effects = stage.querySelector('[data-name="레이어_2"]');
+      var text = stage.querySelector('[data-name="레이어_3"]');
+      if (!people || !effects || !text) return;
+
+      var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var frame = 0;
+
+      var update = function () {
+        frame = 0;
+        var rect = fig.getBoundingClientRect();
+        var raw = (window.innerHeight - rect.top) / (window.innerHeight + rect.height * 0.45);
+        var p = mq.matches ? 1 : Math.max(0, Math.min(1, raw));
+        var fx = Math.max(0, Math.min(1, (p - 0.2) / 0.58));
+        var tp = Math.max(0, Math.min(1, (p - 0.08) / 0.58));
+        people.style.transform = 'translateY(' + ((1 - p) * 24) + 'px) scale(' + (0.82 + p * 0.22) + ')';
+        effects.style.opacity = String(fx);
+        effects.style.transform = 'translateY(' + ((1 - fx) * 12) + 'px)';
+        text.style.opacity = String(tp);
+        text.style.transform = 'scale(' + (0.12 + (1 - Math.pow(1 - tp, 3)) * 0.88) + ')';
+      };
+      var schedule = function () { if (!frame) frame = requestAnimationFrame(update); };
+
+      update();
+      window.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+      if (mq.addEventListener) mq.addEventListener('change', schedule);
+    }).catch(function () { /* 못 받아오면 대체 문구가 그대로 남는다 */ });
+  })();
 })();

@@ -342,8 +342,49 @@ header.site-nav.scrolled {
     .hero-dday { margin-bottom: 14px; padding: 6px 14px; }
     .hero-dday .dd-value { font-size: 15.5px; }
 }
-h1.hero-title { font-family: var(--serif); font-weight: 900; font-size: clamp(34px, 6vw, 64px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -.01em; }
-h1.hero-title em { font-style: normal; background: var(--accent); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* ---------- 히어로 제목 (SVG 2레이어) ---------- */
+/* SVG를 받기 전에는 아래 글자가 그대로 제목이다. 받은 뒤에는 글자를 감추고
+   같은 자리에 그림을 얹으므로, 스크립트가 죽어도 제목이 사라지지 않는다. */
+h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
+.animated-main-title { display: block; width: min(100%, 1056px); margin: 0 auto; }
+.animated-main-title .title-fallback {
+    display: block; font-family: var(--serif); font-weight: 900;
+    font-size: clamp(34px, 6vw, 64px); line-height: 1.1; letter-spacing: -.01em; }
+.animated-main-title .title-fallback em { font-style: normal; background: var(--accent);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }
+.main-title-layers { position: relative; display: block; aspect-ratio: 1056.23 / 859.41; }
+.main-title-layers .fireworks-layer,
+.main-title-layers .static-title-layer { position: absolute; inset: 0; display: block; }
+.main-title-layers .static-title-layer { z-index: 2; pointer-events: none; }
+.main-title-layers .fireworks-layer { z-index: 1; }
+.main-title-layers svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* 조각마다 제자리에서 돌고 커져야 한다. fill-box 가 아니면 SVG 전체를 기준으로 돈다 */
+.animated-main-title .firework-particle { transform-box: fill-box; transform-origin: center; will-change: transform, opacity; }
+
+/* D-day 배지 — 그림 제목 위에 겹친다 */
+h1.hero-title-art .hero-dday { position: absolute; z-index: 6; top: 24%; left: 50%; transform: translate(-50%, -50%); margin: 0; }
+
+/* ---------- 걸어오는 사람들 ---------- */
+.hero-walkers { width: min(100%, 900px); margin: clamp(26px, 4vw, 48px) auto 0; overflow: hidden; }
+.walkers-stage { position: relative; aspect-ratio: 1078.04 / 911.06; }
+.walkers-stage > div, .walkers-stage svg { display: block; width: 100%; height: 100%; }
+.walkers-stage [data-name="레이어_1"] { transform-box: view-box; transform-origin: 50% 92%; will-change: transform; }
+.walkers-stage [data-name="레이어_2"],
+.walkers-stage [data-name="레이어_3"] { transform-box: view-box; transform-origin: center; will-change: transform, opacity; }
+.walkers-fallback { display: grid; place-items: center; height: 100%; color: var(--muted); font-size: 14px; }
+.hero-walkers:not(.is-loaded) .walkers-stage { aspect-ratio: auto; min-height: 120px; }
+
+@media (max-width: 640px) {
+    .animated-main-title { width: 115%; margin-left: -7.5%; }
+    h1.hero-title-art .hero-dday { top: 24%; }
+    .hero-walkers { width: 116%; margin-left: -8%; margin-right: -8%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .animated-main-title .firework-particle { will-change: auto; }
+    .walkers-stage [data-name="레이어_1"],
+    .walkers-stage [data-name="레이어_2"],
+    .walkers-stage [data-name="레이어_3"] { transform: none !important; opacity: 1 !important; will-change: auto; }
+}
 .hero-en { font-family: var(--mono); font-size: 14px; letter-spacing: .05em; color: var(--muted); margin-bottom: 24px; }
 .hero-copy { font-size: 15.5px; line-height: 1.9; color: var(--muted); max-width: 580px; margin: 0 auto 30px; }
 .hero-facts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 20px; margin-bottom: 32px; font-family: var(--mono); font-size: 14px; color: var(--muted); }
