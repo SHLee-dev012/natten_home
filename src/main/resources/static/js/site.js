@@ -438,7 +438,7 @@
   // ---------- 히어로 하단: 걸어오는 사람들 ----------
   // 두 SVG가 모두 .st0~ 클래스를 쓰고 색이 달라, 한쪽 이름을 바꿔야 서로 덮어쓰지 않는다.
   (function () {
-    var fig = document.getElementById('heroWalkers');
+    var fig = document.getElementById('ovWalkers');
     if (!fig || !fig.dataset.svg || !window.fetch) return;
     var stage = fig.querySelector('.walkers-stage');
     if (!stage) return;
