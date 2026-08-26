@@ -370,7 +370,9 @@ h1.hero-title em { font-style: normal; background: var(--accent); -webkit-backgr
 /* ---------- OVERVIEW ---------- */
 .overview-grid { display: grid; grid-template-columns: 320px 1fr; gap: 40px; align-items: start; }
 @media (max-width: 820px) { .overview-grid { grid-template-columns: 1fr; } }
-.ov-poster img { border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 24px 60px -24px rgba(129,140,248,.5); }
+/* width/height 속성을 달면 그 값이 그대로 상자가 된다. 칸은 320px인데 높이만
+   1528로 남아 세로로 늘어났다. height:auto 로 비율을 되돌린다. */
+.ov-poster img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); box-shadow: 0 24px 60px -24px rgba(129,140,248,.5); }
 .ov-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
 .ov-table th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--faint); padding: 11px 14px 11px 0; border-top: 1px solid var(--line); vertical-align: top; white-space: nowrap; width: 72px; }
 .ov-table tr:first-child th, .ov-table tr:first-child td { border-top: none; }
