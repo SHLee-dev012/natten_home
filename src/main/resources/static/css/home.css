@@ -377,7 +377,6 @@ h1.hero-title-art .hero-dday { position: absolute; z-index: 6; top: 24%; left: 5
 @media (max-width: 640px) {
     .animated-main-title { width: 115%; margin-left: -7.5%; }
     h1.hero-title-art .hero-dday { top: 24%; }
-    .hero-walkers { width: 116%; margin-left: -8%; margin-right: -8%; }
 }
 @media (prefers-reduced-motion: reduce) {
     .animated-main-title .firework-particle { will-change: auto; }
