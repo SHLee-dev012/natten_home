@@ -1169,20 +1169,10 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .steps li .step-body span { display: block; font-size: 13.5px; color: var(--muted); margin-top: 3px; line-height: 1.7; }
 
 /* ---------- CREW ---------- */
-/* 여섯 명을 두 줄로 세운다. flex는 폭에 따라 3–4–5개씩 제멋대로 접혀
-   줄 수가 오락가락했다. 3열 격자면 언제나 3+3이다. */
-.crew-lead { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
-.crew-lead .role { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--gold); margin-bottom: 6px; text-transform: uppercase; }
-.crew-lead .nm { font-size: 15.5px; font-weight: 700; line-height: 1.9; color: var(--ink); }
 
-/* 도움 주신 분들 — 크루와 같은 섹션이지만 성격이 달라 선으로 끊고 라벨을
-   보라로 둔다(스태프는 금색). 총장 수가 열일곱이라 열 수를 고정하지 않고
-   폭에 맞춰 채우게 한다. */
-.thanks-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
-.crew-sub { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0 0 6px; }
-.crew-sub-en { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
-    color: var(--accent-solid); margin-bottom: 18px; }
-.thanks-lead { font-size: 14.5px; line-height: 1.85; color: var(--muted); margin: 0 0 28px; }
+/* 크루 명단이 빠지고 이 블록이 섹션 본문이 됐다. 리드 바로 아래라 위 여백만 준다 */
+.thanks-block { margin-top: 34px; }
+
 /* 낯 / 낯Y / 낯C / 낯M / 낯W 를 줄로 나눈다. 격자를 계열마다 따로 두면 각자
    새 줄에서 시작하고, 열 자리는 컨테이너 폭이 같아 계열끼리 그대로 맞는다.
    줄 간격은 격자 안 행 간격과 같게 둬 한 목록으로 읽히게 한다. */
@@ -1197,19 +1187,12 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .tf-label { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--accent-solid); }
 .tf-names { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.75; }
 @media (max-width: 700px) {
-    .thanks-block { margin-top: 30px; padding-top: 24px; }
-    .crew-sub-en { margin-bottom: 14px; }
-    .thanks-lead { margin-bottom: 22px; }
+    .thanks-block { margin-top: 26px; }
     .thanks-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 16px 18px; }
     .thanks-grid + .thanks-grid { margin-top: 16px; }
     .thanks-founders { margin-top: 24px; }
     .thanks-grid .nm, .tf-names { font-size: 13.5px; }
 }
-.crew-table { display: grid; grid-template-columns: 200px 1fr; gap: 4px 24px; }
-@media (max-width: 700px) { .crew-table { grid-template-columns: 1fr; } }
-.crew-table .team { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; color: var(--faint); padding: 13px 0; border-top: 1px solid var(--line); }
-.crew-table .names { font-size: 15.5px; font-weight: 600; padding: 13px 0; border-top: 1px solid var(--line); line-height: 1.9; color: var(--ink); }
-@media (max-width: 700px) { .crew-table .team { border-top: none; padding-bottom: 2px; opacity: .7; } .crew-table .names { border-top: none; padding-top: 0; margin-bottom: 6px; } }
 
 /* ---------- FOOTER ---------- */
 footer { background: rgba(3, 4, 10, 0.6); border-top: 1px solid var(--line); color: var(--muted); padding: 52px 0 56px; font-size: 13.5px; line-height: 1.9; }
@@ -1336,7 +1319,6 @@ footer .fline { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(-
     .day-block { margin-bottom: 34px; }
     .prelude-block { margin-bottom: 36px; }
     .floor-directory { margin-top: 34px; padding-top: 24px; }
-    .crew-lead { gap: 16px 20px; margin-bottom: 28px; padding-bottom: 24px; }
 }
 @media (max-width: 380px) {
     /* 아주 좁은 화면: 카드는 2열 유지하되 폰트만 소폭 축소 */
