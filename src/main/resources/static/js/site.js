@@ -413,10 +413,11 @@
 
       var update = function () {
         frame = 0;
-        var distance = Math.max(220, Math.min(480, window.innerHeight * 0.56));
+        // 불꽃이 다 피는 데 걸리는 스크롤 거리. 짧을수록 일찍 터진다.
+        var distance = Math.max(110, Math.min(240, window.innerHeight * 0.28));
         var progress = mq.matches ? 1 : Math.max(0, Math.min(1, window.scrollY / distance));
         sparks.forEach(function (spark, i) {
-          var delay = (i % 11) * 0.018;
+          var delay = (i % 11) * 0.012;
           var local = Math.max(0, Math.min(1, (progress - delay) / 0.8));
           var eased = 1 - Math.pow(1 - local, 3);
           var dir = i % 2 === 0 ? 1 : -1;
