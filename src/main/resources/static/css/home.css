@@ -346,12 +346,11 @@ header.site-nav.scrolled {
 /* SVG를 받기 전에는 아래 글자가 그대로 제목이다. 받은 뒤에는 글자를 감추고
    같은 자리에 그림을 얹으므로, 스크립트가 죽어도 제목이 사라지지 않는다. */
 h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
-/* 그림 제목은 화면 높이를 따라 줄어든다. 제목 아래로 D-day·태그라인·소개글·일시·버튼이
-   약 610px을 쓰므로, 그만큼 뺀 높이 안에 그림이 들어와야 첫 화면에 다 보인다.
-   가로세로비가 1056.23/859.41 이라 높이 h 는 폭 h*1.229 에 대응한다.
-   창이 아주 낮을 때는 240px 아래로는 줄이지 않는다 — 더 줄면 글자를 못 읽는다. */
-.animated-main-title { display: block; margin: 0 auto;
-    width: min(100%, 1056px, max(240px, calc((100vh - 610px) * 1.229))); }
+/* 그림 제목은 화면 폭을 꽉 채운다. 감싸는 .section-wrap 이 좌우를 잡고 있으므로
+   50% - 50vw 만큼 음수 마진을 줘 그 밖으로 밀어낸다.
+   글자는 viewBox 안쪽에 여백을 두고 그려져 있어, 세로 스크롤바 폭만큼
+   넘치더라도 잘리는 획은 없다. */
+.animated-main-title { display: block; width: auto; margin: 0 calc(50% - 50vw); }
 .animated-main-title .title-fallback {
     display: block; font-family: var(--serif); font-weight: 900;
     font-size: clamp(34px, 6vw, 64px); line-height: 1.1; letter-spacing: -.01em; }
