@@ -1174,6 +1174,32 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .crew-lead { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 32px; margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
 .crew-lead .role { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; color: var(--gold); margin-bottom: 6px; text-transform: uppercase; }
 .crew-lead .nm { font-size: 15.5px; font-weight: 700; line-height: 1.9; color: var(--ink); }
+
+/* 도움 주신 분들 — 크루와 같은 섹션이지만 성격이 달라 선으로 끊고 라벨을
+   보라로 둔다(스태프는 금색). 총장 수가 열일곱이라 열 수를 고정하지 않고
+   폭에 맞춰 채우게 한다. */
+.thanks-block { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+.crew-sub { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0 0 6px; }
+.crew-sub-en { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em;
+    color: var(--accent-solid); margin-bottom: 18px; }
+.thanks-lead { font-size: 14.5px; line-height: 1.85; color: var(--muted); margin: 0 0 28px; }
+.thanks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px 24px; margin-bottom: 30px; }
+.thanks-grid .role { font-family: var(--mono); font-size: 11px; letter-spacing: .05em;
+    color: var(--accent-solid); margin-bottom: 5px; }
+.thanks-grid .nm { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.5; }
+.thanks-founders { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+    padding-top: 22px; border-top: 1px solid var(--line); }
+.tf-label { font-family: var(--mono); font-size: 11px; letter-spacing: .05em; color: var(--accent-solid); }
+.tf-names { font-size: 14.5px; font-weight: 700; color: var(--ink); line-height: 1.75; }
+@media (max-width: 700px) {
+    .thanks-block { margin-top: 30px; padding-top: 24px; }
+    .crew-sub-en { margin-bottom: 14px; }
+    .thanks-lead { margin-bottom: 22px; }
+    .thanks-grid { grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+        gap: 16px 18px; margin-bottom: 24px; }
+    .thanks-grid .nm, .tf-names { font-size: 13.5px; }
+}
 .crew-table { display: grid; grid-template-columns: 200px 1fr; gap: 4px 24px; }
 @media (max-width: 700px) { .crew-table { grid-template-columns: 1fr; } }
 .crew-table .team { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; color: var(--faint); padding: 13px 0; border-top: 1px solid var(--line); }
