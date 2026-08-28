@@ -606,24 +606,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="section-wrap">
         <div class="sec-head"><span class="floor-mark">ARCHIVE</span><h2>아카이브</h2><span class="en">사전·사후 기록 &amp; 게시판</span></div>
         <p class="lead">축제를 준비하는 과정과 그날의 기록이 쌓이는 공간입니다. 사전 홍보 이미지&#8288;·&#8288;영상부터, 축제가 끝난 뒤의 사진과 영상, 그리고 누구나 남길 수 있는 게시판까지.</p>
-        <!-- 아카이브 공개 전 — 내용을 흐리게 덮고 COMING SOON을 얹는다.
-             blur는 시각적 처리일 뿐이라 안쪽은 inert로 초점·클릭에서도 함께 뺀다. -->
-        <div class="ft-veil">
-        <div class="ft-veil-badge">
-            <div class="ftv-board">
-                <span class="ftv-kicker">ARCHIVE</span>
-                <strong class="ftv-title">COMING SOON</strong>
-                <span class="ftv-sub">아카이브 준비 중입니다</span>
-            </div>
-        </div>
-        <div class="veil-body" inert aria-hidden="true">
         <div class="archive-sub reveal">
             <h4>사전 홍보 · 티저</h4>
-            <div class="card-grid">
-                <div class="lecture-card"><div class="photo-slot">TEASER<br>IMAGE PENDING</div><div class="body"><span class="room">사전 홍보 이미지</span><div class="who">공개 예정</div></div></div>
-                <div class="lecture-card"><div class="photo-slot">TEASER<br>VIDEO PENDING</div><div class="body"><span class="room">티저 영상</span><div class="who">공개 예정</div></div></div>
-                <div class="lecture-card"><div class="photo-slot">SNS<br>CARD PENDING</div><div class="body"><span class="room">SNS 홍보 카드뉴스</span><div class="who">공개 예정</div></div></div>
-                <div class="lecture-card"><div class="photo-slot">D-DAY<br>CARD PENDING</div><div class="body"><span class="room">D-DAY 카운트다운</span><div class="who">공개 예정</div></div></div>
+            <!-- 티저 공개 전 — 카드 넉 장만 흐리게 덮고 COMING SOON을 얹는다.
+                 blur는 시각적 처리일 뿐이라 안쪽은 inert로 초점·클릭에서도 함께 뺀다. -->
+            <div class="ft-veil">
+            <div class="ft-veil-badge">
+                <div class="ftv-board">
+                    <span class="ftv-kicker">ARCHIVE</span>
+                    <strong class="ftv-title">COMING SOON</strong>
+                    <span class="ftv-sub">아카이브 준비 중입니다</span>
+                </div>
+            </div>
+            <div class="veil-body" inert aria-hidden="true">
+                <div class="card-grid">
+                    <div class="lecture-card"><div class="photo-slot">TEASER<br>IMAGE PENDING</div><div class="body"><span class="room">사전 홍보 이미지</span><div class="who">공개 예정</div></div></div>
+                    <div class="lecture-card"><div class="photo-slot">TEASER<br>VIDEO PENDING</div><div class="body"><span class="room">티저 영상</span><div class="who">공개 예정</div></div></div>
+                    <div class="lecture-card"><div class="photo-slot">SNS<br>CARD PENDING</div><div class="body"><span class="room">SNS 홍보 카드뉴스</span><div class="who">공개 예정</div></div></div>
+                    <div class="lecture-card"><div class="photo-slot">D-DAY<br>CARD PENDING</div><div class="body"><span class="room">D-DAY 카운트다운</span><div class="who">공개 예정</div></div></div>
+                </div>
+            </div>
             </div>
         </div>
         <div class="archive-sub reveal">
@@ -641,8 +643,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="gb-flash" id="gb-flash" role="status" aria-live="polite" hidden></p>
             <ul class="gb-list" id="gb-list"><li class="gb-empty" id="gb-loading">불러오는 중…</li></ul>
             <nav class="gb-pager" id="gb-pager" aria-label="게시판 페이지" hidden></nav>
-        </div>
-        </div>
         </div>
     </div>
 </section>
