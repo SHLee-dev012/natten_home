@@ -1082,11 +1082,21 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
     background: radial-gradient(72% 62% at 50% 50%, rgba(10, 8, 18, .88), rgba(10, 8, 18, .52)); }
 .ft-veil-badge { position: absolute; inset: 0; z-index: 2; display: flex;
     align-items: center; justify-content: center; text-align: center; padding: 20px 16px; }
-.ftv-board { display: flex; flex-direction: column; align-items: center; gap: 8px;
-    padding: 22px 30px 20px; border-radius: 14px;
+/* 계보 명패 — 한 뿌리에서 갈라져 나온 가지를 새긴다. 7명에서 1,000명이 된
+   내력이 이 섹션의 이야기라, 간판이 그 모양을 그대로 보여준다.
+   안쪽 홑겹 테두리는 족보 문서의 가장자리를 흉내낸 것. */
+.ftv-board { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    padding: 24px 32px 22px; border-radius: 14px;
     border: 1px solid color-mix(in srgb, var(--accent-solid) 42%, transparent);
     background: radial-gradient(130% 100% at 50% 0%, color-mix(in srgb, var(--accent-solid) 16%, transparent), transparent 64%), rgba(10, 8, 18, .74);
     box-shadow: 0 18px 40px -22px rgba(0, 0, 0, .85); }
+.ftv-board::before { content: ""; position: absolute; inset: 6px; border-radius: 9px; pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--accent-solid) 18%, transparent); }
+.ftv-tree { width: clamp(84px, 22vw, 116px); height: auto; display: block; overflow: visible; }
+.ftv-tree path { fill: none; stroke: color-mix(in srgb, var(--accent-solid) 58%, transparent);
+    stroke-width: 1.4; stroke-linecap: round; }
+.ftv-tree circle { fill: color-mix(in srgb, var(--accent-solid) 72%, transparent); }
+.ftv-tree .ftv-root { fill: #e9e3ff; }
 .ftv-kicker { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .16em;
     text-transform: uppercase; color: var(--accent-solid); }
 .ftv-title { font-family: Georgia, "Times New Roman", serif; font-weight: 700; letter-spacing: .07em;
