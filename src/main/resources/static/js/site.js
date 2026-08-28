@@ -62,6 +62,14 @@
     navLinksEl.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
   }
 
+  // PC 하위 메뉴는 호버로 열린다. 그런데 트리거를 마우스로 누르면 버튼에 포커스가
+  // 남고, 그 포커스를 :focus-within 이 붙잡아 마우스를 치워도 메뉴가 열려 있다.
+  // 포인터로 누른 경우(detail > 0)에만 포커스를 거둔다. 키보드로 누르면(Enter·Space)
+  // detail 이 0이라 그대로 두어, 탭으로 하위 항목까지 들어갈 수 있다.
+  document.querySelectorAll('.nav-group-trigger').forEach(function (btn) {
+    btn.addEventListener('click', function (e) { if (e.detail > 0) btn.blur(); });
+  });
+
   // 내비게이션 스크롤 스파이
   var navLinks = document.querySelectorAll('.nav-links a[data-nav]');
   var targets = Array.prototype.map.call(navLinks, function (a) { return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
