@@ -1066,7 +1066,8 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 /* PC에서는 폼이 한 줄이라 베일이 간판보다 낮아진다. min-height로 간판 자리를
    먼저 확보하고, 폼을 flex로 늘려 베일을 빈틈없이 채운다. */
 .ft-veil { position: relative; display: flex; border-radius: 14px; overflow: hidden; min-height: 200px; }
-.ft-veil > .ft-panel { flex: 1; margin: 0; filter: blur(6px); opacity: .40; pointer-events: none; user-select: none; }
+.ft-veil > .ft-panel,
+.ft-veil > .veil-body { flex: 1; margin: 0; filter: blur(6px); opacity: .40; pointer-events: none; user-select: none; }
 .ft-veil::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
     background: radial-gradient(72% 62% at 50% 50%, rgba(10, 8, 18, .88), rgba(10, 8, 18, .52)); }
 .ft-veil-badge { position: absolute; inset: 0; z-index: 2; display: flex;
