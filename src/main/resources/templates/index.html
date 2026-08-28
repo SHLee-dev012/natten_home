@@ -75,7 +75,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <a href="#archive" data-nav>아카이브<span class="nav-soon">coming soon</span></a>
             <a href="#familytree" data-nav>낯선가계도<span class="nav-soon">coming soon</span></a>
             <a href="#location" data-nav>오시는 길</a>
-            <a href="#crew" data-nav>만드는 사람들</a>
+            <div class="nav-group">
+                <button type="button" class="nav-group-trigger">만드는 사람들<span class="nav-caret" aria-hidden="true">⌄</span></button>
+                <div class="nav-submenu">
+                    <a href="#crew" data-nav>축제를 만드는 사람들</a>
+                    <a href="#thanks" data-nav>도움 주신 분들</a>
+                </div>
+            </div>
         </nav>
     </div>
 </header>
@@ -732,7 +738,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <!-- 도움 주신 분들 — 만든 사람이 아니라 도와준 사람이라 선을 긋고
              라벨 색도 스태프(금색)와 다르게 둔다. -->
-        <div class="thanks-block reveal">
+        <div class="thanks-block reveal" id="thanks">
             <h3 class="crew-sub">도움 주신 분들</h3>
             <span class="crew-sub-en">Special Thanks</span>
             <p class="thanks-lead">

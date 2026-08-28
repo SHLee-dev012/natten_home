@@ -95,6 +95,8 @@ a { color: inherit; } img { max-width: 100%; display: block; }
 section { padding: 82px 0; position: relative; }
 section[id] { scroll-margin-top: 72px; }
 #livemarket { scroll-margin-top: 84px; }
+/* 섹션이 아니라 #crew 안쪽 블록이라 section[id] 규칙이 안 걸린다 */
+#thanks { scroll-margin-top: 84px; }
 /* 섹션 경계선 — 섹션마다 명확히 구분 */
 section[id]:not(#notice):not(#cover) { border-top: 1px solid var(--line); }
 
