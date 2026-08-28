@@ -274,9 +274,14 @@
       "&limit=" + PAGE_SIZE + "&offset=" + offset;
     return fetch(url, { headers: Object.assign({ Prefer: "count=exact" }, authHeaders) })
       .then(function (r) {
-        if (!r.ok) throw new Error(r.status);
+        // 총 개수는 416 응답에도 실려 온다(content-range: */9). 먼저 읽는다.
         var cr = r.headers.get("content-range");
         if (cr) { var tot = cr.split("/")[1]; totalCount = (!tot || tot === "*") ? 0 : (parseInt(tot, 10) || 0); }
+        // 마지막 페이지의 마지막 글이 지워지면 그 페이지는 범위 밖이 되어 416이 온다.
+        // 오류로 두면 "불러오지 못했습니다"가 뜨지만 실은 그냥 빈 페이지다.
+        // 빈 배열로 넘기면 아래 load()가 이전 페이지로 물러난다.
+        if (r.status === 416) return [];
+        if (!r.ok) throw new Error(r.status);
         return r.json();
       });
   }
