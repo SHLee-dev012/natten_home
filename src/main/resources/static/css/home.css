@@ -468,11 +468,21 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .join-ways { list-style: none; margin: 0 0 30px; padding: 0; display: grid; gap: 12px; }
 .join-ways li { background: rgba(167,139,250,.07); border-left: 3px solid var(--accent-solid);
     border-radius: 0 10px 10px 0; padding: 15px 18px; }
-/* 신청 버튼을 설명 옆에 둔다. 넓은 화면에서는 설명 오른쪽 끝, 좁아지면 설명 아래.
-   버튼이 따로 놀지 않게 카드 안에서 오른쪽으로 붙인다. */
+/* 신청 버튼은 설명 옆에 둔다. 좁은 화면에서는 아래로 내려 오른쪽에 붙이고,
+   430px 아래에서는 카드 폭을 꽉 채워 손가락이 빗나가지 않게 한다. */
 .jw-go { display: block; margin-top: 12px; text-align: right; }
 .jw-go .btn { min-width: 148px; justify-content: center; }
 @media (max-width: 430px) { .jw-go .btn { display: flex; min-width: 0; } }
+/* 넓은 화면에서는 설명 오른쪽에 세로 가운데로 세운다. 아래에 두면 카드가
+   길어지고 읽은 자리에서 버튼까지 눈이 멀리 간다. 이름과 설명이 왼쪽 한 칸을
+   위아래로 나눠 쓰고, 버튼이 두 줄에 걸쳐 오른쪽 칸을 차지한다. */
+@media (min-width: 641px) {
+    .join-ways li { display: grid; grid-template-columns: 1fr auto;
+        grid-template-areas: "name go" "desc go"; column-gap: 22px; align-items: center; }
+    .jw-name { grid-area: name; }
+    .jw-desc { grid-area: desc; }
+    .jw-go { grid-area: go; margin-top: 0; align-self: center; }
+}
 .jw-name { display: block; font-family: var(--serif); font-weight: 700; font-size: 16px;
     color: var(--ink); margin-bottom: 7px; }
 .jw-desc { display: block; font-size: 14.5px; line-height: 1.85; color: var(--muted); word-break: keep-all; }
