@@ -416,12 +416,6 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .hero-copy { font-size: 15.5px; line-height: 1.75; color: var(--muted); max-width: 620px; margin: 14px auto 0; }
 .hero-copy-2 { margin: 12px auto 22px; }
 .hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
-/* 참여방법 신청 버튼 셋 — 출석후원·동문후원·라이브마켓은 무게가 같은 창구다.
-   아래 join-ways 목록과 순서도 같아, 같은 버튼으로 두고 폭까지 맞춰 한 벌로 읽히게 한다.
-   좁은 화면에서는 한 줄에 하나씩 꽉 채워 손가락이 빗나가지 않게 한다. */
-.join-cta { justify-content: flex-start; }
-.join-cta .btn { min-width: 136px; justify-content: center; }
-@media (max-width: 430px) { .join-cta .btn { flex: 1 1 100%; min-width: 0; } }
 
 /* ---------- OVERVIEW ---------- */
 /* 포스터가 빠지면서 한 열이 됐다. 표를 폭 끝까지 늘리면 행이 너무 길어져
@@ -474,6 +468,11 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .join-ways { list-style: none; margin: 0 0 30px; padding: 0; display: grid; gap: 12px; }
 .join-ways li { background: rgba(167,139,250,.07); border-left: 3px solid var(--accent-solid);
     border-radius: 0 10px 10px 0; padding: 15px 18px; }
+/* 신청 버튼을 설명 옆에 둔다. 넓은 화면에서는 설명 오른쪽 끝, 좁아지면 설명 아래.
+   버튼이 따로 놀지 않게 카드 안에서 오른쪽으로 붙인다. */
+.jw-go { display: block; margin-top: 12px; text-align: right; }
+.jw-go .btn { min-width: 148px; justify-content: center; }
+@media (max-width: 430px) { .jw-go .btn { display: flex; min-width: 0; } }
 .jw-name { display: block; font-family: var(--serif); font-weight: 700; font-size: 16px;
     color: var(--ink); margin-bottom: 7px; }
 .jw-desc { display: block; font-size: 14.5px; line-height: 1.85; color: var(--muted); word-break: keep-all; }
