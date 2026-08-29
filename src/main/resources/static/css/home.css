@@ -547,6 +547,9 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .day-title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
 .day-title .dchip { font-family: var(--mono); font-size: 13.5px; letter-spacing: .05em; background: var(--accent); color: #0a0c1c; font-weight: 800; padding: 5px 11px; border-radius: 6px; }
 .day-title h3 { font-family: var(--serif); font-weight: 700; font-size: 21px; margin: 0; }
+/* 자리 표시 — 시간 칩 옆에 붙되 시간만큼 강하면 안 되니 테두리만 남긴다 */
+.day-title .dchip-place { background: none; color: var(--accent-solid); font-weight: 700;
+    border: 1px solid color-mix(in srgb, var(--accent-solid) 42%, transparent); }
 .moderator-line { font-size: 14.5px; color: var(--muted); margin: 10px 0 20px; line-height: 1.8; }
 .moderator-line b { color: var(--ink); font-weight: 700; }
 /* 모더레이터는 한 명씩 줄을 차지한다. 두 명이 '·'로 이어지거나
