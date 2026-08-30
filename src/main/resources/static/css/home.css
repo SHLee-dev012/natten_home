@@ -1067,12 +1067,9 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
     background: rgba(167, 139, 250, .10);
     border-top: 1px solid color-mix(in srgb, var(--accent-solid) 26%, transparent);
     transition: background .25s ease; }
-.mk-cta-play { flex: none; position: relative; width: 22px; height: 22px;
-    border-radius: 50%; background: var(--accent-solid); }
-.mk-cta-play::before { content: ""; position: absolute; top: 50%; left: 53%;
-    transform: translate(-50%, -50%);
-    border-left: 7px solid #14121f;
-    border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
+/* 목적지가 영상이 아니라 마켓이라 재생 표시는 쓰지 않는다.
+   축제 참여방법 카드가 낯선라이브마켓에 쓰는 표시와 같은 것으로 맞춘다. */
+.mk-cta-ico { flex: none; font-size: 16px; line-height: 1; }
 .mk-cta-arrow { margin-left: auto; color: var(--accent-solid); font-weight: 400;
     transition: transform .25s ease; }
 .mk-poster:hover .mk-cta, .mk-poster:focus-visible .mk-cta { background: rgba(167, 139, 250, .16); }
