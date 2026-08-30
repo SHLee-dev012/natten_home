@@ -1034,6 +1034,22 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .market-cols li:last-child { border-bottom: 1px dotted var(--line); }
 /* 출품 목록 공개 전 티저 — 유럽 마켓 가판대(줄무늬 차양 + 나무틀 칠판)로 덮는다.
    blur는 시각적 처리일 뿐이므로 실데이터는 마크업에서 이미 제거했다. */
+/* 라이브마켓 포스터 — 공개된 지금은 COMING SOON 베일 대신 포스터가 안내를 맡는다.
+   본문 문단(max-width:640px)과 같은 폭으로 묶어 왼쪽 정렬선을 맞춘다. */
+.mk-poster { display: block; width: 100%; max-width: 640px; margin-top: 18px;
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+    background: #2b2f8c;   /* 로딩 중 흰 사각형이 번쩍이지 않도록 포스터 바탕색을 깔아둔다 */
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.mk-poster img { display: block; width: 100%; height: auto; }
+.mk-poster:hover, .mk-poster:focus-visible {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--accent-solid) 45%, transparent);
+    box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .8); }
+@media (prefers-reduced-motion: reduce) {
+    .mk-poster { transition: none; }
+    .mk-poster:hover, .mk-poster:focus-visible { transform: none; }
+}
+
 .market-veil { position: relative; margin-top: 16px; border-radius: 12px; overflow: hidden;
     border: 1px solid rgba(196, 132, 74, 0.34);
     background: linear-gradient(180deg, #17110c, #0c0a10 60%, #0a0812);

@@ -554,44 +554,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="prelude-block reveal" id="livemarket">
             <div class="prelude-head"><h3>낯선라이브마켓</h3><span class="tag tag-tba">9월 6일(일) 저녁 8시 생방송</span></div>
             <p style="font-size:14px; line-height:1.85; color:var(--muted); max-width:640px;">동문들이 내놓은 물건과 재능을 라이브로 소개하고 나눕니다. 수익금 전액은 10주년 축제 운영비로 쓰입니다.</p>
-            <!-- 출품 목록은 공개 전 — 내용을 흐리게 덮고 COMING SOON을 얹는다.
-                 주의: blur는 시각적 처리일 뿐이라 소스에는 그대로 남는다. -->
-            <div class="market-veil">
-              <div class="mv-awning" aria-hidden="true"></div>
-              <div class="market-veil-badge">
-                <div class="mv-board">
-                  <span class="mv-kicker">낯선라이브마켓</span>
-                  <strong class="mv-title">COMING SOON</strong>
-                  <span class="mv-sub">출품 목록 공개예정</span>
-                </div>
-              </div>
-            <!-- [LIVE-MARKET] 출품 목록은 공개 전이라 실데이터를 넣지 않는다(소스에 남으면 blur로 가려도 읽힌다).
-                 아래는 형태만 흉내내는 스켈레톤 더미. 공개 시 복원 방법은 local/live-market-items.html 참고. -->
-            <div class="market-cols" aria-hidden="true">
-                <div>
-                    <h5>재능 (7)</h5>
-                    <ul class="mk-skeleton">
-                        <li><span style="--w:82%"></span><span class="g"></span></li>
-                        <li><span style="--w:64%"></span><span class="g"></span></li>
-                        <li><span style="--w:76%"></span><span class="g"></span></li>
-                        <li><span style="--w:52%"></span><span class="g"></span></li>
-                        <li><span style="--w:88%"></span><span class="g"></span></li>
-                        <li><span style="--w:71%"></span><span class="g"></span></li>
-                        <li><span style="--w:58%"></span><span class="g"></span></li>
-                    </ul>
-                </div>
-                <div>
-                    <h5>물품 (4)</h5>
-                    <ul class="mk-skeleton">
-                        <li><span style="--w:79%"></span><span class="g"></span></li>
-                        <li><span style="--w:55%"></span><span class="g"></span></li>
-                        <li><span style="--w:68%"></span><span class="g"></span></li>
-                        <li><span style="--w:85%"></span><span class="g"></span></li>
-                    </ul>
-                </div>
-            </div>
-            <!-- [/LIVE-MARKET] -->
-            </div>
+            <!-- 포스터가 공개되어 COMING SOON 베일을 대신한다.
+                 출품 목록 실데이터 복원 방법은 local/live-market-items.html 참고. -->
+            <a class="mk-poster" data-gtm="livemarket-poster"
+               href="https://abit.ly/natseon_live" target="_blank" rel="noopener noreferrer"
+               aria-label="낯선라이브마켓 유튜브 라이브 보러 가기 (새 창)">
+                <img src="/img/livemarket.jpg" width="896" height="456" loading="lazy" decoding="async"
+                     alt="낯선대학 10주년 축제 낯선라이브마켓 포스터 — 2026년 9월 6일 일요일 20:00~21:00, 유튜브 라이브 생중계">
+            </a>
         </div>
     </div>
 </section>
