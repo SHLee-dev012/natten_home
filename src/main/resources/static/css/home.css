@@ -1129,7 +1129,10 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 /* 사전 홍보 이미지·영상이 담길 자리라 필름 한 컷을 그대로 쓴다.
    위아래 퍼포레이션이 무엇을 기다리는 자리인지 말해준다.
    라이브마켓 간판(나무틀 칠판)과 색을 갈라 두 간판이 헷갈리지 않게 한다. */
-.ft-veil-archive { min-height: 0; }
+/* 간판이 베일 한가운데 뜨는데, 카드가 두 줄로 접히면 베일이 두 배로 길어져
+   간판 위아래가 텅 빈다. 뒤 카드는 어차피 흐려져 질감으로만 보이므로,
+   간판이 숨 쉴 만큼만 남기고 잘라낸다(.ft-veil 이 이미 overflow:hidden). */
+.ft-veil-archive { min-height: 0; max-height: 200px; }
 .av-board { position: relative; display: flex; flex-direction: column; align-items: center; gap: 7px;
     padding: 28px 32px 26px; border-radius: 4px;
     background: linear-gradient(180deg, #17171f, #0f0f16);
