@@ -1027,6 +1027,22 @@ a.sched-btn:hover, a.sched-btn:focus-visible { border-color: var(--accent-solid)
 a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,139,250,.18); }
 /* 링크 미등록: 점선 테두리로 '아직 아님'을 드러내고 클릭 대상에서 뺀다 */
 .sched-btn.is-pending { border-style: dashed; opacity: .42; cursor: default; }
+/* PC 에서는 문구와 포스터를 나란히 둔다. 한 단으로 쌓으면 둘 다 640px 이라
+   블록 오른쪽 350px 가 통째로 비면서 세로만 길어졌다.
+   DOM 순서(제목 -> 문구 -> 포스터)는 그대로 두고 grid-template-areas 로만
+   자리를 옮겨, 모바일과 스크린리더가 읽는 차례는 건드리지 않는다.
+   빈 세 번째 행(.)이 남는 높이를 흡수해 제목과 문구가 위에서 붙어 있게 한다. */
+@media (min-width: 901px) {
+    #livemarket { display: grid;
+        grid-template-columns: minmax(300px, 1fr) minmax(0, 520px);
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: "head poster" "desc poster" ".    poster";
+        column-gap: 44px; align-items: start; }
+    #livemarket > .prelude-head { grid-area: head; }
+    #livemarket > p { grid-area: desc; }
+    #livemarket > .mk-poster { grid-area: poster; align-self: center; margin-top: 0; max-width: none; }
+}
+
 .market-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 16px; }
 .market-cols h5 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent-solid); margin: 0 0 10px; }
 .market-cols ul { list-style: none; margin: 0; padding: 0; }
