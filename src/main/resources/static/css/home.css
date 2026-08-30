@@ -1052,11 +1052,36 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
    blur는 시각적 처리일 뿐이므로 실데이터는 마크업에서 이미 제거했다. */
 /* 라이브마켓 포스터 — 공개된 지금은 COMING SOON 베일 대신 포스터가 안내를 맡는다.
    본문 문단(max-width:640px)과 같은 폭으로 묶어 왼쪽 정렬선을 맞춘다. */
-.mk-poster { display: block; width: 100%; max-width: 640px; margin-top: 18px;
+.mk-poster { display: block; width: 100%; max-width: 640px; margin-top: 18px; text-decoration: none;
     border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
     background: #2b2f8c;   /* 로딩 중 흰 사각형이 번쩍이지 않도록 포스터 바탕색을 깔아둔다 */
     transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
 .mk-poster img { display: block; width: 100%; height: auto; }
+
+/* 포스터가 링크라는 신호가 여태 hover 뿐이었다. 터치에는 hover 가 없어
+   모바일 방문자에겐 단서가 하나도 없었으므로, 쉬고 있을 때도 보이는 띠를
+   그림 아래에 붙인다. 그림 위에 얹지 않아 포스터를 가리지 않는다.
+   띠 자체가 48px 라 손가락 탭 영역도 따로 확보된다. */
+.mk-cta { display: flex; align-items: center; gap: 10px; min-height: 48px;
+    padding: 12px 16px; font-size: 14px; font-weight: 700; color: var(--ink);
+    background: rgba(167, 139, 250, .10);
+    border-top: 1px solid color-mix(in srgb, var(--accent-solid) 26%, transparent);
+    transition: background .25s ease; }
+.mk-cta-play { flex: none; position: relative; width: 22px; height: 22px;
+    border-radius: 50%; background: var(--accent-solid); }
+.mk-cta-play::before { content: ""; position: absolute; top: 50%; left: 53%;
+    transform: translate(-50%, -50%);
+    border-left: 7px solid #14121f;
+    border-top: 4.5px solid transparent; border-bottom: 4.5px solid transparent; }
+.mk-cta-arrow { margin-left: auto; color: var(--accent-solid); font-weight: 400;
+    transition: transform .25s ease; }
+.mk-poster:hover .mk-cta, .mk-poster:focus-visible .mk-cta { background: rgba(167, 139, 250, .16); }
+.mk-poster:hover .mk-cta-arrow, .mk-poster:focus-visible .mk-cta-arrow { transform: translateX(3px); }
+/* 터치에는 hover 가 없으니 누르는 순간 반응을 따로 준다.
+   기본 탭 하이라이트(반투명 회색 사각형)는 둥근 모서리를 뭉개므로 끈다. */
+.mk-poster { -webkit-tap-highlight-color: transparent; }
+.mk-poster:active { transform: translateY(0) scale(.994); }
+.mk-poster:active .mk-cta { background: rgba(167, 139, 250, .22); }
 .mk-poster:hover, .mk-poster:focus-visible {
     transform: translateY(-2px);
     border-color: color-mix(in srgb, var(--accent-solid) 45%, transparent);
@@ -1064,6 +1089,9 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 @media (prefers-reduced-motion: reduce) {
     .mk-poster { transition: none; }
     .mk-poster:hover, .mk-poster:focus-visible { transform: none; }
+    .mk-poster:active { transform: none; }
+    .mk-cta, .mk-cta-arrow { transition: none; }
+    .mk-poster:hover .mk-cta-arrow, .mk-poster:focus-visible .mk-cta-arrow { transform: none; }
 }
 
 .market-veil { position: relative; margin-top: 16px; border-radius: 12px; overflow: hidden;
