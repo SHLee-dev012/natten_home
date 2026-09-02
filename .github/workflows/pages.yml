@@ -9,6 +9,10 @@ on:
     branches: [main]
     paths-ignore:
       - "**.md"
+  # 경로 필터가 걸려 있으면 GitHub 은 "바뀐 파일"을 보고 실행 여부를 정한다.
+  # 그래서 빈 커밋(--allow-empty)은 바뀐 파일이 0개라 아무 워크플로도 잡지
+  # 못한다. 일시적 실패를 다시 돌릴 때는 Actions 에서 Re-run 하거나 아래
+  # workflow_dispatch 로 직접 실행할 것.
   workflow_dispatch:
 
 permissions:
