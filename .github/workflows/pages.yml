@@ -48,7 +48,7 @@ jobs:
           # wait for the app to answer
           for i in $(seq 1 60); do curl -sf http://localhost:8080/ >/dev/null && break; sleep 1; done
 
-          mkdir -p public/css public/js public/img public/api public/admin
+          mkdir -p public/css public/js public/img public/api
           curl -s http://localhost:8080/ > public/index.html
           curl -s http://localhost:8080/admin > public/admin.html
           curl -s http://localhost:8080/api/festival > public/api/festival.json
@@ -57,14 +57,11 @@ jobs:
           cp -r src/main/resources/static/css/. public/css/
           cp -r src/main/resources/static/js/. public/js/
           cp -r src/main/resources/static/img/. public/img/
-          # 봉인된 명단(암호문). 아직 만들지 않았다면 그냥 없는 채로 간다 —
-          # /admin 은 열리고 "명단이 없다"고 알린다.
-          cp -r src/main/resources/static/admin/. public/admin/ 2>/dev/null || true
           touch public/.nojekyll
           # 커스텀 도메인 유지 (Actions 재배포 시 도메인 초기화 방지)
           echo "knotsun.kr" > public/CNAME
           # 관리자 페이지는 색인에서 뺀다. admin.html 의 robots 메타와 짝이다.
-          printf 'User-agent: *\nDisallow: /admin.html\nDisallow: /admin/\n' > public/robots.txt
+          printf 'User-agent: *\nDisallow: /admin.html\n' > public/robots.txt
 
           # Make absolute asset paths relative so they resolve under the
           # /natten_home/ project subpath on GitHub Pages.

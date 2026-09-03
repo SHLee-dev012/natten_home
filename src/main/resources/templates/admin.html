@@ -14,29 +14,35 @@
 
 <main class="wrap">
 
-    <!-- 잠금 화면 -->
+    <!-- 로그인 -->
     <section class="gate" id="gate">
         <span class="kicker">RESTRICTED</span>
         <h1>관리자 열람</h1>
-        <p class="lead">암호구절을 넣으면 이 브라우저 안에서 명단을 풉니다.</p>
+        <p class="lead">등록된 관리자 계정으로 로그인하세요.</p>
 
         <form id="gate-form" autocomplete="off">
             <label class="field">
-                <span class="field-k">암호구절</span>
-                <input type="password" id="gate-pass" name="passphrase"
-                       autocomplete="off" autocapitalize="off" autocorrect="off"
-                       spellcheck="false" required
+                <span class="field-k">이메일</span>
+                <input type="email" id="gate-email" name="email"
+                       autocomplete="username" autocapitalize="off"
+                       autocorrect="off" spellcheck="false" required>
+            </label>
+            <label class="field">
+                <span class="field-k">비밀번호</span>
+                <input type="password" id="gate-pass" name="password"
+                       autocomplete="current-password" required
                        aria-describedby="gate-msg">
             </label>
-            <button class="btn" type="submit" id="gate-go">열기</button>
+            <button class="btn" type="submit" id="gate-go">로그인</button>
         </form>
 
         <p class="msg" id="gate-msg" role="status" aria-live="polite"></p>
 
         <p class="fineprint">
-            이 페이지에는 서버가 없습니다. 명단은 암호문으로 배포되고, 푸는 일은
-            전부 이 브라우저 안에서만 일어납니다. 암호구절은 어디로도 전송되지
-            않고 저장되지도 않습니다 — 탭을 닫으면 사라집니다.
+            명단은 이 페이지에 실려 있지 않습니다. 로그인해서 받은 토큰으로
+            데이터베이스에 물어보고, 권한 판단은 서버가 합니다 — 권한이 없으면
+            서버가 아예 내주지 않습니다. 토큰은 이 탭의 메모리에만 있어
+            새로고침하거나 탭을 닫으면 사라집니다.
         </p>
     </section>
 
@@ -44,10 +50,10 @@
     <section class="vault" id="vault" hidden>
         <div class="vault-head">
             <div>
-                <h1 id="v-title">명단</h1>
-                <p class="lead" id="v-note"></p>
+                <h1>명단</h1>
+                <p class="lead" id="who"></p>
             </div>
-            <button class="btn btn-ghost" type="button" id="lock">잠그기</button>
+            <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
         </div>
 
         <div class="tools">
@@ -56,6 +62,7 @@
                 <input type="search" id="q" placeholder="이름·기수·구분" autocomplete="off">
             </label>
             <span class="count" id="count"></span>
+            <button class="btn btn-ghost" type="button" id="reload">새로 받기</button>
         </div>
 
         <div class="table-scroll">
@@ -65,7 +72,7 @@
             </table>
         </div>
 
-        <p class="fineprint" id="sealed"></p>
+        <p class="fineprint" id="fetched"></p>
     </section>
 
 </main>
