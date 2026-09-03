@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 검색엔진에 걸리지 않게 한다. robots.txt 와 짝이다. -->
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="referrer" content="no-referrer">
+    <title>관리자 · 낯선대학 10주년 축제</title>
+    <link rel="icon" th:href="@{/img/favicon.svg}" href="/img/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" th:href="@{/css/admin.css}" href="/css/admin.css">
+</head>
+<body>
+
+<main class="wrap">
+
+    <!-- 잠금 화면 -->
+    <section class="gate" id="gate">
+        <span class="kicker">RESTRICTED</span>
+        <h1>관리자 열람</h1>
+        <p class="lead">암호구절을 넣으면 이 브라우저 안에서 명단을 풉니다.</p>
+
+        <form id="gate-form" autocomplete="off">
+            <label class="field">
+                <span class="field-k">암호구절</span>
+                <input type="password" id="gate-pass" name="passphrase"
+                       autocomplete="off" autocapitalize="off" autocorrect="off"
+                       spellcheck="false" required
+                       aria-describedby="gate-msg">
+            </label>
+            <button class="btn" type="submit" id="gate-go">열기</button>
+        </form>
+
+        <p class="msg" id="gate-msg" role="status" aria-live="polite"></p>
+
+        <p class="fineprint">
+            이 페이지에는 서버가 없습니다. 명단은 암호문으로 배포되고, 푸는 일은
+            전부 이 브라우저 안에서만 일어납니다. 암호구절은 어디로도 전송되지
+            않고 저장되지도 않습니다 — 탭을 닫으면 사라집니다.
+        </p>
+    </section>
+
+    <!-- 열린 뒤 -->
+    <section class="vault" id="vault" hidden>
+        <div class="vault-head">
+            <div>
+                <h1 id="v-title">명단</h1>
+                <p class="lead" id="v-note"></p>
+            </div>
+            <button class="btn btn-ghost" type="button" id="lock">잠그기</button>
+        </div>
+
+        <div class="tools">
+            <label class="field field-inline">
+                <span class="field-k">검색</span>
+                <input type="search" id="q" placeholder="이름·기수·구분" autocomplete="off">
+            </label>
+            <span class="count" id="count"></span>
+        </div>
+
+        <div class="table-scroll">
+            <table class="roster" id="roster">
+                <thead><tr id="thead-row"></tr></thead>
+                <tbody id="tbody"></tbody>
+            </table>
+        </div>
+
+        <p class="fineprint" id="sealed"></p>
+    </section>
+
+</main>
+
+<script th:src="@{/js/admin.js}" src="/js/admin.js"></script>
+</body>
+</html>

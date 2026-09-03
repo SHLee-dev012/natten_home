@@ -17,4 +17,16 @@ public class HomeController {
     public String home() {
         return "index";
     }
+
+    /**
+     * Renders the admin gate page.
+     *
+     * <p>The page ships no data of its own. The roster lives beside it as an
+     * encrypted blob ({@code /admin/roster.enc.json}) that only the browser can
+     * open, and only with the passphrase. Nothing here reads or holds it.
+     */
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
 }
