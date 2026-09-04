@@ -35,7 +35,7 @@
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
         day_qty: "일출권", all_qty: "올출권",
-        drink_qty: "음료권", food_qty: "푸드권",
+        drink_qty: "음료권", food_qty: "푸드권", checked_in_at: "체크인",
         phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고"
     };
     // 표시 순서. DB 에 칸을 더하면 맨 뒤에 붙는데, 읽는 순서는 그것과 다르다
@@ -44,7 +44,7 @@
     // 더해도 화면이 깨지지 않는다.
     var ORDER = ["name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
-                 "cohort"];
+                 "cohort", "checked_in_at"];
     // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
     var SUM = ["day_qty", "all_qty", "drink_qty", "food_qty"];
     // 검색이 훑을 칸. 사람을 특정하는 값만 본다.
@@ -89,6 +89,13 @@
         msg.className = "msg" + (kind ? " msg-" + kind : "");
     }
 
+    // 금고가 열려 있을 때 하는 말. 로그인 화면의 자리는 그때 숨어 있다.
+    var vmsg = document.getElementById("vault-msg");
+    function vsay(text, kind) {
+        vmsg.textContent = text;
+        vmsg.className = "msg" + (kind ? " msg-" + kind : "");
+    }
+
     // ── 표 그리기 ──────────────────────────────────────────────────────
     function render(filter) {
         var needle = (filter || "").trim().toLowerCase();
@@ -98,10 +105,16 @@
             var hay = SEARCH.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
             if (needle && hay.toLowerCase().indexOf(needle) === -1) return;
             var tr = document.createElement("tr");
+            tr.dataset.id = row.id;
             cols.forEach(function (c) {
                 var td = document.createElement("td");
-                td.textContent = row[c] == null ? "" : String(row[c]);
                 td.setAttribute("data-label", LABEL[c] || c);
+                if (c === "checked_in_at") {
+                    td.className = "cell-checkin";
+                    td.appendChild(checkInButton(row));
+                } else {
+                    td.textContent = row[c] == null ? "" : String(row[c]);
+                }
                 tr.appendChild(td);
             });
             tbody.appendChild(tr);
@@ -117,8 +130,8 @@
             // 검색어가 아무 글자로나 끝나므로 조사를 붙이지 않는다.
             // "없는이름 로" 처럼 받침에 안 맞는 조사가 나오는 것을 피한다.
             td0.textContent = needle
-                ? "\u201c" + filter.trim() + "\u201d 검색 결과가 없습니다."
-                : "아직 받은 줄이 없습니다.";
+                ? "\u201c" + filter.trim() + "\u201d 검색 결과 없음"
+                : "검색 결과 없음";
             tr0.appendChild(td0);
             tbody.appendChild(tr0);
         }
@@ -131,6 +144,75 @@
                 return (LABEL[c] || c) + " " + n;
             });
         countEl.textContent = totals.length ? head + " · " + totals.join(" · ") : head;
+    }
+
+    // ── 체크인 ─────────────────────────────────────────────────────────
+    function hhmm(iso) {
+        var d = new Date(iso);
+        return String(d.getHours()).padStart(2, "0") + ":" +
+               String(d.getMinutes()).padStart(2, "0");
+    }
+
+    function paintCheckIn(btn, row) {
+        var on = !!row.checked_in_at;
+        btn.className = "chk" + (on ? " chk-on" : "");
+        btn.textContent = on ? hhmm(row.checked_in_at) : "체크인";
+        // 눌린 뒤에는 무엇을 되돌리는 것인지 분명히 말해준다.
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        btn.title = on
+            ? row.name + " — " + hhmm(row.checked_in_at) + " 체크인됨. 누르면 취소합니다."
+            : row.name + " 체크인";
+    }
+
+    function checkInButton(row) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        paintCheckIn(btn, row);
+        btn.addEventListener("click", function () {
+            if (!token) return;
+            var turningOn = !row.checked_in_at;
+            // 되돌릴 때만 한 번 묻는다. 체크인은 다시 누르면 그만이지만,
+            // 취소는 기록된 시각을 지우는 일이라 실수가 아깝다.
+            if (!turningOn &&
+                !window.confirm(row.name + " 체크인을 취소할까요? 기록된 시각이 지워집니다.")) {
+                return;
+            }
+            btn.disabled = true;
+            var prev = btn.textContent;
+            btn.textContent = "…";
+            fetch(SUPABASE_URL + "/rest/v1/rpc/set_check_in", {
+                method: "POST",
+                headers: {
+                    apikey: SUPABASE_ANON,
+                    Authorization: "Bearer " + token,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ p_id: row.id, p_on: turningOn })
+            })
+                .then(function (r) {
+                    if (r.status === 401 || r.status === 403) throw new Error("DENIED");
+                    return r.json().then(function (b) {
+                        if (!r.ok) throw new Error(b.message || ("HTTP " + r.status));
+                        return b;
+                    });
+                })
+                .then(function (at) {
+                    // 서버가 돌려준 시각을 그대로 쓴다. 브라우저 시계가 틀려도
+                    // 표에 남는 값은 DB 가 정한 하나뿐이다.
+                    row.checked_in_at = at;
+                    paintCheckIn(btn, row);
+                    vsay("");
+                })
+                .catch(function (err) {
+                    btn.textContent = prev;
+                    var m = String((err && err.message) || "");
+                    vsay(/DENIED|42501|not an admin/i.test(m)
+                        ? "체크인 권한이 없습니다."
+                        : "체크인에 실패했습니다 (" + m + ").", "bad");
+                })
+                .finally(function () { btn.disabled = false; });
+        });
+        return btn;
     }
 
     function drawHead() {
@@ -253,6 +335,7 @@
         pass.value = "";
         vault.hidden = true;
         gate.hidden = false;
+        vsay("");
         say("");
         email.focus();
     }

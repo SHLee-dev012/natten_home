@@ -122,6 +122,51 @@ revoke insert, update, delete on public.roster from anon, authenticated;
 -- 내용을 읽어갈 수 없으므로, 권한까지 뺏을 실익이 없다.
 revoke insert, update, delete on public.admin_emails from anon, authenticated;
 
+-- ── 체크인 ────────────────────────────────────────────────────────────
+-- 현장에서 온 사람을 표시한다. 눌린 시각을 남기므로 "언제 왔는지"가 함께
+-- 기록되고, 되돌리면 NULL 로 비운다.
+alter table public.roster add column if not exists checked_in_at timestamptz;
+
+-- 쓰기 권한은 앞서 걷어냈다(revoke). 체크인만 하자고 그것을 되돌리면
+-- 이름도 매수도 함께 고칠 수 있게 되므로, 이 칸 하나만 건드리는 함수를
+-- 따로 둔다. security definer 라 함수 주인의 권한으로 실행되고, 안에서
+-- 하는 일이 정해져 있어 다른 칸으로 번질 수 없다.
+create or replace function public.set_check_in(p_id bigint, p_on boolean)
+returns timestamptz
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+    v_at timestamptz;
+begin
+    -- 함수가 권한을 넘겨받았으므로 관리자인지 여기서 직접 가린다.
+    -- 이 확인이 없으면 로그인만 하면 누구나 체크인을 누를 수 있다.
+    if not exists (
+        select 1 from public.admin_emails a
+        where lower(a.email) = lower(auth.jwt() ->> 'email')
+    ) then
+        raise exception 'not an admin' using errcode = '42501';
+    end if;
+
+    update public.roster
+       set checked_in_at = case when p_on then now() else null end
+     where id = p_id
+    returning checked_in_at into v_at;
+
+    if not found then
+        raise exception 'no such row' using errcode = 'P0002';
+    end if;
+
+    return v_at;
+end;
+$$;
+
+-- 함수 실행 권한은 로그인한 사람에게만. anon 은 부를 수 없다.
+revoke all on function public.set_check_in(bigint, boolean) from public, anon;
+grant execute on function public.set_check_in(bigint, boolean) to authenticated;
+
+
 -- 이름으로 자주 찾으므로 색인 하나.
 create index if not exists roster_name_idx on public.roster (name);
 
