@@ -1,4 +1,4 @@
-name,phone_last4,kind,day_qty,all_qty,drink_qty,food_qty,memo,cohort
-홍길동,4821,출석후원,2,0,2,1,,낯5
-김낯선,0713,동문후원,0,1,0,2,현장 수령,낯C3
-이대학,,출석후원,1,1,3,0,번호 미기재,낯Y8
+name,phone_last4,kind,day_qty,all_qty,drink_qty,food_qty,cohort
+홍길동,4821,출석후원,2,0,2,1,낯5
+김낯선,0713,동문후원,0,1,0,2,낯C3
+이대학,,출석후원,1,1,3,0,낯Y8
