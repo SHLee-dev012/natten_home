@@ -23,7 +23,9 @@
     // DB 에는 admin@knotsun.kr 계정이다. '@' 가 들어오면 그대로 쓴다.
     var LOGIN_DOMAIN = "@knotsun.kr";
     // 화면에 내보내지 않을 칸. 있어도 굳이 보여줄 이유가 없다.
-    var HIDE = ["id", "created_at"];
+    // applied_on(신청일)은 현장에서 볼 일이 없어 감춘다. DB 에는 남아 있으므로
+    // 다시 보이려면 이 목록에서 빼기만 하면 된다.
+    var HIDE = ["id", "created_at", "applied_on"];
     // 보기 좋은 이름. 여기 없는 칸은 원래 이름 그대로 나온다.
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
@@ -35,7 +37,7 @@
     // 적히지 않은 칸은 뒤에 원래 순서대로 붙는다 — 그래서 DB 에 칸을 새로
     // 더해도 화면이 깨지지 않는다.
     var ORDER = ["name", "cohort", "kind", "day_qty", "all_qty", "drink_qty",
-                 "phone_last4", "applied_on", "memo"];
+                 "phone_last4", "memo"];
     // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
     var SUM = ["day_qty", "all_qty", "drink_qty"];
 
