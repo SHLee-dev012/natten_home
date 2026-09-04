@@ -46,6 +46,20 @@
     var ORDER = ["name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
                  "cohort", "checked_in_at"];
+    // 검색어와 데이터를 같은 모양으로 맞춘다.
+    //
+    // 한글은 "김"을 한 글자(NFC)로도, 자모 셋(NFD)으로도 적을 수 있다. 눈에는
+    // 똑같이 보이지만 문자열로는 다르다. 맥과 아이폰에서 입력하면 NFD 로
+    // 들어오는 경우가 있어, DB 에 NFC 로 담긴 이름을 못 찾는 일이 생긴다.
+    // 양쪽 다 NFC 로 모으고, 띄어쓰기는 지운다 — "김 하늘" 로 담겼든
+    // "김하늘" 로 찾든 같은 사람에게 닿아야 한다.
+    function norm(v) {
+        if (v == null) return "";
+        var t = String(v);
+        try { t = t.normalize("NFC"); } catch (e) { /* 아주 옛 브라우저 */ }
+        return t.replace(/\s+/g, "").toLowerCase();
+    }
+
     // 검색이 훑을 칸. 사람을 특정하는 값만 본다.
     // 기수와 구분은 여러 사람이 같은 값을 가져서, 넣으면 "낯5" 한 번에 수십
     // 명이 걸려 오히려 찾기 어려워진다. 매수는 숫자라 "2" 로 거의 다 걸린다.
@@ -129,12 +143,12 @@
 
     // ── 표 그리기 ──────────────────────────────────────────────────────
     function render(filter) {
-        var needle = (filter || "").trim().toLowerCase();
+        var needle = norm(filter);
         tbody.textContent = "";
         var shown = 0;
         rows.forEach(function (row) {
-            var hay = SEARCH.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
-            if (needle && hay.toLowerCase().indexOf(needle) === -1) return;
+            var hay = SEARCH.map(function (c) { return norm(row[c]); }).join(" ");
+            if (needle && hay.indexOf(needle) === -1) return;
             var tr = document.createElement("tr");
             tr.dataset.id = row.id;
             cols.forEach(function (c) {
@@ -160,7 +174,7 @@
             // 검색어가 아무 글자로나 끝나므로 조사를 붙이지 않는다.
             // "없는이름 로" 처럼 받침에 안 맞는 조사가 나오는 것을 피한다.
             td0.textContent = needle
-                ? "\u201c" + filter.trim() + "\u201d 검색 결과 없음"
+                ? "\u201c" + String(filter || "").trim() + "\u201d 검색 결과 없음"
                 : "검색 결과 없음";
             tr0.appendChild(td0);
             tbody.appendChild(tr0);
