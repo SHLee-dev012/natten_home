@@ -42,7 +42,8 @@ create table if not exists public.roster (
     name        text not null,         -- 이름
     cohort      text,                  -- 기수 (낯5, 낯C3 …)
     kind        text,                  -- 구분 (출석후원 / 동문후원 …)
-    ticket_qty  integer,               -- 매수
+    day_qty     integer,               -- 일출권 매수
+    all_qty     integer,               -- 올출권 매수
     drink_qty   integer,               -- 음료권 매수
     phone_last4 text,                  -- 전화 뒤 4자리 (동명이인 가릴 때만)
     applied_on  date,                  -- 신청일
@@ -54,14 +55,31 @@ create table if not exists public.roster (
 -- 나중에 더한 칸은 표 맨 뒤에 붙지만, 화면은 admin.js 의 ORDER 가 정한
 -- 차례로 그리므로 매수·음료권이 구분 옆에 나온다.
 alter table public.roster add column if not exists phone_last4 text;
-alter table public.roster add column if not exists ticket_qty  integer;
+alter table public.roster add column if not exists day_qty     integer;
+alter table public.roster add column if not exists all_qty     integer;
 alter table public.roster add column if not exists drink_qty   integer;
+
+-- 티켓을 매수 한 칸(ticket_qty)으로 두었다가 일출권·올출권으로 나눴다.
+-- 앞 판을 이미 돌린 표가 있으면 값을 일출권으로 옮기고 옛 칸을 없앤다.
+-- 없는 표에서는 아무 일도 하지 않는다.
+do $$
+begin
+    if exists (
+        select 1 from information_schema.columns
+        where table_schema = 'public' and table_name = 'roster'
+          and column_name = 'ticket_qty'
+    ) then
+        execute 'update public.roster set day_qty = coalesce(day_qty, ticket_qty)';
+        execute 'alter table public.roster drop column ticket_qty';
+    end if;
+end $$;
 
 -- 음수는 있을 수 없다.
 alter table public.roster drop constraint if exists roster_qty_chk;
 alter table public.roster add constraint roster_qty_chk
-    check ((ticket_qty is null or ticket_qty >= 0)
-       and (drink_qty  is null or drink_qty  >= 0));
+    check ((day_qty   is null or day_qty   >= 0)
+       and (all_qty   is null or all_qty   >= 0)
+       and (drink_qty is null or drink_qty >= 0));
 
 -- 뒤 4자리만 담기게 못박는다. 실수로 전체 번호를 붙여넣으면 여기서 걸린다.
 alter table public.roster drop constraint if exists roster_phone_last4_chk;
