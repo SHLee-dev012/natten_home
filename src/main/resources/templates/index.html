@@ -620,10 +620,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- 계보 데이터가 별도 사이트로 공개됐다. 예전에는 여기 폼을 흐리게 덮고
              COMING SOON 을 얹어 뒀는데, 이제 그 자리를 바깥으로 나가는 링크가 대신한다. -->
         <p class="ft-go">
-            <a class="btn btn-solid" data-gtm="familytree"
+            <a class="btn btn-solid ft-btn" data-gtm="familytree"
                href="https://yeonjea.github.io/knotsun_tree/"
                target="_blank" rel="noopener noreferrer"
-               aria-label="낯선대학 계보 네트워크 열기 (새 창)">나의 조상 찾기 →</a>
+               aria-label="낯선대학 계보 네트워크 열기 (새 창)">
+                <!-- 계보 표식. 한 뿌리에서 가지가 갈라지는 모양으로,
+                     이 버튼이 무엇을 여는지 글자 없이도 말해준다. -->
+                <svg class="ft-mark" viewBox="0 0 24 18" aria-hidden="true" focusable="false">
+                    <path class="ft-mark-line" d="M12 6V9 M5 9H19 M5 9v4 M19 9v4"/>
+                    <circle class="ft-mark-root" cx="12" cy="3" r="2.6"/>
+                    <circle cx="5" cy="15" r="2"/>
+                    <circle cx="19" cy="15" r="2"/>
+                </svg>
+                <span>나의 조상 찾기</span>
+                <span class="ft-arrow" aria-hidden="true">→</span>
+            </a>
         </p>
     </div>
 </section>
