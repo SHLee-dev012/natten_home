@@ -29,17 +29,19 @@
     // 보기 좋은 이름. 여기 없는 칸은 원래 이름 그대로 나온다.
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
-        day_qty: "일출권", all_qty: "올출권", drink_qty: "음료권",
+        day_qty: "일출권", all_qty: "올출권",
+        drink_qty: "음료권", food_qty: "푸드권",
         phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고"
     };
     // 표시 순서. DB 에 칸을 더하면 맨 뒤에 붙는데, 읽는 순서는 그것과 다르다
     // (매수는 구분 바로 옆에 있어야 한다). 여기 적힌 차례로 앞세우고,
     // 적히지 않은 칸은 뒤에 원래 순서대로 붙는다 — 그래서 DB 에 칸을 새로
     // 더해도 화면이 깨지지 않는다.
-    var ORDER = ["name", "cohort", "kind", "day_qty", "all_qty", "drink_qty",
-                 "phone_last4", "memo"];
+    var ORDER = ["name", "phone_last4", "kind",
+                 "day_qty", "all_qty", "drink_qty", "food_qty",
+                 "memo", "cohort"];
     // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
-    var SUM = ["day_qty", "all_qty", "drink_qty"];
+    var SUM = ["day_qty", "all_qty", "drink_qty", "food_qty"];
 
     function orderCols(keys) {
         var known = [], rest = [];

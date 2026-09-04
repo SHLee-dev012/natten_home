@@ -45,6 +45,7 @@ create table if not exists public.roster (
     day_qty     integer,               -- 일출권 매수
     all_qty     integer,               -- 올출권 매수
     drink_qty   integer,               -- 음료권 매수
+    food_qty    integer,               -- 푸드권 매수
     phone_last4 text,                  -- 전화 뒤 4자리 (동명이인 가릴 때만)
     applied_on  date,                  -- 신청일
     memo        text,                  -- 비고
@@ -58,6 +59,7 @@ alter table public.roster add column if not exists phone_last4 text;
 alter table public.roster add column if not exists day_qty     integer;
 alter table public.roster add column if not exists all_qty     integer;
 alter table public.roster add column if not exists drink_qty   integer;
+alter table public.roster add column if not exists food_qty    integer;
 
 -- 티켓을 매수 한 칸(ticket_qty)으로 두었다가 일출권·올출권으로 나눴다.
 -- 앞 판을 이미 돌린 표가 있으면 값을 일출권으로 옮기고 옛 칸을 없앤다.
@@ -79,7 +81,8 @@ alter table public.roster drop constraint if exists roster_qty_chk;
 alter table public.roster add constraint roster_qty_chk
     check ((day_qty   is null or day_qty   >= 0)
        and (all_qty   is null or all_qty   >= 0)
-       and (drink_qty is null or drink_qty >= 0));
+       and (drink_qty is null or drink_qty >= 0)
+       and (food_qty  is null or food_qty  >= 0));
 
 -- 뒤 4자리만 담기게 못박는다. 실수로 전체 번호를 붙여넣으면 여기서 걸린다.
 alter table public.roster drop constraint if exists roster_phone_last4_chk;
