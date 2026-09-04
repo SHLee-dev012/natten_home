@@ -39,7 +39,7 @@
         <p class="msg" id="gate-msg" role="status" aria-live="polite"></p>
 
         <p class="fineprint">
-            명단은 이 페이지에 실려 있지 않습니다. 로그인해서 받은 토큰으로
+            후원자 명단은 이 페이지에 실려 있지 않습니다. 로그인해서 받은 토큰으로
             데이터베이스에 물어보고, 권한 판단은 서버가 합니다 — 권한이 없으면
             서버가 아예 내주지 않습니다. 토큰은 이 탭의 메모리에만 있어
             새로고침하거나 탭을 닫으면 사라집니다.
@@ -50,7 +50,7 @@
     <section class="vault" id="vault" hidden>
         <div class="vault-head">
             <div>
-                <h1>명단</h1>
+                <h1>후원자 명단</h1>
                 <p class="lead" id="who"></p>
             </div>
             <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
@@ -62,7 +62,8 @@
                 <input type="search" id="q" placeholder="이름 · 기수 · 구분 · 전화 뒤4" autocomplete="off">
             </label>
             <span class="count" id="count"></span>
-            <button class="btn btn-ghost" type="button" id="reload">새로 받기</button>
+            <button class="btn btn-ghost" type="button" id="reload"
+                    title="데이터베이스에서 명단을 다시 받아옵니다 (로그아웃하지 않음)">다시 불러오기</button>
         </div>
 
         <div class="table-scroll">

@@ -198,7 +198,7 @@
                 if (m === "DENIED") {
                     say("이 계정에는 열람 권한이 없습니다.", "bad");
                 } else if (m.indexOf("HTTP") === 0) {
-                    say("명단을 받아오지 못했습니다 (" + m + ").", "bad");
+                    say("후원자 명단을 받아오지 못했습니다 (" + m + ").", "bad");
                 } else if (/Invalid login|invalid_grant|LOGIN/i.test(m)) {
                     say("아이디 또는 비밀번호가 맞지 않습니다.", "bad");
                 } else {
