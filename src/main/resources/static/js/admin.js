@@ -192,8 +192,23 @@
     }
 
     // ── 체크인 ─────────────────────────────────────────────────────────
+    // Postgres 는 timestamptz 를 마이크로초 6자리까지 붙여 준다
+    // (2026-09-04T07:00:00.123456+00:00). 사파리는 소수점 이하가 3자리를
+    // 넘으면 Invalid Date 를 내서 시각이 NaN:NaN 으로 찍힌다. 크롬은 관대해
+    // 그냥 파싱되므로 크롬에서만 멀쩡해 보인다. 3자리로 잘라서 넘긴다.
+    function parseTs(iso) {
+        if (!iso) return null;
+        var t = String(iso)
+            .replace(" ", "T")                        // 공백 구분자도 받는다
+            .replace(/(\.\d{3})\d+/, "$1")             // .123456 -> .123
+            .replace(/([+-]\d{2})$/, "$1:00");         // +00 -> +00:00
+        var d = new Date(t);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
     function hhmm(iso) {
-        var d = new Date(iso);
+        var d = parseTs(iso);
+        if (!d) return "체크인됨";   // 시각을 못 읽어도 상태는 알려준다
         return String(d.getHours()).padStart(2, "0") + ":" +
                String(d.getMinutes()).padStart(2, "0");
     }
@@ -420,6 +435,13 @@
 
     // 치는 대로 걸러진다. 데스크톱에서는 이것만으로 충분하다.
     q.addEventListener("input", function () { if (token) render(q.value); });
+
+    // 한글은 자모를 모아 한 글자를 만드는 동안 조합 상태로 있다. 사파리는
+    // 조합이 끝날 때 input 을 한 번 더 주지 않는 경우가 있어, 마지막 조각으로
+    // 거른 결과가 그대로 남는다. 조합이 끝나는 순간을 따로 잡아 다시 그린다.
+    q.addEventListener("compositionend", function () { if (token) render(q.value); });
+    // 사파리의 검색칸 X 단추는 input 대신 search 를 준다.
+    q.addEventListener("search", function () { if (token) render(q.value); });
 
     // 휴대폰에서는 키보드가 화면 절반을 덮어 결과가 안 보인다. 조회를 누르거나
     // 키보드의 검색 키를 치면 입력칸에서 초점을 떼어 키보드를 내린다.
