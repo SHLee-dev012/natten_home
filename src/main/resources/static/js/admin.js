@@ -321,7 +321,12 @@
                     say("이 계정에는 열람 권한이 없습니다.", "bad");
                 } else if (m.indexOf("HTTP") === 0) {
                     say("후원자 명단을 받아오지 못했습니다 (" + m + ").", "bad");
-                } else if (/Invalid login|invalid_grant|LOGIN/i.test(m)) {
+                } else if (/provider.*disabled|logins? are disabled/i.test(m)) {
+                    // Supabase 에서 Email 제공자 자체를 꺼두면 로그인도 막힌다.
+                    // 가입만 막으려다 제공자를 통째로 끄는 실수가 흔해, 이 경우를
+                    // 따로 알린다. 비밀번호 탓으로 안내하면 엉뚱한 곳을 뒤지게 된다.
+                    say("서버에서 이메일 로그인이 꺼져 있습니다. Supabase 의 Email 제공자를 켜고, 가입만 막아 주세요.", "bad");
+                } else if (/invalid.?login|invalid_grant|^LOGIN$/i.test(m)) {
                     say("아이디 또는 비밀번호가 맞지 않습니다.", "bad");
                 } else {
                     say(m || "로그인에 실패했습니다.", "bad");
