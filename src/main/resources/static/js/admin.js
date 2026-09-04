@@ -27,7 +27,7 @@
     // 보기 좋은 이름. 표에 없는 칸은 원래 이름 그대로 나온다.
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
-        applied_on: "신청일", memo: "비고"
+        phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고"
     };
 
     function toEmail(v) {

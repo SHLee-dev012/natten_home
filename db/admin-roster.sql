@@ -34,17 +34,29 @@ create policy "admin_emails: 접근 금지"
 -- 칸은 필요에 맞게 고치세요. /admin 페이지는 돌아온 칸을 그대로 그리므로
 -- 여기서 칸을 더하거나 빼도 화면 코드를 손댈 필요가 없습니다.
 --
--- 연락처·이메일·주소는 되도록 넣지 마세요. 현장 확인에는 이름·기수·구분이면
--- 충분하고, 담기지 않은 정보는 샐 수도 없습니다.
+-- 연락처·이메일·주소는 넣지 마세요. 전화는 뒤 4자리(phone_last4)만 둡니다.
+-- 동명이인을 가르는 데는 그것으로 충분하고, 4자리만으로는 연락이 되지 않아
+-- 만에 하나 새더라도 피해가 작습니다. 담기지 않은 정보는 샐 수도 없습니다.
 create table if not exists public.roster (
-    id         bigint generated always as identity primary key,
-    name       text not null,          -- 이름
-    cohort     text,                   -- 기수 (낯5, 낯C3 …)
-    kind       text,                   -- 구분 (출석후원 / 동문후원 …)
-    applied_on date,                   -- 신청일
-    memo       text,                   -- 비고
-    created_at timestamptz not null default now()
+    id          bigint generated always as identity primary key,
+    name        text not null,         -- 이름
+    cohort      text,                  -- 기수 (낯5, 낯C3 …)
+    kind        text,                  -- 구분 (출석후원 / 동문후원 …)
+    phone_last4 text,                  -- 전화 뒤 4자리 (동명이인 가릴 때만)
+    applied_on  date,                  -- 신청일
+    memo        text,                  -- 비고
+    created_at  timestamptz not null default now()
 );
+
+-- 이미 만든 표에도 칸을 더한다(두 번 돌려도 안전).
+alter table public.roster add column if not exists phone_last4 text;
+
+-- 뒤 4자리만 담기게 못박는다. 실수로 전체 번호를 붙여넣으면 여기서 걸린다.
+alter table public.roster drop constraint if exists roster_phone_last4_chk;
+alter table public.roster add constraint roster_phone_last4_chk
+    check (phone_last4 is null or phone_last4 = '' or phone_last4 ~ '^[0-9]{4}$');
+-- 빈 문자열을 함께 허용한 것은 CSV 가져오기 때문이다. 빈 칸이 NULL 이 아니라
+-- '' 로 들어오는 경우가 있는데, 그때 가져오기 전체가 실패하면 곤란하다.
 
 alter table public.roster enable row level security;
 
