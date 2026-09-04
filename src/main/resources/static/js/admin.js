@@ -47,6 +47,10 @@
                  "cohort"];
     // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
     var SUM = ["day_qty", "all_qty", "drink_qty", "food_qty"];
+    // 검색이 훑을 칸. 사람을 특정하는 값만 본다.
+    // 기수와 구분은 여러 사람이 같은 값을 가져서, 넣으면 "낯5" 한 번에 수십
+    // 명이 걸려 오히려 찾기 어려워진다. 매수는 숫자라 "2" 로 거의 다 걸린다.
+    var SEARCH = ["name", "phone_last4"];
 
     function orderCols(keys) {
         var known = [], rest = [];
@@ -91,7 +95,7 @@
         tbody.textContent = "";
         var shown = 0, shownRows = [];
         rows.forEach(function (row) {
-            var hay = cols.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
+            var hay = SEARCH.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
             if (needle && hay.toLowerCase().indexOf(needle) === -1) return;
             var tr = document.createElement("tr");
             cols.forEach(function (c) {
