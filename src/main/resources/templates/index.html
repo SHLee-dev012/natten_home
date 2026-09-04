@@ -73,7 +73,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             </div>
             <a href="#archive" data-nav>아카이브</a>
-            <a href="#familytree" data-nav>낯선가계도<span class="nav-soon">coming soon</span></a>
+            <a href="#familytree" data-nav>낯선가계도</a>
             <a href="#location" data-nav>오시는 길</a>
             <div class="nav-group">
                 <button type="button" class="nav-group-trigger">만드는 사람들<span class="nav-caret" aria-hidden="true">⌄</span></button>
@@ -617,35 +617,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="section-wrap">
         <div class="sec-head"><span class="floor-mark">FAMILY TREE</span><h2>낯선가계도</h2><span class="en">나의 낯대 조상·선배 찾기</span></div>
         <p class="lead">7명에서 시작해 1,000명의 우주가 된 낯선대학. 나의 기수와 이름을 입력하면, 나를 있게 한 낯선 선배들의 계보를 만나볼 수 있어요.</p>
-        <!-- 가계도 데이터 공개 전 — 폼을 흐리게 덮고 COMING SOON을 얹는다.
-             blur는 시각적 처리일 뿐이라 폼은 inert로 초점·클릭에서도 함께 뺀다. -->
-        <div class="ft-veil">
-        <div class="ft-veil-badge">
-            <div class="ftv-board">
-                <svg class="ftv-tree" viewBox="0 0 120 38" aria-hidden="true" focusable="false">
-                    <path d="M60 9V15 M30 15H90 M30 15v7 M90 15v7 M16 22h28 M76 22h28 M16 22v7 M44 22v7 M76 22v7 M104 22v7"/>
-                    <circle cx="60" cy="6" r="3.2" class="ftv-root"/>
-                    <circle cx="16" cy="32" r="2.4"/><circle cx="44" cy="32" r="2.4"/>
-                    <circle cx="76" cy="32" r="2.4"/><circle cx="104" cy="32" r="2.4"/>
-                </svg>
-                <span class="ftv-kicker">Family Tree · 계보 데이터</span>
-                <strong class="ftv-title">COMING SOON</strong>
-                <span class="ftv-sub">계보를 잇는 중입니다</span>
-            </div>
-        </div>
-        <div class="ft-panel reveal" inert aria-hidden="true">
-            <div class="ft-form">
-                <label>기수
-                    <select id="ftGen" aria-label="기수 선택"><option>1기</option><option>2기</option><option>3기</option><option>4기</option><option>5기</option><option>6기</option><option>7기</option><option>8기</option><option>9기</option><option>10기</option></select>
-                </label>
-                <label>이름
-                    <input type="text" id="ftName" aria-label="이름 입력" placeholder="이름을 입력하세요" maxlength="10"/>
-                </label>
-                <button type="button" id="ftFindBtn" class="btn btn-solid">나의 조상 찾기 →</button>
-            </div>
-            <div id="ftResult" class="ft-result" style="display:none;"></div>
-        </div>
-        </div>
+        <!-- 계보 데이터가 별도 사이트로 공개됐다. 예전에는 여기 폼을 흐리게 덮고
+             COMING SOON 을 얹어 뒀는데, 이제 그 자리를 바깥으로 나가는 링크가 대신한다. -->
+        <p class="ft-go">
+            <a class="btn btn-solid" data-gtm="familytree"
+               href="https://yeonjea.github.io/knotsun_tree/"
+               target="_blank" rel="noopener noreferrer"
+               aria-label="낯선대학 계보 네트워크 열기 (새 창)">나의 조상 찾기 →</a>
+        </p>
     </div>
 </section>
 
