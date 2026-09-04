@@ -163,6 +163,13 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     font-size: 13.5px; white-space: normal;
 }
 .roster tbody tr.roster-empty { background: none; }
+/* 명단을 한 줄도 못 받았을 때. 무엇을 확인해야 하는지 적는 자리라
+   가운데 정렬을 풀고 읽기 좋게 왼쪽으로 세운다. */
+.empty-why { text-align: left; max-width: 560px; margin: 0 auto; }
+.empty-why b { display: block; color: var(--ink); font-size: 15px; margin-bottom: 8px; }
+.empty-why p { margin: 0 0 10px; color: var(--muted); }
+.empty-why ul { margin: 0; padding-left: 18px; color: var(--muted); }
+.empty-why li { margin-bottom: 5px; }
 .roster tbody tr:nth-child(odd) { background: #fafbfd; }
 .roster td { font-variant-numeric: tabular-nums; color: var(--ink); }
 /* 이름은 사람을 가리는 값이라 한 단 굵게 둔다. 칸 차례가 바뀌어도

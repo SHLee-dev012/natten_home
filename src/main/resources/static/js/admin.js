@@ -158,6 +158,7 @@
     var q = document.getElementById("q");
 
     var token = null;   // 접속 토큰. 메모리에만 둔다.
+    var whoEmail = "";  // 로그인한 계정. 안내 문구에서 쓰므로 따로 들고 있는다.
     var lastSeen = 0;   // 마지막으로 손댄 시각
     var idleTimer = null;
     // 아직 아무것도 받지 않았을 때 보여줄 칸. DB 응답이 오기 전에도, 결과가
@@ -206,16 +207,21 @@
             shown++;
         });
         if (!shown) {
-            // 빈 표는 고장난 것처럼 보인다. 왜 비었는지 한 줄로 알려준다.
+            // 빈 표는 고장난 것처럼 보인다. 왜 비었는지 알려준다.
+            // 검색으로 걸러져 0건인 것과, 서버가 애초에 0건을 준 것은
+            // 원인이 전혀 다르므로 따로 말한다.
             var tr0 = document.createElement("tr");
             tr0.className = "roster-empty";
             var td0 = document.createElement("td");
             td0.colSpan = cols.length || 1;
-            // 검색어가 아무 글자로나 끝나므로 조사를 붙이지 않는다.
-            // "없는이름 로" 처럼 받침에 안 맞는 조사가 나오는 것을 피한다.
-            td0.textContent = needle
-                ? "\u201c" + String(filter || "").trim() + "\u201d 검색 결과 없음"
-                : "검색 결과 없음";
+            if (needle) {
+                // 검색어가 아무 글자로나 끝나므로 조사를 붙이지 않는다.
+                td0.textContent = "\u201c" + String(filter || "").trim() + "\u201d 검색 결과 없음";
+            } else if (!rows.length) {
+                td0.appendChild(emptyReason());
+            } else {
+                td0.textContent = "검색 결과 없음";
+            }
             tr0.appendChild(td0);
             tbody.appendChild(tr0);
         }
@@ -312,6 +318,38 @@
         return btn;
     }
 
+    // 서버가 한 줄도 주지 않았을 때. 명단이 진짜 비었을 수도 있지만, 훨씬
+    // 흔한 것은 RLS 가 걸러낸 경우다 — 로그인한 이메일이 admin_emails 에
+    // 없으면 서버는 오류 대신 빈 배열을 준다. 화면에서는 둘이 똑같이 보이므로
+    // 무엇을 확인해야 하는지 적어 준다.
+    function emptyReason() {
+        var box = document.createElement("div");
+        box.className = "empty-why";
+        var who = whoEmail || (document.getElementById("who").textContent || "").trim();
+
+        var h = document.createElement("b");
+        h.textContent = "명단을 한 줄도 받지 못했습니다.";
+        box.appendChild(h);
+
+        var p = document.createElement("p");
+        p.textContent = "서버는 정상으로 답했지만 내용이 비어 있습니다. " +
+            "명단이 실제로 비었거나, 이 계정에 열람 권한이 없어 걸러졌을 수 있습니다.";
+        box.appendChild(p);
+
+        var ul = document.createElement("ul");
+        [
+            "지금 로그인한 계정: " + (who || "(알 수 없음)"),
+            "Supabase 의 admin_emails 표에 위 주소가 그대로 들어 있는지 확인하세요.",
+            "roster 표에 실제로 줄이 있는지 대시보드에서 확인하세요."
+        ].forEach(function (t) {
+            var li = document.createElement("li");
+            li.textContent = t;
+            ul.appendChild(li);
+        });
+        box.appendChild(ul);
+        return box;
+    }
+
     function drawHead() {
         theadRow.textContent = "";
         cols.forEach(function (c) {
@@ -366,7 +404,8 @@
             cols = rows.length
                 ? orderCols(Object.keys(rows[0]).filter(function (c) { return HIDE.indexOf(c) === -1; }))
                 : ORDER.slice();
-            diag("명단", gotCount + "건 받음 (서버 총계 " + totalCount + ")");
+            diag("명단", gotCount + "건 받음 (서버 총계 " + totalCount + ")" +
+                (gotCount === 0 ? "  ← 서버가 0건을 줬다. RLS 가 걸렀을 가능성이 크다." : ""));
             drawHead();
             render(q.value);
             // 잘렸으면 실제 숫자를 그대로 적는다. 우리가 건 상한(2000)보다
@@ -455,6 +494,7 @@
         stopIdle();
         clearSession();
         token = null;
+        whoEmail = "";
         rows = [];
         cols = ORDER.slice();
         tbody.textContent = "";
@@ -532,6 +572,7 @@
             })
             .then(function (session) {
                 token = session.access_token;
+                whoEmail = (session.user && session.user.email) || "";
                 saveSession(session);
                 // 비밀번호는 더 쓸 일이 없다. 입력칸에 남기면 개발자도구나
                 // 자동완성에 그대로 노출된다.
@@ -581,6 +622,7 @@
         if (!saved) { email.focus(); return; }
 
         token = saved.t;
+        whoEmail = saved.e || "";
         say("이어서 여는 중…");
         go.disabled = true;
         loadRoster()
