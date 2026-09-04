@@ -82,6 +82,12 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 }
 
 /* ── 열린 뒤 ───────────────────────────────────────────────────────── */
+/* hidden 속성이 display 지정을 이기게 한다.
+   브라우저 기본 [hidden]{display:none} 은 저자 스타일에 지므로, .idle 에
+   display:flex 를 주는 순간 hidden 을 붙여도 계속 보인다. 실제로 경고띠가
+   내내 떠 있었다. 같은 함정을 gate/vault 도 나중에 밟지 않도록 함께 막는다. */
+[hidden] { display: none !important; }
+
 /* 곧 잠긴다는 알림. 눈에 띄되 화면을 가리지는 않는다. */
 .idle {
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
@@ -104,7 +110,7 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     margin-bottom: 14px;
 }
-.field-inline { display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 240px; }
+.field-inline { display: flex; align-items: center; margin: 0; flex: 1 1 240px; }
 #find { flex: none; }
 @media (max-width: 620px) {
     /* 좁은 화면에서는 검색칸이 한 줄을 다 쓰고 조회 버튼이 그 아래 붙는다.
@@ -114,20 +120,21 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     #find { flex: 1 1 100%; }
     .count { flex: 1 1 100%; }
 }
-.field-inline .field-k { margin: 0; white-space: nowrap; }
 .count { font-family: var(--mono); font-size: 12.5px; color: var(--faint); }
 
 /* 넓은 표는 페이지가 아니라 표 자신이 옆으로 흐르게 한다. */
 .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 11px; }
 
-.roster { width: 100%; border-collapse: collapse; font-size: 14px; }
-.roster th, .roster td { padding: 11px 14px; text-align: left; white-space: nowrap; }
+/* 현장에서 폰을 들고 읽는 화면이라 본문보다 크게 잡는다.
+   14px 는 팔을 뻗은 거리에서 숫자를 가늠하기에 작았다. */
+.roster { width: 100%; border-collapse: collapse; font-size: 16px; }
+.roster th, .roster td { padding: 13px 14px; text-align: left; white-space: nowrap; }
 .roster thead th {
     position: sticky; top: 0; z-index: 1;
     /* 표머리는 11px 로 작아 --faint 로는 대비가 4.45:1 에 그친다.
        한 단 진하게 잡아 본문 기준(4.5)을 넘긴다. */
     background: var(--panel); color: #565c6e;
-    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em;
+    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .06em;
     border-bottom: 1px solid var(--line);
 }
 .roster tbody tr { border-top: 1px solid #e6e8ef; }
@@ -158,13 +165,15 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     .roster tbody tr:nth-child(odd) { background: var(--panel); }
     .roster td {
         display: flex; justify-content: space-between; gap: 14px;
-        padding: 7px 12px; white-space: normal;
+        padding: 9px 12px; white-space: normal; font-size: 16px;
     }
     .roster td::before {
         content: attr(data-label);
-        font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+        font-family: var(--mono); font-size: 12px; letter-spacing: .05em;
         color: var(--faint); flex: none;
     }
+    /* 이름은 카드에서 제목 노릇을 하므로 한 단 더 크게. */
+    .roster tbody td:first-child { font-size: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

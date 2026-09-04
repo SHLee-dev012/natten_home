@@ -84,8 +84,11 @@
              키보드가 닫히면서 결과가 보인다. 데스크톱에서는 치는 대로 걸러진다. -->
         <form class="tools" id="find-form" autocomplete="off">
             <label class="field field-inline">
-                <span class="field-k">검색</span>
+                <!-- '검색' 글자를 빼고 자리를 입력칸에 넘긴다. 무엇을 넣는
+                     칸인지는 안내글이 이미 말해준다. 다만 보이는 이름이
+                     사라지면 스크린리더가 읽을 것이 없어 aria-label 로 남긴다. -->
                 <input type="search" id="q" name="q" enterkeyhint="search"
+                       aria-label="후원자 검색"
                        placeholder="이름 · 기수 · 구분 · 전화 뒤4"
                        autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
             </label>
