@@ -483,11 +483,23 @@
 
     // 휴대폰에서는 키보드가 화면 절반을 덮어 결과가 안 보인다. 조회를 누르거나
     // 키보드의 검색 키를 치면 입력칸에서 초점을 떼어 키보드를 내린다.
-    document.getElementById("find-form").addEventListener("submit", function (e) {
-        e.preventDefault();
-        diag("이벤트", "submit (조회 누름)");
+    function doFind(from) {
+        diag("이벤트", from);
         if (token) render(q.value);
         q.blur();
+    }
+
+    document.getElementById("find-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        doFind("submit");
+    });
+
+    // 단추에도 직접 손잡이를 단다. 폼 submit 이 오지 않는 브라우저가 있어도
+    // 누른 것은 눌린 대로 동작해야 한다. 둘 다 오면 같은 일을 두 번 하는데,
+    // 거르는 일이라 결과가 달라지지 않는다.
+    document.getElementById("find").addEventListener("click", function (e) {
+        e.preventDefault();
+        doFind("click (조회 단추)");
     });
     document.getElementById("lock").addEventListener("click", logout);
     document.getElementById("reload").addEventListener("click", function () {
