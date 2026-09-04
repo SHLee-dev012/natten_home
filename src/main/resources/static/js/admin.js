@@ -6,9 +6,10 @@
 // 남의 명단을 볼 수 없다. 앞서 쓰던 '빌드 때 암호화' 방식과 다른 점이 이것이다 —
 // 그쪽은 암호문이 공개 주소에 올라가 오프라인으로 뒤질 수 있었다.
 //
-// 토큰은 이 탭의 메모리에만 둔다. localStorage 에 넣으면 XSS 한 번에 통째로
-// 털리고, 새로고침해도 남아 있어 공용 PC 에서 위험하다. 새로고침하면 다시
-// 로그인하는 쪽이 낫다.
+// 토큰은 sessionStorage 에 둔다. 새로고침은 버티고 탭을 닫으면 사라진다.
+// localStorage 는 쓰지 않는다 — 브라우저를 껐다 켜도 남아 공용 기기에서
+// 위험하고, 다음 사람이 그대로 명단을 보게 된다. 메모리에만 두는 것도
+// 해봤지만, 현장에서 새로고침 한 번에 다시 로그인해야 해 쓸 수 없었다.
 (function () {
     "use strict";
 
@@ -57,6 +58,38 @@
         keys.forEach(function (k) { (ORDER.indexOf(k) >= 0 ? known : rest).push(k); });
         known.sort(function (a, b) { return ORDER.indexOf(a) - ORDER.indexOf(b); });
         return known.concat(rest);
+    }
+
+    // 새로고침을 버티게 하는 자리. 탭 단위라 탭을 닫으면 함께 사라진다.
+    var SESSION_KEY = "knotsun.admin.session";
+
+    function saveSession(session) {
+        try {
+            sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+                t: session.access_token,
+                e: session.user && session.user.email,
+                // 언제까지 쓸 수 있는지 함께 적어 둔다. 지난 토큰으로 화면을
+                // 열어놓고 있다가 누를 때마다 실패하는 것보다, 열기 전에
+                // 판정하는 편이 낫다.
+                x: session.expires_at
+                    ? session.expires_at * 1000
+                    : Date.now() + (session.expires_in || 3600) * 1000
+            }));
+        } catch (e) { /* 저장이 막힌 브라우저면 그냥 이번 탭만 쓴다 */ }
+    }
+
+    function readSession() {
+        try {
+            var v = JSON.parse(sessionStorage.getItem(SESSION_KEY) || "null");
+            if (!v || !v.t) return null;
+            // 30초 여유를 둔다. 딱 맞춰 만료된 토큰으로 요청을 보내지 않는다.
+            if (v.x && Date.now() > v.x - 30000) { clearSession(); return null; }
+            return v;
+        } catch (e) { return null; }
+    }
+
+    function clearSession() {
+        try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
     }
 
     function toEmail(v) {
@@ -326,6 +359,7 @@
             }).catch(function () {});
         }
         stopIdle();
+        clearSession();
         token = null;
         rows = [];
         cols = ORDER.slice();
@@ -384,6 +418,7 @@
             })
             .then(function (session) {
                 token = session.access_token;
+                saveSession(session);
                 // 비밀번호는 더 쓸 일이 없다. 입력칸에 남기면 개발자도구나
                 // 자동완성에 그대로 노출된다.
                 pass.value = "";
@@ -424,5 +459,32 @@
             .finally(function () { go.disabled = false; });
     });
 
-    email.focus();
+    // ── 새로고침 뒤 되살리기 ───────────────────────────────────────────
+    // 저장된 토큰이 아직 살아 있으면 로그인 화면을 건너뛴다. 토큰이 진짜
+    // 유효한지는 서버가 판정한다 — 명단을 받아보고 거절당하면 그때 지운다.
+    (function restore() {
+        var saved = readSession();
+        if (!saved) { email.focus(); return; }
+
+        token = saved.t;
+        say("이어서 여는 중…");
+        go.disabled = true;
+        loadRoster()
+            .then(function () {
+                say("");
+                openVault(saved.e);
+            })
+            .catch(function (err) {
+                // 서버가 거절했으면 저장된 것이 쓸모없다. 깨끗이 지우고
+                // 로그인 화면으로 되돌린다.
+                token = null;
+                clearSession();
+                var m = String((err && err.message) || "");
+                say(m === "DENIED"
+                    ? "접속 시간이 지났습니다. 다시 로그인해 주세요."
+                    : "", m === "DENIED" ? "bad" : "");
+                email.focus();
+            })
+            .finally(function () { go.disabled = false; });
+    })();
 })();
