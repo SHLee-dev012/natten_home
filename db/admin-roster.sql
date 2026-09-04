@@ -93,17 +93,38 @@ alter table public.roster add constraint roster_phone_last4_chk
 
 alter table public.roster enable row level security;
 
+-- 관리자인지 판정하는 함수.
+--
+-- 정책 안에서 admin_emails 를 직접 조회하면 안 된다. 정책의 하위 질의도
+-- 부르는 사람의 권한으로 실행되므로 admin_emails 의 RLS 를 다시 통과해야
+-- 하는데, 그 표는 using(false) 로 잠겨 있어 아무 줄도 보이지 않는다.
+-- 결과는 오류가 아니라 "관리자가 아님" 이다 - 모든 계정이 조용히 0건을
+-- 받게 되고, 오류가 안 나니 원인을 찾기 어렵다.
+--
+-- security definer 로 함수 주인의 권한을 빌려 이 고리를 끊는다. 함수가 하는
+-- 일은 "이 이메일이 목록에 있는가" 하나뿐이라 다른 것이 새지 않는다.
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+    select exists (
+        select 1 from public.admin_emails a
+        where lower(a.email) = lower(auth.jwt() ->> 'email')
+    );
+$$;
+
+revoke all on function public.is_admin() from public, anon;
+grant execute on function public.is_admin() to authenticated;
+
 -- 읽기: 로그인했고, 그 이메일이 admin_emails 에 있을 때만.
 drop policy if exists "roster: 관리자만 읽기" on public.roster;
 create policy "roster: 관리자만 읽기"
     on public.roster for select
     to authenticated
-    using (
-        exists (
-            select 1 from public.admin_emails a
-            where lower(a.email) = lower(auth.jwt() ->> 'email')
-        )
-    );
+    using (public.is_admin());
 
 -- 쓰기 정책은 두지 않는다. 정책이 없으면 RLS 아래에서는 아무도 못 쓴다.
 -- 명단 넣기는 대시보드(Table Editor / CSV 가져오기)에서 하세요. 대시보드는
@@ -142,10 +163,9 @@ declare
 begin
     -- 함수가 권한을 넘겨받았으므로 관리자인지 여기서 직접 가린다.
     -- 이 확인이 없으면 로그인만 하면 누구나 체크인을 누를 수 있다.
-    if not exists (
-        select 1 from public.admin_emails a
-        where lower(a.email) = lower(auth.jwt() ->> 'email')
-    ) then
+    -- (이 함수는 security definer 라 admin_emails 를 직접 봐도 되지만,
+    --  판정 규칙을 한 곳에 모아 두려고 is_admin() 을 쓴다.)
+    if not public.is_admin() then
         raise exception 'not an admin' using errcode = '42501';
     end if;
 
