@@ -2,15 +2,20 @@
    랜딩의 화려함을 끌어오지 않는다. 읽고 찾는 일만 잘 되면 된다.
    home.css 를 물리지 않으므로 여기서 자립한다. */
 
+/* 밝은 화면으로 간다. 축제 접수대는 낮에 야외광이 들어오는 자리라,
+   어두운 화면은 폰에서 반사가 심해 읽기 어렵다. 흰 바탕에 검은 글씨가
+   그 조건에서 가장 잘 읽힌다. */
 :root {
-    --bg: #0b0b12;
-    --panel: #14141d;
-    --line: rgba(255, 255, 255, .10);
-    --ink: #f4f5ff;
-    --muted: #9ba1b8;
+    --bg: #ffffff;
+    --panel: #f4f5f9;
+    --line: #d8dbe4;
+    --ink: #14161f;
+    --muted: #4b5163;
     --faint: #6b7186;
-    --accent: #a78bfa;
-    --bad: #f87171;
+    /* 보라를 흰 바탕에서도 읽히게 낮춘다. 원래 색(#a78bfa)은 흰 위에서
+       대비가 2:1 도 안 나와 글자로 쓸 수 없다. */
+    --accent: #6d28d9;
+    --bad: #b91c1c;
     --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
     --sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
         "Pretendard", "Malgun Gothic", sans-serif;
@@ -58,7 +63,7 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 .btn {
     font: inherit; font-weight: 700; cursor: pointer;
     padding: 12px 22px; min-height: 44px; border-radius: 9px;
-    color: #16121f; background: var(--accent); border: 1px solid transparent;
+    color: #ffffff; background: var(--accent); border: 1px solid transparent;
     transition: filter .18s ease;
 }
 .btn:hover:not(:disabled) { filter: brightness(1.08); }
@@ -82,8 +87,8 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     margin: 0 0 16px; padding: 12px 16px; border-radius: 10px;
     font-size: 13.5px; color: var(--ink);
-    background: rgba(248, 113, 113, .10);
-    border: 1px solid rgba(248, 113, 113, .42);
+    background: #fdf0f0;
+    border: 1px solid #e9b6b6;
 }
 .idle b { font-family: var(--mono); font-size: 15px; color: var(--bad); }
 .idle .btn { padding: 8px 14px; min-height: 38px; font-size: 13px; margin-left: auto; }
@@ -119,19 +124,23 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 .roster th, .roster td { padding: 11px 14px; text-align: left; white-space: nowrap; }
 .roster thead th {
     position: sticky; top: 0; z-index: 1;
-    background: var(--panel); color: var(--faint);
+    /* 표머리는 11px 로 작아 --faint 로는 대비가 4.45:1 에 그친다.
+       한 단 진하게 잡아 본문 기준(4.5)을 넘긴다. */
+    background: var(--panel); color: #565c6e;
     font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .08em;
     border-bottom: 1px solid var(--line);
 }
-.roster tbody tr { border-top: 1px solid rgba(255, 255, 255, .05); }
+.roster tbody tr { border-top: 1px solid #e6e8ef; }
 /* 빈 표는 고장난 것처럼 보인다. 왜 비었는지 알리는 한 줄. */
 .roster tbody tr.roster-empty td {
     padding: 26px 14px; text-align: center; color: var(--faint);
     font-size: 13.5px; white-space: normal;
 }
 .roster tbody tr.roster-empty { background: none; }
-.roster tbody tr:nth-child(odd) { background: rgba(255, 255, 255, .018); }
-.roster td { font-variant-numeric: tabular-nums; }
+.roster tbody tr:nth-child(odd) { background: #fafbfd; }
+.roster td { font-variant-numeric: tabular-nums; color: var(--ink); }
+/* 이름과 매수는 현장에서 제일 먼저 읽는 값이라 한 단 굵게 둔다. */
+.roster tbody td:first-child { font-weight: 700; }
 
 /* 좁은 화면에서는 표를 카드로 접는다. 가로로 밀어 읽는 것보다 낫다. */
 @media (max-width: 620px) {
