@@ -109,6 +109,19 @@ create policy "roster: 관리자만 읽기"
 -- 명단 넣기는 대시보드(Table Editor / CSV 가져오기)에서 하세요. 대시보드는
 -- service_role 로 붙으므로 RLS 를 지나갑니다.
 
+-- 다만 정책이 없는 것만으로는 응답이 어정쩡하다. 표 단위 쓰기 권한이 남아
+-- 있으면 PostgREST 가 401 이 아니라 204(No Content)를 돌려준다. RLS 가 행을
+-- 다 가려 0건이 처리된 것이라 실제로 바뀌는 것은 없지만, "성공했다"로 읽혀
+-- 지워졌는지 걱정하게 된다. 권한 자체를 걷어 401 로 딱 잘리게 한다.
+revoke insert, update, delete on public.roster from anon, authenticated;
+
+-- admin_emails 의 select 권한은 건드리지 않는다.
+-- 위 roster 정책이 이 표를 읽어 관리자인지 가린다. authenticated 에게서
+-- select 를 뺏으면 정책을 평가하다 권한 오류가 나서 관리자까지 명단을 못
+-- 보게 될 수 있다. 이 표는 RLS 로 이미 잠겨 있어(정책 using(false)) 바깥에서
+-- 내용을 읽어갈 수 없으므로, 권한까지 뺏을 실익이 없다.
+revoke insert, update, delete on public.admin_emails from anon, authenticated;
+
 -- 이름으로 자주 찾으므로 색인 하나.
 create index if not exists roster_name_idx on public.roster (name);
 
