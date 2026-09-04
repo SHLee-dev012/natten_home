@@ -68,7 +68,9 @@
     var q = document.getElementById("q");
 
     var token = null;   // 접속 토큰. 메모리에만 둔다.
-    var cols = [];
+    // 아직 아무것도 받지 않았을 때 보여줄 칸. DB 응답이 오기 전에도, 결과가
+    // 0건일 때도 표 머리가 서 있어야 무엇을 조회하는 화면인지 알 수 있다.
+    var cols = ORDER.slice();
     var rows = [];
 
     function say(text, kind) {
@@ -95,6 +97,20 @@
             shownRows.push(row);
             shown++;
         });
+        if (!shown) {
+            // 빈 표는 고장난 것처럼 보인다. 왜 비었는지 한 줄로 알려준다.
+            var tr0 = document.createElement("tr");
+            tr0.className = "roster-empty";
+            var td0 = document.createElement("td");
+            td0.colSpan = cols.length || 1;
+            // 검색어가 아무 글자로나 끝나므로 조사를 붙이지 않는다.
+            // "없는이름 로" 처럼 받침에 안 맞는 조사가 나오는 것을 피한다.
+            td0.textContent = needle
+                ? "\u201c" + filter.trim() + "\u201d 검색 결과가 없습니다."
+                : "아직 받은 줄이 없습니다.";
+            tr0.appendChild(td0);
+            tbody.appendChild(tr0);
+        }
         var head = needle ? shown + " / " + rows.length + "명" : rows.length + "명";
         // 보이는 줄만 더한다. 검색으로 좁히면 그 사람들 몫만 나온다.
         var totals = SUM.filter(function (c) { return cols.indexOf(c) >= 0; })
@@ -134,9 +150,10 @@
         }).then(function (list) {
             rows = list || [];
             // 돌아온 칸을 그대로 쓴다. DB 에서 칸을 더하거나 빼도 여기는 안 고친다.
+            // 한 줄도 없으면 무엇이 올 자리인지 알 수 없으므로 기본 칸을 세워 둔다.
             cols = rows.length
                 ? orderCols(Object.keys(rows[0]).filter(function (c) { return HIDE.indexOf(c) === -1; }))
-                : [];
+                : ORDER.slice();
             drawHead();
             render(q.value);
             document.getElementById("fetched").textContent =
@@ -161,9 +178,9 @@
         }
         token = null;
         rows = [];
-        cols = [];
+        cols = ORDER.slice();
         tbody.textContent = "";
-        theadRow.textContent = "";
+        drawHead();
         q.value = "";
         pass.value = "";
         vault.hidden = true;
@@ -172,7 +189,19 @@
         email.focus();
     }
 
+    // 로그인하기 전에 미리 그려 둔다. 금고가 열리는 순간 표가 이미 서 있다.
+    drawHead();
+
+    // 치는 대로 걸러진다. 데스크톱에서는 이것만으로 충분하다.
     q.addEventListener("input", function () { if (token) render(q.value); });
+
+    // 휴대폰에서는 키보드가 화면 절반을 덮어 결과가 안 보인다. 조회를 누르거나
+    // 키보드의 검색 키를 치면 입력칸에서 초점을 떼어 키보드를 내린다.
+    document.getElementById("find-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (token) render(q.value);
+        q.blur();
+    });
     document.getElementById("lock").addEventListener("click", logout);
     document.getElementById("reload").addEventListener("click", function () {
         loadRoster().catch(function (err) {

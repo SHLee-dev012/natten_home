@@ -66,18 +66,25 @@
                 <h1>후원자 명단</h1>
                 <p class="lead" id="who"></p>
             </div>
-            <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
+            <div class="vault-actions">
+                <button class="btn btn-ghost" type="button" id="reload"
+                        title="데이터베이스에서 명단을 다시 받아옵니다 (로그아웃하지 않음)">다시 불러오기</button>
+                <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
+            </div>
         </div>
 
-        <div class="tools">
+        <!-- 검색은 폼이다. 폼이라야 휴대폰 키보드에 '검색' 키가 뜨고, 누르면
+             키보드가 닫히면서 결과가 보인다. 데스크톱에서는 치는 대로 걸러진다. -->
+        <form class="tools" id="find-form" autocomplete="off">
             <label class="field field-inline">
                 <span class="field-k">검색</span>
-                <input type="search" id="q" placeholder="이름 · 기수 · 구분 · 전화 뒤4" autocomplete="off">
+                <input type="search" id="q" name="q" enterkeyhint="search"
+                       placeholder="이름 · 기수 · 구분 · 전화 뒤4"
+                       autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
             </label>
+            <button class="btn" type="submit" id="find">조회</button>
             <span class="count" id="count"></span>
-            <button class="btn btn-ghost" type="button" id="reload"
-                    title="데이터베이스에서 명단을 다시 받아옵니다 (로그아웃하지 않음)">다시 불러오기</button>
-        </div>
+        </form>
 
         <div class="table-scroll">
             <table class="roster" id="roster">

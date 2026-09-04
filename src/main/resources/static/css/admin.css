@@ -82,12 +82,23 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
 }
 .vault-head .lead { margin-bottom: 0; }
+/* 다시 불러오기와 로그아웃은 짝이다. 둘 다 표를 건드리지 않고 상태만 바꾼다. */
+.vault-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
 .tools {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
     margin-bottom: 14px;
 }
-.field-inline { display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 260px; }
+.field-inline { display: flex; align-items: center; gap: 10px; margin: 0; flex: 1 1 240px; }
+#find { flex: none; }
+@media (max-width: 620px) {
+    /* 좁은 화면에서는 검색칸이 한 줄을 다 쓰고 조회 버튼이 그 아래 붙는다.
+       엄지로 닿는 자리에 두어야 한 손으로 쓸 수 있다. */
+    .tools { gap: 10px; }
+    .field-inline { flex: 1 1 100%; }
+    #find { flex: 1 1 100%; }
+    .count { flex: 1 1 100%; }
+}
 .field-inline .field-k { margin: 0; white-space: nowrap; }
 .count { font-family: var(--mono); font-size: 12.5px; color: var(--faint); }
 
@@ -103,13 +114,23 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     border-bottom: 1px solid var(--line);
 }
 .roster tbody tr { border-top: 1px solid rgba(255, 255, 255, .05); }
+/* 빈 표는 고장난 것처럼 보인다. 왜 비었는지 알리는 한 줄. */
+.roster tbody tr.roster-empty td {
+    padding: 26px 14px; text-align: center; color: var(--faint);
+    font-size: 13.5px; white-space: normal;
+}
+.roster tbody tr.roster-empty { background: none; }
 .roster tbody tr:nth-child(odd) { background: rgba(255, 255, 255, .018); }
 .roster td { font-variant-numeric: tabular-nums; }
 
 /* 좁은 화면에서는 표를 카드로 접는다. 가로로 밀어 읽는 것보다 낫다. */
 @media (max-width: 620px) {
     .roster, .roster tbody, .roster tr, .roster td { display: block; width: 100%; }
+    /* 좁은 화면에서는 표를 카드로 접으므로 머리글을 숨긴다. 다만 각 칸이
+       data-label 로 제 이름을 달고 있어 무엇을 뜻하는지는 그대로 보인다. */
     .roster thead { display: none; }
+    .roster tbody tr.roster-empty td::before { content: none; }
+    .roster tbody tr.roster-empty td { display: block; }
     .table-scroll { border: 0; border-radius: 0; overflow: visible; }
     .roster tbody tr {
         border: 1px solid var(--line); border-radius: 10px;
