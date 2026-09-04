@@ -43,9 +43,11 @@
     // (매수는 구분 바로 옆에 있어야 한다). 여기 적힌 차례로 앞세우고,
     // 적히지 않은 칸은 뒤에 원래 순서대로 붙는다 — 그래서 DB 에 칸을 새로
     // 더해도 화면이 깨지지 않는다.
-    var ORDER = ["name", "phone_last4", "kind",
+    // 체크인이 맨 앞이다. 현장에서 하는 일이 "찾아서 누르기" 이므로,
+    // 누를 것이 먼저 오고 확인할 값이 뒤따르는 편이 손이 덜 간다.
+    var ORDER = ["checked_in_at", "name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
-                 "cohort", "checked_in_at"];
+                 "cohort"];
     // 검색어와 데이터를 같은 모양으로 맞춘다.
     //
     // 한글은 "김"을 한 글자(NFC)로도, 자모 셋(NFD)으로도 적을 수 있다. 눈에는
@@ -158,6 +160,9 @@
                     td.className = "cell-checkin";
                     td.appendChild(checkInButton(row));
                 } else {
+                    // 이름은 자리가 아니라 이름으로 집는다. 칸 차례가 바뀌어도
+                    // 굵게 두는 규칙이 엉뚱한 칸에 걸리지 않는다.
+                    if (c === "name") td.className = "cell-name";
                     td.textContent = row[c] == null ? "" : String(row[c]);
                 }
                 tr.appendChild(td);
@@ -265,6 +270,13 @@
     }
 
     // ── 명단 받기 ──────────────────────────────────────────────────────
+    // 명단은 처음 열 때 통째로 받아 둔다. 300명 남짓이라 한 번에 받아도
+    // 가볍고, 그 뒤 검색은 서버를 다시 부르지 않아 현장에서 빠르다.
+    // 다만 PostgREST 에는 행 수 상한이 있어 넘치면 조용히 잘린다. 범위를
+    // 넉넉히 적어 두고, 서버가 알려주는 총계와 받은 수를 견줘 확인한다.
+    var FETCH_MAX = 2000;
+    var gotCount = 0, totalCount = null;
+
     function loadRoster() {
         return fetch(
             SUPABASE_URL + "/rest/v1/" + TABLE + "?select=*&order=name.asc",
@@ -273,13 +285,28 @@
                 headers: {
                     apikey: SUPABASE_ANON,
                     Authorization: "Bearer " + token,
-                    Accept: "application/json"
+                    Accept: "application/json",
+                    // 0-1999. 총계를 함께 달라고 해서 잘렸는지 판정한다.
+                    Range: "0-" + (FETCH_MAX - 1),
+                    "Range-Unit": "items",
+                    Prefer: "count=exact"
                 }
             }
         ).then(function (r) {
             if (r.status === 401 || r.status === 403) throw new Error("DENIED");
-            if (!r.ok) throw new Error("HTTP " + r.status);
-            return r.json();
+            // 206 은 부분 응답이다. 범위를 줬으니 정상이다.
+            if (!r.ok && r.status !== 206) throw new Error("HTTP " + r.status);
+            var cr = r.headers.get("content-range");     // 예: 0-299/300
+            var total = null;
+            if (cr) {
+                var t = cr.split("/")[1];
+                if (t && t !== "*") total = parseInt(t, 10);
+            }
+            return r.json().then(function (list) {
+                totalCount = total;
+                gotCount = (list && list.length) || 0;
+                return list;
+            });
         }).then(function (list) {
             rows = list || [];
             // 돌아온 칸을 그대로 쓴다. DB 에서 칸을 더하거나 빼도 여기는 안 고친다.
@@ -289,8 +316,15 @@
                 : ORDER.slice();
             drawHead();
             render(q.value);
+            // 잘렸으면 실제 숫자를 그대로 적는다. 우리가 건 상한(2000)보다
+            // 적은데도 잘렸다면 서버 쪽 Max rows 설정이 원인이므로, 어디를
+            // 봐야 하는지까지 알려준다.
+            var when = "받은 시각 " + new Date().toLocaleString("ko-KR");
             document.getElementById("fetched").textContent =
-                "받은 시각 " + new Date().toLocaleString("ko-KR");
+                (totalCount != null && gotCount < totalCount)
+                    ? when + " — 명단 " + totalCount + "명 중 " + gotCount +
+                      "명만 받았습니다. Supabase 의 Max rows 설정을 확인하세요."
+                    : when;
         });
     }
 

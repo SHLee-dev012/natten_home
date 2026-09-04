@@ -165,8 +165,9 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 .roster tbody tr.roster-empty { background: none; }
 .roster tbody tr:nth-child(odd) { background: #fafbfd; }
 .roster td { font-variant-numeric: tabular-nums; color: var(--ink); }
-/* 이름과 매수는 현장에서 제일 먼저 읽는 값이라 한 단 굵게 둔다. */
-.roster tbody td:first-child { font-weight: 700; }
+/* 이름은 사람을 가리는 값이라 한 단 굵게 둔다. 칸 차례가 바뀌어도
+   따라가도록 자리(:first-child)가 아니라 이름 칸을 집는다. */
+.roster tbody td.cell-name { font-weight: 700; }
 
 /* 좁은 화면에서는 표를 카드로 접는다. 가로로 밀어 읽는 것보다 낫다. */
 @media (max-width: 620px) {
@@ -192,7 +193,7 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
         color: var(--faint); flex: none;
     }
     /* 이름은 카드에서 제목 노릇을 하므로 한 단 더 크게. */
-    .roster tbody td:first-child { font-size: 18px; }
+    .roster tbody td.cell-name { font-size: 18px; }
     /* 체크인은 카드에서 제일 자주 누르는 것이라 손가락이 닿기 쉽게 키운다. */
     .roster tbody td.cell-checkin { padding: 10px 12px; }
     .roster tbody td.cell-checkin .chk { min-height: 44px; min-width: 96px; }
