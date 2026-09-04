@@ -1,0 +1,16 @@
+{
+  "name": "명단 조회 · 낯선대학 10주년 축제",
+  "short_name": "명단 조회",
+  "description": "후원자 명단을 현장에서 조회합니다. 관리자 로그인이 필요합니다.",
+  "start_url": "../admin.html",
+  "scope": "../",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0b12",
+  "theme_color": "#0b0b12",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
