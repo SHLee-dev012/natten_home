@@ -61,6 +61,13 @@
 
     <!-- 열린 뒤 -->
     <section class="vault" id="vault" hidden>
+        <!-- 잠기기 30초 전부터 뜬다. 접수 중에 갑자기 잠기면 당황하므로
+             미리 알리고, 계속 보기를 누르면 시간이 다시 채워진다. -->
+        <p class="idle" id="idle" role="status" aria-live="polite" hidden>
+            사용이 없어 <b id="idle-left">30</b>초 뒤 잠깁니다.
+            <button class="btn btn-ghost" type="button">계속 보기</button>
+        </p>
+
         <div class="vault-head">
             <div>
                 <h1>후원자 명단</h1>

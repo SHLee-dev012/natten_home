@@ -18,6 +18,11 @@
     var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhcnVua2RkdXpvbHFnY2d4cW1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2OTgwNjAsImV4cCI6MjEwMTI3NDA2MH0.HdzWaXH8XvokiBJBQ8r5_fc6TjZOCQB86IbvBG9PFaA";
 
     var TABLE = "roster";
+    // 손을 안 대면 잠근다. 검색이 서버를 부르지 않아 토큰이 만료돼도 화면의
+    // 명단은 그대로 남는다 — 접수대에 폰을 두고 자리를 비우면 누구나 본다.
+    // 그 구멍을 메우는 장치다.
+    var IDLE_MS = 30 * 60 * 1000;   // 30분
+    var WARN_MS = 30 * 1000;        // 잠기기 30초 전부터 알린다
     // Supabase Auth 는 로그인 식별자로 이메일을 요구한다. 화면에서는 아이디만
     // 받고 여기서 도메인을 붙인다 — 쓰는 사람에게는 'admin' 한 단어이고,
     // DB 에는 admin@knotsun.kr 계정이다. '@' 가 들어오면 그대로 쓴다.
@@ -68,6 +73,8 @@
     var q = document.getElementById("q");
 
     var token = null;   // 접속 토큰. 메모리에만 둔다.
+    var lastSeen = 0;   // 마지막으로 손댄 시각
+    var idleTimer = null;
     // 아직 아무것도 받지 않았을 때 보여줄 칸. DB 응답이 오기 전에도, 결과가
     // 0건일 때도 표 머리가 서 있어야 무엇을 조회하는 화면인지 알 수 있다.
     var cols = ORDER.slice();
@@ -165,7 +172,63 @@
         document.getElementById("who").textContent = userEmail;
         gate.hidden = true;
         vault.hidden = false;
+        startIdle();
         q.focus();
+    }
+
+    // ── 유휴 잠금 ──────────────────────────────────────────────────────
+    // 1초마다 남은 시간을 보고 화면에 알린다. 타이머로 한 번에 재우지 않는
+    // 이유는, 휴대폰이 절전에 들어가면 타이머가 밀려 훨씬 늦게 깨기 때문이다.
+    // 시각을 직접 비교하면 절전에서 돌아온 순간 바로 판정된다.
+    var idleBar = document.getElementById("idle");
+    var idleLeft = document.getElementById("idle-left");
+
+    function touch() {
+        lastSeen = Date.now();
+        if (idleBar && !idleBar.hidden) idleBar.hidden = true;
+    }
+
+    function idleTick() {
+        if (!token) return;
+        var idle = Date.now() - lastSeen;
+        var left = IDLE_MS - idle;
+        if (left <= 0) {
+            logout();
+            say("30분 동안 사용이 없어 잠겼습니다. 다시 로그인해 주세요.");
+            return;
+        }
+        if (idleBar) {
+            if (left <= WARN_MS) {
+                idleBar.hidden = false;
+                idleLeft.textContent = Math.ceil(left / 1000);
+            } else if (!idleBar.hidden) {
+                idleBar.hidden = true;
+            }
+        }
+    }
+
+    function startIdle() {
+        touch();
+        if (idleTimer) clearInterval(idleTimer);
+        idleTimer = setInterval(idleTick, 1000);
+    }
+
+    function stopIdle() {
+        if (idleTimer) { clearInterval(idleTimer); idleTimer = null; }
+        if (idleBar) idleBar.hidden = true;
+    }
+
+    // 보고만 있는 것은 활동이 아니다. 실제로 손을 댄 것만 센다.
+    ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (ev) {
+        document.addEventListener(ev, function () { if (token) touch(); },
+            { passive: true, capture: true });
+    });
+    // 다른 앱에 갔다가 돌아온 순간에도 바로 판정한다.
+    document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) idleTick();
+    });
+    if (idleBar) {
+        idleBar.querySelector("button").addEventListener("click", touch);
     }
 
     function logout() {
@@ -176,6 +239,7 @@
                 headers: { apikey: SUPABASE_ANON, Authorization: "Bearer " + token }
             }).catch(function () {});
         }
+        stopIdle();
         token = null;
         rows = [];
         cols = ORDER.slice();

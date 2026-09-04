@@ -77,6 +77,16 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 }
 
 /* ── 열린 뒤 ───────────────────────────────────────────────────────── */
+/* 곧 잠긴다는 알림. 눈에 띄되 화면을 가리지는 않는다. */
+.idle {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    margin: 0 0 16px; padding: 12px 16px; border-radius: 10px;
+    font-size: 13.5px; color: var(--ink);
+    background: rgba(248, 113, 113, .10);
+    border: 1px solid rgba(248, 113, 113, .42);
+}
+.idle b { font-family: var(--mono); font-size: 15px; color: var(--bad); }
+.idle .btn { padding: 8px 14px; min-height: 38px; font-size: 13px; margin-left: auto; }
 .vault-head {
     display: flex; align-items: flex-start; justify-content: space-between;
     gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
