@@ -42,6 +42,8 @@ create table if not exists public.roster (
     name        text not null,         -- 이름
     cohort      text,                  -- 기수 (낯5, 낯C3 …)
     kind        text,                  -- 구분 (출석후원 / 동문후원 …)
+    ticket_qty  integer,               -- 매수
+    drink_qty   integer,               -- 음료권 매수
     phone_last4 text,                  -- 전화 뒤 4자리 (동명이인 가릴 때만)
     applied_on  date,                  -- 신청일
     memo        text,                  -- 비고
@@ -49,7 +51,17 @@ create table if not exists public.roster (
 );
 
 -- 이미 만든 표에도 칸을 더한다(두 번 돌려도 안전).
+-- 나중에 더한 칸은 표 맨 뒤에 붙지만, 화면은 admin.js 의 ORDER 가 정한
+-- 차례로 그리므로 매수·음료권이 구분 옆에 나온다.
 alter table public.roster add column if not exists phone_last4 text;
+alter table public.roster add column if not exists ticket_qty  integer;
+alter table public.roster add column if not exists drink_qty   integer;
+
+-- 음수는 있을 수 없다.
+alter table public.roster drop constraint if exists roster_qty_chk;
+alter table public.roster add constraint roster_qty_chk
+    check ((ticket_qty is null or ticket_qty >= 0)
+       and (drink_qty  is null or drink_qty  >= 0));
 
 -- 뒤 4자리만 담기게 못박는다. 실수로 전체 번호를 붙여넣으면 여기서 걸린다.
 alter table public.roster drop constraint if exists roster_phone_last4_chk;

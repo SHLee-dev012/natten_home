@@ -24,11 +24,27 @@
     var LOGIN_DOMAIN = "@knotsun.kr";
     // 화면에 내보내지 않을 칸. 있어도 굳이 보여줄 이유가 없다.
     var HIDE = ["id", "created_at"];
-    // 보기 좋은 이름. 표에 없는 칸은 원래 이름 그대로 나온다.
+    // 보기 좋은 이름. 여기 없는 칸은 원래 이름 그대로 나온다.
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
+        ticket_qty: "매수", drink_qty: "음료권",
         phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고"
     };
+    // 표시 순서. DB 에 칸을 더하면 맨 뒤에 붙는데, 읽는 순서는 그것과 다르다
+    // (매수는 구분 바로 옆에 있어야 한다). 여기 적힌 차례로 앞세우고,
+    // 적히지 않은 칸은 뒤에 원래 순서대로 붙는다 — 그래서 DB 에 칸을 새로
+    // 더해도 화면이 깨지지 않는다.
+    var ORDER = ["name", "cohort", "kind", "ticket_qty", "drink_qty",
+                 "phone_last4", "applied_on", "memo"];
+    // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
+    var SUM = ["ticket_qty", "drink_qty"];
+
+    function orderCols(keys) {
+        var known = [], rest = [];
+        keys.forEach(function (k) { (ORDER.indexOf(k) >= 0 ? known : rest).push(k); });
+        known.sort(function (a, b) { return ORDER.indexOf(a) - ORDER.indexOf(b); });
+        return known.concat(rest);
+    }
 
     function toEmail(v) {
         v = (v || "").trim();
@@ -60,7 +76,7 @@
     function render(filter) {
         var needle = (filter || "").trim().toLowerCase();
         tbody.textContent = "";
-        var shown = 0;
+        var shown = 0, shownRows = [];
         rows.forEach(function (row) {
             var hay = cols.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
             if (needle && hay.toLowerCase().indexOf(needle) === -1) return;
@@ -72,9 +88,18 @@
                 tr.appendChild(td);
             });
             tbody.appendChild(tr);
+            shownRows.push(row);
             shown++;
         });
-        countEl.textContent = needle ? shown + " / " + rows.length + "명" : rows.length + "명";
+        var head = needle ? shown + " / " + rows.length + "명" : rows.length + "명";
+        // 보이는 줄만 더한다. 검색으로 좁히면 그 사람들 몫만 나온다.
+        var totals = SUM.filter(function (c) { return cols.indexOf(c) >= 0; })
+            .map(function (c) {
+                var n = 0;
+                shownRows.forEach(function (row) { n += Number(row[c]) || 0; });
+                return (LABEL[c] || c) + " " + n;
+            });
+        countEl.textContent = totals.length ? head + " · " + totals.join(" · ") : head;
     }
 
     function drawHead() {
@@ -106,7 +131,7 @@
             rows = list || [];
             // 돌아온 칸을 그대로 쓴다. DB 에서 칸을 더하거나 빼도 여기는 안 고친다.
             cols = rows.length
-                ? Object.keys(rows[0]).filter(function (c) { return HIDE.indexOf(c) === -1; })
+                ? orderCols(Object.keys(rows[0]).filter(function (c) { return HIDE.indexOf(c) === -1; }))
                 : [];
             drawHead();
             render(q.value);
