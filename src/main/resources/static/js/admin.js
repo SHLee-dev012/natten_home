@@ -18,6 +18,10 @@
     var SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhcnVua2RkdXpvbHFnY2d4cW1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2OTgwNjAsImV4cCI6MjEwMTI3NDA2MH0.HdzWaXH8XvokiBJBQ8r5_fc6TjZOCQB86IbvBG9PFaA";
 
     var TABLE = "roster";
+    // Supabase Auth 는 로그인 식별자로 이메일을 요구한다. 화면에서는 아이디만
+    // 받고 여기서 도메인을 붙인다 — 쓰는 사람에게는 'admin' 한 단어이고,
+    // DB 에는 admin@knotsun.kr 계정이다. '@' 가 들어오면 그대로 쓴다.
+    var LOGIN_DOMAIN = "@knotsun.kr";
     // 화면에 내보내지 않을 칸. 있어도 굳이 보여줄 이유가 없다.
     var HIDE = ["id", "created_at"];
     // 보기 좋은 이름. 표에 없는 칸은 원래 이름 그대로 나온다.
@@ -25,6 +29,11 @@
         name: "이름", cohort: "기수", kind: "구분",
         applied_on: "신청일", memo: "비고"
     };
+
+    function toEmail(v) {
+        v = (v || "").trim();
+        return v.indexOf("@") >= 0 ? v : v + LOGIN_DOMAIN;
+    }
 
     var gate = document.getElementById("gate");
     var vault = document.getElementById("vault");
@@ -156,7 +165,7 @@
         fetch(SUPABASE_URL + "/auth/v1/token?grant_type=password", {
             method: "POST",
             headers: { apikey: SUPABASE_ANON, "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email.value, password: pass.value })
+            body: JSON.stringify({ email: toEmail(email.value), password: pass.value })
         })
             .then(function (r) {
                 return r.json().then(function (body) {
@@ -191,7 +200,7 @@
                 } else if (m.indexOf("HTTP") === 0) {
                     say("명단을 받아오지 못했습니다 (" + m + ").", "bad");
                 } else if (/Invalid login|invalid_grant|LOGIN/i.test(m)) {
-                    say("이메일 또는 비밀번호가 맞지 않습니다.", "bad");
+                    say("아이디 또는 비밀번호가 맞지 않습니다.", "bad");
                 } else {
                     say(m || "로그인에 실패했습니다.", "bad");
                 }

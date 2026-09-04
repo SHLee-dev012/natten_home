@@ -22,9 +22,11 @@ create policy "admin_emails: 접근 금지"
     on public.admin_emails for all
     using (false) with check (false);
 
--- 관리자 이메일을 여기에 넣으세요. Supabase Auth 에 만든 계정과 같아야 합니다.
+-- 관리자 계정을 여기에 넣으세요. Supabase Auth 에 만든 계정과 같아야 합니다.
+-- /admin 화면은 아이디만 받고 뒤에 @knotsun.kr 을 붙이므로, 'admin' 으로
+-- 로그인하려면 여기와 Auth 양쪽 모두 admin@knotsun.kr 이어야 합니다.
 -- insert into public.admin_emails (email, note)
--- values ('you@example.com', '총감독')
+-- values ('admin@knotsun.kr', '총감독')
 -- on conflict (email) do nothing;
 
 
