@@ -72,6 +72,16 @@ jobs:
           done
           sed -i 's#url("/img/#url("../img/#g' public/css/home.css
 
+          # Pages 는 css/js 에 cache-control: max-age=600 을 붙인다. 배포해도
+          # 최대 10분 동안 브라우저가 옛 파일을 쓴다는 뜻이고, 그동안 고친 것이
+          # 반영되지 않은 화면을 보게 된다. 주소 뒤에 커밋 해시를 달아 배포마다
+          # 다른 주소가 되게 한다 — 새 배포는 즉시, 그 사이에는 캐시가 그대로 산다.
+          V="${GITHUB_SHA:0:7}"
+          for page in public/index.html public/admin.html; do
+            sed -i "s#\(href=\"css/[A-Za-z0-9._-]*\.css\)\"#\1?v=$V\"#g; \
+                    s#\(src=\"js/[A-Za-z0-9._-]*\.js\)\"#\1?v=$V\"#g" "$page"
+          done
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
