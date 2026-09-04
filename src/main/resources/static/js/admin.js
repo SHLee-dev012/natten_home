@@ -74,40 +74,6 @@
         return known.concat(rest);
     }
 
-    // ── 진단판 ─────────────────────────────────────────────────────────
-    // ?diag=1 로 열면 화면 아래에 속사정을 적는다. 사파리처럼 손이 닿지 않는
-    // 브라우저에서 무엇이 어긋나는지 물어보지 않고 볼 수 있어야 한다.
-    var DIAG = /[?&]diag=1/.test(location.search);
-    var diagBox = null;
-    function diag(label, value) {
-        if (!DIAG) return;
-        if (!diagBox) {
-            diagBox = document.createElement("pre");
-            diagBox.className = "diag";
-            document.querySelector(".wrap").appendChild(diagBox);
-            diagBox.textContent =
-                "UA " + navigator.userAgent + "\n" +
-                "스크립트 " + (document.querySelector("script[src*=admin]") || {}).src + "\n";
-        }
-        diagBox.textContent += label + " " + value + "\n";
-        diagBox.scrollTop = diagBox.scrollHeight;
-    }
-    // 잡히지 않은 오류도 여기 적는다. 사파리에서만 나는 오류를 놓치지 않는다.
-    if (DIAG) {
-        window.addEventListener("error", function (e) {
-            diag("‼ 오류", (e.message || "") + " @" + (e.filename || "").split("/").pop() + ":" + e.lineno);
-        });
-        window.addEventListener("unhandledrejection", function (e) {
-            diag("‼ 미처리", String((e.reason && e.reason.message) || e.reason));
-        });
-    }
-    // 글자를 코드포인트로 펼친다. 눈으로 같아 보이는 한글을 가르는 데 쓴다.
-    function cps(v) {
-        return Array.prototype.map.call(String(v || ""), function (ch) {
-            return ch.charCodeAt(0).toString(16).toUpperCase();
-        }).join(" ");
-    }
-
     // 새로고침을 버티게 하는 자리. 탭 단위라 탭을 닫으면 함께 사라진다.
     var SESSION_KEY = "knotsun.admin.session";
 
@@ -181,7 +147,6 @@
     // ── 표 그리기 ──────────────────────────────────────────────────────
     function render(filter) {
         var needle = norm(filter);
-        diag("검색", '"' + String(filter || "") + '" → 정리 "' + needle + '" [' + cps(filter) + "]");
         tbody.textContent = "";
         var shown = 0;
         rows.forEach(function (row) {
@@ -230,8 +195,6 @@
         countEl.textContent = needle
             ? shown + " / " + rows.length + "명"
             : rows.length + "명";
-        diag("  결과", shown + " / " + rows.length + "명" +
-            (rows.length ? "   첫 이름 \"" + rows[0].name + "\" [" + cps(rows[0].name) + "]" : ""));
     }
 
     // ── 체크인 ─────────────────────────────────────────────────────────
@@ -404,8 +367,6 @@
             cols = rows.length
                 ? orderCols(Object.keys(rows[0]).filter(function (c) { return HIDE.indexOf(c) === -1; }))
                 : ORDER.slice();
-            diag("명단", gotCount + "건 받음 (서버 총계 " + totalCount + ")" +
-                (gotCount === 0 ? "  ← 서버가 0건을 줬다. RLS 가 걸렀을 가능성이 크다." : ""));
             drawHead();
             render(q.value);
             // 잘렸으면 실제 숫자를 그대로 적는다. 우리가 건 상한(2000)보다
@@ -512,26 +473,25 @@
     drawHead();
 
     // 치는 대로 걸러진다. 데스크톱에서는 이것만으로 충분하다.
-    q.addEventListener("input", function () { diag("이벤트", "input"); if (token) render(q.value); });
+    q.addEventListener("input", function () { if (token) render(q.value); });
 
     // 한글은 자모를 모아 한 글자를 만드는 동안 조합 상태로 있다. 사파리는
     // 조합이 끝날 때 input 을 한 번 더 주지 않는 경우가 있어, 마지막 조각으로
     // 거른 결과가 그대로 남는다. 조합이 끝나는 순간을 따로 잡아 다시 그린다.
-    q.addEventListener("compositionend", function () { diag("이벤트", "compositionend"); if (token) render(q.value); });
+    q.addEventListener("compositionend", function () { if (token) render(q.value); });
     // 사파리의 검색칸 X 단추는 input 대신 search 를 준다.
-    q.addEventListener("search", function () { diag("이벤트", "search"); if (token) render(q.value); });
+    q.addEventListener("search", function () { if (token) render(q.value); });
 
     // 휴대폰에서는 키보드가 화면 절반을 덮어 결과가 안 보인다. 조회를 누르거나
     // 키보드의 검색 키를 치면 입력칸에서 초점을 떼어 키보드를 내린다.
-    function doFind(from) {
-        diag("이벤트", from);
+    function doFind() {
         if (token) render(q.value);
         q.blur();
     }
 
     document.getElementById("find-form").addEventListener("submit", function (e) {
         e.preventDefault();
-        doFind("submit");
+        doFind();
     });
 
     // 단추에도 직접 손잡이를 단다. 폼 submit 이 오지 않는 브라우저가 있어도
@@ -539,7 +499,7 @@
     // 거르는 일이라 결과가 달라지지 않는다.
     document.getElementById("find").addEventListener("click", function (e) {
         e.preventDefault();
-        doFind("click (조회 단추)");
+        doFind();
     });
     document.getElementById("lock").addEventListener("click", logout);
     document.getElementById("reload").addEventListener("click", function () {
