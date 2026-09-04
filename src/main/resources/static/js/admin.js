@@ -46,8 +46,6 @@
     var ORDER = ["name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
                  "cohort", "checked_in_at"];
-    // 합계를 낼 칸. 현장에서 몇 장을 내줘야 하는지가 바로 보여야 한다.
-    var SUM = ["day_qty", "all_qty", "drink_qty", "food_qty"];
     // 검색이 훑을 칸. 사람을 특정하는 값만 본다.
     // 기수와 구분은 여러 사람이 같은 값을 가져서, 넣으면 "낯5" 한 번에 수십
     // 명이 걸려 오히려 찾기 어려워진다. 매수는 숫자라 "2" 로 거의 다 걸린다.
@@ -133,7 +131,7 @@
     function render(filter) {
         var needle = (filter || "").trim().toLowerCase();
         tbody.textContent = "";
-        var shown = 0, shownRows = [];
+        var shown = 0;
         rows.forEach(function (row) {
             var hay = SEARCH.map(function (c) { return row[c] == null ? "" : row[c]; }).join(" ");
             if (needle && hay.toLowerCase().indexOf(needle) === -1) return;
@@ -151,7 +149,6 @@
                 tr.appendChild(td);
             });
             tbody.appendChild(tr);
-            shownRows.push(row);
             shown++;
         });
         if (!shown) {
@@ -168,15 +165,11 @@
             tr0.appendChild(td0);
             tbody.appendChild(tr0);
         }
-        var head = needle ? shown + " / " + rows.length + "명" : rows.length + "명";
-        // 보이는 줄만 더한다. 검색으로 좁히면 그 사람들 몫만 나온다.
-        var totals = SUM.filter(function (c) { return cols.indexOf(c) >= 0; })
-            .map(function (c) {
-                var n = 0;
-                shownRows.forEach(function (row) { n += Number(row[c]) || 0; });
-                return (LABEL[c] || c) + " " + n;
-            });
-        countEl.textContent = totals.length ? head + " · " + totals.join(" · ") : head;
+        // 인원 수만 적는다. 매수 합계까지 함께 적었더니 줄이 길어져
+        // 정작 몇 명인지가 눈에 안 들어왔다.
+        countEl.textContent = needle
+            ? shown + " / " + rows.length + "명"
+            : rows.length + "명";
     }
 
     // ── 체크인 ─────────────────────────────────────────────────────────
