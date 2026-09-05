@@ -83,8 +83,6 @@ a { color: inherit; } img { max-width: 100%; display: block; }
 .btn-solid:hover { opacity: .95; }
 .btn-ghost-dark, .btn-ghost-light { color: var(--ink); border-color: var(--line); }
 .btn-ghost-dark:hover, .btn-ghost-light:hover { border-color: var(--accent-solid); background: rgba(255,255,255,.04); }
-/* 참여방법 리드 아래 신청 버튼 — 리드와 카드 그리드 사이 간격을 준다 */
-.howto-cta { margin: 22px 0 30px; }
 .tag { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .05em; padding: 4px 9px; border: 1px solid var(--line); border-radius: 999px; display: inline-block; white-space: nowrap; color: var(--muted); }
 .tag-tba { color: var(--accent-solid); border-color: rgba(167,139,250,.5); background: rgba(167,139,250,.08); }
 .tag-live { color: #34d399; border-color: rgba(52,211,153,.5); background: rgba(52,211,153,.08); }
@@ -498,11 +496,16 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .howto-card .howto-num { font-family: var(--serif); font-weight: 900; font-size: 24px; color: var(--accent-solid); display: block; margin-bottom: 10px; }
 .howto-card h4 { font-family: var(--serif); font-weight: 700; font-size: 16px; margin: 0 0 10px; line-height: 1.4; }
 .howto-card p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0; }
-.howto-footer { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; border-top: 1px solid var(--line); padding-top: 28px; }
-@media (max-width: 700px) { .howto-footer { grid-template-columns: 1fr; } }
+/* 오시는 길 안내를 걷어내 이제 굿즈 카드 하나만 담는다. 폭을 나눌 일이
+   없으므로 격자를 두지 않는다. */
+.howto-footer { border-top: 1px solid var(--line); padding-top: 28px; }
 /* 축제 기념 굿즈 — 배경도 테두리도 없는 맨 문단이라 위 카드 4장에 묻혔다.
    4F 낯선마켓에서만 파는 물건이라 층 색(--gold)에 맞춘 카드로 세운다. */
 .howto-goods { position: relative; overflow: hidden; padding: 24px 26px; border-radius: 14px;
+    /* 왼쪽은 글, 오른쪽은 포스터. 포스터는 세로로 긴 그림이라 폭을 묶어
+       두지 않으면 카드가 통째로 길어진다. */
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
+    gap: 34px; align-items: center;
     border: 1px solid rgba(251, 191, 36, 0.34);
     background:
         radial-gradient(130% 110% at 0% 0%, rgba(251, 191, 36, 0.14), transparent 62%),
@@ -520,7 +523,33 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     background: linear-gradient(100deg, #fde68a, #fbbf24 52%, #f59e0b);
     -webkit-background-clip: text; background-clip: text; color: transparent; }
 .howto-goods h4::before { content: "✦"; font-size: 0.7em; }
-.howto-goods p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0 0 12px; max-width: 520px; }
+/* 폭 상한은 두지 않는다. 카드가 두 칸이 되면서 격자 칸이 이미 폭을 정하는데,
+   여기서 다시 520px 로 묶으면 글 끝과 포스터 사이에 빈 골이 생긴다. */
+.howto-goods p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0 0 12px; }
+/* 왼쪽 글 묶음. 격자 칸 안에서 자기 폭을 넘기지 않게 min-width 를 푼다. */
+.goods-copy { min-width: 0; }
+.goods-copy > .tag { margin-bottom: 2px; }
+
+/* 포스터. 카드 바탕은 어둡고 포스터는 흰 종이라 그대로 얹으면 종이가 공중에
+   뜬 것처럼 보인다. 금색 테두리로 카드에 묶고 그림자로 바닥을 만든다. */
+.goods-shot {
+    display: block; border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(251, 191, 36, .38);
+    box-shadow: 0 18px 38px -20px rgba(0, 0, 0, .85);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.goods-shot img { display: block; width: 100%; height: auto; }
+.goods-shot:hover, .goods-shot:focus-visible {
+    transform: translateY(-3px);
+    border-color: rgba(251, 191, 36, .75);
+    box-shadow: 0 24px 46px -20px rgba(0, 0, 0, .95);
+}
+/* 좁아지면 두 칸을 한 줄로 접는다. 4:5 세로 그림이라 폭을 그대로 두면
+   화면 높이의 대부분을 포스터가 먹어 글이 밀려난다. 폭을 묶고 가운데 세운다. */
+@media (max-width: 760px) {
+    .howto-goods { grid-template-columns: 1fr; gap: 22px; }
+    .goods-shot { max-width: 300px; margin: 0 auto; }
+}
 /* 마지막 줄은 괄호로 묶인 곁말이다. 굵게 키우면 곁말이 본문을 이기므로
    한 단계 작고 옅게 둬서 읽는 차례가 뒤가 되게 한다. */
 .howto-goods .goods-rush { margin-top: 6px; font-size: 13.5px; opacity: .82; }
@@ -532,6 +561,8 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     display: inline-flex; align-items: center; gap: 9px;
     min-height: 40px; padding: 0 17px; border-radius: 999px;
     font-family: var(--mono); font-size: 12.5px; font-weight: 700; letter-spacing: .03em;
+    /* 두 칸 배치에서 왼쪽 칸이 좁아지면 글자가 줄바꿈되어 단추가 뭉개진다. */
+    white-space: nowrap;
     color: #2a1c00; text-decoration: none;
     background: linear-gradient(100deg, #fde68a, #fbbf24 55%, #f59e0b);
     border: 1px solid rgba(251, 191, 36, .55);
@@ -547,13 +578,10 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .goods-go-arrow { transition: transform .15s ease; }
 .goods-go:hover .goods-go-arrow, .goods-go:focus-visible .goods-go-arrow { transform: translateX(3px); }
 @media (prefers-reduced-motion: reduce) {
-    .goods-go, .goods-go-arrow { transition: none; }
-    .goods-go:hover { transform: none; }
+    .goods-go, .goods-go-arrow, .goods-shot { transition: none; }
+    .goods-go:hover, .goods-shot:hover { transform: none; }
     .goods-go:hover .goods-go-arrow { transform: none; }
 }
-.howto-cta { text-align: right; }
-@media (max-width: 700px) { .howto-cta { text-align: left; } }
-.howto-cta p { font-size: 12.5px; color: var(--muted); margin: 0 0 8px; font-family: var(--mono); }
 
 /* ---------- PROGRAMS ---------- */
 .pgroup { margin-bottom: 40px; }
