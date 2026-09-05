@@ -502,10 +502,21 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* 축제 기념 굿즈 — 배경도 테두리도 없는 맨 문단이라 위 카드 4장에 묻혔다.
    4F 낯선마켓에서만 파는 물건이라 층 색(--gold)에 맞춘 카드로 세운다. */
 .howto-goods { position: relative; overflow: hidden; padding: 24px 26px; border-radius: 14px;
-    /* 왼쪽은 글, 오른쪽은 포스터. 포스터는 세로로 긴 그림이라 폭을 묶어
-       두지 않으면 카드가 통째로 길어진다. */
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
-    gap: 34px; align-items: center;
+    /* 넓을 때는 왼쪽에 글, 오른쪽에 포스터. 포스터는 세로로 긴 그림이라
+       폭을 묶어 두지 않으면 카드가 통째로 길어진다.
+       칸에 이름을 붙여 두면 좁아질 때 순서만 바꿔 쌓을 수 있다. */
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(210px, 300px);
+    /* 위아래 1fr 은 남는 높이를 받아내는 빈 줄이다. 포스터가 두 줄에 걸치면서
+       왼쪽보다 키가 크면, 이 빈 줄이 없을 때 남는 높이를 머리말 줄과 본문 줄이
+       나눠 가져 둘이 위아래로 벌어진다. */
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas:
+        ".    shot"
+        "head shot"
+        "copy shot"
+        ".    shot";
+    column-gap: 34px;
     border: 1px solid rgba(251, 191, 36, 0.34);
     background:
         radial-gradient(130% 110% at 0% 0%, rgba(251, 191, 36, 0.14), transparent 62%),
@@ -526,9 +537,10 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* 폭 상한은 두지 않는다. 카드가 두 칸이 되면서 격자 칸이 이미 폭을 정하는데,
    여기서 다시 520px 로 묶으면 글 끝과 포스터 사이에 빈 골이 생긴다. */
 .howto-goods p { font-size: 14.5px; line-height: 1.8; color: var(--muted); margin: 0 0 12px; }
-/* 왼쪽 글 묶음. 격자 칸 안에서 자기 폭을 넘기지 않게 min-width 를 푼다. */
-.goods-copy { min-width: 0; }
-.goods-copy > .tag { margin-bottom: 2px; }
+/* 격자 칸 안에서 자기 폭을 넘기지 않게 min-width 를 푼다. */
+.goods-head { grid-area: head; min-width: 0; }
+.goods-copy { grid-area: copy; min-width: 0; }
+.goods-shot { grid-area: shot; align-self: center; }
 
 /* 포스터. 카드 바탕은 어둡고 포스터는 흰 종이라 그대로 얹으면 종이가 공중에
    뜬 것처럼 보인다. 금색 테두리로 카드에 묶고 그림자로 바닥을 만든다. */
@@ -544,11 +556,24 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     border-color: rgba(251, 191, 36, .75);
     box-shadow: 0 24px 46px -20px rgba(0, 0, 0, .95);
 }
-/* 좁아지면 두 칸을 한 줄로 접는다. 4:5 세로 그림이라 폭을 그대로 두면
-   화면 높이의 대부분을 포스터가 먹어 글이 밀려난다. 폭을 묶고 가운데 세운다. */
+/* 좁아지면 한 줄로 쌓는다. 순서는 머리말 - 포스터 - 설명 - 단추.
+   포스터를 단추 뒤에 두면 물건을 보기 전에 사라고 먼저 말하는 꼴이 된다.
+   폭도 카드 폭에 꽉 채운다. 가운데로 좁혀 두면 이것만 왼쪽 선이 어긋나
+   보이는데, 좁은 화면에서는 그 어긋남이 바로 눈에 띈다. */
 @media (max-width: 760px) {
-    .howto-goods { grid-template-columns: 1fr; gap: 22px; }
-    .goods-shot { max-width: 300px; margin: 0 auto; }
+    .howto-goods {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        grid-template-areas: "head" "shot" "copy";
+        row-gap: 18px;
+    }
+    .goods-shot { max-width: none; margin: 0; }
+    /* 머리말 아래 여백은 격자의 row-gap 이 맡는다. */
+    .howto-goods h4 { margin-bottom: 0; }
+    .howto-goods p { margin-bottom: 16px; }
+    /* 엄지로 누르는 단추다. 폭을 꽉 채우면 겨냥할 필요가 없어지고,
+       글 왼쪽 선과도 끝이 맞는다. */
+    .goods-go { width: 100%; justify-content: center; }
 }
 /* 마지막 줄은 괄호로 묶인 곁말이다. 굵게 키우면 곁말이 본문을 이기므로
    한 단계 작고 옅게 둬서 읽는 차례가 뒤가 되게 한다. */
