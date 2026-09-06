@@ -1338,6 +1338,25 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
     position: absolute; inset: 0; width: 100%; height: 100%;
     opacity: .55; pointer-events: none;
 }
+/* 조각마다 다른 폭·속도·위상으로 살랑인다. 값이 같으면 46개가 한 덩어리로
+   움직여 꽃가루가 아니라 무늬가 흔들리는 것처럼 보인다.
+   음수 지연(--d)이라 화면에 들어온 순간 이미 흩어져 있는 상태에서 시작한다.
+
+   회전은 <g> 의 transform 속성이 맡고 살랑임은 안쪽 요소의 CSS transform 이
+   맡는다. 한 요소에 둘을 겹치면 CSS 가 속성을 덮어써 처음 각도가 사라진다. */
+.mk-done-confetti g > * {
+    transform-box: fill-box; transform-origin: center;
+    animation: confettiFloat var(--t, 8s) ease-in-out var(--d, 0s) infinite;
+    will-change: transform;
+}
+@keyframes confettiFloat {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50%      { transform: translate(var(--dx), var(--dy)) rotate(var(--r)); }
+}
+/* 움직임을 줄이라고 한 사람에게는 멈춘 꽃가루만 남긴다. */
+@media (prefers-reduced-motion: reduce) {
+    .mk-done-confetti g > * { animation: none; }
+}
 .mk-done > p { position: relative; margin: 0; }
 .mk-done-lead {
     display: flex; align-items: center; justify-content: center; gap: 9px;
