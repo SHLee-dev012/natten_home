@@ -484,9 +484,49 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     .jw-desc { grid-area: desc; }
     .jw-go { grid-area: go; margin-top: 0; align-self: center; }
 }
-.jw-name { display: block; font-family: var(--serif); font-weight: 700; font-size: 16px;
+/* flex 로 두는 이유는 완판 표 때문이다. 인라인으로 두면 좁은 화면에서 표가
+   둘째 줄로 밀릴 때 앞 여백만큼 들여써져 혼자 어긋나 보인다.
+   flex-wrap 이면 밀려도 왼쪽 선에 딱 맞게 떨어진다. */
+.jw-name { display: flex; align-items: center; flex-wrap: wrap; gap: 9px;
+    font-family: var(--serif); font-weight: 700; font-size: 16px;
     color: var(--ink); margin-bottom: 7px; }
 .jw-desc { display: block; font-size: 14.5px; line-height: 1.85; color: var(--muted); word-break: keep-all; }
+
+/* 완판 표.
+   완판은 실패가 아니라 성과다. 품절 표시를 회색으로 죽이는 흔한 방식은
+   "닫혔다"로 읽히는데, 여기서 알리려는 것은 "다 나갔다"이다. 그래서 흐리게
+   하지 않고 밝게 세운다. 색은 이미 이 사이트가 쓰는 6층 색(--rose)이라
+   새 색을 들이지 않는다. */
+.sold {
+    display: inline-block;
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .02em; padding: 3px 9px 4px; border-radius: 999px;
+    white-space: nowrap;
+    color: #45091f;
+    background: linear-gradient(100deg, #fbcfe8, #f472b6 55%, #ec4899);
+    box-shadow: 0 6px 16px -9px rgba(244, 114, 182, .95);
+}
+/* 표 하나만으로는 카드를 훑을 때 지나친다. 카드의 왼쪽 띠도 같은 색으로
+   바꿔, 목록을 내려보는 눈에 이 줄만 상태가 다르다는 것이 걸리게 한다. */
+.join-ways li.is-sold {
+    border-left-color: var(--rose);
+    background: rgba(244, 114, 182, .075);
+}
+/* 완판된 줄에서는 단추가 주인공이 아니다. 다 나간 물건을 밝은 주단추로 계속
+   부르면 '품절인데 사라'로 읽힌다. 링크는 남긴다 — 무엇이 있었는지 구경은 할 수
+   있어야 한다. 다만 한 걸음 물러세워, 그 줄에서 가장 크게 읽히는 것이
+   '완판' 이 되게 한다. HTML 이 아니라 규칙으로 처리해서 is-sold 를 떼면
+   저절로 원래 단추로 돌아온다. */
+.join-ways li.is-sold .jw-go .btn {
+    background: transparent;
+    border-color: rgba(244, 114, 182, .45);
+    color: var(--rose);
+    font-weight: 600;
+}
+.join-ways li.is-sold .jw-go .btn:hover {
+    border-color: var(--rose);
+    background: rgba(244, 114, 182, .09);
+}
 @media (max-width: 640px) {
     .join-ways li { padding: 13px 15px; }
     .jw-desc { font-size: 14px; }
