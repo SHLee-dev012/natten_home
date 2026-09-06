@@ -504,7 +504,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .join-ways li.is-sold { position: relative; }
 .sold {
     position: absolute; z-index: 2;
-    top: -13px; right: -8px;
+    top: 4px; right: 12px;
     width: 78px; height: 78px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 1px;
@@ -553,20 +553,20 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* 딱지가 앉을 자리를 비운다. 넓은 화면에서는 오른쪽에 단추가 있으므로
    단추를 왼쪽으로 물려 딱지와 겹치지 않게 한다. */
 @media (min-width: 641px) {
-    .join-ways li.is-sold .jw-go { margin-right: 78px; }
+    .join-ways li.is-sold .jw-go { margin-right: 100px; }
 }
 /* 좁은 화면에서는 카드가 훨씬 좁아 같은 크기로 두면 딱지가 설명 첫 줄을
    덮는다. 조금 줄이고 위로 올려, 이름 줄 옆에만 걸치게 한다.
    설명에는 여백을 주지 않는다 - 393px 에서 오른쪽을 60px 넘게 비우면
    본문이 서너 낱말마다 끊긴다. */
 @media (max-width: 640px) {
-    .sold { width: 64px; height: 64px; top: -16px; right: -6px; }
-    .sold .big { font-size: 16px; }
-    .sold .small { font-size: 7px; letter-spacing: .1em; }
+    .sold { width: 60px; height: 60px; top: 0; right: 10px; }
+    .sold .big { font-size: 15px; }
+    .sold .small { font-size: 6.5px; letter-spacing: .08em; }
     /* 이름 줄에 딱지가 앉을 높이를 준다. 설명에 오른쪽 여백을 주는 방법도
        있지만, 393px 에서 60px 넘게 비우면 본문이 서너 낱말마다 끊긴다.
        줄 높이를 키우면 딱지는 이름 옆에만 걸치고 설명은 폭을 온전히 쓴다. */
-    .join-ways li.is-sold .jw-name { padding-right: 62px; min-height: 50px; }
+    .join-ways li.is-sold .jw-name { padding-right: 66px; min-height: 62px; }
 }
 
 /* 완판된 줄에서는 단추가 주인공이 아니다. 다 나간 물건을 밝은 주단추로 계속
