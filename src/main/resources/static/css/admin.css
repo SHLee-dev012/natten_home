@@ -103,6 +103,15 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
 }
 .vault-head .lead { margin-bottom: 0; }
+/* 접속이 언제 끝나는지. 평소에는 옆에 조용히 있다가, 30분이 남으면
+   색을 바꿔 눈에 걸리게 한다. 접수대가 갑자기 끊기는 것을 막는 줄이다. */
+.until {
+    margin: 6px 0 0; font-family: var(--mono); font-size: 12px;
+    color: var(--muted);
+}
+.until-soon {
+    color: var(--bad); font-weight: 700;
+}
 /* 다시 불러오기와 로그아웃은 짝이다. 둘 다 표를 건드리지 않고 상태만 바꾼다. */
 .vault-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 

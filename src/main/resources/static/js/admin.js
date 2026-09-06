@@ -89,16 +89,16 @@
     var SESSION_KEY = "knotsun.admin.session";
 
     function saveSession(session) {
+        // 언제까지 쓸 수 있는지 계산해 둔다. 지난 토큰으로 화면을 열어놓고
+        // 있다가 누를 때마다 실패하는 것보다, 열기 전에 판정하는 편이 낫다.
+        tokenExp = session.expires_at
+            ? session.expires_at * 1000
+            : Date.now() + (session.expires_in || 3600) * 1000;
         try {
             sessionStorage.setItem(SESSION_KEY, JSON.stringify({
                 t: session.access_token,
                 e: session.user && session.user.email,
-                // 언제까지 쓸 수 있는지 함께 적어 둔다. 지난 토큰으로 화면을
-                // 열어놓고 있다가 누를 때마다 실패하는 것보다, 열기 전에
-                // 판정하는 편이 낫다.
-                x: session.expires_at
-                    ? session.expires_at * 1000
-                    : Date.now() + (session.expires_in || 3600) * 1000
+                x: tokenExp
             }));
         } catch (e) { /* 저장이 막힌 브라우저면 그냥 이번 탭만 쓴다 */ }
     }
@@ -142,6 +142,8 @@
     // 시작한 시각도 같이 들고 있다가 너무 오래되면 스스로 푼다.
     var writing = 0;
     var writingAt = 0;
+    // 이 접속이 언제 끝나는지(밀리초). 0 이면 모른다.
+    var tokenExp = 0;
     var lastSeen = 0;   // 마지막으로 손댄 시각
     var idleTimer = null;
     // 아직 아무것도 받지 않았을 때 보여줄 칸. DB 응답이 오기 전에도, 결과가
@@ -482,6 +484,7 @@
         vault.hidden = false;
         startIdle();
         startPolling();
+        paintUntil();
         q.focus();
     }
 
@@ -497,8 +500,42 @@
         if (idleBar && !idleBar.hidden) idleBar.hidden = true;
     }
 
+    // 접속이 언제 끝나는지 적는다. 남은 시간이 아니라 '몇 시까지' 로 적는다.
+    // 접수대에서 필요한 판단은 "지금 다시 로그인해 둘까" 하나뿐인데, 시계를
+    // 보고 바로 답이 나오는 쪽이 카운트다운보다 낫다.
+    var untilEl = document.getElementById("until");
+    var untilShown = "";
+    function paintUntil() {
+        if (!untilEl) return;
+        if (!token || !tokenExp) { untilEl.hidden = true; untilShown = ""; return; }
+        var left = tokenExp - Date.now();
+        var end = new Date(tokenExp);
+        var t = end.toLocaleTimeString("ko-KR", { hour: "numeric", minute: "2-digit" });
+        // 접속이 12시간이면 저녁에 로그인한 사람의 끝나는 시각은 다음 날 새벽이다.
+        // 그냥 '오전 6:06까지' 라고만 적으면 이미 지난 시각으로 읽힌다.
+        // 날짜가 넘어가면 반드시 밝힌다.
+        var d0 = new Date(); d0.setHours(0, 0, 0, 0);
+        var days = Math.floor((end - d0) / 86400000);
+        var when = days <= 0 ? t
+                 : days === 1 ? "내일 " + t
+                 : days === 2 ? "모레 " + t
+                 : end.toLocaleString("ko-KR",
+                     { month: "numeric", day: "numeric", hour: "numeric", minute: "2-digit" });
+        var text = left <= 30 * 60 * 1000
+            ? "접속이 " + when + "에 끝납니다 — 지금 다시 로그인해 두세요"
+            : when + "까지 사용할 수 있습니다";
+        // 1초마다 불리므로 글이 그대로면 손대지 않는다.
+        if (text !== untilShown) {
+            untilEl.textContent = text;
+            untilShown = text;
+        }
+        untilEl.hidden = false;
+        untilEl.classList.toggle("until-soon", left <= 30 * 60 * 1000);
+    }
+
     function idleTick() {
         if (!token) return;
+        paintUntil();
         var idle = Date.now() - lastSeen;
         var left = IDLE_MS - idle;
         if (left <= 0) {
@@ -561,6 +598,8 @@
         clearSession();
         token = null;
         whoEmail = "";
+        tokenExp = 0;
+        paintUntil();
         rows = [];
         cols = ORDER.slice();
         tbody.textContent = "";
@@ -688,6 +727,7 @@
 
         token = saved.t;
         whoEmail = saved.e || "";
+        tokenExp = saved.x || 0;
         say("이어서 여는 중…");
         go.disabled = true;
         loadRoster()
