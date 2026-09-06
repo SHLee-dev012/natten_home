@@ -23,6 +23,17 @@
     // 명단은 그대로 남는다 — 접수대에 폰을 두고 자리를 비우면 누구나 본다.
     // 그 구멍을 메우는 장치다.
     var IDLE_MS = 30 * 60 * 1000;   // 30분
+    // 현장에서 여러 명이 동시에 체크인한다. 15초마다 명단을 다시 받아
+    // 서로의 체크인이 서로에게 보이게 한다. 300명을 한 번 받는 비용이
+    // 작아서 이 주기로도 부담이 없다.
+    var POLL_MS = 15 * 1000;
+    // fetch 는 스스로 포기하지 않는다. 휴대폰이 신호를 잃으면 요청이
+    // 끝나지도 실패하지도 않고 매달린다. 끊어 주지 않으면 그 요청을
+    // 기다리던 표시가 영영 남아 자동 갱신이 조용히 죽는다.
+    var REQ_TIMEOUT_MS = 20 * 1000;
+    // 그래도 어딘가에서 표시가 남으면 이만큼 지나서 스스로 푼다.
+    // 자동 갱신이 멈추는 것보다 한 번 겹쳐 받는 편이 낫다.
+    var STUCK_MS = 30 * 1000;
     var WARN_MS = 30 * 1000;        // 잠기기 30초 전부터 알린다
     // Supabase Auth 는 로그인 식별자로 이메일을 요구한다. 화면에서는 아이디만
     // 받고 여기서 도메인을 붙인다 — 쓰는 사람에게는 'admin' 한 단어이고,
@@ -125,6 +136,12 @@
 
     var token = null;   // 접속 토큰. 메모리에만 둔다.
     var whoEmail = "";  // 로그인한 계정. 안내 문구에서 쓰므로 따로 들고 있는다.
+    var pollTimer = null;
+    // 체크인이 오가는 중에 표를 새로 그리면 누르던 단추가 사라진다.
+    // 개수만 세면 요청 하나가 매달렸을 때 영영 0 으로 안 돌아오므로,
+    // 시작한 시각도 같이 들고 있다가 너무 오래되면 스스로 푼다.
+    var writing = 0;
+    var writingAt = 0;
     var lastSeen = 0;   // 마지막으로 손댄 시각
     var idleTimer = null;
     // 아직 아무것도 받지 않았을 때 보여줄 칸. DB 응답이 오기 전에도, 결과가
@@ -202,6 +219,17 @@
     // (2026-09-04T07:00:00.123456+00:00). 사파리는 소수점 이하가 3자리를
     // 넘으면 Invalid Date 를 내서 시각이 NaN:NaN 으로 찍힌다. 크롬은 관대해
     // 그냥 파싱되므로 크롬에서만 멀쩡해 보인다. 3자리로 잘라서 넘긴다.
+    // 요청 하나에 시간 제한을 건다. 제한을 넘기면 abort 로 끊어서 catch 로
+    // 떨어뜨린다. 그래야 기다리던 표시가 반드시 풀린다.
+    function timeLimit(ms) {
+        if (typeof AbortController === "undefined") {
+            return { signal: undefined, clear: function () {} };
+        }
+        var ac = new AbortController();
+        var t = setTimeout(function () { ac.abort(); }, ms);
+        return { signal: ac.signal, clear: function () { clearTimeout(t); } };
+    }
+
     function parseTs(iso) {
         if (!iso) return null;
         var t = String(iso)
@@ -246,8 +274,13 @@
             btn.disabled = true;
             var prev = btn.textContent;
             btn.textContent = "…";
+            // 저장이 오가는 동안에는 자동 갱신이 표를 새로 그리지 않게 막는다.
+            writing++;
+            writingAt = Date.now();
+            var lim = timeLimit(REQ_TIMEOUT_MS);
             fetch(SUPABASE_URL + "/rest/v1/rpc/set_check_in", {
                 method: "POST",
+                signal: lim.signal,
                 headers: {
                     apikey: SUPABASE_ANON,
                     Authorization: "Bearer " + token,
@@ -265,6 +298,10 @@
                 .then(function (at) {
                     // 서버가 돌려준 시각을 그대로 쓴다. 브라우저 시계가 틀려도
                     // 표에 남는 값은 DB 가 정한 하나뿐이다.
+                    //
+                    // 내 화면이 낡아서 이미 찍힌 사람을 다시 눌렀다면, 서버는
+                    // 먼저 찍힌 시각을 그대로 돌려준다(덮어쓰지 않는다).
+                    // 그러면 여기서 그 시각이 그대로 들어와 화면이 사실과 맞는다.
                     row.checked_in_at = at;
                     paintCheckIn(btn, row);
                     vsay("");
@@ -276,7 +313,14 @@
                         ? "체크인 권한이 없습니다."
                         : "체크인에 실패했습니다 (" + m + ").", "bad");
                 })
-                .finally(function () { btn.disabled = false; });
+                .finally(function () {
+                    lim.clear();
+                    btn.disabled = false;
+                    if (writing > 0) writing--;
+                    // 방금 손을 댄 참이니 그 김에 전체를 한 번 맞춘다.
+                    // 옆 사람이 그 사이에 찍은 것도 같이 따라온다.
+                    refresh();
+                });
         });
         return btn;
     }
@@ -331,10 +375,12 @@
     var gotCount = 0, totalCount = null;
 
     function loadRoster() {
+        var lim = timeLimit(REQ_TIMEOUT_MS);
         return fetch(
             SUPABASE_URL + "/rest/v1/" + TABLE + "?select=*&order=name.asc",
             {
                 cache: "no-store",
+                signal: lim.signal,
                 headers: {
                     apikey: SUPABASE_ANON,
                     Authorization: "Bearer " + token,
@@ -378,7 +424,56 @@
                     ? when + " — 명단 " + totalCount + "명 중 " + gotCount +
                       "명만 받았습니다. Supabase 의 Max rows 설정을 확인하세요."
                     : when;
-        });
+        }).finally(function () { lim.clear(); });
+    }
+
+    // ── 자동 갱신 ──────────────────────────────────────────────────────
+    // 접수대에 여러 명이 서서 각자 자기 화면으로 체크인한다. 갱신이 없으면
+    // 옆 사람이 방금 찍은 것이 내 화면에 안 보여서, 같은 사람을 또 들여보내거나
+    // 이미 찍힌 시각을 덮어쓰게 된다.
+    //
+    // 조용히 돈다. 실패해도 화면에 오류를 띄우지 않는다 - 지하나 엘리베이터에서
+    // 잠깐 끊기는 것은 흔한 일이고, 다음 차례에 다시 받으면 그만이다.
+    // 다만 권한이 끊긴 것(401/403)은 다음 차례에도 안 풀리므로 그때는 잠근다.
+    // 받는 중이면 0 이 아닌, 시작한 시각. 참/거짓 하나로 두면 요청이 매달렸을 때
+    // 영영 '받는 중' 으로 남아 자동 갱신이 죽는다. 시각으로 두면 스스로 풀린다.
+    var loadingAt = 0;
+
+    // 지금 저장 중인가. 너무 오래 붙들려 있으면 잘못 남은 것으로 보고 푼다.
+    function busyWriting() {
+        if (writing <= 0) return false;
+        if (Date.now() - writingAt > STUCK_MS) { writing = 0; return false; }
+        return true;
+    }
+
+    function refresh() {
+        if (!token) return Promise.resolve();
+        // 이미 받는 중이면 겹쳐 부르지 않는다. 겹치면 늦게 떠난 요청이 먼저
+        // 도착해 낡은 명단이 새 명단을 덮는 일이 생긴다.
+        if (loadingAt && Date.now() - loadingAt < STUCK_MS) return Promise.resolve();
+        // 저장 중이면 건너뛴다. 지금 표를 새로 그리면 누르고 있는 단추가
+        // 통째로 사라진다.
+        if (busyWriting()) return Promise.resolve();
+        // 화면이 안 보이면 받을 이유가 없다. 배터리만 쓴다.
+        if (document.hidden) return Promise.resolve();
+        loadingAt = Date.now();
+        return loadRoster().catch(function (err) {
+            if (/DENIED/.test(String((err && err.message) || ""))) {
+                logout();
+                say("로그인이 만료되었습니다. 다시 로그인해 주세요.");
+            }
+            // 그 밖의 실패는 삼킨다. #fetched 의 '받은 시각' 이 안 바뀌는 것으로
+            // 무언가 멈췄다는 것이 드러난다.
+        }).finally(function () { loadingAt = 0; });
+    }
+
+    function startPolling() {
+        stopPolling();
+        pollTimer = setInterval(refresh, POLL_MS);
+    }
+
+    function stopPolling() {
+        if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
     }
 
     function openVault(userEmail) {
@@ -386,6 +481,7 @@
         gate.hidden = true;
         vault.hidden = false;
         startIdle();
+        startPolling();
         q.focus();
     }
 
@@ -436,9 +532,13 @@
         document.addEventListener(ev, function () { if (token) touch(); },
             { passive: true, capture: true });
     });
-    // 다른 앱에 갔다가 돌아온 순간에도 바로 판정한다.
+    // 다른 앱에 갔다가 돌아온 순간에도 바로 판정한다. 자리를 비운 사이에
+    // 옆 사람이 찍은 것이 있으므로 명단도 그 자리에서 다시 받는다.
+    // 15초를 기다리게 하면 돌아오자마자 낡은 화면을 보고 손을 대게 된다.
     document.addEventListener("visibilitychange", function () {
-        if (!document.hidden) idleTick();
+        if (document.hidden) return;
+        idleTick();
+        refresh();
     });
     if (idleBar) {
         idleBar.querySelector("button").addEventListener("click", touch);
@@ -447,12 +547,17 @@
     function logout() {
         // 서버에도 알려 토큰을 무효화한다. 실패해도 화면은 잠근다.
         if (token) {
-            fetch(SUPABASE_URL + "/auth/v1/logout", {
+            // scope=local 을 반드시 붙인다. 붙이지 않으면 Supabase 는 이 계정의
+            // 모든 자리를 한꺼번에 끊는다(global 이 기본값). 접수대 다섯이 같은
+            // admin 계정을 나눠 쓰는데, 한 사람이 자기 화면을 잠갔다고 나머지
+            // 넷이 같이 끊기면 안 된다.
+            fetch(SUPABASE_URL + "/auth/v1/logout?scope=local", {
                 method: "POST",
                 headers: { apikey: SUPABASE_ANON, Authorization: "Bearer " + token }
             }).catch(function () {});
         }
         stopIdle();
+        stopPolling();
         clearSession();
         token = null;
         whoEmail = "";

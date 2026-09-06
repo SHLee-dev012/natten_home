@@ -169,8 +169,16 @@ begin
         raise exception 'not an admin' using errcode = '42501';
     end if;
 
+    -- 이미 찍혀 있으면 그 시각을 그대로 둔다.
+    -- 접수대에 여러 명이 서면 누군가의 화면은 늘 몇 초쯤 낡아 있다. 그 화면에서
+    -- 이미 체크인된 사람을 다시 누르면 p_on = true 가 한 번 더 오는데, 여기서
+    -- 무조건 now() 를 넣으면 먼저 찍힌 도착 시각이 지워진다.
+    -- coalesce 로 첫 시각을 지킨다. 되돌리기(p_on = false)는 그대로 지운다.
     update public.roster
-       set checked_in_at = case when p_on then now() else null end
+       set checked_in_at = case
+               when p_on then coalesce(checked_in_at, now())
+               else null
+           end
      where id = p_id
     returning checked_in_at into v_at;
 
