@@ -497,32 +497,6 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
    작은 알약으로는 "다 나갔다"가 지나가듯 읽힌다. 굿즈 포스터의
    Limited Edition 별딱지와 같은 언어로, 카드 모서리에 비스듬히 붙인 것처럼
    둔다. 이 사이트가 이미 쓰는 모양이라 새로 들이는 것이 아니다. */
-/* 완판된 줄은 카드째로 세운다. 목록을 내려보는 눈에 이 줄만 상태가
-   다르다는 것이 걸려야 한다. */
-.join-ways li.is-sold {
-    position: relative;
-    border-left-color: var(--rose);
-    background:
-        radial-gradient(130% 150% at 100% 0%, rgba(244, 114, 182, .24), transparent 62%),
-        linear-gradient(180deg, rgba(244, 114, 182, .12), rgba(244, 114, 182, .05));
-    box-shadow:
-        inset 0 0 0 1px rgba(244, 114, 182, .24),
-        0 16px 36px -24px rgba(244, 114, 182, .85);
-}
-/* 완판된 줄에서는 단추가 주인공이 아니다. 다 나간 물건을 밝은 주단추로 계속
-   부르면 '품절인데 사라'로 읽힌다. 링크는 남긴다 — 무엇이 있었는지 구경은 할 수
-   있어야 한다. 다만 한 걸음 물러세운다. HTML 이 아니라 규칙으로 처리해서
-   is-sold 를 떼면 저절로 원래 단추로 돌아온다. */
-.join-ways li.is-sold .jw-go .btn {
-    background: transparent;
-    border-color: rgba(244, 114, 182, .45);
-    color: var(--rose);
-    font-weight: 600;
-}
-.join-ways li.is-sold .jw-go .btn:hover {
-    border-color: var(--rose);
-    background: rgba(244, 114, 182, .09);
-}
 @media (max-width: 640px) {
     .join-ways li { padding: 13px 15px; }
     .jw-desc { font-size: 14px; }
