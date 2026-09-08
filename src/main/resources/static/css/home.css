@@ -1540,6 +1540,53 @@ a.sched-btn-alert:hover, a.sched-btn-alert:focus-visible { background: rgba(167,
 .archive-sub { margin-bottom: 44px; }
 .archive-sub h4 { font-family: var(--serif); font-weight: 700; font-size: 17px; margin: 0 0 16px; display: flex; align-items: center; flex-wrap: wrap; }
 
+/* ---------- 언론 보도 ---------- */
+/* 매체 로고는 쓰지 않는다. 저작권이 걸리고, 기사가 늘 때마다 이미지를
+   구해 넣어야 한다. 글자만으로도 어느 매체인지 읽히면 그것으로 충분하다. */
+.press-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.press-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "meta arrow" "title arrow";
+    align-items: center; column-gap: 16px; row-gap: 6px;
+    padding: 15px 18px; border-radius: 12px;
+    border: 1px solid var(--line);
+    background: rgba(167, 139, 250, .05);
+    text-decoration: none;
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+}
+.press-meta {
+    grid-area: meta; display: flex; align-items: center; flex-wrap: wrap; gap: 8px;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em;
+}
+.press-outlet { color: var(--accent-solid); font-weight: 600; }
+.press-date { color: var(--faint); }
+/* 기사 제목이 이 줄의 주인공이다. 매체명보다 크고 밝게 둔다. */
+.press-title {
+    grid-area: title; color: var(--ink);
+    font-size: 15px; line-height: 1.6; font-weight: 500;
+    word-break: keep-all;
+}
+.press-arrow {
+    grid-area: arrow; color: var(--accent-solid); font-size: 15px;
+    transition: transform .15s ease;
+}
+.press-item:hover, .press-item:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(167, 139, 250, .45);
+    background: rgba(167, 139, 250, .1);
+}
+.press-item:hover .press-arrow, .press-item:focus-visible .press-arrow { transform: translateX(3px); }
+@media (prefers-reduced-motion: reduce) {
+    .press-item, .press-arrow { transition: none; }
+    .press-item:hover { transform: none; }
+    .press-item:hover .press-arrow { transform: none; }
+}
+@media (max-width: 640px) {
+    .press-item { padding: 13px 15px; column-gap: 12px; }
+    .press-title { font-size: 14.5px; }
+}
+
 /* ---------- FAMILY TREE ---------- */
 .ft-demo-tag { font-family: var(--mono); font-size: 10px; letter-spacing: .06em; color: var(--gold); border: 1px solid rgba(251,191,36,.5); border-radius: 999px; padding: 3px 8px; }
 .ft-line { font-size: 14.5px; color: var(--muted); margin: 14px 0 4px; }
