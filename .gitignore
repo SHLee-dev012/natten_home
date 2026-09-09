@@ -54,3 +54,9 @@ out/
 /src/main/resources/static/img/낯8 DJ T3K.jpg
 /src/main/resources/static/img/낯C3,5,7 D.KIM.jpg
 /src/main/resources/static/img/낯C5,6 DPC.jpg
+
+# 후원자 명단 등 개인정보가 든 CSV 는 절대 저장소에 올리지 않는다.
+# 이 저장소는 공개이고 GitHub Pages 로 그대로 배포된다.
+# 예외로 올려야 하는 서식 파일은 db/ 아래 두고 아래에서 따로 허용한다.
+*.csv
+!db/roster-template.csv
