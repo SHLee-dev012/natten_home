@@ -739,6 +739,12 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 .lecture-card .room { font-family: var(--mono); font-size: 12.5px; font-weight: 700; color: var(--accent-solid); margin-bottom: 8px; letter-spacing: .04em; display: block; }
 .lecture-card .field { font-family: var(--mono); font-size: 10.5px; letter-spacing: .05em; color: var(--gold); border: 1px solid rgba(251,191,36,.5); border-radius: 999px; padding: 2px 8px; display: inline-block; margin-bottom: 9px; }
 .lecture-card .kw { font-family: var(--serif); font-size: 14.5px; font-weight: 700; line-height: 1.45; margin-bottom: 6px; }
+/* 강연 제목 아래 부제. 제목보다 작고 옅게 둬서 읽는 차례가 뒤가 되게 한다.
+   아래 해시태그(.who)와도 구분돼야 하므로 글꼴은 본문 계열로 둔다. */
+.lecture-card .kw-sub {
+    font-size: 13px; line-height: 1.6; color: var(--muted);
+    margin: -2px 0 8px; text-wrap: balance; word-break: keep-all;
+}
 .lecture-card .who { font-size: 12.5px; color: var(--muted);
     /* 띄어쓰기 없는 긴 해시태그라 아무 데서나 끊긴다. 마지막 줄에
        한 글자만 남는 것을 막는다 */
