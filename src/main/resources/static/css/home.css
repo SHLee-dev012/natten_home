@@ -845,8 +845,38 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* ---------- FLOOR-5 도서관 (목록카드) ---------- */
 
 /* 도서 목록카드 (index card) */
-.archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 30px; }
+/* 카드가 셋에서 둘로 줄었다. 고정 3열로 두면 한 칸이 비어 보인다. */
+.archive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 30px; }
 @media (max-width: 820px) { .archive-grid { grid-template-columns: 1fr; } }
+
+/* 온라인 졸업앨범. 세 카드 중 하나로 나란히 있으면 '전시 셋 중 하나'로 읽힌다.
+   전시는 이틀뿐이고 이것만 남는 것이라, 카드에서 꺼내 판으로 세운다.
+   색은 이 층의 색(--stamp)을 쓴다. */
+.album-online {
+    position: relative; margin-top: 30px; padding: 30px 28px; border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--stamp) 38%, transparent);
+    background:
+        radial-gradient(120% 90% at 12% 0%, color-mix(in srgb, var(--stamp) 12%, transparent), transparent 58%),
+        var(--glass);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--stamp) 7%, transparent),
+                0 18px 44px -26px color-mix(in srgb, var(--stamp) 45%, transparent);
+}
+.album-online .ao-tag {
+    display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 700;
+    letter-spacing: .06em; color: var(--stamp);
+    border: 1px solid color-mix(in srgb, var(--stamp) 50%, transparent);
+    border-radius: 999px; padding: 3px 10px; margin-bottom: 14px;
+}
+.album-online h3 {
+    font-family: var(--serif); font-weight: 800;
+    font-size: clamp(20px, 2.6vw, 25px); margin: 0 0 10px; letter-spacing: -.01em;
+}
+.album-online p {
+    font-size: 15px; line-height: 1.8; color: var(--muted); margin: 0;
+    max-width: 62ch; word-break: keep-all;
+}
+@media (max-width: 520px) { .album-online { padding: 24px 20px; } }
 .archive-card {
     position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 22px 20px;
     background: var(--glass);
@@ -901,34 +931,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* 사진 접수 — 졸업앨범 대지(臺紙)처럼 보이게 한다.
    위 세 카드가 보라 계열이라 이 카드만 금색으로 잡아 눈에 먼저 들어오게 했다.
    배경의 옅은 모눈은 앨범 속지에서 가져왔다. */
-.album-progress {
-    position: relative; margin-top: 30px; border-radius: 14px; padding: 30px 28px; overflow: hidden;
-    border: 1px solid color-mix(in srgb, var(--gold) 38%, transparent);
-    background:
-        /* 모눈 — 22px 간격으로 아주 옅게 */
-        repeating-linear-gradient(90deg, rgba(251,191,36,.05) 0 1px, transparent 1px 22px),
-        repeating-linear-gradient(0deg,  rgba(251,191,36,.05) 0 1px, transparent 1px 22px),
-        radial-gradient(120% 90% at 12% 0%, rgba(251,191,36,.10), transparent 58%),
-        var(--glass);
-    box-shadow: 0 0 0 1px rgba(251,191,36,.06), 0 18px 44px -26px rgba(251,191,36,.45);
-}
-.due-stamp {
-    position: absolute; top: 26px; right: 28px; transform: rotate(-9deg);
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
-    border: 2px solid rgba(244, 114, 182, 0.6); border-radius: 6px; padding: 6px 14px;
-    color: rgba(244, 114, 182, 0.85);
-}
-.due-stamp b { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; }
-.due-stamp i { font-family: var(--serif); font-style: normal; font-weight: 700; font-size: 18px; letter-spacing: 0.04em; }
-.album-progress .bar { height: 9px; background: rgba(0,0,0,.28); border-radius: 5px; overflow: hidden;
-    margin: 16px 0 11px; box-shadow: inset 0 1px 2px rgba(0,0,0,.35); }
-.album-progress .bar > i { display: block; height: 100%; width: 0%;
-    background: linear-gradient(90deg, #fbbf24, #f472b6); border-radius: 5px; }
-.album-progress small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
-.album-progress .cta-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; }
-
-/* 선배 목록 아래 홀로 서는 신청 줄. album-progress 안의 cta-line은 카드가
-   배경을 맡아 줬지만, 여기는 기댈 카드가 없어 스스로 테두리를 두른다. */
+/* 선배 목록 아래 홀로 서는 신청 줄. 기댈 카드가 없어 스스로 테두리를 두른다. */
 .cta-line-solo { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
     gap: 16px; margin-top: 18px; padding: 18px 20px; border-radius: 14px;
     border: 1px solid color-mix(in srgb, var(--accent-solid) 34%, transparent);
@@ -990,10 +993,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
    끝나 경계가 덜 느껴진다. 이 섹션만 줄인다. */
 #floor-5 { padding-bottom: 40px; }
 @media (max-width: 640px) { #floor-5 { padding-bottom: 22px; } }
-@media (max-width: 520px) {
-    .due-stamp { display: none; }
-    .album-progress { padding: 24px 20px; }
-}
+
 
 /* ---------- FLOOR-6 옥상광장 (루프탑 파티) ---------- */
 /* 노을~밤 루프탑 무드 배너 */
