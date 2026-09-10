@@ -98,6 +98,25 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 }
 .idle b { font-family: var(--mono); font-size: 15px; color: var(--bad); }
 .idle .btn { padding: 8px 14px; min-height: 38px; font-size: 13px; margin-left: auto; }
+/* 제목과 검색칸을 화면 위에 붙여 둔다. 252명을 훑는 동안 다음 사람을
+   찾으려고 매번 맨 위로 올라가야 하면 접수대가 느려진다.
+   배경을 칠하는 것이 핵심이다 — 투명하면 아래 명단이 글자 사이로 비친다. */
+.vault-sticky {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--bg);
+    /* .wrap 의 좌우 여백만큼 넓혀 붙여야, 스크롤한 줄이 옆으로 새어 보이지 않는다. */
+    margin: -48px -20px 0; padding: 48px 20px 12px;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 10px 18px -14px rgba(20, 22, 31, .35);
+}
+@media (max-width: 620px) {
+    /* 좁은 화면에서는 위 여백을 줄여 명단이 보일 자리를 남긴다.
+       .wrap 과 .vault-sticky 를 같이 줄여야 한다 - 한쪽만 줄이면
+       음수 여백이 어긋나 위쪽에 안 덮인 띠가 생긴다. */
+    .wrap { padding-top: 24px; }
+    .vault-sticky { margin-top: -24px; padding-top: 24px; padding-bottom: 10px; }
+}
+
 .vault-head {
     display: flex; align-items: flex-start; justify-content: space-between;
     gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
