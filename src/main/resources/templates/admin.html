@@ -68,40 +68,36 @@
             <button class="btn btn-ghost" type="button">계속 보기</button>
         </p>
 
-        <!-- 스크롤해도 제목과 검색칸이 화면에 남아야 한다. 접수대에서는
-             명단을 훑다가 바로 다음 사람을 찾는 일이 반복된다. -->
-        <div class="vault-sticky">
-            <div class="vault-head">
-                <div>
-                    <h1>후원자 명단</h1>
-                    <p class="lead" id="who"></p>
-                    <!-- 접속이 언제 끝나는지. 접수대에서 "언제 다시 로그인해야 하나"를
-                         콘솔을 열지 않고 눈으로 알 수 있어야 한다. -->
-                    <p class="until" id="until" hidden></p>
-                </div>
-                <div class="vault-actions">
-                    <button class="btn btn-ghost" type="button" id="reload"
-                            title="데이터베이스에서 명단을 다시 받아옵니다 (로그아웃하지 않음)">다시 불러오기</button>
-                    <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
-                </div>
+        <div class="vault-head">
+            <div>
+                <h1>후원자 명단</h1>
+                <p class="lead" id="who"></p>
+                <!-- 접속이 언제 끝나는지. 접수대에서 "언제 다시 로그인해야 하나"를
+                     콘솔을 열지 않고 눈으로 알 수 있어야 한다. -->
+                <p class="until" id="until" hidden></p>
             </div>
-
-            <!-- 검색은 폼이다. 폼이라야 휴대폰 키보드에 '검색' 키가 뜨고, 누르면
-                 키보드가 닫히면서 결과가 보인다. 데스크톱에서는 치는 대로 걸러진다. -->
-            <form class="tools" id="find-form" autocomplete="off">
-                <label class="field field-inline">
-                    <!-- '검색' 글자를 빼고 자리를 입력칸에 넘긴다. 무엇을 넣는
-                         칸인지는 안내글이 이미 말해준다. 다만 보이는 이름이
-                         사라지면 스크린리더가 읽을 것이 없어 aria-label 로 남긴다. -->
-                    <input type="search" id="q" name="q" enterkeyhint="search"
-                           aria-label="후원자 검색"
-                           placeholder="이름 또는 전화 뒤 4자리"
-                           autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
-                </label>
-                <button class="btn" type="submit" id="find">조회</button>
-                <span class="count" id="count"></span>
-            </form>
+            <div class="vault-actions">
+                <button class="btn btn-ghost" type="button" id="reload"
+                        title="데이터베이스에서 명단을 다시 받아옵니다 (로그아웃하지 않음)">다시 불러오기</button>
+                <button class="btn btn-ghost" type="button" id="lock">로그아웃</button>
+            </div>
         </div>
+
+        <!-- 검색은 폼이다. 폼이라야 휴대폰 키보드에 '검색' 키가 뜨고, 누르면
+             키보드가 닫히면서 결과가 보인다. 데스크톱에서는 치는 대로 걸러진다. -->
+        <form class="tools" id="find-form" autocomplete="off">
+            <label class="field field-inline">
+                <!-- '검색' 글자를 빼고 자리를 입력칸에 넘긴다. 무엇을 넣는
+                     칸인지는 안내글이 이미 말해준다. 다만 보이는 이름이
+                     사라지면 스크린리더가 읽을 것이 없어 aria-label 로 남긴다. -->
+                <input type="search" id="q" name="q" enterkeyhint="search"
+                       aria-label="후원자 검색"
+                       placeholder="이름 또는 전화 뒤 4자리"
+                       autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+            </label>
+            <button class="btn" type="submit" id="find">조회</button>
+            <span class="count" id="count"></span>
+        </form>
 
         <!-- 금고 안에서 나는 말(체크인 실패 등). 로그인 화면의 gate-msg 는
              금고가 열리면 함께 숨으므로 여기 따로 둔다. -->

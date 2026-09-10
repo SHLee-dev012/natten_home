@@ -98,25 +98,6 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 }
 .idle b { font-family: var(--mono); font-size: 15px; color: var(--bad); }
 .idle .btn { padding: 8px 14px; min-height: 38px; font-size: 13px; margin-left: auto; }
-/* 제목과 검색칸을 화면 위에 붙여 둔다. 252명을 훑는 동안 다음 사람을
-   찾으려고 매번 맨 위로 올라가야 하면 접수대가 느려진다.
-   배경을 칠하는 것이 핵심이다 — 투명하면 아래 명단이 글자 사이로 비친다. */
-.vault-sticky {
-    position: sticky; top: 0; z-index: 20;
-    background: var(--bg);
-    /* .wrap 의 좌우 여백만큼 넓혀 붙여야, 스크롤한 줄이 옆으로 새어 보이지 않는다. */
-    margin: -48px -20px 0; padding: 48px 20px 12px;
-    border-bottom: 1px solid var(--line);
-    box-shadow: 0 10px 18px -14px rgba(20, 22, 31, .35);
-}
-@media (max-width: 620px) {
-    /* 좁은 화면에서는 위 여백을 줄여 명단이 보일 자리를 남긴다.
-       .wrap 과 .vault-sticky 를 같이 줄여야 한다 - 한쪽만 줄이면
-       음수 여백이 어긋나 위쪽에 안 덮인 띠가 생긴다. */
-    .wrap { padding-top: 24px; }
-    .vault-sticky { margin-top: -24px; padding-top: 24px; padding-bottom: 10px; }
-}
-
 .vault-head {
     display: flex; align-items: flex-start; justify-content: space-between;
     gap: 16px; flex-wrap: wrap; margin-bottom: 18px;
@@ -169,8 +150,17 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
 .chk-on:hover:not(:disabled) { background: #166534; }
 .cell-checkin { white-space: nowrap; }
 
-/* 넓은 표는 페이지가 아니라 표 자신이 옆으로 흐르게 한다. */
-.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 11px; }
+/* 표머리(체크인·이름·…)를 화면 위에 붙여 두려면 이 칸이 스크롤칸이 아니어야
+   한다. overflow-x:auto 는 세로도 auto 로 만들어, 표머리의 sticky 가 이 칸
+   안쪽에 갇힌다 - 페이지를 아무리 내려도 표머리가 같이 올라가 버렸다.
+   clip 은 스크롤칸을 만들지 않으면서 둥근 모서리는 그대로 잘라준다. */
+.table-scroll { overflow: clip; border: 1px solid var(--line); border-radius: 11px; }
+/* 표가 실제로 요구하는 최소 너비는 638px 이다. 그보다 좁은 구간에서만
+   가로로 밀어 읽게 한다. 이 구간에서는 표머리가 붙지 않지만,
+   칸을 잘라 감추는 것보다는 낫다. */
+@media (min-width: 621px) and (max-width: 678px) {
+    .table-scroll { overflow-x: auto; overflow-y: auto; }
+}
 
 /* 현장에서 폰을 들고 읽는 화면이라 본문보다 크게 잡는다.
    14px 는 팔을 뻗은 거리에서 숫자를 가늠하기에 작았다. */
@@ -182,7 +172,10 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
        한 단 진하게 잡아 본문 기준(4.5)을 넘긴다. */
     background: var(--panel); color: #565c6e;
     font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .06em;
-    border-bottom: 1px solid var(--line);
+    /* border-collapse 표에서 아래 테두리는 칸이 아니라 표에 속한다. 표머리가
+       sticky 로 떠오르면 그 선만 제자리에 남아 첫 줄이 머리에 딱 붙어 보인다.
+       inset 그림자는 칸이 직접 그리므로 떠 있어도 따라온다. */
+    box-shadow: inset 0 -1px 0 var(--line);
 }
 .roster tbody tr { border-top: 1px solid #e6e8ef; }
 /* 빈 표는 고장난 것처럼 보인다. 왜 비었는지 알리는 한 줄. */
