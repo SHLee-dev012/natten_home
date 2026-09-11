@@ -502,24 +502,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="archive-card"><span class="room-tag">13:00–19:00</span><h4>역사 전시 : 낯선 HISTORY</h4><p>10년의 입학과 졸업. 그 사이에 피어난 우리의 역사를 전시합니다. 낯선대학의 역사와 우리의 이야기를 감상해 보세요.</p></div>
             <div class="archive-card"><span class="room-tag">13:00–19:00</span><h4>공모 전시 : 낯선 STORY</h4><p>함께했던 10년간의 낯선 이야기. 여러분의 장면을 기다립니다. 사진첩 속 &#8216;소중한 낯대&#8217;의 순간과 그때의 이야기를 함께 보내주세요.</p></div>
         </div>
-        <!-- 온라인 졸업앨범은 이제 '만들 예정'이 아니라 문이 열린 전시다.
-             들어가는 문이 한눈에 보이도록 글과 버튼을 좌우로 나눈다. -->
+        <!-- 위 전시 카드 두 장과 같은 무게면 세 번째 카드로 읽힌다. 이 자리는
+             카드가 아니라 '들어가는 문'이라, 전시장 벽을 그려 무게를 올린다.
+             다섯 칸은 장식이 아니라 실제 전시실 다섯 곳이고 순서도 관람 동선 그대로다. -->
         <div class="album-online reveal" id="album">
-            <div class="ao-copy">
+            <div class="ao-head">
                 <span class="ao-tag">ONLINE · 상시 관람</span>
                 <h3>온라인 졸업앨범</h3>
                 <p class="ao-quote">&#8220;우리가 함께 울고 웃었던 순간들&#8221;</p>
-                <p>10년의 사진을 한자리에 모은 <b>낯선대학 10주년 사진전</b>이 열렸습니다. 전시실을 천천히 걸어 다니며, 그때의 장면을 하나씩 꺼내 보세요. 축제가 끝난 뒤에도 언제든 다시 찾아올 수 있는 자리입니다.</p>
-                <ul class="ao-rooms">
-                    <li>낯선대학</li>
-                    <li>낯선대학&#160;C</li>
-                    <li>낯선대학&#160;Y</li>
-                    <li>낯선대학&#160;M</li>
-                    <li>전시를 마치며</li>
-                </ul>
+                <p class="ao-body">10년의 사진을 한자리에 모은 <b>낯선대학 10주년 사진전</b>이 열렸습니다. 전시실을 천천히 걸어 다니며, 그때의 장면을 하나씩 꺼내 보세요. 축제가 끝난 뒤에도 언제든 다시 찾아올 수 있는 자리입니다.</p>
             </div>
+
+            <!-- 전시장 벽. 액자는 비어 있는 것이 아니라 전시실 이름을 단 안내판이다. -->
+            <ul class="ao-wall" aria-label="전시실 다섯 곳">
+                <li class="ao-room"><span class="ao-frame" aria-hidden="true"></span><span class="ao-plate">낯선대학</span></li>
+                <li class="ao-room"><span class="ao-frame" aria-hidden="true"></span><span class="ao-plate">낯선대학&#160;C</span></li>
+                <li class="ao-room"><span class="ao-frame" aria-hidden="true"></span><span class="ao-plate">낯선대학&#160;Y</span></li>
+                <li class="ao-room"><span class="ao-frame" aria-hidden="true"></span><span class="ao-plate">낯선대학&#160;M</span></li>
+                <li class="ao-room"><span class="ao-frame" aria-hidden="true"></span><span class="ao-plate">전시를 마치며</span></li>
+            </ul>
+
             <div class="ao-go">
-                <a class="btn btn-solid" data-gtm="album-online"
+                <a class="btn btn-solid ao-btn" data-gtm="album-online"
                    href="https://dalchef.github.io/knotsun/" target="_blank" rel="noopener noreferrer"
                    aria-label="온라인 졸업앨범 전시 입장 (새 창)">전시 입장하기</a>
                 <!-- 사무실에서 무심코 눌렀다가 놀라지 않도록 미리 알린다. -->

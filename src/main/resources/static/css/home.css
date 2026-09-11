@@ -858,65 +858,108 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
 /* 온라인 졸업앨범. 세 카드 중 하나로 나란히 있으면 '전시 셋 중 하나'로 읽힌다.
    전시는 이틀뿐이고 이것만 남는 것이라, 카드에서 꺼내 판으로 세운다.
    색은 이 층의 색(--stamp)을 쓴다. */
+/* 5F 전시 입구. 위 전시 카드 두 장과 같은 무게로 두면 세 번째 카드로 읽혀
+   그냥 지나친다. 그래서 카드가 아니라 '전시장 벽'으로 그린다 —
+   위에서 조명이 떨어지고, 액자 다섯이 걸려 있고, 그 아래 바닥선이 있다.
+   6F 루프탑 무대와 같은 결이되 색만 5F 의 보라(--stamp)로 간다. */
 .album-online {
-    position: relative; margin-top: 30px; padding: 30px 28px; border-radius: 14px;
-    border: 1px solid color-mix(in srgb, var(--stamp) 38%, transparent);
+    position: relative; overflow: hidden; isolation: isolate;
+    margin-top: 44px; padding: 46px 32px 40px; text-align: center;
+    border-radius: 20px;
+    border: 1px solid color-mix(in srgb, var(--stamp) 42%, transparent);
     background:
-        radial-gradient(120% 90% at 12% 0%, color-mix(in srgb, var(--stamp) 12%, transparent), transparent 58%),
-        var(--glass);
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--stamp) 7%, transparent),
-                0 18px 44px -26px color-mix(in srgb, var(--stamp) 45%, transparent);
+        radial-gradient(130% 80% at 50% -8%, color-mix(in srgb, var(--stamp) 26%, transparent), transparent 62%),
+        linear-gradient(180deg, rgba(22, 18, 46, .80), rgba(16, 18, 42, .72));
+    box-shadow: 0 30px 78px -42px color-mix(in srgb, var(--stamp) 72%, transparent),
+                inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+/* 천장 조명 한 줄기. 벽 위쪽만 밝히고 아래로 사라진다. */
+.album-online::before {
+    content: ""; position: absolute; inset: 0 0 auto; height: 62%; z-index: -1;
+    background: radial-gradient(58% 100% at 50% 0%, color-mix(in srgb, var(--stamp) 20%, transparent), transparent 70%);
+    pointer-events: none;
 }
 .album-online .ao-tag {
     display: inline-block; font-family: var(--mono); font-size: 12px; font-weight: 700;
     letter-spacing: .06em; color: var(--stamp);
     border: 1px solid color-mix(in srgb, var(--stamp) 50%, transparent);
     border-radius: 999px; padding: 3px 10px; margin-bottom: 14px;
+    background: color-mix(in srgb, var(--stamp) 10%, transparent);
 }
+/* 카드 제목(17px)보다 확실히 크게 잡아야 '여기가 다른 자리'로 읽힌다. */
 .album-online h3 {
     font-family: var(--serif); font-weight: 800;
-    font-size: clamp(20px, 2.6vw, 25px); margin: 0 0 10px; letter-spacing: -.01em;
+    font-size: clamp(25px, 3.4vw, 34px); margin: 0 0 10px; letter-spacing: -.02em;
+    text-wrap: balance;
 }
-.album-online p {
-    font-size: 15px; line-height: 1.8; color: var(--muted); margin: 0;
-    max-width: 62ch; word-break: keep-all;
-}
-.album-online p b { color: var(--ink); font-weight: 700; }
-/* 전시가 스스로를 소개하는 한 줄. 본문보다 한 뼘 앞에 세운다. */
+/* 전시가 스스로를 소개하는 한 줄. */
 .album-online .ao-quote {
-    font-family: var(--serif); font-size: clamp(15px, 1.9vw, 17px);
-    color: color-mix(in srgb, var(--stamp) 72%, #ffffff); margin: 0 0 12px;
+    font-family: var(--serif); font-size: clamp(15px, 1.9vw, 18px);
+    color: color-mix(in srgb, var(--stamp) 62%, #ffffff); margin: 0 0 14px;
 }
-/* 글과 들어가는 문을 좌우로 나눈다. 버튼이 글 끝까지 내려가 숨지 않도록
-   따로 칸을 준다. 좁아지면 한 줄로 쌓는다. */
-.album-online {
-    display: grid; grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center; gap: 22px 30px;
+.album-online .ao-body {
+    font-size: 15px; line-height: 1.8; color: var(--muted); margin: 0 auto;
+    max-width: 58ch; word-break: keep-all;
 }
-.ao-go { display: flex; flex-direction: column; align-items: stretch; gap: 9px; }
-.ao-go .btn { justify-content: center; white-space: nowrap; }
+.album-online .ao-body b { color: var(--ink); font-weight: 700; }
+
+/* 벽에 걸린 액자 다섯. 전시실 다섯 곳이고 왼쪽부터가 관람 순서다. */
+.ao-wall {
+    list-style: none; margin: 30px 0 0; padding: 0 0 16px;
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 14px;
+    position: relative;
+}
+/* 바닥선 — 액자가 허공이 아니라 벽에 걸려 있다고 읽히게 한다. */
+.ao-wall::after {
+    content: ""; position: absolute; left: 8%; right: 8%; bottom: 0; height: 1px;
+    background: linear-gradient(90deg, transparent,
+                color-mix(in srgb, var(--stamp) 62%, transparent) 18%,
+                color-mix(in srgb, var(--stamp) 62%, transparent) 82%, transparent);
+}
+.ao-room { display: flex; flex-direction: column; align-items: center; gap: 8px; width: 104px; }
+/* 액자 틀 + 종이 마운트. 속을 어둡게 두면 빈 상자로 읽혀
+   "사진이 없네" 가 된다. 마운트는 밝게, 속은 조명을 받은 면으로 채운다. */
+.ao-frame {
+    display: block; width: 100%; aspect-ratio: 4 / 3; border-radius: 3px;
+    border: 2px solid color-mix(in srgb, var(--stamp) 58%, transparent);
+    padding: 4px;
+    background: color-mix(in srgb, var(--stamp) 15%, rgba(255, 255, 255, .10));
+    box-shadow: 0 10px 18px -10px rgba(0, 0, 0, .75);
+}
+/* 액자 속 그림 면. 위에서 떨어지는 조명이 비스듬히 걸친 것처럼 칠한다. */
+.ao-frame::before {
+    content: ""; display: block; width: 100%; height: 100%; border-radius: 1px;
+    background:
+        linear-gradient(200deg, rgba(255, 255, 255, .40), rgba(255, 255, 255, .07) 44%, transparent 72%),
+        linear-gradient(160deg, color-mix(in srgb, var(--stamp) 58%, transparent),
+                                color-mix(in srgb, #22d3ee 26%, transparent));
+}
+/* 다섯 점이 똑같으면 무늬가 된다. 걸린 각도를 조금씩 달리해 서로 다른 그림으로 읽히게. */
+.ao-room:nth-child(2) .ao-frame::before { background-position: 0 -6px, 0 0; filter: hue-rotate(-12deg); }
+.ao-room:nth-child(3) .ao-frame::before { filter: hue-rotate(14deg) brightness(1.06); }
+.ao-room:nth-child(4) .ao-frame::before { filter: hue-rotate(-22deg) brightness(.96); }
+.ao-room:nth-child(5) .ao-frame::before { filter: saturate(.55) brightness(1.04); }
+/* 액자 아래 명판. 전시실 이름을 여기 단다. */
+.ao-plate {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .02em;
+    color: var(--muted); text-align: center; word-break: keep-all; line-height: 1.4;
+}
+
+.ao-go { margin-top: 26px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+/* 문은 글보다 커야 한다. 기본 .btn 보다 한 단 키운다. */
+.ao-btn { padding: 15px 34px; font-size: 15px; font-weight: 700; }
 .ao-note {
     font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
-    color: var(--faint); text-align: center; word-break: keep-all;
+    color: var(--faint); word-break: keep-all;
 }
-/* 전시실 다섯 곳. 관람 순서가 있는 동선이라 차례대로 늘어놓는다. */
-.ao-rooms {
-    list-style: none; margin: 16px 0 0; padding: 0;
-    display: flex; flex-wrap: wrap; gap: 7px;
+
+@media (max-width: 620px) {
+    .album-online { padding: 36px 20px 32px; margin-top: 32px; }
+    /* 다섯 칸이 한 줄에 안 들어간다. 셋 + 둘로 접히게 폭만 줄인다. */
+    .ao-room { width: 88px; }
+    .ao-wall { gap: 12px 10px; }
+    .ao-btn { width: 100%; justify-content: center; }
 }
-.ao-rooms li {
-    font-family: var(--mono); font-size: 11.5px; letter-spacing: .03em;
-    color: var(--muted); padding: 4px 10px; border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--stamp) 26%, transparent);
-    background: color-mix(in srgb, var(--stamp) 7%, transparent);
-}
-@media (max-width: 760px) {
-    .album-online { grid-template-columns: 1fr; align-items: start; }
-    .ao-go { align-items: flex-start; }
-    .ao-go .btn { width: 100%; }
-    .ao-note { text-align: left; }
-}
-@media (max-width: 520px) { .album-online { padding: 24px 20px; } }
 .archive-card {
     position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 22px 20px;
     background: var(--glass);
