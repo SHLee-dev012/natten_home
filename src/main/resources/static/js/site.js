@@ -1,5 +1,65 @@
 // 축제 홈 인터랙션 — 스크롤 스파이 · 리빌 · 일정표 탭 · 계좌복사 · 낯선가계도 데모
 (function () {
+  // 해시를 달고 들어오면(새로고침·공유 링크) 그 자리로 가지 않고 맨 위에 선다.
+  //
+  // html 에 scroll-behavior: smooth 가 걸려 있어서다. 브라우저는 해시로
+  // 가려고 '부드럽게' 움직이는데, 그 사이 폰트·이미지가 자리를 잡으며 문서
+  // 높이가 바뀌면 애니메이션이 중간에 끊겨 시작점에 그대로 남는다. 길이가
+  // 긴 페이지일수록, 회선이 느릴수록 잘 일어난다 - 폰에서 특히 그렇다.
+  //
+  // 재 보니 smooth 일 때 scrollY 가 0(계좌칸은 4306px 아래), auto 로 바꾸면
+  // 4222 로 정확히 선다. overflow-x: clip 은 무관한 것도 함께 확인했다.
+  //
+  // 그래서 '들어올 때 한 번만' 즉시 스크롤로 바꿔 정확히 세우고 되돌린다.
+  // 메뉴를 눌러 이동할 때의 부드러운 스크롤은 그대로 살아 있다.
+  (function () {
+    var hash = location.hash;
+    if (!hash || hash.length < 2) return;
+
+    var target = null;
+    try { target = document.querySelector(hash); } catch (e) { return; }  // '#1abc' 같은 건 선택자가 아니다
+    if (!target) return;
+
+    var root = document.documentElement;
+    function jump() {
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      target.scrollIntoView();          // scroll-margin-top 은 그대로 지켜진다
+      root.style.scrollBehavior = prev;
+      return Math.round(window.pageYOffset);
+    }
+
+    // 한 번만 맞춰서는 모자란다. 늦게 오는 이미지가 위쪽에서 자리를 잡으면
+    // 그만큼 목표가 밀리고(못 미침), 줄면 지나친다. 자리가 잡힐 때까지
+    // 몇 번 더 확인한다 - 이미 제자리면 아무 일도 일어나지 않는다.
+    //
+    // 사람이 직접 스크롤을 시작하면 즉시 손을 뗀다. 읽고 있는데 화면이
+    // 저 혼자 튀는 것만큼 나쁜 것이 없다.
+    var landed = -1, touched = false;
+    function onUserScroll() {
+      // 우리가 옮긴 직후의 스크롤 이벤트는 사람이 한 것이 아니다.
+      if (landed >= 0 && Math.abs(window.pageYOffset - landed) < 2) return;
+      touched = true;
+      window.removeEventListener('scroll', onUserScroll);
+    }
+
+    function settleTo() {
+      if (touched) return;
+      landed = jump();
+    }
+
+    window.addEventListener('load', function () {
+      settleTo();
+      window.addEventListener('scroll', onUserScroll, { passive: true });
+      [120, 350, 800, 1500].forEach(function (ms) { setTimeout(settleTo, ms); });
+      window.addEventListener('resize', settleTo, { passive: true });
+      setTimeout(function () {
+        window.removeEventListener('scroll', onUserScroll);
+        window.removeEventListener('resize', settleTo);
+      }, 1800);
+    });
+  })();
+
   // 진입 애니메이션 스위치. 이게 붙어야 CSS가 초기 상태를 숨긴다.
   // 관찰자를 걸 수 없는 환경에서는 붙이지 않아 내용이 그대로 보인다.
   var canObserve = 'IntersectionObserver' in window;
