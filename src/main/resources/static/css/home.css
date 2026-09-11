@@ -969,28 +969,28 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     .album-online {
         margin-top: 40px;
         /* 바깥 립 — 네 변의 색이 달라 모서리가 45도로 맞물린다. */
-        border-style: solid; border-width: 4px;
+        border-style: solid; border-width: 3px;
         border-top-color: color-mix(in srgb, var(--stamp) 62%, #ffffff 20%);
         border-left-color: color-mix(in srgb, var(--stamp) 48%, #ffffff 8%);
         border-right-color: #16122e;
         border-bottom-color: #0c0a1a;
         /* 네모난 틀은 액자보다 상자로 보인다. 옛날 초상 액자처럼 윗변을
            아치로 세운다. 가로/세로 반지름을 따로 줘야 아치가 완만해진다. */
-        border-radius: 48% 48% 9px 9px / 15% 15% 4px 4px;
-        padding: 21px;                       /* 코브(골)의 폭 */
+        border-radius: 48% 48% 9px 9px / 10% 10% 4px 4px;
+        padding: 13px;                       /* 코브(골)의 폭 */
         /* 네 귀의 장식못 + 결 + 움푹 들어간 골.
            몰딩은 페이지 바탕보다 확실히 밝아야 '테두리'가 아니라 '틀'로 보인다. */
         background:
-            radial-gradient(circle at 13px 13px,
+            radial-gradient(circle at 9px 9px,
                 color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 2.6px,
                 color-mix(in srgb, var(--stamp) 30%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at calc(100% - 13px) 13px,
+            radial-gradient(circle at calc(100% - 9px) 9px,
                 color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 2.6px,
                 color-mix(in srgb, var(--stamp) 30%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at 13px calc(100% - 13px),
+            radial-gradient(circle at 9px calc(100% - 9px),
                 color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 2.6px,
                 color-mix(in srgb, var(--stamp) 26%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at calc(100% - 13px) calc(100% - 13px),
+            radial-gradient(circle at calc(100% - 9px) calc(100% - 9px),
                 color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 2.6px,
                 color-mix(in srgb, var(--stamp) 26%, #000000) 3px, transparent 4px),
             repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 5px),
@@ -1011,10 +1011,10 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     /* 매트와 그 둘레의 가는 금선(필릿). 여기도 네 변 색을 달리해
        모서리가 한 번 더 맞물린다 - 층이 두 겹인 액자가 된다. */
     .album-online::before {
-        display: block; position: absolute; inset: 21px;
-        left: 21px; right: 21px; top: 21px; bottom: 21px;
-        background: none; border-radius: 47% 47% 3px 3px / 15% 15% 2px 2px;
-        border-style: solid; border-width: 15px;
+        display: block; position: absolute; inset: 13px;
+        left: 13px; right: 13px; top: 13px; bottom: 13px;
+        background: none; border-radius: 47% 47% 3px 3px / 10% 10% 2px 2px;
+        border-style: solid; border-width: 10px;
         border-top-color: color-mix(in srgb, var(--stamp) 9%, transparent);
         border-left-color: color-mix(in srgb, var(--stamp) 11%, transparent);
         border-right-color: color-mix(in srgb, var(--stamp) 14%, transparent);
@@ -1027,8 +1027,8 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     }
     .ao-spread {
         grid-template-columns: 1fr;
-        margin: 15px;                        /* 매트 폭과 같게 */
-        border-radius: 46% 46% 2px 2px / 14% 14% 1px 1px;
+        margin: 10px;                        /* 매트 폭과 같게 */
+        border-radius: 46% 46% 2px 2px / 9% 9% 1px 1px;
         overflow: hidden;                    /* 유리 반사가 아치 밖으로 새지 않게 */
         border: 1px solid color-mix(in srgb, var(--stamp) 30%, transparent);
         /* 그림이 매트보다 한 단 들어가 보이게 안쪽 위에 그늘을 준다. */
@@ -1045,11 +1045,18 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
             rgba(255, 255, 255, .025) 30%,
             transparent 44%);
     }
-    .ao-page { padding: 32px 22px; min-height: 0; }
-    /* 아치가 좁아지는 구간을 글이 피해야 한다. 첫 줄을 곡선 아래로 내린다. */
-    .ao-left { padding-top: 62px; padding-bottom: 8px; }
+    /* 폰에서는 세로가 곧 스크롤이다. 여백을 줄여 한 화면에 더 담는다. */
+    .ao-page { padding: 22px 16px; min-height: 0; }
+    /* 아치가 좁아지는 구간을 글이 피해야 한다. 첫 줄을 곡선 아래로 내린다.
+       아치를 완만하게(10%) 바꾸면서 이 여백도 함께 줄였다. */
+    .ao-left { padding-top: 34px; padding-bottom: 4px; }
     /* 제목 칸과 본문 칸 사이 얇은 괘선 하나만 남긴다. */
-    .ao-right { gap: 22px; border-top: 1px solid var(--line); padding-top: 26px; }
+    .ao-right { gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
+    /* 줄이 6줄이라 줄간격 0.15 만 줄여도 한 눈에 들어온다. */
+    .album-online .ao-body { line-height: 1.75; }
+    .album-online h3::after { margin: 14px auto; }
+    .album-online .ao-quote { margin: 12px 0 0; }
+    .ao-emboss { margin-top: 16px; }
     .ao-go { align-items: stretch; }
     .ao-btn { width: 100%; }
 }
