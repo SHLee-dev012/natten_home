@@ -879,6 +879,41 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     font-size: 15px; line-height: 1.8; color: var(--muted); margin: 0;
     max-width: 62ch; word-break: keep-all;
 }
+.album-online p b { color: var(--ink); font-weight: 700; }
+/* 전시가 스스로를 소개하는 한 줄. 본문보다 한 뼘 앞에 세운다. */
+.album-online .ao-quote {
+    font-family: var(--serif); font-size: clamp(15px, 1.9vw, 17px);
+    color: color-mix(in srgb, var(--stamp) 72%, #ffffff); margin: 0 0 12px;
+}
+/* 글과 들어가는 문을 좌우로 나눈다. 버튼이 글 끝까지 내려가 숨지 않도록
+   따로 칸을 준다. 좁아지면 한 줄로 쌓는다. */
+.album-online {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; gap: 22px 30px;
+}
+.ao-go { display: flex; flex-direction: column; align-items: stretch; gap: 9px; }
+.ao-go .btn { justify-content: center; white-space: nowrap; }
+.ao-note {
+    font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
+    color: var(--faint); text-align: center; word-break: keep-all;
+}
+/* 전시실 다섯 곳. 관람 순서가 있는 동선이라 차례대로 늘어놓는다. */
+.ao-rooms {
+    list-style: none; margin: 16px 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 7px;
+}
+.ao-rooms li {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .03em;
+    color: var(--muted); padding: 4px 10px; border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--stamp) 26%, transparent);
+    background: color-mix(in srgb, var(--stamp) 7%, transparent);
+}
+@media (max-width: 760px) {
+    .album-online { grid-template-columns: 1fr; align-items: start; }
+    .ao-go { align-items: flex-start; }
+    .ao-go .btn { width: 100%; }
+    .ao-note { text-align: left; }
+}
 @media (max-width: 520px) { .album-online { padding: 24px 20px; } }
 .archive-card {
     position: relative; border: 1px solid var(--line); border-radius: 8px; padding: 22px 20px;
