@@ -969,7 +969,7 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     .album-online {
         margin-top: 40px;
         /* 바깥 립 — 네 변의 색이 달라 모서리가 45도로 맞물린다. */
-        border-style: solid; border-width: 3px;
+        border-style: solid; border-width: 2px;
         border-top-color: color-mix(in srgb, var(--stamp) 62%, #ffffff 20%);
         border-left-color: color-mix(in srgb, var(--stamp) 48%, #ffffff 8%);
         border-right-color: #16122e;
@@ -977,22 +977,22 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
         /* 네모난 틀은 액자보다 상자로 보인다. 옛날 초상 액자처럼 윗변을
            아치로 세운다. 가로/세로 반지름을 따로 줘야 아치가 완만해진다. */
         border-radius: 48% 48% 9px 9px / 10% 10% 4px 4px;
-        padding: 13px;                       /* 코브(골)의 폭 */
+        padding: 8px;                        /* 코브(골)의 폭 */
         /* 네 귀의 장식못 + 결 + 움푹 들어간 골.
            몰딩은 페이지 바탕보다 확실히 밝아야 '테두리'가 아니라 '틀'로 보인다. */
         background:
-            radial-gradient(circle at 9px 9px,
-                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 2.6px,
-                color-mix(in srgb, var(--stamp) 30%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at calc(100% - 9px) 9px,
-                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 2.6px,
-                color-mix(in srgb, var(--stamp) 30%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at 9px calc(100% - 9px),
-                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 2.6px,
-                color-mix(in srgb, var(--stamp) 26%, #000000) 3px, transparent 4px),
-            radial-gradient(circle at calc(100% - 9px) calc(100% - 9px),
-                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 2.6px,
-                color-mix(in srgb, var(--stamp) 26%, #000000) 3px, transparent 4px),
+            radial-gradient(circle at 6px 6px,
+                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 1.9px,
+                color-mix(in srgb, var(--stamp) 30%, #000000) 2.3px, transparent 3px),
+            radial-gradient(circle at calc(100% - 6px) 6px,
+                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 1.9px,
+                color-mix(in srgb, var(--stamp) 30%, #000000) 2.3px, transparent 3px),
+            radial-gradient(circle at 6px calc(100% - 6px),
+                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 1.9px,
+                color-mix(in srgb, var(--stamp) 26%, #000000) 2.3px, transparent 3px),
+            radial-gradient(circle at calc(100% - 6px) calc(100% - 6px),
+                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 1.9px,
+                color-mix(in srgb, var(--stamp) 26%, #000000) 2.3px, transparent 3px),
             repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 5px),
             /* 골은 위아래가 어둡고 가운데가 밝다 - 안으로 패인 면이 그렇게 보인다 */
             linear-gradient(180deg,
@@ -1011,8 +1011,8 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     /* 매트와 그 둘레의 가는 금선(필릿). 여기도 네 변 색을 달리해
        모서리가 한 번 더 맞물린다 - 층이 두 겹인 액자가 된다. */
     .album-online::before {
-        display: block; position: absolute; inset: 13px;
-        left: 13px; right: 13px; top: 13px; bottom: 13px;
+        display: block; position: absolute; inset: 8px;
+        left: 8px; right: 8px; top: 8px; bottom: 8px;
         background: none; border-radius: 47% 47% 3px 3px / 10% 10% 2px 2px;
         border-style: solid; border-width: 10px;
         border-top-color: color-mix(in srgb, var(--stamp) 9%, transparent);
