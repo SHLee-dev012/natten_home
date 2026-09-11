@@ -48,7 +48,8 @@
         name: "이름", cohort: "기수", kind: "구분",
         day_qty: "일출권", all_qty: "올출권",
         drink_qty: "음료권", food_qty: "푸드권", checked_in_at: "체크인",
-        phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고"
+        phone_last4: "전화 뒤4", applied_on: "신청일", memo: "비고",
+        code: "코드"
     };
     // 표시 순서. DB 에 칸을 더하면 맨 뒤에 붙는데, 읽는 순서는 그것과 다르다
     // (매수는 구분 바로 옆에 있어야 한다). 여기 적힌 차례로 앞세우고,
@@ -56,7 +57,9 @@
     // 더해도 화면이 깨지지 않는다.
     // 체크인이 맨 앞이다. 현장에서 하는 일이 "찾아서 누르기" 이므로,
     // 누를 것이 먼저 오고 확인할 값이 뒤따르는 편이 손이 덜 간다.
-    var ORDER = ["checked_in_at", "name", "phone_last4", "kind",
+    // 코드는 이름 바로 뒤다. 코드를 들고 온 사람은 그것부터 부르므로
+    // 이름과 나란히 있어야 눈이 덜 움직인다.
+    var ORDER = ["checked_in_at", "name", "code", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
                  "cohort"];
     // 검색어와 데이터를 같은 모양으로 맞춘다.
@@ -76,7 +79,9 @@
     // 검색이 훑을 칸. 사람을 특정하는 값만 본다.
     // 기수와 구분은 여러 사람이 같은 값을 가져서, 넣으면 "낯5" 한 번에 수십
     // 명이 걸려 오히려 찾기 어려워진다. 매수는 숫자라 "2" 로 거의 다 걸린다.
-    var SEARCH = ["name", "phone_last4"];
+    // 코드는 사람마다 다르므로 검색에 넣는다. 이름이 겹쳐도 코드는 한 명만
+    // 걸린다 - 동명이인 34명을 가리는 가장 빠른 길이다.
+    var SEARCH = ["name", "phone_last4", "code"];
 
     function orderCols(keys) {
         var known = [], rest = [];

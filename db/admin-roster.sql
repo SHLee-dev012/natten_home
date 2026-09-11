@@ -46,6 +46,7 @@ create table if not exists public.roster (
     all_qty     integer,               -- 올출권 매수
     drink_qty   integer,               -- 음료권 매수
     food_qty    integer,               -- 푸드권 매수
+    code        text,                  -- 코드 (바깥에서 정해져 오는 값, 사람마다 유일)
     phone_last4 text,                  -- 전화 뒤 4자리 (동명이인 가릴 때만)
     applied_on  date,                  -- 신청일
     memo        text,                  -- 비고
@@ -56,6 +57,8 @@ create table if not exists public.roster (
 -- 나중에 더한 칸은 표 맨 뒤에 붙지만, 화면은 admin.js 의 ORDER 가 정한
 -- 차례로 그리므로 매수·음료권이 구분 옆에 나온다.
 alter table public.roster add column if not exists phone_last4 text;
+-- 코드는 바깥에서 이미 정해져 온다. 자세한 제약은 db/add-roster-code.sql 참고.
+alter table public.roster add column if not exists code        text;
 alter table public.roster add column if not exists day_qty     integer;
 alter table public.roster add column if not exists all_qty     integer;
 alter table public.roster add column if not exists drink_qty   integer;

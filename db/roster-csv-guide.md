@@ -8,14 +8,15 @@
 `db/roster-template.csv`
 
 ```csv
-name,phone_last4,kind,day_qty,all_qty,drink_qty,food_qty,cohort
-홍길동,4821,출석후원,2,0,2,1,낯5
-김낯선,0713,동문후원,0,1,0,2,낯C3
-이대학,,출석후원,1,1,3,0,낯Y8
+code,name,phone_last4,kind,day_qty,all_qty,drink_qty,food_qty,cohort
+A-7K3M,홍길동,4821,출석후원,2,0,2,1,낯5
+B-9XQ2,김낯선,0713,동문후원,0,1,0,2,낯C3
+,이대학,,출석후원,1,1,3,0,낯Y8
 ```
 
 | 칸 | 뜻 | 비고 |
 |---|---|---|
+| `code` | 코드 | **사람마다 달라야 한다.** 비워도 된다(빈 줄끼리는 겹쳐도 괜찮다) |
 | `name` | 이름 | **반드시 있어야 한다.** 비면 그 줄은 들어가지 않는다 |
 | `phone_last4` | 전화 뒤 4자리 | 동명이인을 가릴 때만 쓴다. 비워도 된다 |
 | `kind` | 구분 | 출석후원 / 동문후원 … 정해진 값이 아니라 적은 그대로 들어간다 |
@@ -35,7 +36,32 @@ name,phone_last4,kind,day_qty,all_qty,drink_qty,food_qty,cohort
 Supabase 대시보드 → **Table Editor** → `roster` 표 →
 오른쪽 위 **Insert** → **Import data from CSV**
 
-## 3. 걸리기 쉬운 것 셋
+## 3. 코드 칸
+
+코드는 바깥에서 이미 정해져 오는 값이다. 여기서 만들지 않고 받아 담기만 한다.
+
+**같은 코드가 두 번 있으면 가져오기가 통째로 실패한다.** 254줄 중 한 줄이라도
+겹치면 한 줄도 안 들어간다. 올리기 전에 엑셀에서 `code` 열을 골라
+조건부 서식 → 중복 값으로 한 번 훑으면 된다.
+
+**엑셀이 코드를 망가뜨리는 세 가지.** 앞서 이름·전화에서 겪은 것과 같은 종류다.
+
+| 코드가 이렇게 생겼으면 | 엑셀이 이렇게 바꾼다 | 막는 법 |
+|---|---|---|
+| `007A` 처럼 0으로 시작 | `7A` — 앞 0을 지운다 | 열 전체를 **텍스트 서식**으로 |
+| `1-4`, `3-12` 처럼 숫자-숫자 | `1월 4일` — 날짜로 읽는다 | 열 전체를 **텍스트 서식**으로 |
+| `1,4` 처럼 쉼표가 들어감 | 칸이 둘로 쪼개진다 | 코드에 쉼표를 쓰지 말 것 |
+
+서식은 값을 넣기 **전에** 바꿔야 한다. 이미 망가진 뒤에 텍스트로 바꾸면
+`1월 4일` 이 숫자로 보일 뿐 원래 값은 돌아오지 않는다.
+
+**대소문자는 구분한다.** `A1` 과 `a1` 은 다른 코드로 들어간다. 같은 것으로
+보고 싶으면 `db/add-roster-code.sql` 아래쪽 주석대로 색인을 바꾸면 된다.
+
+**앞뒤 공백은 자동으로 털린다.** 다만 코드 가운데 낀 공백은 그대로 남으니
+접수대에서 못 찾는 일이 생긴다.
+
+## 4. 걸리기 쉬운 것 셋
 
 ### 한글이 깨진다
 엑셀에서 그냥 저장하면 윈도우에서는 CP949 로 저장돼 Supabase 에서 한글이
@@ -55,7 +81,7 @@ Supabase 대시보드 → **Table Editor** → `roster` 표 →
 `day_qty` 를 비우면 0 이 아니라 NULL 로 들어가 화면에 빈칸으로 나온다.
 0 으로 보이길 원하면 **0 이라고 적는다.**
 
-## 4. 다시 올릴 때
+## 5. 다시 올릴 때
 
 Import 는 **덧붙이기**다. 같은 파일을 두 번 올리면 두 벌이 들어간다.
 갈아엎으려면 먼저 지운다.
@@ -71,14 +97,24 @@ delete from public.roster;
 delete from public.roster where memo = '__TEST__';
 ```
 
-## 5. 올린 뒤 확인
+## 6. 올린 뒤 확인
 
 ```sql
 select count(*) as 명단_행수,
        count(*) filter (where name is null or name = '') as 이름_빈줄,
        count(*) filter (where phone_last4 is not null
-                          and length(phone_last4) <> 4)  as 전화뒤4_이상한줄
+                          and length(phone_last4) <> 4)  as 전화뒤4_이상한줄,
+       count(*) filter (where code is null or code = '') as 코드_빈줄
 from public.roster;
 ```
 
-그리고 `knotsun.kr/admin` 에 로그인해 **조회 옆 인원 수**가 올린 수와 같은지 본다.
+코드가 대소문자만 다른 채로 섞여 들어갔는지 (색인은 이것을 막지 않는다)
+
+```sql
+select upper(code), count(*) from public.roster
+ where code is not null and code <> ''
+ group by upper(code) having count(*) > 1;
+```
+
+그리고 `knotsun.kr/admin` 에 로그인해 **조회 옆 인원 수**가 올린 수와 같은지 보고,
+**코드 칸**이 비어 있지 않은지 눈으로 확인한다. 코드로 검색도 된다.
