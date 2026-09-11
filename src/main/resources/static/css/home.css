@@ -952,27 +952,64 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     color: var(--faint); word-break: keep-all;
 }
 
-/* 좁은 화면에서는 펼칠 자리가 없다. 접힌 책은 어정쩡하니 세로 액자로
-   바꾼다 - 틀, 매트(종이 여백), 그림 면, 벽에 걸린 그림자.
-   마크업을 늘리지 않고 box-shadow 를 겹쳐 테두리 층을 그린다. */
+/* 좁은 화면에서는 펼칠 자리가 없다. 접힌 책은 어정쩡하니 세로 액자로 바꾼다.
+
+   평평한 테두리를 여러 겹 두르면 액자가 아니라 겹친 선으로 읽힌다.
+   액자로 보이게 하는 것은 두께가 아니라 빛이다 - 틀 윗면은 빛을 받아
+   밝고 아랫면은 그늘진다. 매트는 비스듬히 잘려 안쪽 단면이 빛나고,
+   그림은 매트보다 한 단 들어가 있다. 그 위에 유리가 비스듬히 반사한다.
+
+   마크업은 늘리지 않는다. 틀은 .album-online 의 안쪽 여백,
+   매트는 ::before 의 테두리 링, 유리는 ::after 가 맡는다. */
 @media (max-width: 760px) {
-    .album-online { margin-top: 40px; }
-    /* 두께를 만들던 낱장은 액자에서는 맞지 않는다. */
-    .album-online::before { display: none; }
+    .album-online {
+        margin-top: 40px;
+        padding: 17px;                       /* 틀 두께 */
+        border-radius: 4px;
+        /* 세로로 지나가는 결 + 위에서 아래로 어두워지는 면 */
+        background:
+            repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 1px, transparent 1px 5px),
+            linear-gradient(163deg,
+                color-mix(in srgb, var(--stamp) 32%, #1b1838),
+                color-mix(in srgb, var(--stamp) 15%, #15132c) 54%,
+                #100e22);
+        box-shadow:
+            inset 0 1px 0 color-mix(in srgb, var(--stamp) 58%, transparent),  /* 틀 윗면 빛 */
+            inset 1px 0 0 color-mix(in srgb, var(--stamp) 26%, transparent),
+            inset -1px 0 0 rgba(0, 0, 0, .5),
+            inset 0 -1px 0 rgba(0, 0, 0, .7),                                 /* 틀 아랫면 그늘 */
+            0 26px 44px -18px rgba(0, 0, 0, .92);                             /* 벽 그림자 */
+    }
+    /* 매트 — 틀과 그림 사이의 종이 여백. 배경을 채우지 않고 테두리 링으로
+       두른다. 채우면 반투명한 그림 뒤로 비쳐 바탕색이 달라진다. */
+    .album-online::before {
+        display: block; position: absolute; inset: 17px;
+        left: 17px; right: 17px; top: 17px; bottom: 17px;
+        border: 15px solid color-mix(in srgb, var(--stamp) 12%, transparent);
+        border-radius: 2px; background: none;
+        /* 매트 안쪽 단면(베벨) — 위가 밝고 아래가 어둡다 */
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16),
+                    inset 0 -1px 0 rgba(0, 0, 0, .45);
+    }
     .ao-spread {
         grid-template-columns: 1fr;
-        /* 바깥으로 뻗는 테두리 층(21px)만큼 자리를 비워 둔다. */
-        margin: 21px; border-radius: 3px;
-        border: 1px solid var(--line);            /* 그림과 매트의 경계 */
-        box-shadow:
-            0 0 0 10px color-mix(in srgb, var(--stamp) 10%, transparent),   /* 매트 */
-            0 0 0 11px var(--line),
-            0 0 0 20px color-mix(in srgb, var(--stamp) 22%, transparent),   /* 틀 */
-            0 0 0 21px color-mix(in srgb, var(--stamp) 45%, transparent),
-            0 22px 36px -14px rgba(0, 0, 0, .85);                           /* 벽 그림자 */
+        margin: 15px;                        /* 매트 폭과 같게 */
+        border-radius: 1px;
+        border: 1px solid color-mix(in srgb, var(--stamp) 30%, transparent);
+        /* 그림이 매트보다 한 단 들어가 보이게 안쪽 위에 그늘을 준다. */
+        box-shadow: inset 0 9px 18px -11px rgba(0, 0, 0, .85),
+                    inset 0 -6px 14px -12px rgba(0, 0, 0, .6);
     }
-    /* 접힘선은 세로 액자에 없다. */
-    .ao-spread::after { display: none; }
+    /* 유리 반사 — 왼쪽 위에서 비스듬히 걸친 빛 한 줄기. */
+    .ao-spread::after {
+        display: block; position: absolute;
+        inset: 0; left: 0; right: 0; top: 0; bottom: 0;
+        width: auto; transform: none; pointer-events: none;
+        background: linear-gradient(118deg,
+            rgba(255, 255, 255, .075) 0 22%,
+            rgba(255, 255, 255, .025) 30%,
+            transparent 44%);
+    }
     .ao-page { padding: 32px 22px; min-height: 0; }
     .ao-left { padding-bottom: 8px; }
     /* 제목 칸과 본문 칸 사이 얇은 괘선 하나만 남긴다. */
