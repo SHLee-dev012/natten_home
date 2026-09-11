@@ -155,16 +155,19 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
    안쪽에 갇힌다 - 페이지를 아무리 내려도 표머리가 같이 올라가 버렸다.
    clip 은 스크롤칸을 만들지 않으면서 둥근 모서리는 그대로 잘라준다. */
 .table-scroll { overflow: clip; border: 1px solid var(--line); border-radius: 11px; }
-/* 표가 실제로 요구하는 최소 너비는 733px 이다(코드 칸이 늘면서 638 에서
-   올랐다). 본문 폭은 화면에서 좌우 여백 40px 을 뺀 값이므로, 화면이
-   773px 아래면 넘친다. 그 구간에서만 가로로 밀어 읽게 한다.
-   여기서는 표머리가 안 붙지만, 칸을 잘라 감추는 것보다는 낫다.
 
-   칸을 더하거나 뺄 때 이 숫자를 같이 고쳐야 한다. 안 고치면 넘치는데도
-   overflow:clip 이라 맨 오른쪽 칸이 소리 없이 잘린다. */
-@media (min-width: 621px) and (max-width: 772px) {
-    .table-scroll { overflow-x: auto; overflow-y: auto; }
-}
+/* 표가 실제로 넘칠 때만 가로로 밀어 읽게 한다. 이 칸을 붙이는 판단은
+   admin.js 가 매번 재서 한다.
+
+   전에는 "표 최소 너비 nnnpx" 를 CSS 에 적어 두었는데, 그 숫자가 데이터에
+   따라 변한다. 기수 칸에 '낯Y2,3 (운) / 낯C2 / 낯6' 같은 긴 값이 하나
+   들어오면 733px 이던 것이 908px 이 된다. 숫자가 낡으면 넘치는데도
+   overflow:clip 이라 맨 오른쪽 칸이 소리 없이 잘린다 - 하필 그 칸이
+   코드라 접수대에서 제일 아쉬운 것이 사라진다.
+
+   그래서 숫자를 지우고 실측으로 바꾼다. 넘치지 않으면 clip 그대로라
+   표머리도 계속 붙어 있는다. */
+.table-scroll.is-wide { overflow-x: auto; overflow-y: auto; }
 
 /* 현장에서 폰을 들고 읽는 화면이라 본문보다 크게 잡는다.
    14px 는 팔을 뻗은 거리에서 숫자를 가늠하기에 작았다. */

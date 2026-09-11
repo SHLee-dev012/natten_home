@@ -57,11 +57,12 @@
     // 더해도 화면이 깨지지 않는다.
     // 체크인이 맨 앞이다. 현장에서 하는 일이 "찾아서 누르기" 이므로,
     // 누를 것이 먼저 오고 확인할 값이 뒤따르는 편이 손이 덜 간다.
-    // 코드는 이름 바로 뒤다. 코드를 들고 온 사람은 그것부터 부르므로
-    // 이름과 나란히 있어야 눈이 덜 움직인다.
-    var ORDER = ["checked_in_at", "name", "code", "phone_last4", "kind",
+    // 코드는 맨 뒤다. 명단 자체가 코드순으로 서 있어서 굳이 앞에 둘 필요가
+    // 없고, 접수대에서 눈으로 좇는 것은 이름과 매수다. 코드는 검색에는
+    // 그대로 걸리므로 찾는 데는 지장이 없다.
+    var ORDER = ["checked_in_at", "name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
-                 "cohort"];
+                 "cohort", "code"];
     // 검색어와 데이터를 같은 모양으로 맞춘다.
     //
     // 한글은 "김"을 한 글자(NFC)로도, 자모 셋(NFD)으로도 적을 수 있다. 눈에는
@@ -136,6 +137,7 @@
     var msg = document.getElementById("gate-msg");
     var theadRow = document.getElementById("thead-row");
     var tbody = document.getElementById("tbody");
+    var table = document.getElementById("roster");
     var countEl = document.getElementById("count");
     var q = document.getElementById("q");
 
@@ -219,6 +221,8 @@
         countEl.textContent = needle
             ? shown + " / " + rows.length + "명"
             : rows.length + "명";
+        // 줄이 바뀌면 표 너비도 바뀐다. 그릴 때마다 다시 잰다.
+        fitTable();
     }
 
     // ── 체크인 ─────────────────────────────────────────────────────────
@@ -363,6 +367,28 @@
         box.appendChild(ul);
         return box;
     }
+
+    // 표가 칸 안에서 넘치는지 재서 가로 스크롤을 켠다.
+    //
+    // CSS 에 "최소 너비 nnnpx" 를 적어 두면 데이터가 바뀔 때마다 낡는다.
+    // 기수 칸에 긴 값 하나가 들어오면 733px 이던 것이 908px 이 되는데,
+    // 숫자가 낡으면 넘치는데도 clip 이라 맨 오른쪽 칸이 소리 없이 잘린다.
+    //
+    // 넘치지 않으면 클래스를 떼어 clip 으로 되돌린다 - 그래야 표머리가
+    // 화면 위에 계속 붙어 있는다(스크롤칸 안에서는 sticky 가 갇힌다).
+    function fitTable() {
+        var box = table && table.parentNode;
+        if (!box || !box.classList.contains("table-scroll")) return;
+        // 좁은 화면에서는 표를 카드로 접으므로 가로로 넘칠 일이 없다.
+        if (!table.tHead || getComputedStyle(table.tHead).display === "none") {
+            box.classList.remove("is-wide");
+            return;
+        }
+        // 켜진 상태로 재면 이미 줄어든 너비가 나온다. 끄고 재서 판단한다.
+        box.classList.remove("is-wide");
+        if (table.scrollWidth > box.clientWidth + 1) box.classList.add("is-wide");
+    }
+    window.addEventListener("resize", fitTable, { passive: true });
 
     function drawHead() {
         theadRow.textContent = "";
