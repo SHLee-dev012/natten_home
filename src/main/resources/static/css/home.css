@@ -952,107 +952,42 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
     color: var(--faint); word-break: keep-all;
 }
 
-/* 좁은 화면에서는 펼칠 자리가 없다. 접힌 책은 어정쩡하니 세로 액자로 바꾼다.
+/* 좁은 화면에서는 펼칠 자리가 없다. 한 면으로 접고 액자를 두른다.
 
-   밋밋한 네모 테두리는 액자로 안 보인다. 옛날 액자를 액자로 보이게 하는
-   것은 '층'과 '모서리'다. 바깥 테두리(립) → 움푹 들어간 골(코브) →
-   가는 금선(필릿) → 매트 → 그림 순으로 단이 지고, 네 귀에서 몰딩 네
-   조각이 45도로 맞물린다.
+   몰딩을 면으로 채우면(결·골·장식못) 폰에서 두껍고 무겁다. 선만 남긴다 -
+   바깥 한 줄, 사이를 띄우고, 안쪽 한 줄. 두 줄 사이의 빈틈으로 페이지가
+   그대로 비쳐 틀이 가벼워진다. 한쪽 두께가 20px 에서 9px 이 된다.
 
-   맞댄 모서리는 CSS 가 공짜로 준다. border 의 네 변에 서로 다른 색을
-   주면 모서리가 45도로 갈라진다 - 진짜 액자의 이음매와 같은 모양이다.
-   그래서 테두리를 box-shadow 링이 아니라 border 로 그린다.
-
-   마크업은 늘리지 않는다. 몰딩은 .album-online, 매트는 ::before,
-   유리는 ::after 가 맡는다. 데스크톱(펼친 책)은 건드리지 않는다. */
+   아치도 접는다. 모서리를 살짝만 굴린 사각 액자로 둔다. */
 @media (max-width: 760px) {
     .album-online {
-        margin-top: 40px;
-        /* 바깥 립 — 네 변의 색이 달라 모서리가 45도로 맞물린다. */
-        border-style: solid; border-width: 2px;
-        border-top-color: color-mix(in srgb, var(--stamp) 62%, #ffffff 20%);
-        border-left-color: color-mix(in srgb, var(--stamp) 48%, #ffffff 8%);
-        border-right-color: #16122e;
-        border-bottom-color: #0c0a1a;
-        /* 네모난 틀은 액자보다 상자로 보인다. 옛날 초상 액자처럼 윗변을
-           아치로 세운다. 가로/세로 반지름을 따로 줘야 아치가 완만해진다. */
-        border-radius: 48% 48% 9px 9px / 10% 10% 4px 4px;
-        padding: 8px;                        /* 코브(골)의 폭 */
-        /* 네 귀의 장식못 + 결 + 움푹 들어간 골.
-           몰딩은 페이지 바탕보다 확실히 밝아야 '테두리'가 아니라 '틀'로 보인다. */
-        background:
-            radial-gradient(circle at 6px 6px,
-                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 1.9px,
-                color-mix(in srgb, var(--stamp) 30%, #000000) 2.3px, transparent 3px),
-            radial-gradient(circle at calc(100% - 6px) 6px,
-                color-mix(in srgb, var(--stamp) 86%, #ffffff 34%) 0 1.9px,
-                color-mix(in srgb, var(--stamp) 30%, #000000) 2.3px, transparent 3px),
-            radial-gradient(circle at 6px calc(100% - 6px),
-                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 1.9px,
-                color-mix(in srgb, var(--stamp) 26%, #000000) 2.3px, transparent 3px),
-            radial-gradient(circle at calc(100% - 6px) calc(100% - 6px),
-                color-mix(in srgb, var(--stamp) 70%, #ffffff 10%) 0 1.9px,
-                color-mix(in srgb, var(--stamp) 26%, #000000) 2.3px, transparent 3px),
-            repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 5px),
-            /* 골은 위아래가 어둡고 가운데가 밝다 - 안으로 패인 면이 그렇게 보인다 */
-            linear-gradient(180deg,
-                color-mix(in srgb, var(--stamp) 22%, #201c42),
-                color-mix(in srgb, var(--stamp) 46%, #2b2658) 48%,
-                color-mix(in srgb, var(--stamp) 18%, #1b1838));
-        /* background 단축 속성 뒤에 와야 한다 - 앞에 두면 단축 속성이
-           이 값을 초기값(padding-box)으로 되돌려 장식못이 몰딩 띠 안쪽으로
-           밀린다. 좌표를 테두리 바깥에서부터 세야 띠 한가운데 온다. */
-        background-origin: border-box;
-        box-shadow:
-            inset 0 3px 4px -1px rgba(0, 0, 0, .6),                              /* 골 위쪽 그늘 */
-            inset 0 -3px 4px -1px rgba(0, 0, 0, .45),
-            0 26px 44px -18px rgba(0, 0, 0, .92);                                /* 벽 그림자 */
+        margin-top: 36px;
+        /* 바깥 선 */
+        border: 1px solid color-mix(in srgb, var(--stamp) 46%, transparent);
+        border-radius: 4px;
+        padding: 7px;                        /* 두 선 사이의 빈틈 */
+        background: none;
+        box-shadow: 0 20px 36px -20px rgba(0, 0, 0, .85);
     }
-    /* 매트와 그 둘레의 가는 금선(필릿). 여기도 네 변 색을 달리해
-       모서리가 한 번 더 맞물린다 - 층이 두 겹인 액자가 된다. */
-    .album-online::before {
-        display: block; position: absolute; inset: 8px;
-        left: 8px; right: 8px; top: 8px; bottom: 8px;
-        background: none; border-radius: 47% 47% 3px 3px / 10% 10% 2px 2px;
-        border-style: solid; border-width: 10px;
-        border-top-color: color-mix(in srgb, var(--stamp) 9%, transparent);
-        border-left-color: color-mix(in srgb, var(--stamp) 11%, transparent);
-        border-right-color: color-mix(in srgb, var(--stamp) 14%, transparent);
-        border-bottom-color: color-mix(in srgb, var(--stamp) 16%, transparent);
-        /* 바깥쪽 금선 + 안쪽 매트 단면(베벨) */
-        box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--stamp) 52%, #ffffff 10%),
-            inset 0 1px 0 rgba(255, 255, 255, .18),
-            inset 0 -1px 0 rgba(0, 0, 0, .5);
-    }
+    /* 면으로 채우던 매트와 장식못은 쓰지 않는다. */
+    .album-online::before { display: none; }
     .ao-spread {
         grid-template-columns: 1fr;
-        margin: 10px;                        /* 매트 폭과 같게 */
-        border-radius: 46% 46% 2px 2px / 9% 9% 1px 1px;
-        overflow: hidden;                    /* 유리 반사가 아치 밖으로 새지 않게 */
-        border: 1px solid color-mix(in srgb, var(--stamp) 30%, transparent);
-        /* 그림이 매트보다 한 단 들어가 보이게 안쪽 위에 그늘을 준다. */
-        box-shadow: inset 0 9px 18px -11px rgba(0, 0, 0, .85),
-                    inset 0 -6px 14px -12px rgba(0, 0, 0, .6);
+        margin: 0;
+        /* 안쪽 선 */
+        border: 1px solid color-mix(in srgb, var(--stamp) 24%, transparent);
+        border-radius: 2px;
+        box-shadow: none;
     }
-    /* 유리 반사 — 왼쪽 위에서 비스듬히 걸친 빛 한 줄기. */
-    .ao-spread::after {
-        display: block; position: absolute;
-        inset: 0; left: 0; right: 0; top: 0; bottom: 0;
-        width: auto; transform: none; pointer-events: none;
-        background: linear-gradient(118deg,
-            rgba(255, 255, 255, .075) 0 22%,
-            rgba(255, 255, 255, .025) 30%,
-            transparent 44%);
-    }
+    /* 유리 반사도 뺀다. 틀이 선뿐이면 유리가 있을 자리가 아니다. */
+    .ao-spread::after { display: none; }
     /* 폰에서는 세로가 곧 스크롤이다. 여백을 줄여 한 화면에 더 담는다. */
     .ao-page { padding: 22px 16px; min-height: 0; }
-    /* 아치가 좁아지는 구간을 글이 피해야 한다. 첫 줄을 곡선 아래로 내린다.
-       아치를 완만하게(10%) 바꾸면서 이 여백도 함께 줄였다. */
-    .ao-left { padding-top: 34px; padding-bottom: 4px; }
+    /* 아치가 없어졌으니 윗여백도 되돌린다. */
+    .ao-left { padding-top: 4px; padding-bottom: 4px; }
     /* 제목 칸과 본문 칸 사이 얇은 괘선 하나만 남긴다. */
     .ao-right { gap: 18px; border-top: 1px solid var(--line); padding-top: 20px; }
-    /* 줄이 6줄이라 줄간격 0.15 만 줄여도 한 눈에 들어온다. */
+    /* 줄이 여러 줄이라 줄간격 0.15 만 줄여도 한 눈에 들어온다. */
     .album-online .ao-body { line-height: 1.75; }
     .album-online h3::after { margin: 14px auto; }
     .album-online .ao-quote { margin: 12px 0 0; }
