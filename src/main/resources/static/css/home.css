@@ -99,6 +99,8 @@ section[id] { scroll-margin-top: 72px; }
 /* knotsun.kr/#account 로 후원 계좌에 바로 닿게 한다. 단톡방에 링크만
    던지면 계좌번호와 복사 버튼이 화면 안에 들어온다. */
 #account { scroll-margin-top: 84px; }
+/* knotsun.kr/#album 로 온라인 졸업앨범 입구에 바로 닿게 한다. */
+#album { scroll-margin-top: 84px; }
 /* 섹션이 아니라 #crew 안쪽 블록이라 section[id] 규칙이 안 걸린다 */
 #thanks { scroll-margin-top: 84px; }
 #guestbook { scroll-margin-top: 84px; }
