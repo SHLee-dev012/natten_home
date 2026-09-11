@@ -862,114 +862,121 @@ h1.hero-title-art { position: relative; margin: 0 0 16px; isolation: isolate; }
    표지를 닫아 두었더니 폭이 720px 라 위 전시카드 줄(992px)보다 좁아
    혼자 안으로 들어가 보였다. 펼치면 두 면이 폭을 제대로 채운다.
 
-   색은 어두운 페이지에서 벗어나 크림 지면으로 간다. 앨범을 펼치면
-   보이는 것은 천 표지가 아니라 종이다. 어두운 화면 위의 밝은 지면이라
-   눈에도 가장 먼저 들어온다.
-
-   여기는 배경이 밝으므로 --ink/--muted 같은 어두운 화면용 토큰을 쓰면
-   글자가 사라진다. 이 블록 안의 색은 전부 따로 적는다. */
-.album-online {
-    /* 크림·금박은 이 사이트에서 혼자 따뜻한 계열이라 겉돌았다. 밝기는 그대로
-       두되(어두운 화면 위에서 눈에 먼저 들어와야 한다) 색만 5F 보라(--stamp)
-       계열로 옮긴다. 주변과 같은 계열, 다른 밝기. */
-    --pg: #eceaf6;          /* 지면 — 아주 옅은 보라 */
-    --pg-edge: #d3cde9;     /* 지면 가장자리 */
-    --pg-ink: #221d3c;      /* 본문 잉크 — 사이트 남보라 */
-    --pg-soft: #5b5480;     /* 흐린 잉크 */
-    --pg-foil: #5b43b8;     /* 은박 대신 보라박 */
-    position: relative; margin: 46px 0 0;
-}
-/* 쌓인 낱장. 바깥으로 두 겹 비켜 놓아 두께를 만든다. */
+   바탕은 위 전시카드(.archive-card)와 같은 반투명 --glass 를 쓴다.
+   밝은 지면으로 해 봤더니 이 페이지에서 혼자 떠 보였다. 같은 재질을
+   쓰고, 크기와 가운데 접힘으로 '펼친 책'을 만든다. */
+.album-online { position: relative; margin: 46px 0 0; }
+/* 쌓인 낱장. 바깥으로 비켜 놓아 두께를 만든다. */
 .album-online::before {
-    content: ""; position: absolute; left: 6px; right: 6px; top: 7px; bottom: -7px;
-    border-radius: 4px; background: var(--pg-edge);
-    box-shadow: 0 3px 0 -1px #c3bade, 0 34px 60px -30px rgba(0, 0, 0, .8);
+    content: ""; position: absolute; left: 7px; right: 7px; top: 8px; bottom: -8px;
+    border-radius: 12px;
+    border: 1px solid var(--line); border-top: 0;
+    background: var(--panel-dark);
 }
 .ao-spread {
     position: relative;
     display: grid; grid-template-columns: 1fr 1fr;
-    background: var(--pg);
-    border-radius: 4px;
-    box-shadow: inset 0 0 0 1px rgba(34, 29, 60, .16);
+    background: var(--glass);
+    border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 30px 64px -34px rgba(0, 0, 0, .8);
 }
-/* 가운데 접힘. 양쪽으로 그늘이 지고 한가운데 실선이 지난다. */
+/* 가운데 접힘. 실선 한 줄과 양쪽으로 지는 옅은 그늘. */
 .ao-spread::after {
-    content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 46px;
+    content: ""; position: absolute; left: 50%; top: 14px; bottom: 14px; width: 40px;
     transform: translateX(-50%); pointer-events: none;
-    background: linear-gradient(90deg, transparent, rgba(34, 29, 60, .18) 44%,
-                rgba(34, 29, 60, .34) 50%, rgba(34, 29, 60, .18) 56%, transparent);
+    background:
+        linear-gradient(90deg, transparent, rgba(0, 0, 0, .16) 42%, transparent 50%,
+                        rgba(0, 0, 0, .16) 58%, transparent),
+        linear-gradient(90deg, transparent calc(50% - .5px),
+                        var(--line) calc(50% - .5px), var(--line) calc(50% + .5px),
+                        transparent calc(50% + .5px));
 }
 /* 펼친 책은 가로세로가 대략 2:1 이다. 내용만큼만 높이를 주면 3:1 을 넘어
    납작한 띠로 보여 책 같지 않다. 지면에 최소 높이를 준다. */
 .ao-page { padding: 52px 46px; min-height: 400px; display: flex; flex-direction: column; }
-.ao-left  { align-items: center; justify-content: center; text-align: center; gap: 0; }
+.ao-left  { align-items: center; justify-content: center; text-align: center; }
 .ao-right { justify-content: center; gap: 26px; }
 
 .album-online .ao-tag {
     font-family: var(--mono); font-size: 10.5px; font-weight: 700;
-    letter-spacing: .18em; color: var(--pg-foil); margin-bottom: 18px;
+    letter-spacing: .18em; color: var(--stamp); margin-bottom: 18px;
 }
-/* 속표지 제목. 금박처럼 보이게 세로로 흐르는 띠를 입힌다. */
+/* 속표지 제목. 세로로 흐르는 밝은 띠를 입혀 박(箔)처럼 보이게 한다. */
 .album-online h3 {
     font-family: var(--serif); font-weight: 800;
-    font-size: clamp(26px, 3.4vw, 38px); margin: 0; letter-spacing: -.02em;
-    color: var(--pg-ink);                      /* 그라디언트 미지원 시 */
-    background: linear-gradient(176deg, #3a2a80, var(--pg-foil) 40%, #9d86e8 54%, #46349a);
+    font-size: clamp(25px, 3.3vw, 36px); margin: 0; letter-spacing: -.02em;
+    color: var(--ink);                      /* 그라디언트 미지원 시 */
+    background: linear-gradient(176deg, #ffffff, color-mix(in srgb, var(--stamp) 40%, #ffffff) 44%,
+                                var(--stamp) 56%, #ffffff);
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent;
     text-wrap: balance;
 }
 .album-online h3::after {
-    content: ""; display: block; width: 72px; height: 1px; margin: 18px auto 0;
-    background: linear-gradient(90deg, transparent, var(--pg-foil), transparent);
+    content: ""; display: block; width: 72px; height: 1px; margin: 20px auto;
+    background: linear-gradient(90deg, transparent, var(--stamp), transparent);
 }
+/* 이 앨범이 무엇인지 한 줄로 말하는 자리다. 제목 다음으로 크게 둔다. */
 .album-online .ao-quote {
-    font-family: var(--serif); font-style: italic;
-    font-size: clamp(15px, 1.8vw, 18px); color: var(--pg-soft);
-    margin: 18px 0 0; word-break: keep-all;
+    font-family: var(--serif); font-weight: 700;
+    font-size: clamp(19px, 2.7vw, 27px); line-height: 1.5; letter-spacing: -.01em;
+    color: var(--ink); margin: 0; word-break: keep-all; text-wrap: balance;
+    text-shadow: 0 0 30px color-mix(in srgb, var(--stamp) 34%, transparent);
 }
 .ao-emboss {
-    margin-top: 26px;
+    margin-top: 24px;
     font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .3em;
-    /* 각인이라 흐리게 두고 싶지만, 62% 로 섞었더니 대비가 2.79:1 밖에
-       안 나와 10px 글씨가 읽히지 않았다. 92% 로 올려 5.11:1 을 맞춘다. */
-    color: color-mix(in srgb, var(--pg-foil) 92%, var(--pg));
+    color: var(--faint);
 }
 .album-online .ao-body {
-    font-size: 15.5px; line-height: 1.9; color: var(--pg-ink); margin: 0;
-    /* 한 면으로 접히면 줄이 지면 끝까지 늘어난다. 읽기 좋은 길이로 묶는다.
-       두 면일 때는 칸이 이미 더 좁아 걸리지 않는다. */
+    font-size: 15.5px; line-height: 1.9; color: var(--muted); margin: 0;
+    /* 한 면으로 접히면 줄이 지면 끝까지 늘어난다. 읽기 좋은 길이로 묶는다. */
     max-width: 58ch; word-break: keep-all;
 }
-.album-online .ao-body b { font-weight: 800; }
+.album-online .ao-body b { color: var(--ink); font-weight: 700; }
 
 .ao-go { display: flex; flex-direction: column; align-items: flex-start; gap: 11px; }
-/* 밝은 지면 위에서는 어두운 단추가 가장 또렷하다. 사이트 기본 .btn 의
-   보라 그라디언트는 여기서 겉돌아 쓰지 않는다. */
+/* 사이트의 다른 단추와 같은 결로 두되 한 단 크게. 문은 글보다 커야 한다. */
 .ao-btn {
     display: inline-flex; align-items: center; justify-content: center;
-    min-height: 52px; padding: 15px 32px; border-radius: 3px;
+    min-height: 52px; padding: 15px 32px; border-radius: 8px;
     font-family: var(--mono); font-size: 15px; font-weight: 700; letter-spacing: .03em;
-    color: var(--pg); background: var(--pg-ink); border: 1px solid var(--pg-ink);
+    color: #0a0c1c; background: var(--accent); border: 1px solid transparent;
     text-decoration: none; cursor: pointer;
-    transition: transform .15s ease, background .15s ease;
+    transition: transform .15s ease, opacity .15s ease;
 }
-.ao-btn:hover { transform: translateY(-2px); background: #352d5c; }
-.ao-btn:focus-visible { outline: 2px solid var(--pg-foil); outline-offset: 3px; }
+.ao-btn:hover { transform: translateY(-2px); opacity: .95; }
+.ao-btn:focus-visible { outline: 2px solid var(--stamp); outline-offset: 3px; }
 .ao-note {
     font-family: var(--mono); font-size: 11.5px; line-height: 1.5;
-    color: var(--pg-soft); word-break: keep-all;
+    color: var(--faint); word-break: keep-all;
 }
 
-/* 좁은 화면에서는 펼칠 자리가 없다. 한 면으로 접고 접힘선을 지운다. */
+/* 좁은 화면에서는 펼칠 자리가 없다. 접힌 책은 어정쩡하니 세로 액자로
+   바꾼다 - 틀, 매트(종이 여백), 그림 면, 벽에 걸린 그림자.
+   마크업을 늘리지 않고 box-shadow 를 겹쳐 테두리 층을 그린다. */
 @media (max-width: 760px) {
-    .ao-spread { grid-template-columns: 1fr; }
+    .album-online { margin-top: 40px; }
+    /* 두께를 만들던 낱장은 액자에서는 맞지 않는다. */
+    .album-online::before { display: none; }
+    .ao-spread {
+        grid-template-columns: 1fr;
+        /* 바깥으로 뻗는 테두리 층(21px)만큼 자리를 비워 둔다. */
+        margin: 21px; border-radius: 3px;
+        border: 1px solid var(--line);            /* 그림과 매트의 경계 */
+        box-shadow:
+            0 0 0 10px color-mix(in srgb, var(--stamp) 10%, transparent),   /* 매트 */
+            0 0 0 11px var(--line),
+            0 0 0 20px color-mix(in srgb, var(--stamp) 22%, transparent),   /* 틀 */
+            0 0 0 21px color-mix(in srgb, var(--stamp) 45%, transparent),
+            0 22px 36px -14px rgba(0, 0, 0, .85);                           /* 벽 그림자 */
+    }
+    /* 접힘선은 세로 액자에 없다. */
     .ao-spread::after { display: none; }
-    .ao-page { padding: 34px 24px; min-height: 0; }
+    .ao-page { padding: 32px 22px; min-height: 0; }
     .ao-left { padding-bottom: 8px; }
-    .ao-right { gap: 22px; }
-    /* 두 면 사이에 접힘 대신 가로 괘선을 둔다. */
-    .ao-right { border-top: 1px solid rgba(34, 29, 60, .18); padding-top: 28px; }
+    /* 제목 칸과 본문 칸 사이 얇은 괘선 하나만 남긴다. */
+    .ao-right { gap: 22px; border-top: 1px solid var(--line); padding-top: 26px; }
     .ao-go { align-items: stretch; }
     .ao-btn { width: 100%; }
 }
