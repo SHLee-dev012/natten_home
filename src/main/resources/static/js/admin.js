@@ -383,8 +383,16 @@
 
     function loadRoster() {
         var lim = timeLimit(REQ_TIMEOUT_MS);
+        // 코드순으로 받는다. 코드가 B-01, E1-07 처럼 접두+두 자리라 문자열로
+        // 정렬해도 묶음이 흩어지지 않고 번호도 제 차례대로 선다.
+        //
+        // 이름순이 아닌 이유: 접수대에서 종이 명단과 화면을 나란히 놓고 보는데,
+        // 종이는 코드 차례로 뽑는다. 두 순서가 다르면 눈이 계속 왔다 갔다 한다.
+        //
+        // 코드가 아직 없는 줄은 맨 뒤로 보낸다. 빈 문자열은 어떤 글자보다
+        // 앞서므로 nullslast 만으로는 모자라 화면에서 한 번 더 민다.
         return fetch(
-            SUPABASE_URL + "/rest/v1/" + TABLE + "?select=*&order=name.asc",
+            SUPABASE_URL + "/rest/v1/" + TABLE + "?select=*&order=code.asc.nullslast",
             {
                 cache: "no-store",
                 signal: lim.signal,
@@ -415,6 +423,15 @@
             });
         }).then(function (list) {
             rows = list || [];
+            // 코드가 빈 줄('')은 DB 정렬에서 맨 앞에 선다. nullslast 는 NULL 만
+            // 뒤로 보내므로 여기서 한 번 더 민다 - 코드 없는 사람이 명단 첫머리에
+            // 오면 종이와 차례가 어긋난다.
+            rows.sort(function (a, b) {
+                var x = (a.code || "").trim(), y = (b.code || "").trim();
+                if (!x !== !y) return x ? -1 : 1;      // 빈 코드는 뒤로
+                if (x === y) return (a.name || "").localeCompare(b.name || "", "ko");
+                return x < y ? -1 : 1;
+            });
             // 돌아온 칸을 그대로 쓴다. DB 에서 칸을 더하거나 빼도 여기는 안 고친다.
             // 한 줄도 없으면 무엇이 올 자리인지 알 수 없으므로 기본 칸을 세워 둔다.
             cols = rows.length
