@@ -245,18 +245,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- 후원 계좌는 참여방법 안에 있어야 한다. 폼을 거치지 않고 바로 송금하려는
              사람이 준비물까지 내려가지 않아도 되게. -->
         <div class="account-box" id="account">
-            <div class="acct-line">
-                <div><span class="al">후원상품 기부 · 축제 운영비 후원</span><span class="an">하나은행 101-910061-06104 (낯대 문화예술축제조직위)</span></div>
-                <button class="copy-btn" id="copyAcctBtn" data-gtm="copy-account">계좌번호 복사</button>
-            </div>
-            <!-- 현장 판매대에서 knotsun.kr/#account 링크 하나를 건네면 계좌번호와
-                 신청 폼이 한 화면에 함께 보여야 한다. 그래서 신청 버튼을 참여방법
-                 카드에서 이 칸 안으로 옮겼다. -->
-            <div class="acct-apply">
-                <span class="aa-note">입금하셨다면 신청서를 남겨주세요. 명단은 이것으로 만듭니다.</span>
+            <!-- 현장 판매대의 실제 순서는 신청서 먼저, 입금 나중이다. 번호를 매겨
+                 화면이 차례를 직접 보이게 한다 - 접수대에서 말로 설명할 일이 없다. -->
+            <div class="acct-step">
+                <span class="as-num" aria-hidden="true">1</span>
+                <div class="as-body">
+                    <span class="as-title">먼저 신청서를 작성해 주세요</span>
+                    <span class="as-note">명단은 이것으로 만듭니다.</span>
+                </div>
                 <a class="btn btn-solid" data-gtm="attend-form-account"
                    href="https://forms.gle/SDxC4EzWBCnTfB5BA" target="_blank" rel="noopener noreferrer"
-                   aria-label="출석후원 신청 현장구매 (구글 폼, 새 창)">출석후원 신청&#160;(현장구매)</a>
+                   aria-label="1단계, 출석후원 신청 현장구매 (구글 폼, 새 창)">출석후원 신청&#160;(현장구매)</a>
+            </div>
+            <div class="acct-step">
+                <span class="as-num" aria-hidden="true">2</span>
+                <div class="as-body">
+                    <span class="as-title">그다음 이 계좌로 입금해 주세요</span>
+                    <span class="an">하나은행 101-910061-06104 (낯대 문화예술축제조직위)</span>
+                    <span class="as-note">후원상품 기부 · 축제 운영비 후원</span>
+                </div>
+                <button class="copy-btn" id="copyAcctBtn" data-gtm="copy-account">계좌번호 복사</button>
             </div>
         </div>
         <h3 class="howto-sub">축제 준비물</h3>
