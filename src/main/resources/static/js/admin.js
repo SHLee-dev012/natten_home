@@ -220,11 +220,7 @@
             tr0.appendChild(td0);
             tbody.appendChild(tr0);
         }
-        // 인원 수만 적는다. 매수 합계까지 함께 적었더니 줄이 길어져
-        // 정작 몇 명인지가 눈에 안 들어왔다.
-        countEl.textContent = needle
-            ? shown + " / " + rows.length + "명"
-            : rows.length + "명";
+        paintCount(needle, shown);
         // 줄이 바뀌면 표 너비도 바뀐다. 그릴 때마다 다시 잰다.
         fitTable();
     }
@@ -319,6 +315,7 @@
                     // 그러면 여기서 그 시각이 그대로 들어와 화면이 사실과 맞는다.
                     row.checked_in_at = at;
                     paintCheckIn(btn, row);
+                    paintCount(norm(q.value), null);   // 방금 한 명이 늘었다
                     vsay("");
                 })
                 .catch(function (err) {
@@ -370,6 +367,35 @@
         });
         box.appendChild(ul);
         return box;
+    }
+
+    // 인원 수와 체크인 수를 적는다.
+    //
+    // 매수 합계까지 적었더니 줄이 길어져 정작 몇 명인지가 안 보여 뺐었다.
+    // 체크인 수는 다르다 - 접수대에서 하루 종일 쳐다보는 유일한 숫자다.
+    // "몇 명 왔나"를 세려고 표를 훑을 수는 없다.
+    //
+    // 검색 중이어도 체크인 수는 전체 기준으로 둔다. 걸러진 세 명 중 한 명이
+    // 왔다는 것보다 오늘 몇 명이 들어왔는지가 알고 싶은 숫자다.
+    function paintCount(needle, shown) {
+        // 체크인 직후처럼 몇 줄이 보이는지 모르고 부를 때가 있다.
+        // 그때는 지금 그려져 있는 줄을 직접 센다.
+        if (shown == null) {
+            shown = tbody.querySelectorAll("tr:not(.roster-empty)").length;
+        }
+        var done = 0;
+        rows.forEach(function (r) { if (r.checked_in_at) done++; });
+        countEl.textContent = "";
+        countEl.appendChild(document.createTextNode(
+            needle ? shown + " / " + rows.length + "명" : rows.length + "명"
+        ));
+        if (rows.length) {
+            var b = document.createElement("b");
+            b.className = "count-in";
+            b.textContent = "체크인 " + done;
+            countEl.appendChild(document.createTextNode(" · "));
+            countEl.appendChild(b);
+        }
     }
 
     // 표가 칸 안에서 넘치는지 재서 가로 스크롤을 켠다.

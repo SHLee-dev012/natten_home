@@ -134,6 +134,11 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
     .count { flex: 1 1 100%; }
 }
 .count { font-family: var(--mono); font-size: 12.5px; color: var(--faint); }
+/* 체크인 수는 하루 종일 쳐다보는 숫자다. 인원 수와 같은 줄에 두되
+   체크인 버튼과 같은 초록으로 칠해 둘이 한 쌍임을 보인다.
+   전역 규칙이다 - 처음에 620px 미디어쿼리 안에 넣어 좁은 화면에서만
+   초록이 되고 데스크톱에서는 회색으로 남았다. */
+.count-in { color: #15803d; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 /* 체크인 단추. 안 된 사람은 테두리만, 된 사람은 채워서 한눈에 갈린다.
    체크인된 줄에는 시각이 그대로 적혀 언제 왔는지도 함께 읽힌다. */
