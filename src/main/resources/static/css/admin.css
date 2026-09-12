@@ -140,6 +140,22 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
    초록이 되고 데스크톱에서는 회색으로 남았다. */
 .count-in { color: #15803d; font-weight: 700; font-variant-numeric: tabular-nums; }
 
+/* 구분별 체크인 현황. 검색칸 아래 한 줄로 깔고, 좁으면 접힌다.
+   차례는 인원 순으로 고정이라 사람이 들어와도 칩이 자리를 안 바꾼다. */
+.tally { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
+.tally[hidden] { display: none; }
+.tally-chip {
+    display: inline-flex; align-items: baseline; gap: 6px;
+    padding: 5px 10px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--panel);
+    font-family: var(--mono); font-size: 12px; line-height: 1.2;
+}
+.tally-name { color: var(--muted); }
+.tally-num { color: #15803d; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* 그 무리가 다 왔으면 칩째로 초록으로 물들여 훑을 때 바로 걸러진다. */
+.tally-full { border-color: rgba(21, 128, 61, .45); background: rgba(21, 128, 61, .10); }
+.tally-full .tally-name { color: #166534; }
+
 /* 체크인 단추. 안 된 사람은 테두리만, 된 사람은 채워서 한눈에 갈린다.
    체크인된 줄에는 시각이 그대로 적혀 언제 왔는지도 함께 읽힌다. */
 .chk {

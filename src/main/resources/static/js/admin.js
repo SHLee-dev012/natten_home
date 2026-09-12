@@ -141,6 +141,7 @@
     var tbody = document.getElementById("tbody");
     var table = document.getElementById("roster");
     var countEl = document.getElementById("count");
+    var tallyEl = document.getElementById("tally");
     var q = document.getElementById("q");
 
     var token = null;   // 접속 토큰. 메모리에만 둔다.
@@ -396,6 +397,45 @@
             countEl.appendChild(document.createTextNode(" · "));
             countEl.appendChild(b);
         }
+        paintTally();
+    }
+
+    // 구분별 체크인 현황.
+    //
+    // 전체 '체크인 N' 만으로는 어느 무리가 덜 왔는지 모른다. 출연진이
+    // 다 왔는지, 기획단이 몇 명 남았는지는 따로 세지 않으면 알 수 없다.
+    //
+    // 차례는 인원이 많은 순으로 고정한다. 체크인 순으로 하면 사람이 들어올
+    // 때마다 칩이 자리를 바꿔, 보려던 것을 눈으로 다시 찾아야 한다.
+    function paintTally() {
+        if (!tallyEl) return;
+        if (!rows.length) { tallyEl.hidden = true; tallyEl.textContent = ""; return; }
+        var g = {};
+        rows.forEach(function (r) {
+            var k = (r.kind == null || r.kind === "") ? "(구분 없음)" : String(r.kind);
+            if (!g[k]) g[k] = { all: 0, done: 0 };
+            g[k].all++;
+            if (r.checked_in_at) g[k].done++;
+        });
+        var keys = Object.keys(g).sort(function (a, b) {
+            if (g[b].all !== g[a].all) return g[b].all - g[a].all;
+            return a.localeCompare(b, "ko");
+        });
+        tallyEl.textContent = "";
+        keys.forEach(function (k) {
+            var chip = document.createElement("span");
+            chip.className = "tally-chip" + (g[k].done === g[k].all ? " tally-full" : "");
+            var nm = document.createElement("span");
+            nm.className = "tally-name";
+            nm.textContent = k;
+            var num = document.createElement("b");
+            num.className = "tally-num";
+            num.textContent = g[k].done + "/" + g[k].all;
+            chip.appendChild(nm);
+            chip.appendChild(num);
+            tallyEl.appendChild(chip);
+        });
+        tallyEl.hidden = false;
     }
 
     // 표가 칸 안에서 넘치는지 재서 가로 스크롤을 켠다.

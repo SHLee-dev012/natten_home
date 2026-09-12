@@ -99,6 +99,10 @@
             <span class="count" id="count"></span>
         </form>
 
+        <!-- 구분별 체크인 현황. 전체 '체크인 N' 만으로는 어느 무리가 덜 왔는지
+             모른다. 검색으로 걸러도 이 줄은 늘 전체 기준이다. -->
+        <div class="tally" id="tally" hidden aria-label="구분별 체크인 현황"></div>
+
         <!-- 금고 안에서 나는 말(체크인 실패 등). 로그인 화면의 gate-msg 는
              금고가 열리면 함께 숨으므로 여기 따로 둔다. -->
         <p class="msg" id="vault-msg" role="status" aria-live="polite"></p>
