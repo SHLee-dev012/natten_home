@@ -33,7 +33,11 @@ body {
     -webkit-text-size-adjust: 100%;
 }
 
-.wrap { max-width: 960px; margin: 0 auto; padding: 48px 20px 80px; }
+/* 관리자 화면은 읽는 글이 아니라 칸이 열한 개인 표다. 960px 은 본문
+   읽기에 맞춘 폭이라, 비고까지 켜면 표가 1157px 을 요구해 늘 넘쳤다.
+   넘치면 가로 스크롤칸이 되고, 그 안에서는 표머리 sticky 가 갇힌다.
+   폭을 넓혀 표가 들어가게 하면 표머리가 계속 붙어 있는다. */
+.wrap { max-width: 1280px; margin: 0 auto; padding: 48px 20px 80px; }
 
 h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em; }
 
@@ -173,6 +177,13 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
    14px 는 팔을 뻗은 거리에서 숫자를 가늠하기에 작았다. */
 .roster { width: 100%; border-collapse: collapse; font-size: 16px; }
 .roster th, .roster td { padding: 13px 14px; text-align: left; white-space: nowrap; }
+/* 비고만은 줄을 바꾼다. '예비낯대인 / 서상혁 / 낯3 / 낯C1,2,3,4' 처럼 긴
+   글이 들어오는데 nowrap 이면 표가 그만큼 옆으로 늘어나, 정작 자주 보는
+   이름·매수까지 화면 밖으로 밀려난다. */
+.roster td.cell-memo, .roster th.cell-memo {
+    white-space: normal; min-width: 160px; max-width: 260px;
+    word-break: keep-all; line-height: 1.5; color: var(--muted); font-size: 14px;
+}
 .roster thead th {
     position: sticky; top: 0; z-index: 1;
     /* 표머리는 11px 로 작아 --faint 로는 대비가 4.45:1 에 그친다.

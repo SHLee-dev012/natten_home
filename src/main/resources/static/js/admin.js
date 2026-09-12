@@ -40,9 +40,11 @@
     // DB 에는 admin@knotsun.kr 계정이다. '@' 가 들어오면 그대로 쓴다.
     var LOGIN_DOMAIN = "@knotsun.kr";
     // 화면에 내보내지 않을 칸. 있어도 굳이 보여줄 이유가 없다.
-    // applied_on(신청일)과 memo(비고)는 현장에서 볼 일이 없어 감춘다.
     // DB 에는 남아 있으므로 다시 보이려면 이 목록에서 빼기만 하면 된다.
-    var HIDE = ["id", "created_at", "applied_on", "memo"];
+    //
+    // memo 는 감췄다가 도로 꺼냈다. 현장 금액이나 '예비낯대인' 같은,
+    // 다른 칸에 자리가 없는 것들이 여기 들어가기 시작했다.
+    var HIDE = ["id", "created_at", "applied_on"];
     // 보기 좋은 이름. 여기 없는 칸은 원래 이름 그대로 나온다.
     var LABEL = {
         name: "이름", cohort: "기수", kind: "구분",
@@ -62,7 +64,7 @@
     // 그대로 걸리므로 찾는 데는 지장이 없다.
     var ORDER = ["checked_in_at", "name", "phone_last4", "kind",
                  "day_qty", "all_qty", "drink_qty", "food_qty",
-                 "cohort", "code"];
+                 "cohort", "code", "memo"];
     // 검색어와 데이터를 같은 모양으로 맞춘다.
     //
     // 한글은 "김"을 한 글자(NFC)로도, 자모 셋(NFD)으로도 적을 수 있다. 눈에는
@@ -82,7 +84,7 @@
     // 명이 걸려 오히려 찾기 어려워진다. 매수는 숫자라 "2" 로 거의 다 걸린다.
     // 코드는 사람마다 다르므로 검색에 넣는다. 이름이 겹쳐도 코드는 한 명만
     // 걸린다 - 동명이인 34명을 가리는 가장 빠른 길이다.
-    var SEARCH = ["name", "phone_last4", "code"];
+    var SEARCH = ["name", "phone_last4", "code", "memo"];
 
     function orderCols(keys) {
         var known = [], rest = [];
@@ -190,6 +192,8 @@
                     // 이름은 자리가 아니라 이름으로 집는다. 칸 차례가 바뀌어도
                     // 굵게 두는 규칙이 엉뚱한 칸에 걸리지 않는다.
                     if (c === "name") td.className = "cell-name";
+                    // 비고는 유일하게 줄바꿈을 허용하는 칸이다.
+                    if (c === "memo") td.className = "cell-memo";
                     td.textContent = row[c] == null ? "" : String(row[c]);
                 }
                 tr.appendChild(td);
@@ -394,6 +398,7 @@
         theadRow.textContent = "";
         cols.forEach(function (c) {
             var th = document.createElement("th");
+            if (c === "memo") th.className = "cell-memo";   // 폭 규칙이 머리에도 걸려야 한다
             th.textContent = LABEL[c] || c;
             theadRow.appendChild(th);
         });
