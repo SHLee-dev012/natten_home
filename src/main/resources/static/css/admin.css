@@ -172,6 +172,20 @@ h1 { font-size: 22px; font-weight: 700; margin: 0 0 6px; letter-spacing: -.01em;
    그래서 숫자를 지우고 실측으로 바꾼다. 넘치지 않으면 clip 그대로라
    표머리도 계속 붙어 있는다. */
 .table-scroll.is-wide { overflow-x: auto; overflow-y: auto; }
+/* 옆으로 밀 수 있다는 것을 알려야 민다. 오른쪽 끝에 옅은 그늘을 세워
+   "여기서 끝이 아니다"를 보인다. 다 밀면 사라진다.
+   붙박이(scroll-attachment) 배경이라 스크롤을 따라 오른쪽에 머문다. */
+.table-scroll.is-wide {
+    background:
+        linear-gradient(90deg, transparent, rgba(20, 22, 31, .10)) right center / 26px 100% no-repeat local;
+}
+/* 손가락 없이도 밀 수 있게 스크롤막대를 남긴다(맥은 기본이 숨김). */
+.table-scroll.is-wide::-webkit-scrollbar { height: 10px; }
+.table-scroll.is-wide::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--accent) 45%, transparent);
+    border-radius: 999px;
+}
+.table-scroll.is-wide::-webkit-scrollbar-track { background: transparent; }
 
 /* 현장에서 폰을 들고 읽는 화면이라 본문보다 크게 잡는다.
    14px 는 팔을 뻗은 거리에서 숫자를 가늠하기에 작았다. */

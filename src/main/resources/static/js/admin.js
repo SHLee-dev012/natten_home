@@ -375,24 +375,51 @@
     // 표가 칸 안에서 넘치는지 재서 가로 스크롤을 켠다.
     //
     // CSS 에 "최소 너비 nnnpx" 를 적어 두면 데이터가 바뀔 때마다 낡는다.
-    // 기수 칸에 긴 값 하나가 들어오면 733px 이던 것이 908px 이 되는데,
-    // 숫자가 낡으면 넘치는데도 clip 이라 맨 오른쪽 칸이 소리 없이 잘린다.
+    // 기수나 비고에 긴 값 하나가 들어오면 필요한 폭이 확 뛴다. 숫자가
+    // 낡으면 넘치는데도 clip 이라 맨 오른쪽 칸이 소리 없이 잘린다.
     //
-    // 넘치지 않으면 클래스를 떼어 clip 으로 되돌린다 - 그래야 표머리가
-    // 화면 위에 계속 붙어 있는다(스크롤칸 안에서는 sticky 가 갇힌다).
+    // 앞 판은 두 가지를 잘못했다. 첫째, 그린 직후 한 번만 쟀다. 그때 아직
+    // 폭이 안 잡혀 있으면 "안 넘친다"로 굳어 영영 잘린 채 남는다. 둘째,
+    // 재기 전에 클래스를 껐다 켰다 - DOM 을 건드리니 관찰자가 다시 불려
+    // 값이 흔들렸다.
+    //
+    // 이제 끄지 않고 잰다. 켜져 있어도 표는 줄어들지 않고 넘칠 뿐이라
+    // scrollWidth > clientWidth 는 두 상태에서 똑같이 옳다. 결과가 바뀔
+    // 때만 DOM 을 건드리므로 관찰자가 되돌아 불려도 멈춘다.
     function fitTable() {
         var box = table && table.parentNode;
         if (!box || !box.classList.contains("table-scroll")) return;
+        var was = box.classList.contains("is-wide");
         // 좁은 화면에서는 표를 카드로 접으므로 가로로 넘칠 일이 없다.
         if (!table.tHead || getComputedStyle(table.tHead).display === "none") {
-            box.classList.remove("is-wide");
+            if (was) box.classList.remove("is-wide");
             return;
         }
-        // 켜진 상태로 재면 이미 줄어든 너비가 나온다. 끄고 재서 판단한다.
-        box.classList.remove("is-wide");
-        if (table.scrollWidth > box.clientWidth + 1) box.classList.add("is-wide");
+        var need = table.scrollWidth > box.clientWidth + 1;
+        if (need !== was) box.classList.toggle("is-wide", need);
     }
-    window.addEventListener("resize", fitTable, { passive: true });
+
+    // 한 번 재고 끝내지 않는다. 폭이 잡히는 시점이 기기마다 다르다.
+    (function watchFit() {
+        window.addEventListener("resize", fitTable, { passive: true });
+        window.addEventListener("orientationchange", fitTable, { passive: true });
+        window.addEventListener("load", fitTable);
+        // 글꼴이 늦게 오면 글자 폭이 달라져 필요한 너비도 달라진다.
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(fitTable).catch(function () { });
+        }
+        // 칸이나 표의 크기가 바뀌면 그때마다 다시 잰다. 위 이벤트로는
+        // 잡히지 않는 변화(글자 줄바꿈, 칸 추가)까지 여기서 걸린다.
+        if (typeof ResizeObserver !== "undefined") {
+            var ro = new ResizeObserver(function () { fitTable(); });
+            var box = table && table.parentNode;
+            if (box) ro.observe(box);
+            if (table) ro.observe(table);
+        } else {
+            // 아주 옛 브라우저 대비. 그린 직후 몇 번 더 확인한다.
+            [200, 600, 1500].forEach(function (ms) { setTimeout(fitTable, ms); });
+        }
+    })();
 
     function drawHead() {
         theadRow.textContent = "";
